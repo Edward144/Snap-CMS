@@ -6,8 +6,7 @@
             <li><a class="sidebarLink" href="/admin/pages">Pages</a></li>
             <li><a class="sidebarLink" href="/admin/posts">Posts</a></li>
             <li><a class="sidebarLink" href="/admin/navigation">Navigation</a></li>
-            <!--<li><a class="sidebarLink" href="/admin/comments">Comments WIP</a></li>-->
-            <li><a class="sidebarLink" href="/admin/categories">Categories WIP</a></li>
+            <li><a class="sidebarLink" href="/admin/categories">Categories</a></li>
             <li><a class="sidebarLink" href="/admin/media">Media</a></li>
         </ul>
         
