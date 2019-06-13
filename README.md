@@ -6,10 +6,16 @@ your MySQL database. All required tables will then be setup.
 
 After setup you can login by going to /login and entering Username: admin and Password: changeme
 
+Currently to re-install drop all tables from the database and delete /templates/database-connect.php you will be redirected back to the setup screen on refresh.
+
 Styles and templates can both be changed by creating and editing files in /templates and /admin/templates respectively.
 
 Credit to the following which are all included in this repository:
-   TinyMCE: https://www.tiny.cloud/
-   MoxieManager: https://www.moxiemanager.com/
-   Owl Carousel: https://owlcarousel2.github.io/OwlCarousel2/
-   Animate.css: https://daneden.github.io/animate.css/
+
+   - TinyMCE: https://www.tiny.cloud/
+   
+   - MoxieManager: https://www.moxiemanager.com/
+   
+   - Owl Carousel: https://owlcarousel2.github.io/OwlCarousel2/
+   
+   - Animate.css: https://daneden.github.io/animate.css/
