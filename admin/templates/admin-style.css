@@ -1,0 +1,1032 @@
+/* GENERAL */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+.tox-tinymce {
+    min-height: 500px;
+}
+
+.formBlock {
+    margin: 0.5em 0;
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #aaa;
+}
+
+.formBlock:last-child {
+    border-bottom: 0;
+}
+
+.formBlock form {
+    max-width: 500px;
+    width: 100%;
+    margin-right: 0.5em;
+}
+
+.formBlock form p {
+    width: 100%;
+}
+
+.formBlock form p:first-child {
+    margin-top: 0;
+}
+
+.formBlock form p * {
+    display: inline-block;
+}
+
+.formBlock p label {
+    width: 150px;
+}
+
+.formBlock p input,
+.formBlock p textarea,
+.formBlock p select {
+    width: -webkit-calc(100% - 159px);
+    width: -moz-calc(100% - 159px);
+    width: -o-calc(100% - 159px);
+    width: calc(100% - 159px);
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+}
+
+.formBlock p input[type="checkbox"] {
+    margin: 0 0.5em;
+    width: auto;
+    transform: scale(1.4);
+}
+
+.formBlock p input[type="file"] {
+    border: 0;
+}
+
+.formBlock table input,
+.formBlock table textarea,
+.formBlock table select {
+    width: 100%;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+}
+
+.formBlock p input[type="button"],
+.formBlock p input[type="submit"],
+.formBlock table input[type="button"],
+.formBlock table input[type="submit"] {
+    min-width: 120px;
+    width: auto;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+    background: #0271ba;
+    color: #fff;
+}
+
+.formBlock table input[type="button"],
+.formBlock table input[type="submit"] {
+    min-width: 100px;
+}
+
+.formBlock p input[type="button"]:hover,
+.formBlock p input[type="submit"]:hover,
+.formBlock table input[type="button"]:hover,
+.formBlock table input[type="submit"]:hover {
+    background: #01538b;
+}
+
+.badButton {
+    background: #ff0000 !important;
+}
+
+.badButton:hover{
+    background: #8b0000 !important;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+table .headers {
+    background: #333;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+table td {
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    text-align: center;
+}
+
+table .icon {
+    cursor: pointer;
+    position: relative;
+}
+
+table .icon:hover:after {
+    content: "Icon";
+    vertical-align: middle;
+    margin-left: 0.25em;
+}
+
+table #view:hover:after {
+    content: "Visible";
+}
+
+table #hide:hover:after {
+    content: "Hidden";
+}
+
+table #edit:hover:after {
+    content: "Edit";
+}
+
+table #apply:hover:after {
+    content: "Apply";
+}
+
+table #delete:hover:after {
+    content: "Delete";
+}
+
+table .icon img {
+    max-width: 20px;
+    vertical-align: middle;
+}
+
+.pagination {
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+.pagination a {
+    color: #333;
+    margin: 0 0.25em;
+}
+
+.pagination a:hover {
+    text-shadow: 0px 0px 1px #333;
+}
+
+#helper {
+    position: relative;
+    cursor: pointer;
+}
+
+#helper:after {
+    content: "?";
+    border: 1px solid #aaa;
+    border-radius: 100%;
+    color: #aaa;
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-left: 0.25em;
+}
+
+#helperText {
+    display: none;
+}
+
+#helper:hover > #helperText {
+    position: absolute;
+    top: 1.5em;
+    display: block;
+    background: #aaa;
+    color: #fff;
+    padding: 0.5em;
+    box-sizing: border-box;
+    width: 400px;
+    z-index: 999;
+}
+
+/* HEADER */
+
+.header {
+    padding: 0.5em;
+    box-sizing: border-box;
+    height: 100px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,aaaaaa+100 */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(left, #ffffff 0%, #aaaaaa 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #ffffff 0%,#aaaaaa 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #ffffff 0%,#aaaaaa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa',GradientType=1 ); /* IE6-9 */
+    border-bottom: 1px solid #aaa;
+}
+
+.headerInner {
+    height: 100%;
+    text-align: center;
+}
+
+.header .left, .header .right {
+    display: inline-block;
+    vertical-align: middle;
+    width: -webkit-calc(50% - 4px);
+    width: -moz-calc(50% - 4px);
+    width: -o-calc(50% - 4px);
+    width: calc(50% - 4px);
+}
+
+.header .logo {
+    max-height: 80px;
+    float: left;
+}
+
+.header .breadcrumbs {
+    text-align: right;
+    margin: 0;
+}
+
+/* NAVIGGATION */
+
+.nav {
+    background: #f3f3f3;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+/* FOOTER */
+
+.footer {
+    padding: 0.5em;
+    box-sizing: border-box;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,aaaaaa+100 */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(left, #ffffff 0%, #aaaaaa 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #ffffff 0%,#aaaaaa 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #ffffff 0%,#aaaaaa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa',GradientType=1 ); /* IE6-9 */
+    border-top: 1px solid #aaa;
+}
+
+.footer .left, .footer .right {
+    display: inline-block;
+    vertical-align: middle;
+    width: -webkit-calc(50% - 4px);
+    width: -moz-calc(50% - 4px);
+    width: -o-calc(50% - 4px);
+    width: calc(50% - 4px);
+}
+
+.footer .logout {
+    text-align: right;
+    margin: 0;
+}
+
+.footer .logout a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer .logout a:hover {
+    text-decoration: underline;
+}
+
+/* MAIN */
+
+.main {
+    margin: 0 auto;
+    height: -webkit-calc(100vh - 135px);
+    height: -moz-calc(100vh - 135px);
+    height: -o-calc(100vh - 135px);
+    height: calc(100vh - 135px);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.main .sidebar {
+    width: 300px;
+    box-sizing: border-box;
+    float: left;
+    border-right: 1px solid grey;
+    background: #333;
+    color: #fff;
+    height: 100%;
+    box-shadow: inset -1px 0px 10px 0px #000;
+    position: relative;
+    z-index: 1300;
+    overflow-y: auto;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 0.75em 0.5em;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar a:hover {
+    background: #111;
+}
+
+.sidebarToggle {
+    background-image: url('/admin/images/icons/hamburger-icon.png');
+    background-color: #333;
+    background-repeat: no-repeat;
+    background-size: 90% 60%;
+    background-position: 2px center;
+    height: 40px;
+    width: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    border-radius: 0 0.5em 0.5em 0;
+    cursor: pointer;
+    display: none;
+}
+
+.sidebarToggle:hover {
+    background-color: #111;
+}
+
+.sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul.sub {
+    display: none;
+}
+
+.sidebar ul.sub a {
+    padding-left: 2em;
+}
+
+.sidebarCategory > a#hidden:before {
+    content: "+";
+    margin-right: 0.5em;
+    border: 1px solid #fff;
+    border-radius: 0.25em;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+}
+
+.sidebarCategory > a#visible:before {
+    content: "-";
+    margin-right: 0.5em;
+    border: 1px solid #fff;
+    border-radius: 0.25em;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+}
+
+.main .content {
+    padding: 0.5em;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* DASHBOARD */
+
+.dashboardBlocks {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dashboardBlocks > div {
+    width: 100%;
+    max-width: 350px;
+    background: #f3f3f3;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+.dashboardBlocks h2, 
+.dashboardBlocks h4 {
+    display: inline;
+    margin: 0 auto;
+    color: #d3d3d3;
+    text-align: center;
+}
+
+.dashboardBlocks .totalHeader { 
+    padding: 0 1em 1em;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.dashboardBlocks .totalHeader span {
+    text-align: center;
+    display: block;
+}
+
+.dashboardBlocks .totalHeader {
+    border-bottom: 3px solid #d3d3d3;
+}
+
+.dashboardBlocks h2 {
+    font-size: 5em;
+}
+
+.dashboardBlocks h4 {
+    font-size: 2em;
+}
+
+.dashboardBlocks .latest {
+    color: #333;
+}
+
+/* POSTS/PAGES */
+
+.postRow:nth-child(even), .pageRow:nth-child(even) {
+    background: #eee;
+}
+
+.postRow:hover, .pageRow:hover {
+    background: rgba(2, 113, 186, 0.25);
+}
+
+.postRow td *, .pageRow td * {
+    margin: 0 auto 0.5em;
+}
+
+.postRow td *:last-child, .pageRow td *:last-child {
+    margin-bottom: 0;
+}
+
+.details .left, .details .right {
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.details .left {
+    width: 70%;
+    margin-right: 0.5em;
+}
+
+.details .right {
+    width: -webkit-calc(30% - 1.5em);
+    width: -moz-calc(30% - 1.5em);
+    width: -o-calc(30% - 1.5em);
+    width: calc(30% - 1.5em);
+}
+
+.details p label {
+    width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.details p input,
+.details p select {
+    width: -webkit-calc(100% - 150px - 1em);
+    width: -moz-calc(100% - 150px - 1em);
+    width: -o-calc(100% - 150px - 1em);
+    width: calc(100% - 150px - 1em);
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    font-weight: bold;
+    font-size: 1em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.details .right p input,
+.details .right p select {
+    width: 100%;
+}
+
+.details p input[type="datetime-local"],
+.details p select {
+    font-weight: normal;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.actions .icon {
+    cursor: pointer;
+    margin: 0 auto;
+    width: calc(33% - 0.5em);
+    margin-right: 0.5em;
+    max-height: 50px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    border-radius: 0.5em;
+}
+
+.actions .icon:first-child {
+    margin-left: 0;
+}
+
+.actions .icon:last-child {
+    margin-right: 0;
+}
+
+.actions .icon img {
+    height: 100%;
+    width: auto;
+}
+
+.actions .icon:hover {
+    background: #aaa;
+}
+
+.actions .icon:hover img {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+}
+
+.editor {
+    width: 70%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.featuredImage {
+    display: inline-block;
+    vertical-align: top;
+    width: 29%;
+    width: -webkit-calc(30% - 5px);
+    width: -moz-calc(30% - 5px);
+    width: -o-calc(30% - 5px);
+    width: calc(30% - 5px);
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+    padding: 1em;
+    min-height: 235px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.featuredImage .featuredInner {
+    background: #f3f3f3;
+    color: #333;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    padding: 1em;
+    box-sizing: border-box;
+    display: table;
+    min-height: 200px;
+    position: relative;
+}
+
+.featuredImage .featuredInner span {
+    display: table-cell;
+    vertical-align: middle;
+    
+}
+
+.featuredImage .featuredInner img {
+    width: 100%;
+}
+
+.featuredImage span.featuredDelete {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: -10px;
+    right: -10px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 100%;
+    display: none;
+}
+
+.featuredImage .featuredInner:hover > .featuredDelete {
+    display: block;
+}
+
+.featuredImage .featuredDelete:hover {
+    background: #555;
+}
+
+.featuredImage .featuredDelete span {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.75em;
+    font-weight: normal;
+}
+
+/* MEDIA */
+
+.mediaInfo {
+    float: right;
+    width: 280px;
+    background: #f3f3f3;
+    box-sizing: border-box;
+    padding: 1em;
+    border-radius: 0.5em;
+    margin: 0.5em auto;
+    display: none;
+}
+
+.mediaInfo #imageLink, 
+.mediaInfo #dimensions {
+    display: none;
+}
+
+.mediaList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mediaFile, .mediaDir {
+    width: 150px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    background: #f3f3f3;
+    color: #333;
+    position: relative;
+}
+
+.mediaFile:hover, .mediaDir:hover {
+    background: rgba(2, 113, 186, 0.25);
+    color: #fff;
+}
+
+.mediaFile a, .mediaDir a {
+    color: #333;
+    text-decoration: none;
+}
+
+.mediaFile:hover a, .mediaDir:hover a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.mediaImage {
+    padding: 1em;
+    box-sizing: border-box;
+    height: 134px;
+    overflow: hidden;
+}
+
+.mediaImage img {
+    width: 100%;
+}
+
+.mediaName {
+    margin-top: 1em;
+    display: block;
+    word-break: break-all;
+}
+
+#mediaAddOverlay,
+#mediaEditOverlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(50, 50, 50, 0.5);
+    display: none;
+}
+
+#mediaAddVisible, #mediaAddHidden,
+#mediaEdit {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+    width: 100%;
+    padding: 0 1em;
+    box-sizing: border-box;
+}
+
+#mediaAddVisible > div, #mediaAddHidden > div, #mediaEdit > div {
+    background: #f3f3f3;
+    width: 100%;
+    max-width: 500px;
+    padding: 1em;
+    z-index: 10001;
+    vertical-align: middle;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+#mediaAddHidden {
+    display: none;
+}
+
+#mediaAddVisible, #mediaEdit {
+    display: table;
+}
+
+#mediaAddClose span,
+#mediaEditClose span {
+    color: #fff;
+    background: red;
+    border-radius: 100%;
+    text-align: center;
+    border-radius: 100%;
+    text-align: center;
+    height: 24px;
+    width: 24px;
+    display: block;
+    box-sizing: border-box;
+    padding: 0.25em;
+    cursor: pointer;
+    margin-bottom: 1em;
+    float: right;
+}
+
+#mediaAddClose span:hover,
+#mediaEditClose span:hover, {
+    background: darkred;
+}
+
+.mediaDelete,
+.mediaEdit {
+    display: none;
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: -10px;
+    background: #f3f3f3;
+    border-radius: 100%;
+    padding: 0.5em;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.mediaDelete {
+    right: -10px;
+}
+
+.mediaEdit {
+    left: -10px;
+}
+
+.mediaDelete img, 
+.mediaEdit img {
+    width: 100%;
+}
+
+.mediaDelete:hover,
+.mediaEdit:hover {
+    background: #d3d3d3;
+}
+
+.mediaDelete:hover img,
+.mediaEdit:hover img {
+    -webkit-filter: invert(1);
+    filter: invert(1);
+}
+
+.mediaDir:hover .mediaDelete,
+.mediaDir:hover .mediaEdit,
+.mediaFile:hover .mediaDelete,
+.mediaFile:hover .mediaEdit {
+    display: block;
+}
+
+.mediaList.popup {
+    position: absolute;
+    width: 100%;
+    width: -webkit-calc(100% - 2em);
+    width: -moz-calc(100% - 2em);
+    width: -o-calc(100% - 2em);
+    width: calc(100% - 2em);
+    max-width: 750px;
+    max-height: 500px;
+    overflow-y: auto;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fafafa;
+    display: block;
+    z-index: 9999;
+    box-shadow: 1px 1px 5px -4px #000;
+    border-radius: 0 1em 0 0;
+    text-align: left;
+}
+
+.mediaList.popup#hidden {
+    display: none;
+}
+
+.mediaList.popup .mediaFile,
+.mediaList.popup .mediaDir {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.mediaList.popup .mediaEdit, 
+.mediaList.popup .mediaDelete, 
+.mediaList.popup #mediaAddDirectory {
+    display: none;
+}
+
+.mediaList.popup .mediaClose {
+    background: #333;
+    width: 40px;
+    height: 40px;
+    float: right;
+    text-align: center;
+    color: #fff;
+    border-radius: 100%;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.mediaList.popup .mediaClose:hover {
+    background: #555;
+}
+
+.mediaList.popup .mediaClose span {
+    margin-top: 10px;
+    display: block;
+}
+
+/* SETUP */
+
+#setup, #login, #reset, #newPassword {
+    margin: 0 auto;
+    background: #f3f3f3;
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+/* NAVIGATION / CATEGORIES */
+
+#navLayout ul, #catLayout ul {
+    margin: 0 auto;
+    list-style: none;
+    padding-left: 1em;
+    box-sizing: border-box;
+    border-left: 1px solid #000;
+}
+
+#navLayout ul li, #catLayout ul li {
+    position: relative;
+}
+
+#navLayout ul li:before, #catLayout ul li:before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    border-bottom: 1px solid #000;
+    top: 10px;
+    left: -16px;
+}
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 1024px) {
+    body {
+        overflow: auto;
+    }
+    
+    .header {
+        height: auto;
+        text-align: center;
+    }
+    
+    .hedder .left, .header .right {
+        display: block;
+        width: 100%;
+    }
+    
+    .header .breadcrumbs {
+        text-align: center;
+        margin: 0.5em auto;
+    }
+    
+    .header .logo {
+        height: auto;
+        max-height: 80px;
+        float: none;
+    }
+    
+    .main .sidebar {
+        position: absolute;
+        top: 0;
+        left: -300px;
+    }
+    
+    .sidebarToggle {
+        display: block;
+    }
+    
+    .main {
+        overflow-x: hidden;
+        min-height: 100vh;
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .details .left, .details .right {
+        display: block;
+        width: 100%;
+    }
+    
+    .details .left {
+        margin-right: 0;
+    }
+    
+    .details p input,
+    .details p select,
+    .details .right p input,
+    .details .right p select {
+        width: -webkit-calc(100% - 150px - 0.5em);
+        width: -moz-calc(100% - 150px - 0.5em);
+        width: -o-calc(100% - 150px - 0.5em);
+        width: calc(100% - 150px - 0.5em);
+    }
+    
+    .details p input[type="datetime-local"] {
+        width: -webkit-calc(100% - 150px - 0.5em - 2px);
+        width: -moz-calc(100% - 150px - 0.5em - 2px);
+        width: -o-calc(100% - 150px - 0.5em - 2px);
+        width: calc(100% - 150px - 0.5em - 2px);
+    }
+    
+    .actions .icon {
+        width: 50px;
+        margin: 0.5em ;
+    }
+    
+    .actions .icon:first-child {
+        margin-left: 0.5em;
+    }
+    
+    .actions .icon:last-child {
+        margin-right: 0.5em;
+    }
+    
+    .editor, .featuredImage {
+        display: block;
+        width: 100%;
+    }
+    
+    .featuredImage {
+        max-width: 250px;
+        margin-top: 1em;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .main .sidebar {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        left: -100%;
+    }
+    
+    .details p input {
+        width: 100%;
+    }
+    
+    .mediaInfo {
+        float: none;
+        width: 100%;
+    }
+}

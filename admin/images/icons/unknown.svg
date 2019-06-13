@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#E2E5E7;}
+	.st1{fill:#B0B7BD;}
+	.st2{fill:#CAD1D8;}
+	.st3{fill:#576D7E;}
+	.st4{fill:#FFFFFF;}
+	.st5{font-family:'VAG-Rounded-Bold';}
+	.st6{font-size:141.4645px;}
+</style>
+<font horiz-adv-x="2048">
+<!-- Copyright (c) 1989 Adobe Systems Incorporated. All Rights Reserved. -->
+<font-face font-family="VAG-Rounded-Bold" units-per-em="2048" underline-position="-100" underline-thickness="50"/>
+<missing-glyph horiz-adv-x="1536" d="M256,0l0,1280l1024,0l0,-1280M1247,33l0,1214l-958,0l0,-1214z"/>
+<glyph unicode="?" horiz-adv-x="985" d="M301,557l0,205C301,795 313,817 337,828C360,839 404,853 467,870C519,885 559,905 588,929C617,952 631,991 631,1044C631,1089 614,1126 580,1156C546,1185 506,1200 461,1200C423,1200 390,1191 362,1172C334,1153 306,1128 278,1095C249,1062 225,1037 205,1021C184,1005 160,997 131,997C94,997 64,1011 41,1038C18,1065 6,1100 6,1145C6,1196 20,1242 49,1285C78,1328 115,1364 162,1394C209,1423 259,1446 312,1461C365,1476 415,1483 461,1483C550,1483 631,1465 706,1430C780,1395 839,1344 884,1277C928,1210 950,1132 950,1044C950,935 919,846 856,777C793,708 707,659 596,631l0,-74C596,516 582,482 555,456C527,429 492,416 449,416C404,416 369,429 342,456C315,482 301,516 301,557M449,-25C405,-25 367,-9 336,22C305,53 289,91 289,135C289,179 305,217 336,248C367,279 405,295 449,295C494,295 531,279 562,248C593,217 608,179 608,135C608,91 593,53 562,22C531,-9 494,-25 449,-25z"/>
+</font>
+
+	<path class="st0" d="M128,0c-17.6,0-32,14.4-32,32v448c0,17.6,14.4,32,32,32h320c17.6,0,32-14.4,32-32V128L352,0H128z"/>
+<path class="st1" d="M384,128h96L352,0v96C352,113.6,366.4,128,384,128z"/>
+<polygon class="st2" points="480,224 384,128 480,128 "/>
+<path class="st3" d="M416,416c0,8.8-7.2,16-16,16H48c-8.8,0-16-7.2-16-16V256c0-8.8,7.2-16,16-16h352c8.8,0,16,7.2,16,16V416z"/>
+<path class="st2" d="M400,432H96v16h304c8.8,0,16-7.2,16-16v-16C416,424.8,408.8,432,400,432z"/>
+<text transform="matrix(1 0 0 1 192.9995 387.6182)" class="st4 st5 st6">?</text>
+</svg>
