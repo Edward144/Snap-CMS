@@ -3,11 +3,13 @@
     $baseUrl = $_SERVER['DOCUMENT_ROOT'];
     $baseName = $_SERVER['SEVER_NAME'];
 
+    //Check If Database Connect File Exists
+    if(!file_exists($_SERVER['SERVER_NAME'] . '/templates/database-connect.php')) {
+        session_destroy();
+    }
 
     //Redirect If Setup Is Incomplete
-    if($_SESSION['setupcomplete'] == 0 && $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] !=  $_SERVER['SERVER_NAME'] . '/setup/start') {
-        session_destroy();
-        
+    if($_SESSION['setupcomplete'] == 0 && $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] !=  $_SERVER['SERVER_NAME'] . '/setup/start') {        
         header('Location: ' . '/setup/start');
     }
     elseif($_SESSION['setupcomplete'] == 1 && $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ==  $_SERVER['SERVER_NAME'] . '/setup/start') {
