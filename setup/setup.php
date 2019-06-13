@@ -136,7 +136,7 @@
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
             description VARCHAR(255),
-            url VARCHAR(200) UNIQUE,
+            url VARCHAR(191) UNIQUE,
             author VARCHAR(200),
             date_posted DATETIME,
             visible TINYINT(1),
@@ -151,7 +151,7 @@
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
             description VARCHAR(255),
-            url VARCHAR(200) UNIQUE,
+            url VARCHAR(191) UNIQUE,
             author VARCHAR(200),
             date_posted DATETIME,
             visible TINYINT(1),
@@ -177,7 +177,7 @@
         "CREATE TABLE IF NOT EXISTS `password_reset` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             email VARCHAR(255),
-            token VARCHAR(200) UNIQUE,
+            token VARCHAR(191) UNIQUE,
             date_generated DATETIME DEFAULT CURRENT_TIMESTAMP,
             expired TINYINT DEFAULT 0
         )"
