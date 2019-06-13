@@ -4,7 +4,7 @@
     $baseName = $_SERVER['SEVER_NAME'];
 
     //Check If Database Connect File Exists
-    if(!file_exists($_SERVER['SERVER_NAME'] . '/templates/database-connect.php')) {
+    if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php') != 1) {
         session_destroy();
     }
 
