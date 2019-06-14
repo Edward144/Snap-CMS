@@ -248,6 +248,7 @@ table .icon img {
 
 .header .logo {
     max-height: 80px;
+    max-width: 100%;
     float: left;
 }
 
@@ -349,6 +350,7 @@ table .icon img {
     height: 40px;
     width: 50px;
     position: fixed;
+    z-index: 9999;
     top: 0;
     left: 0;
     z-index: 100;
@@ -941,7 +943,7 @@ table .icon img {
     
     .header .logo {
         height: auto;
-        max-height: 80px;
+        max-height: 100%;
         float: none;
     }
     
