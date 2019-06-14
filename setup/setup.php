@@ -229,7 +229,7 @@
 
     //write Output
     if(!$mysqli->error) {
-        echo json_encode('Setup is complete.<br>An admin user has been created with the username "Admin" and the password "' . $adminPass . '".<br>You can now <a href="/login.php">Login</a>.');
+        echo json_encode('Setup is complete.<br>An admin user has been created with the username "Admin" and the password "' . $adminPass . '".<br>You can now <a href="/login">Login</a>.');
     }
     else {
         echo json_encode('Error ' . $mysqli->errno . ': ' . $mysqli->error);

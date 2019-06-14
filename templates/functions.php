@@ -10,7 +10,7 @@
 
     //Redirect If Setup Is Incomplete
     if($_SESSION['setupcomplete'] == 0 && $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] !=  $_SERVER['SERVER_NAME'] . '/setup/start') {        
-        header('Location: ' . '/setup/start');
+        header('Location: /setup/start');
     }
     elseif($_SESSION['setupcomplete'] == 1 && $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ==  $_SERVER['SERVER_NAME'] . '/setup/start') {
         header('Location: /index');
