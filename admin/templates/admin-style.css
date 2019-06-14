@@ -931,7 +931,7 @@ table .icon img {
         text-align: center;
     }
     
-    .hedder .left, .header .right {
+    .header .left, .header .right {
         display: block;
         width: 100%;
     }
