@@ -350,10 +350,9 @@ table .icon img {
     height: 40px;
     width: 50px;
     position: fixed;
-    z-index: 9999;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1310;
     border-radius: 0 0.5em 0.5em 0;
     cursor: pointer;
     display: none;
