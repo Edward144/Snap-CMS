@@ -85,7 +85,7 @@
                                     <div class="featuredInner">
                                         <span class="featuredDelete"><span>X</span></span>
                                         
-                                        <img src="/admin/useruploads/Citizen_AT4127-52H.jpg" id="featuredImage">
+                                        <img src="<?php echo $row['image_url']; ?>" id="featuredImage">
                                     </div>
                                 <?php endif; ?>
                                 
