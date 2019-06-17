@@ -31,7 +31,7 @@
         $results = $emailCheck->get_result();
         
         if($results->num_rows > 0) {
-            $generateToken = $mysqli->prepare("UPDATE `password_reset` SET token = ?, date_generated = NOW() WHERE email = ?");
+            $generateToken = $mysqli->prepare("UPDATE `password_reset` SET token = ?, date_generated = NOW(), expired = 0 WHERE email = ?");
             $generateToken->bind_param('ss', $token, $email);
             $generateToken->execute();
             $generateToken->close();
