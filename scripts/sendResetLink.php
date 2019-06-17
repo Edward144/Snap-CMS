@@ -23,7 +23,7 @@
     $results = $verify->get_result();
 
     if($results->num_rows > 0) {
-        $token = randomString(200);
+        $token = randomString(191);
         
         $emailCheck = $mysqli->prepare("SELECT email FROM `password_reset` WHERE email = ?");
         $emailCheck->bind_param('s', $email);
