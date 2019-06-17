@@ -49,7 +49,7 @@
         error_reporting( E_ALL );
         
         $from = "no-reply@cmstest.co.uk";
-        $to = "edward.hall.144@gmail.com";
+        $to = $email;
         $subject = "Password Reset";
         $message = 
             "<h2>Use this link to reset your password:</h2>
