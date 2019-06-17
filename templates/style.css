@@ -135,6 +135,10 @@ nav ul li a:hover {
 /* MAIN */
 
 .main {
+    position: relative;
+}
+
+.mainInner {
     max-width: 1024px;
     margin: 1em auto;
     position: relative;
@@ -169,7 +173,7 @@ nav ul li a:hover {
 }
 
 .hero {
-    min-height: 250px;
+    min-height: 300px;
     padding: 1em;
     box-sizing: border-box;
     background-size: cover;
@@ -184,9 +188,11 @@ nav ul li a:hover {
     margin: 0 auto;
     position: absolute;
     width: 100%;
+    max-width: 1024px;
     left: 0;
+    right: 0;
     bottom: 0;
-    padding: 1em;
+    padding: 0.5em;
     box-sizing: border-box;
 }
 

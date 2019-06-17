@@ -1,10 +1,7 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/header.php'); ?>
-    
-    <?php include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php'); ?>
 
     <?php $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0]; ?>
-
-    <div class="content">        
+     
         <?php if(isset($_GET['url'])) : ?>
             <?php $page = $mysqli->query("SELECT * FROM `pages` WHERE url = '{$_GET['url']}'"); ?>
             
@@ -23,10 +20,16 @@
                         <div class="hero" style="<?php echo ($row['image_url'] != null && $row['image_url'] != '' ? 'background-image: url(\'' . $row['image_url'] . '\')' : ''); ?>">
                             <h1><?php echo $row['name']; ?></h1>
                         </div>
-        
-                        <div class="pageContent">
-                            <?php echo $row['content']; ?>
-                        </div>
+
+                        <div class="mainInner">
+                            <?php include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php'); ?>
+                            
+                            <div class="content">
+                                <div class="pageContent">
+                                    <?php echo $row['content']; ?>
+                                </div>
+                            </div>
+                        </div>  
                     <?php else : ?>
                         <?php 
                             http_response_code(404); 
@@ -43,6 +46,5 @@
         <?php else : ?>
             <?php header('Location: /'); ?>
         <?php endif; ?>
-    </div>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/footer.php'); ?>
