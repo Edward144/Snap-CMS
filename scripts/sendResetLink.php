@@ -48,7 +48,7 @@
         ini_set( 'display_errors', 1 );
         error_reporting( E_ALL );
         
-        $from = "no-reply@cmstest.co.uk";
+        $from = "no-reply@" . gethostbyaddr('127.0.0.1');
         $to = $email;
         $subject = "Password Reset";
         $message = 
@@ -56,6 +56,7 @@
             <a href='" . $link . "'>" . $link . "</a>
             ";
         $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "From: noreply@" . gethostbyaddr('127.0.0.1') . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         
         if(mail($to, $subject, $message, $headers)) {
