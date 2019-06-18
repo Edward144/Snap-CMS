@@ -6,7 +6,6 @@
         <h1><?php adminTitle(); ?></h1>
         <div class="formBlock">
             <form id="generalSettings">
-                
                 <p>
                     <label id="helper">Hide Posts: <span id="helperText">Hiding posts will prevent users from accessing the posts page or any individual posts.</span></label>
                     
@@ -33,6 +32,40 @@
                 
                 <p>
                     <input type="submit" value="Submit">
+                </p>
+                
+                <p class="message"></p>
+            </form>
+        </div>
+        
+        <div class="formBlock">            
+            <form id="customPosts">
+                <h2>Custom Post Types</h2>
+                
+                <table>
+                    <tr class="headers">
+                        <td>Name</td>
+                        <td>Actions</td>
+                    </tr>
+                    
+                    <?php $customs = $mysqli->query("SELECT name FROM `custom_posts` ORDER BY name ASC"); ?>
+                    
+                    <?php while($row = $customs->fetch_assoc()) : ?>
+                        <tr>
+                            <td>
+                                <input type="text" name="postTypeName" placeholder="Name" value="<?php echo $row['name']; ?>">
+                            </td>
+
+                            <td>
+                                <input type="button" class="badButton" value="Delete" name="delete"> 
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </table>
+                
+                <p>
+                    <input type="submit" value="Update Post Types">
+                    <input type="button" value="Add Row" name="addRow">
                 </p>
                 
                 <p class="message"></p>
