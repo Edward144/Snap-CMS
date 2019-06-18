@@ -78,7 +78,7 @@
         if($settings) {
             echo 
                 '<ul>
-                    <li class="sidebarCategory"><a href="" id="hidden">' . ucfirst($directory) . '</a>
+                    <li class="sidebarCategory"><a href="" id="hidden">' . ucwords(str_replace('_', ' ', $directory)) . '</a>
                         <ul class="sub">';
 
                             foreach($settings as $setting) {
@@ -873,6 +873,254 @@
                             </p>
                         </li>
                     </ul>';
+            }
+        }
+    }
+
+    class postAdmin {
+        public $postType;
+        public $postTitle;
+        public $categoryPre;
+
+        public function __construct($type) {
+            if($type != null) {
+                $this->postType = $type;            
+                $this->postTitle = ucwords(str_replace('_', ' ', $type));
+
+                if($type != 'post') {
+                    $this->categoryPre = $this->postType . 's_';
+                }
+            }
+            else {
+                echo 'Post type is not defined.';
+            }
+        }
+
+        public function getPost() {
+            if(isset($_GET['p'])) {
+                $this->getPostSingle();
+            }
+            else {
+                $this->getPostList();
+            }
+        }
+
+        private function getFeatured($imageUrl) {
+            echo '<h2>Featured Image</h2>';
+
+            if($imageUrl == null || $imageUrl == '') {
+                echo 
+                    '<div class="noFeatured featuredInner">
+                        <span>Select Image</span>
+                    </div>';
+            }
+            else {
+                echo 
+                    '<div class="featuredInner">
+                        <span class="featuredDelete"><span>X</span></span>
+
+                        <img src="' . $imageUrl . '" id="featuredImage">
+                    </div>';
+            }
+
+
+            if(isset($_GET['f'])) {
+                new mediaTree($_GET['f'], true); 
+            }
+            else {
+                new mediaTree('useruploads', true);
+            }
+        }
+
+        public function getPostList() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            echo '<h1>' . $this->postTitle . 's</h1>';
+
+            $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}s`")->fetch_array()[0];
+            $pagination = new pagination($postCount);
+            $pagination->load();
+
+            echo
+                '<div class="formBlock">
+                    <form class="addContent" id="add' . $this->postType . '">
+                        <p>
+                            <input type="submit" value="New ' . $this->postTitle . '">
+                        </p>
+
+                        <p class="message"></p>
+                    </form>
+
+                    <form id="searchPost">
+                        <p>
+                            <input type="text" name="search" placeholder="Search..." id="' . $pagination->itemLimit .'">
+                        </p>
+                    </form>
+                </div>';
+
+            echo
+                '<table>
+                    <tr class="headers">
+                        <td style="width: 40px;">ID</td>
+                        <td style="text-align: left;">' . $this->postTitle . ' Details</td>
+                        <td style="width: 180px;">Published</td>
+                        <td style="width: 100px;">Actions</td>
+                    </tr>';
+
+                    $posts = $mysqli->query("SELECT * FROM `{$this->postType}s` ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+
+                    if($posts->num_rows > 0) {
+                        while($post = $posts->fetch_assoc()) {
+                            echo
+                                '<tr class="' . $this->postType . 'Row contentRow">
+                                    <td>
+                                        <span class="id">' . $post['id'] . '</span>
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        <h4>' . $post['name'] . '</h4>
+                                        <p>' . $post['description'] . '</p>
+                                        <p style="font-size: 0.75em;">URL: ' . $post['url'] . '</p>
+                                    </td>
+
+                                    <td>
+                                        <p>' . $post['author'] . '</p>
+                                        <p>' . $post['date_posted'] . '</p>
+                                    </td>
+
+                                    <td>';
+
+                                        if($post['visible'] == 1) {
+                                            echo '<p class="icon" id="view"><img src="/admin/images/icons/view.png"></p>';
+                                        }
+                                        else {
+                                            echo '<p class="icon" id="hide"><img src="/admin/images/icons/hide.png"></p>';
+                                        }
+
+                                    echo
+                                        '<p class="icon" id="edit"><img src="/admin/images/icons/edit.png"></p>
+                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png"></p>
+                                    </td>
+                                </tr>';
+                        }
+                    }
+                    else {
+                        echo
+                            '<tr>
+                                <td colspan="4">There are currently no ' . $this->postTitle . 's.</td>
+                            </tr>';
+                    }
+                echo '</table>';
+
+            $pagination->display();
+        }
+
+        public function getPostSingle() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $post = $mysqli->prepare("SELECT * FROM `{$this->postType}s` WHERE id = ?");
+            $post->bind_param('i', $_GET['p']);
+            $post->execute();
+            $result = $post->get_result();
+
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo
+                        '<div class="' . $this->postType . ' contentWrap">
+                            <form id="editContent">
+                                <div class="details">
+                                    <div class="left">
+                                        <p style="display: none;">
+                                            <span class="id">' . $row['id'] . '</span>
+                                        </p>
+
+                                        <p>
+                                            <label>Title: </label>
+                                            <input type="text" name="title" value="' . $row['name'] . '">
+                                        </p>
+
+                                        <p>
+                                            <label>Description: </label>
+                                            <input type="text" name="description" value="' . $row['description'] . '">
+                                        </p>
+
+                                        <p>
+                                            <label>Url: </label>
+                                            <input type="text" name="url" value="' . $row['url'] . '">
+                                        </p>';
+
+                                        if($this->postType != 'page') {
+                                            echo '<p>
+                                                <label>Category: </label>
+                                                <select name="categories">
+                                                    <option value="" selected>--Select Category--</option>';
+
+                                                    $categories = $mysqli->query("SELECT id, name FROM {$this->categoryPre}categories ORDER BY name ASC");
+
+                                                    while($category = $categories->fetch_assoc()) {
+                                                        echo 
+                                                            '<option value="' . $category['id'] . '" ' . ($row['category_id'] == $category['id'] ? 'selected' : '') . '>' .
+                                                            $category['name'] .
+                                                        '</option>';
+                                                    }
+                                            echo '</select>
+                                            </p>';
+                                        }
+                    
+                                    echo '<p class="message"></p>                  
+                                    </div>
+
+                                    <div class="right">
+                                        <p>
+                                            <label>Author: </label>
+                                            <select name="author">
+                                                <option value="" selected disabled>--Select Author--</option>';
+
+                                                $authors = $mysqli->query("SELECT username, first_name, last_name FROM `users` ORDER BY username ASC");
+
+                                                while($author = $authors->fetch_assoc()) {
+                                                    echo '<option value="' . $author['username'] . '" ' . ($author['username'] == $row['author'] ? 'selected' : '') . '>' . $author['username'] . ': ' . $author['first_name'] . ' ' . $author['last_name'] . '</option>';
+                                                }
+
+                                        echo '</select>
+                                        </p>
+
+                                        <p>
+                                            <label>Date Posted: </label>
+                                            <input type="datetime-local" step="1" name="date" value="' . str_replace(' ', 'T', $row['date_posted']) . '">
+                                        </p>
+
+                                        <div class="actions">';
+                                        
+                                        if($row['visible'] == 1) {
+                                            echo '<p class="icon" id="view"><img src="/admin/images/icons/view.png" alt="Visible"></p>';
+                                        }
+                                        else {
+                                            echo '<p class="icon" id="hide"><img src="/admin/images/icons/hide.png" alt="Hidden"></p>';
+                                        }
+
+                                    echo 
+                                        '<p class="icon" id="apply"><img src="/admin/images/icons/check.png" alt="Save Changes"></p>
+                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png" alt="Delete"></p>
+                    
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="editor">
+                                    <textarea name="content">' . $row['content'] . '</textarea>
+                                </div>
+
+                                <div class="featuredImage">';
+                                    $this->getFeatured($row['image_url']);
+                            echo '</div>
+                            </form>
+                        </div>';
+
+                }
+            }
+            else {
+                echo '<h1>' . $this->postTitle . ' ' .  $_GET['p'] . ' does not exist</h1>';
             }
         }
     }
