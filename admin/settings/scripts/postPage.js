@@ -1,6 +1,5 @@
 //Add New Content
-$("#addPost input[type='submit']").click(addContent);
-$("#addPage input[type='submit']").click(addContent);
+$(".addContent input[type='submit']").click(addContent);
 
 function addContent() {
     event.preventDefault();
