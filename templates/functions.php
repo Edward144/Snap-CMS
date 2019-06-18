@@ -71,6 +71,37 @@
         return $bytes;
     }
     
+    //Register Folder To Admin Sidebar
+    function sidebarFolder($directory) {
+        $settings = glob($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $directory . '/*');
+
+        if($settings) {
+            echo 
+                '<ul>
+                    <li class="sidebarCategory"><a href="" id="hidden">' . ucfirst($directory) . '</a>
+                        <ul class="sub">';
+
+                            foreach($settings as $setting) {
+                                $setting = explode('/', $setting);
+                                $settingCount = count($setting);
+                                $setting = explode('.', $setting[$settingCount - 1])[0];
+
+                                if($setting != 'scripts') {
+                                    echo 
+                                        '<li>
+                                            <a class="sidebarLink" href="/admin/' . $directory . '/' . strtolower($setting) . '">' .
+                                                ucwords(str_replace('_', ' ', $setting)) .     
+                                            '</a>
+                                        </li>';
+                                }
+                            }
+            echo
+                        '</ul>
+                    </li>
+                </ul>';
+        }
+    }
+    
     //Classes
     class pagination {
         public $firstPage = 1;
