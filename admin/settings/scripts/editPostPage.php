@@ -26,7 +26,7 @@
     $category = $_POST['category'];
     $image = $_POST['imageUrl'];
 
-    if($type == 'posts') {
+    if($type != 'pages') {
         $update = $mysqli->prepare(
             "UPDATE `{$type}` SET 
                 name = ?,
