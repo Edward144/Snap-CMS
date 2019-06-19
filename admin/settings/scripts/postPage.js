@@ -7,13 +7,13 @@ function addContent() {
     var type = $(this).closest("form").attr("id").split("add")[1].toLowerCase();
     
     $.ajax({
-        url: "settings/scripts/addPostPage.php",
+        url: "/admin/settings/scripts/addPostPage.php",
         method: "GET",
         dataType: "json",
         data: ({type}),
         success: function(data) {
             if(data[0] == 1) {
-                window.location.href = "/admin/" + type + "s?p=" + data[1];
+                window.location.href = "?p=" + data[1];
             }
             else {
                 alert(data[1]);
@@ -32,7 +32,7 @@ function searchContent() {
     var limit = $(this).attr("id");
     
     $.ajax({
-        url: "settings/scripts/searchPostPage.php",
+        url: "/admin/settings/scripts/searchPostPage.php",
         method: "GET",
         dataType: "json",
         data: ({searchTerm, type, limit}),
@@ -64,7 +64,7 @@ function changeVisibility() {
     var action = icon.attr("id");
     
     $.ajax({
-        url: "settings/scripts/visibilityPostPage.php",
+        url: "/admin/settings/scripts/visibilityPostPage.php",
         method: "GET",
         dataType: "json",
         data: ({id, type, action}),
@@ -89,7 +89,7 @@ $(".content table").on("click", ".contentRow #edit", function() {
     var id = row.find(".id").text();
     var type = row.attr("class").split("Row")[0];
     
-    window.location.href = "/admin/" + type + "s?p=" + id;
+    window.location.href = "?p=" + id;
 });
 
 //Delete Content
@@ -111,13 +111,13 @@ function deleteContent() {
     
     if(confirm("Are you sure you want to delete this " + type + "?")) {
         $.ajax({
-            url: "settings/scripts/deletePostPage.php",
+            url: "/admin/settings/scripts/deletePostPage.php",
             method: "GET",
             dataType: "json",
             data: ({id, type}),
             success: function(data) {
                 if(data[0] == 1) {
-                    window.location.href = "/admin/" + type + "s";
+                    location.reload();
                 }
                 else {
                     alert(data[1]);
@@ -235,7 +235,7 @@ $("#editContent .actions #apply").click(function() {
     $("#editContent .message").text("");
     
     $.ajax({
-        url: "settings/scripts/editPostPage.php",
+        url: "/admin/settings/scripts/editPostPage.php",
         method: "POST",
         dataType: "json",
         data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl}),
