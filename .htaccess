@@ -16,11 +16,9 @@ ErrorDocument 404 /404.php
     #Posts
     RewriteRule ^posts/(.*) /posts.php\?url=$1 [L]
     
-    RewriteRule ^news_items/(.*) /custom_news_items.php\?url=$1 [L]
-    
     #Pages
-    #RewriteCond %{REQUEST_FILENAME} !-f
-    #RewriteRule ^(.*).php /pages.php\?url=$1 [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*).php /pages.php\?url=$1 [L]
     
     #Remove Trailing Slash
     RewriteCond %{REQUEST_FILENAME} !-d
