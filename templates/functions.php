@@ -1125,4 +1125,100 @@
         }
     }
 
+    class dashboardBlock {
+        public $postType;
+        public $blockId;
+
+        public function __construct($type, $id = '') {
+            if($type == null) {
+                echo 'No Post Type set.';
+
+                exit();
+            }
+            else {
+                $this->postType = strtolower($type);
+            }
+
+            if($id == null) {
+                $this->blockId = 'total' . ucfirst($this->postType);
+            }
+            else {
+                $this->blockId = $id;
+            }
+
+            $this->displayBlock($this->postType, $this->blockId);
+        }
+
+        private function displayBlock($type, $id) {
+            $mysqli = $GLOBALS['mysqli'];
+            $database = $GLOBALS['database'];
+
+            //Check Tables Exist
+            $checkTable = $mysqli->prepare("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name = ?");
+
+            if($type == 'pages' || $type == 'comments') {
+                $tableNames = [$type];
+            }
+            elseif($type == 'posts') {
+                $tableNames = [$type, 'categories'];
+            }
+            else {
+                $tableNames = [$type, $type . '_categories'];
+            }
+
+            $missingTable = false;
+
+            foreach($tableNames as $tableName) {
+                $checkTable->bind_param('ss', $database, $tableName);
+                $checkTable->execute();
+                $checkResult = $checkTable->get_result();
+
+                if($checkResult->fetch_array()[0] == 0) {
+                    $tableError .= 'Error (' . $type . '): ' . $tableName . ' does not exist.<br>';
+
+                    $missingTable = true;
+                }
+            }
+
+            if($missingTable == false) {
+                $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$type}`")->fetch_array()[0];
+                $postLatest = $mysqli->query("SELECT name, date_posted FROM `{$type}` ORDER BY id DESC LIMIT 5");
+
+                echo
+                    '<div id="' . $id . '">
+                        <div class="totalHeader">
+                            <span>
+                                <h2>' . $postCount . '</h2>
+                                <h4>' . ucwords(str_replace('_', ' ', $type)) . '</h4>
+                            </span>
+                        </div>';
+
+                        if($postLatest->num_rows > 0) {
+                            echo 
+                                '<div class="latest">
+                                    <h4>Latest</h4>';
+
+                                    $i = 1; 
+
+                                    while($post = $postLatest->fetch_assoc()) {
+                                        echo
+                                            '<p>
+                                                <strong>' . $i++ . '. </strong>' . $post['name'] . '(' . $post['date_posted'] . ')
+                                            </p>';
+                                    }
+                            echo 
+                                '</div>';
+                        }
+                echo 
+                    '</div>';
+            }
+            else {
+                echo
+                    '<div id="' . $id . '">'
+                        . $tableError .
+                    '</div>';
+            }
+        }
+    }
+
 ?>
