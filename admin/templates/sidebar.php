@@ -3,8 +3,8 @@
         <a class="sidebarLink" href="/admin/dashboard">Dashboard</a>
         
         <?php 
-            $files = $mysqli->query("SELECT name FROM `admin_sidebar` WHERE type = 0 ORDER BY name ASC"); 
-            $folders = $mysqli->query("SELECT name FROM `admin_sidebar` WHERE type = 1 ORDER BY name ASC"); 
+            $files = $mysqli->query("SELECT name, link FROM `admin_sidebar` WHERE type = 0 ORDER BY name ASC"); 
+            $folders = $mysqli->query("SELECT name, link FROM `admin_sidebar` WHERE type = 1 ORDER BY name ASC"); 
         ?>
         
         <ul>
@@ -15,7 +15,7 @@
             <li><a class="sidebarLink" href="/admin/media">Media</a></li>
             
             <?php while($file = $files->fetch_assoc()) : ?>
-                <li><a class="sidebarLink" href="/admin/<?php echo $file['name']; ?>"><?php echo ucwords($file['name']); ?></a></li>
+                <li><a class="sidebarLink" href="/admin/<?php echo $file['link']; ?>"><?php echo ucwords($file['name']); ?></a></li>
             <?php endwhile; ?>
         </ul>
         

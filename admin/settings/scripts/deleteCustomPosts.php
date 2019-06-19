@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php');
     
     $name = $_POST['name'];
-    $names = $_POST['name'] . 's';
+    $names = 'custom_' . $_POST['name'] . 's';
     
     $checkExisting = $mysqli->prepare("SELECT COUNT(*) FROM `custom_posts` WHERE name = ?");
     $checkExisting->bind_param('s', $name);
@@ -22,11 +22,11 @@
         $deletePost->execute();
         
         //Delete Custom Tables
-        $mysqli->query("DROP TABLE `{$names}`");
-        $mysqli->query("DROP TABLE `{$names}_categories`");
+        $mysqli->query("DROP TABLE `{$name}s`");
+        $mysqli->query("DROP TABLE `{$name}s_categories`");
         
         //Delete File
-        unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $names . '.php');
+        unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php');
         
         echo json_encode([1, $name . ' has been deleted.']);
     }

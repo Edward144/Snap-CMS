@@ -38,7 +38,7 @@
         
         //Create Custom Posts Folder
         if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
-            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type) VALUES('{$name}s', 0)");
+            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'custom_posts/{$name}s')");
         }
         
         //Create File In Folder
@@ -55,13 +55,13 @@
                     ?>
                 </div>
 
-                <script src="settings/scripts/postPage.js"></script>
+                <script src="/admin/settings/scripts/postPage.js"></script>
 
             <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
 
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $name . 's.php', 'w');
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php', 'w');
             
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $name . 's.php', 0775);
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php', 0775);
             
             fwrite($file, $adminFile);
             fclose($file);

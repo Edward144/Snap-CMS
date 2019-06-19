@@ -187,7 +187,8 @@
         "CREATE TABLE IF NOT EXISTS `admin_sidebar` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             type TINYINT(1) DEFAULT 0,
-            name VARCHAR(200)
+            name VARCHAR(200),
+            link VARCHAR(200)
         )"
     );
 
