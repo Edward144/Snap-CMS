@@ -1203,7 +1203,7 @@
                                     while($post = $postLatest->fetch_assoc()) {
                                         echo
                                             '<p>
-                                                <strong>' . $i++ . '. </strong>' . $post['name'] . '(' . $post['date_posted'] . ')
+                                                <strong>' . $i++ . '. </strong>' . $post['name'] . ' (' . $post['date_posted'] . ')
                                             </p>';
                                     }
                             echo 
