@@ -292,14 +292,14 @@
                 while($item = $items->fetch_assoc()) {
                     $itemInfo = $mysqli->query("SELECT * FROM `pages` WHERE id = {$item['page_id']}")->fetch_assoc();
                         $name = $itemInfo['name'];
-                        $url = $itemInfo['url'];
+                        $url = 'page/' . $itemInfo['url'];
                         $visible = $itemInfo['visible'];
                         
                     $customUrl = $item['custom_url'];
                     
                     if($item['page_id'] == -1) {
                         if($customUrl == '' || $customUrl == null) {
-                            $customUrl = '/posts';
+                            $customUrl = 'posts';
                         }
                         
                         $name = 'Posts';
@@ -1123,6 +1123,10 @@
                 echo '<h1>' . $this->postTitle . ' ' .  $_GET['p'] . ' does not exist</h1>';
             }
         }
+    }
+
+    class postUser {
+        
     }
 
     class dashboardBlock {
