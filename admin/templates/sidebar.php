@@ -15,7 +15,7 @@
             <li><a class="sidebarLink" href="/admin/media">Media</a></li>
             
             <?php while($file = $files->fetch_assoc()) : ?>
-                <li><a class="sidebarLink" href="/admin/<?php echo $file['link']; ?>"><?php echo ucwords($file['name']); ?></a></li>
+                <li><a class="sidebarLink" href="/admin/<?php echo $file['link']; ?>"><?php echo ucwords(str_replace('_', ' ', $file['name'])); ?></a></li>
             <?php endwhile; ?>
         </ul>
         
