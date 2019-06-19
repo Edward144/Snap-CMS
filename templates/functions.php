@@ -364,7 +364,7 @@
                             '<li class="pageSelector">
                                 <p>
                                     <select name="pages" style="width: 200px;">
-                                        <option value="" selected disabled>--Select Page--</option>';
+                                        <option value="" selected disabled>--Select Item--</option>';
                                         $pages = $mysqli->query("SELECT * FROM `pages`");
                                         while($page = $pages->fetch_assoc()) {
                                             echo '<option value="' . $page['id'] . '"' . ($page['id'] == $item['page_id'] ? 'selected' : '') . '>' . $page['name'] . '</option>';
@@ -417,7 +417,7 @@
                         <li class="pageSelector">
                             <p>
                                 <select name="pages" style="width: 200px;">
-                                    <option value="" selected disabled>--Select Page--</option>';
+                                    <option value="" selected disabled>--Select Item--</option>';
                                     $pages = $mysqli->query("SELECT * FROM `pages`");
                                     while($page = $pages->fetch_assoc()) {
                                         echo '<option value="' . $page['id'] . '">' . $page['name'] . '</option>';
