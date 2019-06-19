@@ -17,6 +17,9 @@ ErrorDocument 404 /404.php
     RewriteRule ^posts/(.*) /posts.php\?url=$1 [L]
     
     #Custom Post Types
+    RedirectMatch 301 ^/post-type/$ /
+    RedirectMatch 301 ^/post-type$ /
+    
     RewriteRule ^post-type/(.*)/$ /custom_$1.php [L]
     RedirectMatch 301 ^/post-type/(.*)/$ /post-type/$1
     
