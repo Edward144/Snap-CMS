@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php');
     
     $name = $_POST['name'];
-    $names = 'custom_' . $_POST['name'] . 's';
+    $names = $_POST['name'] . 's';
     
     $checkExisting = $mysqli->prepare("SELECT COUNT(*) FROM `custom_posts` WHERE name = ?");
     $checkExisting->bind_param('s', $name);

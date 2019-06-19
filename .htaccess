@@ -9,7 +9,7 @@ ErrorDocument 404 /404.php
     ##Custom Rules
     
     #Admin
-    RewriteRule ^admin/custom_posts/(.*) /admin/custom_$1.php [L]
+    RewriteRule ^admin/post_type/(.*) /admin/custom_$1.php [L]
     
     #Posts
     RewriteRule ^posts/(.*) /posts.php\?url=$1 [L]
