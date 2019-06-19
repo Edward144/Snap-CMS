@@ -9,17 +9,18 @@ ErrorDocument 404 /404.php
     ##Custom Rules
     
     #Admin
-    RewriteRule ^admin/post_type/(.*) /admin/custom_$1.php [L]
+    RewriteRule ^admin/post-type/(.*) /admin/custom_$1.php [L]
+    
+    RedirectMatch 301 ^/admin/$ /admin/dashboard
     
     #Posts
     RewriteRule ^posts/(.*) /posts.php\?url=$1 [L]
     
-    #Pages
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*).php /pages.php\?url=$1 [L]
+    RewriteRule ^news_items/(.*) /custom_news_items.php\?url=$1 [L]
     
-    #Admin
-    RedirectMatch 301 ^/admin/$ /admin/dashboard
+    #Pages
+    #RewriteCond %{REQUEST_FILENAME} !-f
+    #RewriteRule ^(.*).php /pages.php\?url=$1 [L]
     
     #Remove Trailing Slash
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -95,4 +96,8 @@ ErrorDocument 404 /404.php
     ExpiresByType application/x-font-ttf                "access plus 1 month"
     ExpiresByType font/opentype                         "access plus 1 month"
     ExpiresByType image/svg+xml                         "access plus 1 month"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    #RewriteRule ^news_items/(.*) /custom_news_items.php\?url=$1 [L]
 </IfModule>

@@ -36,9 +36,9 @@
         //Create Post Type Categories
         $mysqli->query("CREATE TABLE `{$name}s_categories` LIKE `categories`");
         
-        //Create Custom Posts Folder
+        //Create Custom Posts Folder        
         if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
-            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post_type/{$name}s')");
+            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");
         }
         
         //Create File In Folder
