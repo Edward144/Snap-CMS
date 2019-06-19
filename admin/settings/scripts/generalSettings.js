@@ -72,17 +72,19 @@ $("#customPosts").on("click", "input[name='delete']", function() {
         return;
     }
     
-    $.ajax({
-        url: "scripts/deleteCustomPosts.php",
-        method: "POST",
-        dataType: "json",
-        data: ({name}),
-        success: function(data) {
-            $("#customPosts .message").text(data[1]);
-            
-            if(data[0] == 1) {
-                row.remove();
+    if(confirm("Are you sure you want to delete this post type? All associated posts and categories will be removed.")) {
+        $.ajax({
+            url: "scripts/deleteCustomPosts.php",
+            method: "POST",
+            dataType: "json",
+            data: ({name}),
+            success: function(data) {
+                $("#customPosts .message").text(data[1]);
+
+                if(data[0] == 1) {
+                    row.remove();
+                }
             }
-        }
-    });
+        });
+    }
 });
