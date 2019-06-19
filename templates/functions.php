@@ -1055,7 +1055,7 @@
                                                 <select name="categories">
                                                     <option value="" selected>--Select Category--</option>';
 
-                                                    $categories = $mysqli->query("SELECT id, name FROM {$this->categoryPre}categories ORDER BY name ASC");
+                                                    $categories = $mysqli->query("SELECT id, name FROM `{$this->categoryPre}categories` ORDER BY name ASC");
 
                                                     while($category = $categories->fetch_assoc()) {
                                                         echo 
