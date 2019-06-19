@@ -183,6 +183,21 @@
         )"
     );
 
+    $mysqli->query(
+        "CREATE TABLE IF NOT EXISTS `admin_sidebar` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            type TINYINT(1) DEFAULT 0,
+            name VARCHAR(200)
+        )"
+    );
+
+    $mysqli->query(
+        "CREATE TABLE IF NOT EXISTS `custom_posts` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(200) UNIQUE
+        )"
+    );
+
     //CREATE Database Connection File
     $dbConn = fOpen($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php', 'w');
 
