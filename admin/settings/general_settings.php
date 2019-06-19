@@ -53,7 +53,7 @@
                     <?php while($row = $customs->fetch_assoc()) : ?>
                         <tr>
                             <td>
-                                <input type="text" name="postTypeName" placeholder="Name" value="<?php echo $row['name']; ?>">
+                                <input type="text" name="postTypeName" placeholder="Name" value="<?php echo $row['name']; ?>" disabled>
                             </td>
 
                             <td>

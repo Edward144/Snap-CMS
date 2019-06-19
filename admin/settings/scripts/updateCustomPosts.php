@@ -13,7 +13,7 @@
         return $url;
     }
 
-    $name = slugify($_POST['name']);
+    $name = slugify(strtolower($_POST['name']));
     $name = str_replace('-', '_', $name);
 
     $checkExisting = $mysqli->prepare("SELECT COUNT(*) FROM `custom_posts` WHERE name = ?");
@@ -60,9 +60,10 @@
             <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
 
             $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $name . 's.php', 'w');
-
+            
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $name . 's.php', 0775);
+            
             fwrite($file, $adminFile);
-
             fclose($file);
         }
         

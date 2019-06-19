@@ -26,7 +26,7 @@ $("#customPosts input[name='addRow']").click(function() {
     $("#customPosts table").append(
         "<tr>" + 
             "<td><input type='text' name='postTypeName' placeholder='Name'></td>" + 
-            "<td><input type='button' class='badButton' name='delete' value='Delete'></td>" + 
+            "<td></td>" + 
         "</tr>"
     );
 });
@@ -59,4 +59,30 @@ $("#customPosts input[type='submit']").click(function() {
         
         i++;
     });    
+});
+
+//Delete Post Type
+$("#customPosts").on("click", "input[name='delete']", function() {
+    var row = $(this).closest("tr");
+    var name = $(this).closest("tr").find("input[name='postTypeName']").val();
+    
+    if(name == '') {
+        $("#customPosts .message").text("Cannot delete empty post type.");
+        
+        return;
+    }
+    
+    $.ajax({
+        url: "scripts/deleteCustomPosts.php",
+        method: "POST",
+        dataType: "json",
+        data: ({name}),
+        success: function(data) {
+            $("#customPosts .message").text(data[1]);
+            
+            if(data[0] == 1) {
+                row.remove();
+            }
+        }
+    });
 });
