@@ -9,6 +9,7 @@
 <html>
     <head>
         <link href="/admin/templates/admin-style.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
