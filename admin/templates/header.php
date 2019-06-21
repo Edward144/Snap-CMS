@@ -25,41 +25,13 @@
         <script>
             tinymce.init({
                 selector:'textarea',
-                plugins: 'paste image table code save link moxiemanager',
+                plugins: 'paste image imagetools table code save link moxiemanager media',
                 menubar: 'file edit format insert table ',
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link image | code',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code',
                 relative_urls: false,
                 remove_script_host: false,
                 image_title: true,
                 height: 400
-                /*automatic_uploads: true,
-                image_upload_url: '/admin/settings/scripts/imageUploader.php',
-                file_picker_types: 'image',
-                file_picker_callback: function(cb, value, meta) {
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    
-                    input.onchange = function() {
-                        var file = this.files[0];
-                        var reader = new FileReader();
-                        
-                        reader.onload = function() {
-                            var id = 'blobid' + (new Date()).getTime();
-                            var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                            var base64 = reader.result.split(',')[1];
-                            var blobInfo = blobCache.create(id, file, base64);
-                            
-                            blobCache.add(blobInfo);
-                            
-                            cb(blobInfo.blobUri(), {title: file.name});
-                        }
-                        
-                        reader.readAsDataURL(file);
-                    }
-                    
-                    input.click();
-                }*/
             });
         </script>
     </head>
