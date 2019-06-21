@@ -292,7 +292,7 @@
                 while($item = $items->fetch_assoc()) {
                     $itemInfo = $mysqli->query("SELECT * FROM `pages` WHERE id = {$item['page_id']}")->fetch_assoc();
                         $name = $itemInfo['name'];
-                        $url = 'page/' . $itemInfo['url'];
+                        $url = 'pages/' . $itemInfo['url'];
                         $visible = $itemInfo['visible'];
                         
                     $customUrl = $item['custom_url'];
@@ -740,7 +740,7 @@
             
             $parentName = $mysqli->query("SELECT name FROM `categories` WHERE id = '{$parentId}'")->fetch_array()[0];
             $categories = $mysqli->query("SELECT * FROM `categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
-            $postsWithCats = $mysqli->query("SELECT COUNT(*) FROM `posts` WHERE category_id > 0")->fetch_array()[0];
+            $postsWithCats = $mysqli->query("SELECT COUNT(*) FROM `posts` WHERE category_id > 0 AND visible = 1")->fetch_array()[0];
             
             if($categories->num_rows > 0 && $parentId == 0 && $postsWithCats) {
                 echo '<h3>Categories</h3>';
@@ -1129,7 +1129,9 @@
         public $postType;
         private $postTitle;
         private $categoryPre;
-
+        private $homepage;
+        public $displaySidebar = 1;
+        
         public function __construct($type = '') {
             if($type != null) {
                 $this->postType = $type;
@@ -1137,6 +1139,10 @@
 
                 if($type != 'post') {
                     $this->categoryPre = $this->postType . 's_';
+                }
+                
+                if($type == 'page') {
+                    $this->displaySidebar = 0;
                 }
             }
             else {
@@ -1159,10 +1165,14 @@
             $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
             $hidePosts = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name ='hide_posts'")->fetch_array()[0];
 
-            if($hidePosts == 1 && ($homepage != '' && $homepage != null) && $this->postType == 'posts') {
+            if($hidePosts == 1 && ($homepage != '' && $homepage != null) && ($this->postType == 'post' || $this->postType == 'page')) {
                 header('Location: /');
 
                 exit();
+            }
+            
+            if($homepage != null && $homepage != '') {
+                $this->homepage = $mysqli->query("SELECT url FROM `pages` WHERE id = {$homepage}")->fetch_array()[0];
             }
         }
 
@@ -1177,7 +1187,14 @@
 
         private function getPostSingle() {
             $mysqli = $GLOBALS['mysqli'];
+            
+            if(isset($this->homepage) && $this->homepage == $_GET['url'] && $this->postType == 'page') {
+                header('HTTP/1.1 301 Moved Permenantly');
+                header('Location: /');
 
+                exit();
+            }
+            
             $post = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE url = '{$_GET['url']}' AND visible = 1");
 
             if($post->num_rows > 0) {
@@ -1186,33 +1203,39 @@
                     $authorF = $mysqli->query("SELECT first_name FROM `users` WHERE username = '{$author}'")->fetch_array()[0];
                     $authorL = $mysqli->query("SELECT last_name FROM `users` WHERE username = '{$author}'")->fetch_array()[0];
                     $author = $authorF . ' ' . $authorL;
-
-                    $catId = $row['category_id'];
-                    $category = $mysqli->query("SELECT name FROM {$categoryPre}categories where id = {$catId}")->fetch_array()[0];
-
+                    
+                    if($this->postType != 'page') {
+                        $catId = $row['category_id'];
+                        $category = $mysqli->query("SELECT name FROM {$categoryPre}categories where id = {$catId}")->fetch_array()[0];
+                    }
+                    
                     $postOutput .= 
                         '<div class="hero" style="' . ($row['image_url'] != null && $row['image_url'] != '' ? 'background-image: url(\'' . $row['image_url'] . '\')' : '') . '">
                         <div class="postDetails">
                             <h1>' . $row['name'] . '</h1>';
 
-                            if($category != null && $category != '') {
+                            if($category != null && $category != '' && $this->postType != 'page') {
                                 $postOutput .= '<h3>' . $category . '</h3>';
                             }
-
-                    $postOutput .=
-                            '<div class="author">
-                                <p>
-                                    <strong>By: </strong><span>' . ucwords($author) . '</span> 
-                                    <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>';
+                        if($this->postType != 'page') {
+                            $postOutput .=
+                                '<div class="author">
+                                    <p>
+                                        <strong>By: </strong><span>' . ucwords($author) . '</span> 
+                                        <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
+                                    </p>
+                                </div>';
+                        }
+                        $postOutput .= '</div>
+                            </div>';
 
                     echo $postOutput .
                         '<div class="mainInner">';
+                        
+                        if($this->displaySidebar == 1) {
                             include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php');
-
+                        }
+                    
                         echo '<div class="content">
                                 <div class="postContent">'
                                     . $row['content'] .
@@ -1231,8 +1254,8 @@
 
         private function getPostList() {
             $mysqli = $GLOBALS['mysqli'];
-
-            if(isset($homepage) && ($homepage == null || $homepage == '') && $this->postType == 'post') {
+            
+            if(($this->homepage == null || $this->homepage == '') && $this->postType == 'post') {
                 header('HTTP/1.1 301 Moved Permenantly');
                 header('Location: /');
 
@@ -1276,8 +1299,12 @@
             }
 
             echo 
-                '<div class="mainInner">
-                    <div class="content">
+                '<div class="mainInner">';
+                if($this->postType != 'page') {
+                    include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php');
+                }
+            
+                echo '<div class="content">
                         <h1>' . $this->postTitle . 's</h1>'
                         . $postOutput;
 
