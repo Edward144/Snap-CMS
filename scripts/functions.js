@@ -85,10 +85,7 @@ function setPageHeight() {
     var headerH = $("header").outerHeight();
     var footerH = $("footer").outerHeight();
     var windowH = $(window).height();
-    
-    var mainOH = $(".main").outerHeight(true);
-    var mainH = $(".main").height();
-    var mainMargin = mainOH - mainH;
+    var mainMargin = 16;
     
     var totalH = windowH - (headerH + footerH) - mainMargin;
     
