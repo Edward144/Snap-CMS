@@ -10,7 +10,6 @@ ErrorDocument 404 /404.php
     
     #Admin
     RewriteRule ^admin/post-type/(.*) /admin/custom_$1.php [L]
-    
     RedirectMatch 301 ^/admin/$ /admin/dashboard
     
     #Posts
@@ -28,7 +27,8 @@ ErrorDocument 404 /404.php
     
     #Pages
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^page/(.*).php /pages.php\?url=$1 [L]
+    RewriteRule ^pages/(.*).php /pages.php\?url=$1 [L]
+    RedirectMatch 301 ^/pages$ /
     
     #Remove Trailing Slash
     RewriteCond %{REQUEST_FILENAME} !-d
