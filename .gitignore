@@ -3,3 +3,4 @@ admin/useruploads/*
 !admin/useruploads/.gitkeep
 templates/database_connect.php
 admin/custom_*
+custom_*
