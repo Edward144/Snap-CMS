@@ -1126,7 +1126,165 @@
     }
 
     class postUser {
-        
+        public $postType;
+        private $postTitle;
+        private $categoryPre;
+
+        public function __construct($type = '') {
+            if($type != null) {
+                $this->postType = $type;
+                $this->postTitle = ucwords(str_replace('_', ' ', $type));
+
+                if($type != 'post') {
+                    $this->categoryPre = $this->postType . 's_';
+                }
+            }
+            else {
+                echo 
+                    '<div class="mainInner">
+                        <div class="content">
+                            <h2>Post type is not defined.</h2>
+                        </div>
+                    </div>';
+
+                exit();
+            }
+
+            $this->checkSettings();
+        }
+
+        private function checkSettings() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
+            $hidePosts = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name ='hide_posts'")->fetch_array()[0];
+
+            if($hidePosts == 1 && ($homepage != '' && $homepage != null) && $this->postType == 'posts') {
+                header('Location: /');
+
+                exit();
+            }
+        }
+
+        public function getPost() {
+            if(isset($_GET['url'])) {
+                $this->getPostSingle();
+            }
+            else {
+                $this->getPostList();
+            }
+        }
+
+        private function getPostSingle() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $post = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE url = '{$_GET['url']}' AND visible = 1");
+
+            if($post->num_rows > 0) {
+                while($row = $post->fetch_assoc()) {
+                    $author = $row['author'];
+                    $authorF = $mysqli->query("SELECT first_name FROM `users` WHERE username = '{$author}'")->fetch_array()[0];
+                    $authorL = $mysqli->query("SELECT last_name FROM `users` WHERE username = '{$author}'")->fetch_array()[0];
+                    $author = $authorF . ' ' . $authorL;
+
+                    $catId = $row['category_id'];
+                    $category = $mysqli->query("SELECT name FROM {$categoryPre}categories where id = {$catId}")->fetch_array()[0];
+
+                    $postOutput .= 
+                        '<div class="hero" style="' . ($row['image_url'] != null && $row['image_url'] != '' ? 'background-image: url(\'' . $row['image_url'] . '\')' : '') . '">
+                        <div class="postDetails">
+                            <h1>' . $row['name'] . '</h1>';
+
+                            if($category != null && $category != '') {
+                                $postOutput .= '<h3>' . $category . '</h3>';
+                            }
+
+                    $postOutput .=
+                            '<div class="author">
+                                <p>
+                                    <strong>By: </strong><span>' . ucwords($author) . '</span> 
+                                    <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>';
+
+                    echo $postOutput .
+                        '<div class="mainInner">';
+                            include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php');
+
+                        echo '<div class="content">
+                                <div class="postContent">'
+                                    . $row['content'] .
+                                '</div>
+                            </div>
+                        </div>';
+                }
+            }
+            else {
+                http_response_code(404);
+                header('Location: /404');
+
+                exit();
+            }
+        }
+
+        private function getPostList() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            if(isset($homepage) && ($homepage == null || $homepage == '') && $this->postType == 'post') {
+                header('HTTP/1.1 301 Moved Permenantly');
+                header('Location: /');
+
+                exit();
+            }
+
+            $postCount = $mysqli->query("SELECT COUNT(*) from `{$this->postType}s` WHERE visible = 1")->fetch_array()[0];
+
+            if(isset($_GET['category'])) {
+                $postCount = $mysqli->query("SELECT COUNT(*) from `{$this->postType}s` WHERE visible = 1 AND category_id = {$_GET['category']}")->fetch_array()[0];
+            }
+
+            $pagination = new pagination($postCount);
+            $pagination->load();
+
+            $posts = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE visible = 1 ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+
+            if(isset($_GET['category'])) {
+                $posts = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE visible = 1 AND category_id = {$_GET['category']} ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+            }
+
+            if($posts->num_rows > 0) {
+                while($row = $posts->fetch_assoc()) {
+                    $postOutput .= '<div class="' . $this->postType . '">
+                        <h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
+
+                    $length = strlen($row['description']); 
+
+                    if($length <= 200) {
+                        $postOutput .= '<p>' . $row['description'] . '<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
+                    }
+                    else {
+                        $postOutput .= '<p>' . substr($row['description'], 0, 200) . '...<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
+                    }
+
+                    $postOutput .= '</div><hr>';
+                }                              
+            }
+            else {
+                $postOutput = '<p>There are currently no ' . strtolower($this->postTitle) . 's.</p>';
+            }
+
+            echo 
+                '<div class="mainInner">
+                    <div class="content">
+                        <h1>' . $this->postTitle . 's</h1>'
+                        . $postOutput;
+
+                    echo $pagination->display() .
+                    '</div>
+                </div>';
+        }
     }
 
     class dashboardBlock {
