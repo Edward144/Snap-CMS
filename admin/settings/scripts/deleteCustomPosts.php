@@ -25,8 +25,9 @@
         $mysqli->query("DROP TABLE `{$name}s`");
         $mysqli->query("DROP TABLE `{$name}s_categories`");
         
-        //Delete File
+        //Delete Files
         unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php');
+        unlink($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php');
         
         echo json_encode([1, $name . ' has been deleted.']);
     }

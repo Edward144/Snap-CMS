@@ -41,8 +41,8 @@
             $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");
         }
         
-        //Create File In Folder
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/' . $name . 's.php')) { 
+        //Create AdminFile
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php')) { 
             $adminFile = 
                 '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
 
@@ -68,6 +68,24 @@
         }
         
         //Create Front End File
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php')) { 
+            $frontFile = 
+                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/header.php\'); ?>
+                    
+                    <?php 
+                        $posts = new postUser(\'' . $name . '\');
+                        $posts->getPost();
+                    ?>
+
+            <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/footer.php\'); ?>';
+
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php', 'w');
+            
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php', 0775);
+            
+            fwrite($file, $frontFile);
+            fclose($file);
+        }
         
         //Echo Output
         echo json_encode($name . ' has been added.<br>');
