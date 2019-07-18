@@ -657,17 +657,26 @@
             $this->displayEmptyCount = $value;
         }
 
-        public function listCategories($parentId = 0) {
+        public function listCategories($parentId = 0, $postType = '') {
+            if(isset($postType) && $postType != '') {
+                $postTable = $postType;
+                $postType = $postType . '_';
+            }
+            else {
+                $postType = '';
+                $postTable = 'posts';
+            }
+            
             $mysqli = $GLOBALS['mysqli'];
 
-            $categories = $mysqli->query("SELECT * FROM `categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
+            $categories = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
             
             if($categories->num_rows > 0) {
                 echo '<div class="categories">';
 
                     while($category = $categories->fetch_assoc()) {
-                        $postsCheck = $mysqli->query("SELECT COUNT(*) FROM `posts` WHERE category_id = '{$category['id']}'")->fetch_array()[0];
-                        $subsCheck = $mysqli->query("SELECT COUNT(*) FROM `categories` WHERE parent_id = '{$category['id']}'")->fetch_array()[0];
+                        $postsCheck = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = '{$category['id']}'")->fetch_array()[0];
+                        $subsCheck = $mysqli->query("SELECT COUNT(*) FROM `{$postType}categories` WHERE parent_id = '{$category['id']}'")->fetch_array()[0];
                         
                         echo
                             '<div class="category" id="category' . $category['id'] . '">
@@ -679,7 +688,12 @@
                                         echo '<a href="">';
                                     }
                                     elseif($postsCheck > 0) {
-                                        echo '<a href="/posts?category=' . $category['id'] . '">';
+                                        if($postTable == 'posts') {
+                                            echo '<a href="/' . $postTable . '?category=' . $category['id'] . '">';
+                                        }
+                                        else {
+                                            echo '<a href="/post-type/' . $postTable . '?category=' . $category['id'] . '">';
+                                        }
                                     }
                                         if($category['image_url']) {
                                             echo '<div class="categoryImage">';
@@ -688,13 +702,13 @@
                                         }
                                    echo '<h3 class="categoryName">' . $category['name'] . '</h3>';
 
-                                        $this->postsCount($category['id']);
+                                        $this->postsCount($category['id'], $postTable);
 
                                    echo '<p class="categoryDescription">' . $category['description'] . '</p>
                                     </a>
                                 </div>';
 
-                            $this->subCategories($category['id']);
+                            $this->subCategories($category['id'], $postType);
 
                         echo '</div>';
                     }
@@ -706,20 +720,20 @@
             }
         }
 
-        private function postsCount($categoryId) {
+        private function postsCount($categoryId, $postTable) {
             $mysqli = $GLOBALS['mysqli'];
 
-            $postsCheck = $mysqli->query("SELECT COUNT(*) FROM `posts` WHERE category_id = '{$categoryId}'")->fetch_array()[0];
+            $postsCheck = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = '{$categoryId}'")->fetch_array()[0];
 
             if(($postsCheck == 0 && $this->displayEmptyCount == true) || ($postsCheck > 0)) {
                 echo '<h5>' . $postsCheck . ' Items</h5>';
             }
         }
 
-        private function subCategories($categoryId) {
+        private function subCategories($categoryId, $postType) {
             $mysqli = $GLOBALS['mysqli'];
 
-            $categories = $mysqli->query("SELECT * FROM `categories` WHERE parent_id = '{$categoryId}' ORDER BY position ASC");
+            $categories = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = '{$categoryId}' ORDER BY position ASC");
 
             if($categories->num_rows > 0) {
                 echo '<hr><ul class="subCategories">';

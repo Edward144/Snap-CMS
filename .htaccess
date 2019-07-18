@@ -26,7 +26,12 @@ ErrorDocument 404 /404.php
     RewriteRule ^post-type/(.*) /custom_$1.php [L]
     
     RedirectMatch 301 ^/admin/categories/$ /admin/categories
+    RedirectMatch 301 ^/categories/$ /categories
+    
     RewriteRule ^admin/categories/(.*) /admin/custom_$1_categories.php [L]
+    
+    RewriteRule ^categories/(.*) custom_$1_categories.php [L]
+    
     
     #Pages
     RewriteCond %{REQUEST_FILENAME} !-f

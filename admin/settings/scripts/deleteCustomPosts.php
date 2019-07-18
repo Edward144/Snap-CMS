@@ -35,6 +35,7 @@
         unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php');
         
         unlink($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php');
+        unlink($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php');
         
         echo json_encode([1, $name . ' has been deleted.']);
     }
