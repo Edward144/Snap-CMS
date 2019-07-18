@@ -771,14 +771,18 @@
     }
 
     class categoryTree {
-        public function __construct($level = 0, $parent = 0, $prevLevel = 0) {
-            $this->createLevel($level, $parent, $prevLevel);
+        public function __construct($level = 0, $parent = 0, $prevLevel = 0, $postType = '') {
+            if(isset($postType) && $postType != '') {
+                $postType = $postType . '_';
+            }
+            
+            $this->createLevel($level, $parent, $prevLevel, $postType);
         }
         
-        public function createLevel($level, $parent, $prevLevel) {
+        public function createLevel($level, $parent, $prevLevel, $postType) {
             $mysqli = $GLOBALS['mysqli'];
             
-            $items = $mysqli->query("SELECT * FROM `categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
+            $items = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
             
             if($items->num_rows > 0) {
                 echo '<ul class="level catEditor" id="level' . $level . '">';
@@ -795,7 +799,7 @@
 
                                     <input type="button" class="badButton" style="min-width: 0; width: 24px; height: 24px; border-radius: 100%;" value="X" name="delete">
                                 </p>';
-                            $this->checkChildren($item['custom_id'], $item['level']);
+                            $this->checkChildren($item['custom_id'], $item['level'], $postType);
 
                             echo '</li>';
                     }
@@ -855,11 +859,11 @@
             }
         }
         
-        public function checkChildren($parent, $level) {
+        public function checkChildren($parent, $level, $postType) {
             $mysqli = $GLOBALS['mysqli'];
             $level++;
             
-            $children = $mysqli->query("SELECT * FROM `categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
+            $children = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
             
             if($children->num_rows > 0) {
                 new categoryTree($level, $parent, ($level - 1));

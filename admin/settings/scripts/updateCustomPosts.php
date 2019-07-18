@@ -41,7 +41,7 @@
             $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");
         }
         
-        //Create AdminFile
+        //Create Admin File
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php')) { 
             $adminFile = 
                 '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
@@ -62,6 +62,35 @@
             $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php', 'w');
             
             chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php', 0775);
+            
+            fwrite($file, $adminFile);
+            fclose($file);
+        }
+        
+        //Create Admin Category File
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php')) { 
+            $adminFile = 
+                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
+    
+                <?php include_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/sidebar.php\'); ?>
+
+                <div class="content" style="overflow-x: auto;">
+                    <h1><?php adminTitle(); ?></h1>
+
+                    <div class="formBlock">
+                        <form id="catLayout" style="max-width: 100%;">
+                            <?php new categoryTree(0, 0, 0, \'' . $name . 's\'); ?>
+                        </form>
+                    </div>
+                </div>
+
+                <script src="/admin/settings/scripts/updateCategories.js"></script>
+
+            <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
+
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php', 'w');
+            
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php', 0775);
             
             fwrite($file, $adminFile);
             fclose($file);
