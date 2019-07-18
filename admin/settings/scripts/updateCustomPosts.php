@@ -120,6 +120,36 @@
             fclose($file);
         }
         
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php')) { 
+            $frontFile = 
+                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/header.php\'); ?>
+
+                    <div class="content">
+                        <h1>' . ucwords($name) .'s Categories</h1>
+
+                        <?php
+                            $categories = new categories();
+
+                            if(isset($_GET[\'c\'])) {
+                                $categories->listCategories($_GET[\'c\'], \'' . $name . 's\');
+                            }
+                            else {
+                                $categories->listCategories(0, \'' . $name . 's\');
+                            }
+
+                        ?>
+                    </div>
+
+                <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/footer.php\'); ?>';
+
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php', 'w');
+            
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php', 0775);
+            
+            fwrite($file, $frontFile);
+            fclose($file);
+        }
+        
         //Echo Output
         echo json_encode($name . ' has been added.<br>');
     }
