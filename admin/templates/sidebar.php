@@ -10,8 +10,8 @@
         <ul>
             <li><a class="sidebarLink" href="/admin/pages">Pages</a></li>
             <li><a class="sidebarLink" href="/admin/posts">Posts</a></li>
-            <li><a class="sidebarLink" href="/admin/navigation">Navigation</a></li>
             <li><a class="sidebarLink" href="/admin/categories">Categories</a></li>
+            <li><a class="sidebarLink" href="/admin/navigation">Navigation</a></li>
             <li><a class="sidebarLink" href="/admin/media">Media</a></li>
             
             <?php while($file = $files->fetch_assoc()) : ?>
