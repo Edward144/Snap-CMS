@@ -36,6 +36,7 @@ $("#catLayout input[type='submit']").click(function() {
     event.preventDefault();
     
     var levels = [];
+    var postType = $("#postType").text();
     
     $("#catLayout .message").text("");
     
@@ -48,12 +49,12 @@ $("#catLayout input[type='submit']").click(function() {
     });
     
     $.ajax({
-        url: "settings/scripts/updateCategories.php",
+        url: "/admin/settings/scripts/updateCategories.php",
         method: "POST",
         dataType: "json",
-        data: ({truncate: 1}),
+        data: ({truncate: 1, postType}),
         success: function(data) {
-            if(levels.length > 0) {
+            if(levels.length > 0) {                
                 $("#catLayout .message").append(data + "<br>");
 
                 levels.forEach(function(level) {
@@ -75,12 +76,12 @@ $("#catLayout input[type='submit']").click(function() {
                         }
                         
                         position++;
-
+                        
                         $.ajax({
-                            url: "settings/scripts/updateCategories.php",
+                            url: "/admin/settings/scripts/updateCategories.php",
                             method: "POST",
                             dataType: "json",
-                            data: ({level, name, parentId, position, description, customId, image}),
+                            data: ({level, name, parentId, position, description, customId, image, postType}),
                             success: function(data) {
                                 $("#catLayout .message").append(data + "<br>");
                             }

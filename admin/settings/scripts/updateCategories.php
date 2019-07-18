@@ -10,9 +10,14 @@
     $description = $_POST['description'];
     $image = $_POST['image'];
     $truncate = $_POST['truncate'];
-    
+    $postType = strtolower($_POST['postType']);
+
+    if(isset($postType) && $postType != '') {
+        $postType = $postType . '_';
+    }
+
     if($truncate == 1) {
-        $mysqli->query("TRUNCATE TABLE `categories`");
+        $mysqli->query("TRUNCATE TABLE `{$postType}categories`");
         
         echo json_encode('Updating Categories:');
         
@@ -20,7 +25,7 @@
     }
 
     if($name != null) {
-        $updateNav = $mysqli->prepare("INSERT INTO `categories` (name, description, image_url, parent_id, position, level, custom_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $updateNav = $mysqli->prepare("INSERT INTO `{$postType}categories` (name, description, image_url, parent_id, position, level, custom_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $updateNav->bind_param('sssiiii', $name, $description, $image, $parent, $position, $level, $customId);
         $updateNav->execute();
         $updateNav->close();

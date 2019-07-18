@@ -36,9 +36,13 @@
         //Create Post Type Categories
         $mysqli->query("CREATE TABLE `{$name}s_categories` LIKE `categories`");
         
-        //Create Custom Posts Folder        
+        //Add Links To Admin Sidebar        
         if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
             $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");
+        }
+        
+        if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s_categories'")->fetch_array()[0] == 0) {
+            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s_categories', 0, 'categories/{$name}s')");
         }
         
         //Create Admin File
@@ -75,7 +79,7 @@
                 <?php include_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/sidebar.php\'); ?>
 
                 <div class="content" style="overflow-x: auto;">
-                    <h1><?php adminTitle(); ?></h1>
+                    <h1 id="postType"><?php adminTitle(); ?></h1>
 
                     <div class="formBlock">
                         <form id="catLayout" style="max-width: 100%;">
