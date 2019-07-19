@@ -749,7 +749,16 @@
             }
         }
         
-        public function sidebar($parentId = 0) {
+        public function sidebar($parentId = 0, $postType) {
+            if(isset($postType) && $postType != '') {
+                $postTable = $postType;
+                $postType = $postType . '_';
+            }
+            else {
+                $postType = '';
+                $postTable = 'posts';
+            }
+            
             $mysqli = $GLOBALS['mysqli'];
             
             $parentName = $mysqli->query("SELECT name FROM `{$postType}categories` WHERE id = '{$parentId}'")->fetch_array()[0];
