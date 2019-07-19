@@ -24,7 +24,7 @@
         
         <script>
             tinymce.init({
-                selector:'textarea',
+                selector:'textarea:not(.noTiny)',
                 plugins: 'paste image imagetools table code save link moxiemanager media',
                 menubar: 'file edit format insert table ',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code',

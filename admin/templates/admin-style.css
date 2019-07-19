@@ -103,6 +103,34 @@ body {
     background: #01538b;
 }
 
+.productOptions textarea {
+    height: 100px;
+    max-height: 100px;
+    width: 100%;
+    max-width: 100%:
+}
+
+.productOptions .galleryOption {
+    background: #f3f3f3;
+    width: 100px;
+    height: 100px;
+    border-radius: 0.5em;
+    cursor: pointer;
+    display: table;
+}
+
+.productOptions .galleryOption:hover {
+    background: rgba(2, 113, 186, 0.25);
+}
+
+.productOptions .galleryOption span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 4em;
+    color: #333;
+}
+
 .badButton {
     background: #ff0000 !important;
 }

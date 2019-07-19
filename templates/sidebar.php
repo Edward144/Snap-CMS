@@ -18,6 +18,17 @@
                     $categories->sidebar();
                 }
             }
+        
+            if($uri == '/post-type/products' || $homepage == '' || $homepage == null) {
+                $categories = new categories();
+                
+                if(isset($_GET['category'])) {
+                    $categories->sidebar($_GET['category'], 'products');
+                }
+                else {
+                    $categories->sidebar(0, 'products');
+                }
+            }
         ?>
     </div>
 </div>

@@ -514,7 +514,7 @@
                 </div>';
             }
             
-            echo '<script src="settings/scripts/mediaUploads.js"></script>';
+            echo '<script src="/admin/settings/scripts/mediaUploads.js"></script>';
             echo '</div>';
         }
 
@@ -752,22 +752,24 @@
         public function sidebar($parentId = 0) {
             $mysqli = $GLOBALS['mysqli'];
             
-            $parentName = $mysqli->query("SELECT name FROM `categories` WHERE id = '{$parentId}'")->fetch_array()[0];
-            $categories = $mysqli->query("SELECT * FROM `categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
-            $postsWithCats = $mysqli->query("SELECT COUNT(*) FROM `posts` WHERE category_id > 0 AND visible = 1")->fetch_array()[0];
+            $parentName = $mysqli->query("SELECT name FROM `{$postType}categories` WHERE id = '{$parentId}'")->fetch_array()[0];
+            $categories = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
+            $postsWithCats = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id > 0 AND visible = 1")->fetch_array()[0];
             
             if($categories->num_rows > 0 && $parentId == 0 && $postsWithCats) {
                 echo '<h3>Categories</h3>';
             }
             elseif($parentId != 0) {
-                echo '<h3>' . $parentName . '</h3>';
+                if($mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = {$_GET['category']}")->fetch_array()[0] > 0) {
+                    echo '<h3>' . $parentName . '</h3>';
+                }
             }
             
             if($categories->num_rows > 0 && $postsWithCats) {                
                 echo '<ul class="sidebarCategories">';
                 
                     while($category = $categories->fetch_assoc()) {
-                        $posts = $mysqli->query("SELECT COUNT(*) FROM `posts` WHERE visible = 1 and category_id = {$category['id']}")->fetch_array()[0];
+                        $posts = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE visible = 1 and category_id = {$category['id']}")->fetch_array()[0];
                         
                         if($posts > 0) {
                             echo
