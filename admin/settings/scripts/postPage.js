@@ -176,11 +176,11 @@ $("#editContent .actions #apply").click(function() {
         });
         
         $(".galleryItems.current .galleryItem").each(function() {
-            galleryExist += '\"' + $(this).find("img").attr("alt") + '\";';
+            galleryExist += '\"' + $(this).find(".galleryImage").attr("alt") + '\";';
         });
         
         $(".galleryItems.uploaded .galleryItem").each(function() {
-            galleryNew += '\"' + $(this).find("img").attr("alt") + '\";';
+            galleryNew += '\"' + $(this).find(".galleryImage").attr("alt") + '\";';
         });
     }
     else {

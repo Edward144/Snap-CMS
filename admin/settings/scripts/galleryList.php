@@ -12,7 +12,7 @@
             array_push($json, 
                 '<div class="galleryItem">
                     <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
-                    <img src="/admin/images/tempuploads/' . $file . '" alt="' . $file .'">
+                    <img class="galleryImage" src="/admin/images/tempuploads/' . $file . '" alt="' . $file .'">
                 </div>'
             );
         }
