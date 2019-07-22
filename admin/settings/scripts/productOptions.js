@@ -74,3 +74,23 @@ $("input[name='galleryOption']").on("change", function() {
         }
     });
 });
+
+//Delete Gallery Items
+$(".galleryItems.current").on("click", ".galleryItem .galleryDelete", function() {
+    $(this).closest(".galleryItem").remove();
+});
+
+$(".galleryItems.uploaded").on("click", ".galleryDelete", function() {
+    var file = $(this).closest(".galleryItem").find("img").attr("alt");
+    var galleryItem = $(this).closest(".galleryItem");
+    
+    galleryItem.remove();
+    
+    $("input[name='galleryOption']").val("");
+    
+    $.ajax({
+        url: "/admin/settings/scripts/deleteTempGallery.php",
+        method: "POST",
+        data: ({file})
+    })
+});

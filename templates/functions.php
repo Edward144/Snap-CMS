@@ -1568,6 +1568,7 @@
                     if($image != null && $image != '') {
                         echo
                             '<div class="galleryItem">
+                                <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
                                 <img src="/gallery/products/1/' . $image . '" alt="' . $image . '">
                             </div>';
                     }

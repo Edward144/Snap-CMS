@@ -139,7 +139,6 @@ body {
 .productOptions .galleryItems .galleryItem {
     width: 150px;
     height: 150px;
-    overflow: hidden;
     padding: 0.5em;
     box-sizing: border-box;
     text-align: center;
@@ -840,7 +839,8 @@ table .icon img {
 }
 
 .mediaDelete,
-.mediaEdit {
+.mediaEdit,
+.galleryDelete {
     display: none;
     position: absolute;
     height: 40px;
@@ -853,7 +853,8 @@ table .icon img {
     cursor: pointer;
 }
 
-.mediaDelete {
+.mediaDelete,
+.galleryDelete {
     right: -10px;
 }
 
@@ -862,17 +863,20 @@ table .icon img {
 }
 
 .mediaDelete img, 
-.mediaEdit img {
+.mediaEdit img,
+.galleryDelete img {
     width: 100%;
 }
 
 .mediaDelete:hover,
-.mediaEdit:hover {
+.mediaEdit:hover, 
+.galleryDelete:hover {
     background: #d3d3d3;
 }
 
 .mediaDelete:hover img,
-.mediaEdit:hover img {
+.mediaEdit:hover img
+.galleryDelete:hover img {
     -webkit-filter: invert(1);
     filter: invert(1);
 }
@@ -880,7 +884,8 @@ table .icon img {
 .mediaDir:hover .mediaDelete,
 .mediaDir:hover .mediaEdit,
 .mediaFile:hover .mediaDelete,
-.mediaFile:hover .mediaEdit {
+.mediaFile:hover .mediaEdit,
+.galleryItem:hover .galleryDelete {
     display: block;
 }
 
