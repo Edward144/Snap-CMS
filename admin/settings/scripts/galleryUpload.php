@@ -5,45 +5,43 @@
         echo json_encode('No files selected.');
     }
     else {
-        $files = $_FILES['file']['name'];
+        $files = [];
         $json = [];
-
-        foreach($_FILES['file']['tmp_name'] as $index => $file) {
-            //$file = str_replace("'", "", $file);
-            //$file = preg_replace('/\s+/', '_', $file);
+        
+        //Delete All Files In Temp Uploads
+        $tempDir = glob($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/*');
+        
+        foreach($tempDir as $tempFile) {
+            if(is_file($tempFile)) {
+                unlink($tempFile);
+            }
+        }
+        
+        //Add File Name To Array
+        foreach($_FILES['file']['name'] as $index => $name) {
+            $name = str_replace("'", "", $name);
+            $name = preg_replace('/\s+/', '_', $name);
             
-            /*if(move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/admin/useruploads/' . $_FILES['file']['name'])) {
-                echo json_encode(1);
+            $files[$index]['name'] = $name;
+        }
+        
+        //Add File Temp Name To Array
+        foreach($_FILES['file']['tmp_name'] as $index => $tmp) {
+            $files[$index]['tmp_name'] = $tmp;
+        }
+        
+        
+        //Loop Files Array & Move Files To Temp Uploads
+        foreach($files as $index => $file) {
+            if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $index . '_' . $file['name'])) {
+                //chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $index . '_' . $file['name'], 0666);
+                array_push($json, $index . ':' . 1 . ' ');
             }
             else {
-                echo json_encode(0);
-            }*/
-            
-            array_push($json, $index . ' ' . $file);
+                array_push($json, $index . ':' . 0 . ' ');
+            }
         }
-
-        echo json_encode(implode($_FILES['file']));
-        
-        
+        echo json_encode(implode($json));   
     }
-
-    /*$tmpFile = $_FILES['file']['tmp_name'];
-	$file = $_FILES['file']['name'];
-	$file = str_replace("'", "", $file);
-	$file = preg_replace('/\s+/', '_', $file);
-	$directory = $_SERVER['DOCUMENT_ROOT'] . '/admin/' .$_POST['directory'] . '/' . $file;
-    
-    if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/' .$_POST['directory'])) {
-        echo json_encode($_SERVER['DOCUMENT_ROOT'] . '/admin/' .$_POST['directory']);
-        
-        exit();
-    }
-
-    if(move_uploaded_file($tmpFile, $directory)) {
-        echo json_encode(1);
-    }
-    else {
-        echo json_encode('Error ' . $_FILES['file']['error'] . ': Could not upload File.');
-    }*/
 
 ?>
