@@ -163,6 +163,33 @@ $(".mediaList.popup .mediaFile").click(function() {
 //Update Content
 $("#editContent .actions #apply").click(function() {
     tinyMCE.triggerSave();
+
+    if(productOptions == true) {
+        var features = $("textarea[name='featuresOption']").val();
+        var output = $("textarea[name='outputOption']").val();
+        var spec = "";
+        var galleryExist = "";
+        var galleryNew = "";
+        
+        $(".specificationOption tr:not(.headers)").each(function() {
+            spec += '\"' + $(this).find("input[name='specName']").val() + '\",\"' + $(this).find("input[name='specValue']").val() + '\";';
+        });
+        
+        $(".galleryItems.current .galleryItem").each(function() {
+            galleryExist += '\"' + $(this).find("img").attr("alt") + '\";';
+        });
+        
+        $(".galleryItems.uploaded .galleryItem").each(function() {
+            galleryNew += '\"' + $(this).find("img").attr("alt") + '\";';
+        });
+    }
+    else {
+        var features = "";
+        var output = "";
+        var spec = "";
+        var galleryExist = "";
+        var galleryNew = "";
+    }
     
     var id = $("#editContent .id").text();
     var type = $(".contentWrap").attr("class").split(" ")[0];
@@ -238,7 +265,7 @@ $("#editContent .actions #apply").click(function() {
         url: "/admin/settings/scripts/editPostPage.php",
         method: "POST",
         dataType: "json",
-        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl}),
+        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, output, features}),
         success: function(data) {
             if(data[0] == 1) {
                 $("#editContent .message").text(data[1]);

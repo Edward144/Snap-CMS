@@ -1,3 +1,5 @@
+var productOptions = true;
+
 //Add Spec Row
 $("input[name='addSpec']").click(function() {
     var row = 0;
