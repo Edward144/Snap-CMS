@@ -6,3 +6,5 @@ admin/images/tempuploads/*
 templates/database_connect.php
 admin/custom_*
 custom_*
+gallery/*
+!gallery/.gitkeep
