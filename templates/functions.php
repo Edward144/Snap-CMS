@@ -1439,4 +1439,157 @@
         }
     }
 
+    class productOptions {
+        public $postType = '';
+
+        public function __construct($postType = '') {
+            if(isset($postType) && $postType != '') {
+                $this->postType = $postType;
+            }
+
+            echo '<div class="formBlock productOptions ' . $postType . 'Options" style="max-width: 100%; border-bottom: 0;">' .
+                    '<form style="max-width: 100%;" enctype="multipart/formdata">';
+        }
+
+        public function __destruct() {
+            echo '</form></div>';
+
+            echo '<script src="/admin/settings/scripts/productOptions.js"></script>';
+        }
+
+        public function addFeatures() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $feature = $mysqli->query("SELECT features FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
+
+            echo 
+                '<h3>Features</h3>
+                <p>
+                    <textarea class="noTiny" name="featuresOption">' . $feature .'</textarea>
+                </p>
+                <hr>';
+        }
+
+        public function addOutput() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $output = $mysqli->query("SELECT output FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
+
+            echo 
+                '<h3>Output</h3>
+                <p>
+                    <textarea class="noTiny" name="outputOption">' . $output . '</textarea>
+                </p>
+                <hr>';
+        }
+
+        public function addSpecs() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $specs = $mysqli->query("SELECT specifications FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
+            $specRow = 1;
+
+            if($specs != null && $specs != '') {
+                $specRows = explode(';', rtrim($specs, ';'));
+
+                foreach($specRows as $specRow) {
+                    $specCols = explode('","', $specRow);
+                    $specName = ltrim($specCols[0], '"');
+                    $specValue = rtrim($specCols[1], '"');
+
+                    $tableData .=
+                        '<tr id="spec' . $specRow . '">
+                            <td><input type="text" name="specName" value="' . htmlspecialchars($specName, ENT_COMPAT, 'UTF-8') . '"></td>
+                            <td><input type="text" name="specValue" value="' . htmlspecialchars($specValue, ENT_COMPAT, 'UTF-8') .'"></td>
+                            <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                        </tr>';
+
+                    $specRow++;
+                }
+            }
+            else {
+                $tableData = 
+                    '<tr id="spec1">
+                        <td><input type="text" name="specName" value="Height"></td>
+                        <td><input type="text" name="specValue"></td>
+                        <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                    </tr>
+
+                    <tr id="spec2">
+                        <td><input type="text" name="specName" value="Width"></td>
+                        <td><input type="text" name="specValue"></td>
+                        <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                    </tr>
+
+                    <tr id="spec3">
+                        <td><input type="text" name="specName" value="Depth"></td>
+                        <td><input type="text" name="specValue"></td>
+                        <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                    </tr>';
+            }
+
+
+            echo '<h3>Specifications</h3>';
+
+                echo
+                    '<table class="specificationOption" style="max-width: 650px;">
+                        <tr class="headers">
+                            <td>Specification Name</td>
+                            <td>Specification Value</td>
+                            <td></td>
+                        </tr>' .
+                        $tableData .
+                    '</table>';
+
+            echo 
+                '<p class="specActions">
+                    <input type="button" name="addSpec" value="Add Spec Row">
+                </p>';
+
+            echo '<hr>';
+        }
+
+        public function addGallery() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $galleryImages = $mysqli->query("SELECT gallery_images FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
+            $galleryImages = explode(';', rtrim($galleryImages, ';'));                    
+
+            echo '<h3>Gallery</h3>';
+
+                echo 
+                    '<input type="file" name="galleryOption" multiple>
+                    <div class="galleryItems current">';
+
+                foreach($galleryImages as $image) {
+                    $image = ltrim($image, '"');
+                    $image = rtrim($image, '"');
+                    
+                    if($image != null && $image != '') {
+                        echo
+                            '<div class="galleryItem">
+                                <img src="/gallery/products/1/' . $image . '" alt="' . $image . '">
+                            </div>';
+                    }
+                }
+
+                echo
+                    '</div>
+
+                    <div class="galleryItems uploaded">
+                    </div>';
+
+            echo 
+                '<p class="galleryMessage"></p>
+                <hr>';
+        }
+
+        public function addAll() {
+            $this->addGallery();
+            $this->addFeatures();
+            $this->addSpecs();
+            $this->addOutput();
+        }
+    }
+
 ?>
