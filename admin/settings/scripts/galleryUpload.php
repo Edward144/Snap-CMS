@@ -30,7 +30,7 @@
                 
                 if(in_array(explode('.', strtolower($file['name']))[1], $extensions)) {
                     if(move_uploaded_file($file['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $file['name'])) {
-                        chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $file['name'], 0666);
+                        //chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $file['name'], 0666);
                         //array_push($json, $file['ori_name'] . ': Upload Succeeded.<br>');
                     }
                     else {
