@@ -1,3 +1,4 @@
+//Add Spec Row
 $("input[name='addSpec']").click(function() {
     var row = 0;
 
@@ -18,6 +19,56 @@ $("input[name='addSpec']").click(function() {
     );
 });
 
+//Delete Spec Row
 $(".specificationOption").on("click", "input[name='deleteSpec']", function() {
     $(this).closest("tr").remove();
+});
+
+//Delete Temp Gallery Items
+$(document).ready(function() {    
+    $.ajax({
+        url: "/admin/settings/scripts/deleteTempGallery.php",
+        method: "POST"
+    });
+});
+
+//Upload Gallery Items
+$("input[name='galleryOption']").on("change", function() {
+    var file = $("input[name='galleryOption']").val();
+    var file_data = $("input[name='galleryOption']").prop('files');
+    var form_data = new FormData();
+
+    if(file == "") {
+        $(".galleryMessage").text("No file selected.");
+
+        return;
+    }
+    else {
+        $(".galleryMessage").text("");
+    }
+
+    $.each(file_data, function(index, fdata) {
+        form_data.append("file[" + index + "]", fdata); 
+    });
+
+    $.ajax({
+        url: "/admin/settings/scripts/galleryUpload.php",
+        method: "POST",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        data: form_data,
+        success: function(data){
+            $(".galleryMessage").append(data);
+
+            $.ajax({
+                url: "/admin/settings/scripts/galleryList.php",
+                method: "POST",
+                dataType: "json",
+                success: function(data) {
+                    $(".galleryItems.uploaded").html(data);
+                }
+            });
+        }
+    });
 });
