@@ -1,6 +1,8 @@
 .DS_Store
 admin/useruploads/*
 !admin/useruploads/.gitkeep
+admin/images/tempuploads/*
+!admin/images/tempuploads/.gitkeep
 templates/database_connect.php
 admin/custom_*
 custom_*
