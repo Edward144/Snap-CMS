@@ -74,3 +74,22 @@ $("#companyInfo input[name='clearLogo']").click(function() {
         }
     });
 });
+
+$("#socialLinks input[type='submit']").click(function() {
+    event.preventDefault(); 
+    var facebook = $("#socialLinks input[name='facebook']").val();
+    var twitter = $("#socialLinks input[name='twitter']").val();
+    var youtube = $("#socialLinks input[name='youtube']").val();
+    var instagram = $("#socialLinks input[name='instagram']").val();
+    var linkedin = $("#socialLinks input[name='linkedin']").val();
+    
+    $.ajax({
+       url: "scripts/updateSocial.php",
+        method: "POST",
+        dataType: "json",
+        data: ({facebook, twitter, youtube, instagram, linkedin}),
+        success: function(data) {
+            $("#socialLinks .message").text(data);
+        }
+    });
+});

@@ -102,6 +102,41 @@ footer .footerAfterInner {
     margin: auto;
 }
 
+.socialLinks {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.socialLinks a {
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.socialLinks a img {
+    max-width: 50px;
+}
+
+.socialLinks a:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+    background: rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.socialLinks a:hover:after {
+    display: block;
+}
+
 /* NAVIGATION */
 
 nav ul {

@@ -92,6 +92,20 @@
     );
 
     $mysqli->query(
+        "CREATE TABLE IF NOT EXISTS `social_links` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            link_name VARCHAR(191) UNIQUE,
+            link_value VARCHAR(255)
+        )"
+    );
+
+    $mysqli->query("INSERT IGNORE INTO `social_links` (link_name) VALUES('Facebook')");
+    $mysqli->query("INSERT IGNORE INTO `social_links` (link_name) VALUES('Twitter')");
+    $mysqli->query("INSERT IGNORE INTO `social_links` (link_name) VALUES('Youtube')");
+    $mysqli->query("INSERT IGNORE INTO `social_links` (link_name) VALUES('Instagram')");
+    $mysqli->query("INSERT IGNORE INTO `social_links` (link_name) VALUES('LinkedIn')");
+
+    $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `countries` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             iso_code VARCHAR(20) UNIQUE,

@@ -39,6 +39,27 @@
                         echo ($details['company_name'] ? '<span class="reg"><strong>Reg Number: </strong>' . $details['reg_number'] . '</span><br>' : '');
                     ?>
                 </div>
+                
+                <?php 
+                    $socialCheck = $mysqli->query("SELECT COUNT(*) FROM `social_links` WHERE link_value IS NOT NULL AND link_value <> ''")->fetch_array()[0]; 
+                    $socialLinks = $mysqli->query("SELECT * FROM `social_links` WHERE link_value IS NOT NULL AND link_value <> ''");
+                ?>
+                
+                <?php if($socialCheck > 0) : ?>
+                    <div class="socialLinks">
+                        <?php while($link = $socialLinks->fetch_assoc()) : ?>
+                            <?php if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/images/social/' . strtolower($link['link_name']) . '.png')) : ?>
+                                <a href="<?php echo $link['link_value']; ?>" target="_blank">
+                                    <img src="/admin/images/social/<?php echo strtolower($link['link_name']); ?>.png">
+                                </a>
+                            <?php else : ?>
+                                <a href="<?php echo $link['link_value']; ?>" target="_blank">
+                                    <span><?php echo $link['link_name']; ?></span>
+                                </a>
+                            <?php endif; ?>
+                        <?php endwhile; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         

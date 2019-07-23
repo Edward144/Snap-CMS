@@ -101,6 +101,88 @@
                 <p class="message"></p>                
             </form>
         </div>
+        
+        <h2>Social Links</h2>
+        
+        <div class="formBlock">            
+            <form id="socialLinks">
+                <?php $socialLinks = $mysqli->prepare("SELECT link_value FROM `social_links` WHERE link_value IS NOT NULL AND link_value <> '' AND link_name = ?"); ?>
+                <p>
+                    <?php 
+                        $socialName = 'Facebook'; 
+                        $socialLinks->bind_param('s', $socialName);
+                        $socialLinks->execute();
+                        $result = $socialLinks->get_result();
+                        $result = $result->fetch_assoc()['link_value'];
+                    ?>
+                    
+                    <label>Facebook: </label>
+                    <input type="text" name="facebook" value="<?php echo $result; ?>">
+                </p>
+                
+                <p>
+                    <?php 
+                        $socialName = 'Twitter'; 
+                        $socialLinks->bind_param('s', $socialName);
+                        $socialLinks->execute();
+                        $result = $socialLinks->get_result();
+                        $result = $result->fetch_assoc()['link_value'];
+                    ?>
+                    
+                    <label>Twitter: </label>
+                    <input type="text" name="twitter" value="<?php echo $result; ?>">
+                </p>
+                
+                <p>
+                    <?php 
+                        $socialName = 'Youtube'; 
+                        $socialLinks->bind_param('s', $socialName);
+                        $socialLinks->execute();
+                        $result = $socialLinks->get_result();
+                        $result = $result->fetch_assoc()['link_value'];
+                    ?>
+                    
+                    <label>Youtube: </label>
+                    <input type="text" name="youtube" value="<?php echo $result; ?>">
+                </p>
+            </form>
+            
+            <form id="socialLinks">
+                <p>
+                    <?php 
+                        $socialName = 'Instagram'; 
+                        $socialLinks->bind_param('s', $socialName);
+                        $socialLinks->execute();
+                        $result = $socialLinks->get_result();
+                        $result = $result->fetch_assoc()['link_value'];
+                    ?>
+                    
+                    <label>Instagram: </label>
+                    <input type="text" name="instagram" value="<?php echo $result; ?>">
+                </p>
+                
+                <p>
+                    <?php 
+                        $socialName = 'Linkedin'; 
+                        $socialLinks->bind_param('s', $socialName);
+                        $socialLinks->execute();
+                        $result = $socialLinks->get_result();
+                        $result = $result->fetch_assoc()['link_value'];
+                    ?>
+                    
+                    <label>LinkedIn: </label>
+                    <input type="text" name="linkedin" value="<?php echo $result; ?>">
+                </p>
+                
+                <p>
+                    <?php $socialLinks->close(); ?>
+                    
+                    <input type="submit" value="Update Links">
+                </p>
+                
+                <p class="message"></p>
+            </form>
+        </div>
     </div>
 
     <script src="scripts/companyInfo.js"></script>
