@@ -19,3 +19,5 @@ Credit to the following which are all included in this repository:
    - Owl Carousel: https://owlcarousel2.github.io/OwlCarousel2/
    
    - Animate.css: https://daneden.github.io/animate.css/
+
+Credit to Freepik for the socail media icons: https://www.flaticon.com/authors/freepik
