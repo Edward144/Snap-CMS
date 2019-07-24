@@ -36,6 +36,20 @@
         //Create Post Type Categories
         $mysqli->query("CREATE TABLE `{$name}s_categories` LIKE `categories`");
         
+        //Create Post Type Options
+        $mysqli->query(
+            "CREATE TABLE IF NOT EXISTS `{$name}s_options` (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                post_type_id INT UNIQUE,
+                gallery_images TEXT DEFAULT NULL,
+                main_gallery VACHAR(255) DEFAULT NULL,
+                features VARCHAR(255) DEFAULT NULL,
+                specifications TEXT DEFAULT NULL,
+                output VARCHAR(255) DEFAULT NULL,
+                options VARCHAR(255) DEFAULT NULL
+            )"
+        );
+        
         //Add Links To Admin Sidebar        
         if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
             $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");

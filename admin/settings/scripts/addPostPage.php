@@ -44,7 +44,9 @@
     $add->execute();
     $add->close();
 
-    
+    if($type != 'pages' && $type != 'posts') {
+        $mysqli->query("INSERT INTO `{$type}_options` (post_type_id) VALUES({$id})");
+    }
 
     if(!$mysqli->error) {
         echo json_encode([1, $id]);

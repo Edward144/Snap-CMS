@@ -29,6 +29,7 @@
         //Delete Custom Tables
         $mysqli->query("DROP TABLE `{$name}s`");
         $mysqli->query("DROP TABLE `{$name}s_categories`");
+        $mysqli->query("DROP TABLE `{$name}s_options`");
         
         //Delete Files
         unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php');
