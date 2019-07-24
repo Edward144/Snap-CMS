@@ -99,3 +99,14 @@ function setSidebarVisibility() {
         $(".main .content").css("width", "100%");
     }
 }
+
+//Change Gallery Imaage
+$(".postContent .galleryItem").click(function() {
+    alert('a');
+    var imageUrl = $(this).finc("img").attr("src");
+    
+    $(".hero").css({
+        "background-attachment" : "scroll", 
+        "background-image" : "url('" + imageUrl + "')"
+    });
+});

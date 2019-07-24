@@ -71,4 +71,5 @@
     </footer>
 
     <script src="/scripts/main.js"></script>
+    <script src="/scripts/functions.js"></script>
 </html>
