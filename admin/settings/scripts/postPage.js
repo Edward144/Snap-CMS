@@ -170,6 +170,7 @@ $("#editContent .actions #apply").click(function() {
         var spec = "";
         var galleryExist = "";
         var galleryNew = "";
+        var galleryMain = "abc";
         
         $(".specificationOption tr:not(.headers)").each(function() {
             spec += '\"' + $(this).find("input[name='specName']").val() + '\",\"' + $(this).find("input[name='specValue']").val() + '\";';
@@ -182,6 +183,10 @@ $("#editContent .actions #apply").click(function() {
         $(".galleryItems.uploaded .galleryItem").each(function() {
             galleryNew += '\"' + $(this).find(".galleryImage").attr("alt") + '\";';
         });
+        
+        if($("#galleryMain")) {
+            galleryMain = $("#galleryMain .galleryImage").attr("alt");
+        }
     }
     else {
         var features = "";
@@ -189,6 +194,7 @@ $("#editContent .actions #apply").click(function() {
         var spec = "";
         var galleryExist = "";
         var galleryNew = "";
+        var galleryMain = "";
     }
     
     var id = $("#editContent .id").text();
@@ -265,7 +271,7 @@ $("#editContent .actions #apply").click(function() {
         url: "/admin/settings/scripts/editPostPage.php",
         method: "POST",
         dataType: "json",
-        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, output, features}),
+        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, output, features, galleryMain}),
         success: function(data) {
             if(data[0] == 1) {
                 $("#editContent .message").text(data[1]);

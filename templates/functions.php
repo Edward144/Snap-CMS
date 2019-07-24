@@ -1554,7 +1554,8 @@
 
             $galleryImages = $mysqli->query("SELECT gallery_images FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
             $galleryImages = explode(';', rtrim($galleryImages, ';'));                    
-
+            $galleryMain = $mysqli->query("SELECT gallery_main FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
+            
             echo '<h3>Gallery</h3>';
 
                 echo 
@@ -1567,7 +1568,7 @@
                     
                     if($image != null && $image != '') {
                         echo
-                            '<div class="galleryItem">
+                            '<div class="galleryItem"' . ($galleryMain == $image ? 'id="galleryMain"' : '') . '>
                                 <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
                                 <img class="galleryImage" src="/gallery/products/1/' . $image . '" alt="' . $image . '">
                             </div>';

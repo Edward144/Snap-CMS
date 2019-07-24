@@ -94,3 +94,10 @@ $(".galleryItems.uploaded").on("click", ".galleryDelete", function() {
         data: ({file})
     })
 });
+
+//Set Main Gallery Item
+$(".galleryItems").on("click", ".galleryItem", function() {
+    $(".galleryItem").attr("id", "");
+    
+    $(this).attr("id", "galleryMain");
+});

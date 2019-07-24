@@ -28,6 +28,7 @@
 
     $galleryExist = $_POST['galleryExist'];
     $galleryNew = $_POST['galleryNew'];
+    $galleryMain = $_POST['galleryMain'];
     $features = $_POST['features'];
     $output = $_POST['output'];
     $spec = $_POST['spec'];
@@ -60,18 +61,22 @@
         }
     }
 
+    if($galleryMain == null || $galleryMain == '') {
+        $galleryMain = ltrim(explode('";', $gallery)[0], '"');
+    }
+
     if($type != 'posts' && $type != 'pages') {
         $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$type}_options` WHERE post_type_id = {$id}")->fetch_array()[0];
         
         if($checkOptions > 0) {
-            $updateOptions = $mysqli->prepare("UPDATE `{$type}_options` SET gallery_images = ?, features = ?, specifications = ?, output = ? WHERE post_type_id = ?");
-            $updateOptions->bind_param('ssssi', $gallery, $features, $spec, $output, $id);
+            $updateOptions = $mysqli->prepare("UPDATE `{$type}_options` SET gallery_images = ?, gallery_main = ?, features = ?, specifications = ?, output = ? WHERE post_type_id = ?");
+            $updateOptions->bind_param('sssssi', $gallery, $galleryMain, $features, $spec, $output, $id);
             $updateOptions->execute();
             $updateOptions->close();
         }
         else {
-            $addOptions = $mysqli->prepare("INSERT INTO `{$type}_options` (post_type_id, gallery_images, features, specifications, output) VALUES(?, ?, ?, ?, ?, ?)");
-            $addOptions->bind_param('issss', $id, $gallery, $features, $spec, $output);
+            $addOptions = $mysqli->prepare("INSERT INTO `{$type}_options` (post_type_id, gallery_images, gallery_main, features, specifications, output) VALUES(?, ?, ?, ?, ?, ?, ?)");
+            $addOptions->bind_param('isssss', $id, $gallery, $galleryMain, $features, $spec, $output);
             $addOptions->execute();
             $addOptions->close();
         }

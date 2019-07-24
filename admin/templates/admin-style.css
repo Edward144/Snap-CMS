@@ -155,9 +155,35 @@ body {
     color: #fff;
 }
 
+.productOptions .galleryItems .galleryItem#galleryMain:hover {
+    background: #01538b;
+}
+
+.productOptions .galleryItem#galleryMain:after {
+    content: "Main image";
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: #0171ba;
+    padding: 0.5em 0.1em;
+    box-sizing: border-box;
+    border-radius: 0 0 0.5em 0.5em;
+}
+
+.productOptions .galleryItems .galleryItem#galleryMain:hover:after {
+    background: #01538b;
+}
+
 .productOptions .galleryItem img {
     max-width: 100%;
     max-height: 100%;
+}
+
+.productOptions .galleryItems .galleryItem#galleryMain {
+    background: #0271ba;
 }
 
 .badButton {
