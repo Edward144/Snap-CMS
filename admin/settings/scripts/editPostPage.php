@@ -26,46 +26,46 @@
     $category = $_POST['category'];
     $image = $_POST['imageUrl'];
 
-    $galleryExist = $_POST['galleryExist'];
-    $galleryNew = $_POST['galleryNew'];
-    $galleryMain = $_POST['galleryMain'];
-    $features = $_POST['features'];
-    $output = $_POST['output'];
-    $spec = $_POST['spec'];
+    if($type != 'posts' && $type != 'pages') {
+        $galleryExist = $_POST['galleryExist'];
+        $galleryNew = $_POST['galleryNew'];
+        $galleryMain = $_POST['galleryMain'];
+        $features = $_POST['features'];
+        $output = $_POST['output'];
+        $spec = $_POST['spec'];
 
-    if($galleryExist == '" ";') {
-        $galleryExist = '';
-    }
-
-    if($galleryNew == '" ";') {
-        $galleryNew = '';
-    }
-
-    $gallery = $galleryExist . $galleryNew;
-
-    if($galleryNew != null && $galleryNew != '" ";') {
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id)) {
-            mkdir($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id, 0777, true);
+        if($galleryExist == '" ";') {
+            $galleryExist = '';
         }
-        
-        $tempFiles = glob($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/*');
-        
-        foreach($tempFiles as $tempFile) {            
-            if(is_file($tempFile)) {
-                $tempFile = explode('/', $tempFile);
-                $count = count($tempFile);
-                $tempFile = $tempFile[$count - 1];
-                
-                rename($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $tempFile, $_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id . '/' . $tempFile);
+
+        if($galleryNew == '" ";') {
+            $galleryNew = '';
+        }
+
+        $gallery = $galleryExist . $galleryNew;
+
+        if($galleryNew != null && $galleryNew != '" ";') {
+            if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id)) {
+                mkdir($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id, 0777, true);
+            }
+
+            $tempFiles = glob($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/*');
+
+            foreach($tempFiles as $tempFile) {            
+                if(is_file($tempFile)) {
+                    $tempFile = explode('/', $tempFile);
+                    $count = count($tempFile);
+                    $tempFile = $tempFile[$count - 1];
+
+                    rename($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $tempFile, $_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id . '/' . $tempFile);
+                }
             }
         }
-    }
 
-    if($galleryMain == null || $galleryMain == '') {
-        $galleryMain = ltrim(explode('";', $gallery)[0], '"');
-    }
-
-    if($type != 'posts' && $type != 'pages') {
+        if($galleryMain == null || $galleryMain == '') {
+            $galleryMain = ltrim(explode('";', $gallery)[0], '"');
+        }
+        
         $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$type}_options` WHERE post_type_id = {$id}")->fetch_array()[0];
         
         if($checkOptions > 0) {

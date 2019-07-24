@@ -163,8 +163,8 @@ $(".mediaList.popup .mediaFile").click(function() {
 //Update Content
 $("#editContent .actions #apply").click(function() {
     tinyMCE.triggerSave();
-
-    if(productOptions == true) {
+    
+    if(typeof productOptions !== 'undefined' && productOptions == true) {
         var features = $("textarea[name='featuresOption']").val();
         var output = $("textarea[name='outputOption']").val();
         var spec = "";
