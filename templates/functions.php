@@ -749,7 +749,7 @@
             }
         }
         
-        public function sidebar($parentId = 0, $postType) {
+        public function sidebar($parentId = 0, $postType = null) {
             if(isset($postType) && $postType != '') {
                 $postTable = $postType;
                 $postType = $postType . '_';
