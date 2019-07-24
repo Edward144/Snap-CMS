@@ -299,7 +299,7 @@
                     
                     if($item['page_id'] == -1) {
                         if($customUrl == '' || $customUrl == null) {
-                            $customUrl = 'posts';
+                            $customUrl = '/posts';
                         }
                         
                         $name = 'Posts';
@@ -1235,11 +1235,28 @@
                     
                     if($this->postType != 'page') {
                         $catId = $row['category_id'];
-                        $category = $mysqli->query("SELECT name FROM {$categoryPre}categories where id = {$catId}")->fetch_array()[0];
+                        $category = $mysqli->query("SELECT name FROM {$this->categoryPre}categories where id = {$catId}")->fetch_array()[0];
+                    }
+                    
+                    if($row['image_url'] != null && $row['image_url'] != '') {
+                        $featuredUrl = $row['image_url'];
+                    }
+                    
+                    $productOptions = $mysqli->query("SELECT * FROM `{$this->categoryPre}options` WHERE post_type_id = {$row['id']}");
+                    
+                    if($productOptions->num_rows > 0) {
+                        $option = $productOptions->fetch_assoc();
+                        
+                        if($option['gallery_main'] != null && $option['gallery_main'] != '') {
+                            $featuredUrl = '/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $option['gallery_main'];
+                        }
+                        else if($option['gallery_images'] != null && $option['gallery_images'] != '') {
+                            $featuredUrl = '/gallery/' . $this->postType . 's/' . $row['id'] . '/' . ltrim(explode('";', $option['gallery_images'])[0], '"');
+                        }
                     }
                     
                     $postOutput .= 
-                        '<div class="hero" style="' . ($row['image_url'] != null && $row['image_url'] != '' ? 'background-image: url(\'' . $row['image_url'] . '\')' : '') . '">
+                        '<div class="hero ' . $this->postType . '" style="' . (isset($featuredUrl) ? 'background-image: url(\'' . $featuredUrl . '\')' : '') . '">
                         <div class="postDetails">
                             <h1>' . $row['name'] . '</h1>';
 
@@ -1250,7 +1267,7 @@
                             $postOutput .=
                                 '<div class="author">
                                     <p>
-                                        <strong>By: </strong><span>' . ucwords($author) . '</span> 
+                                        <strong>By: </strong><span>' . ucwords($author) . '</span>
                                         <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
                                     </p>
                                 </div>';
@@ -1258,19 +1275,53 @@
                         $postOutput .= '</div>
                             </div>';
 
-                    echo $postOutput .
+                    $postOutput .=
                         '<div class="mainInner">';
                         
                         if($this->displaySidebar == 1) {
                             include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php');
                         }
                     
-                        echo '<div class="content">
-                                <div class="postContent">'
-                                    . $row['content'] .
-                                '</div>
-                            </div>
-                        </div>';
+                        $postOutput .= 
+                                '<div class="content ' . $this->postType . '">
+                                    <div class="postContent">';
+                        
+                        if($option['gallery_images'] != null) {
+                            $galleryItems = explode(';', rtrim($option['gallery_images'], ';'));
+                    
+                            $postOutput .= '<div class="gallery">';
+                            
+                            if($row['image_url'] != null && $row['image_url'] != '') {
+                                $postOutput .= 
+                                    '<a href="' . $row['image_url'] . '" data-lightbox="gallery">
+                                        <div class="galleryItem">
+                                            <img src="' . $row['image_url'] . '">
+                                        </div>
+                                    </a>';
+                            }
+                            
+                            foreach($galleryItems as $galleryItem) {
+                                $galleryItem = ltrim($galleryItem, '"');
+                                $galleryItem = rtrim($galleryItem, '"');
+                                
+                                $postOutput .=
+                                    '<a href="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem . '" data-lightbox="gallery">
+                                        <div class="galleryItem">
+                                            <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem . '">
+                                        </div>
+                                    </a>';
+                            }
+                            
+                            $postOutput .= '</div>';
+                        }
+                    
+                                $postOutput .=
+                                            $row['content'] .
+                                        '</div>
+                                    </div>
+                                </div>';
+                    
+                    echo $postOutput;
                 }
             }
             else {
