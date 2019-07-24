@@ -19,5 +19,7 @@ Credit to the following which are all included in this repository:
    - Owl Carousel: https://owlcarousel2.github.io/OwlCarousel2/
    
    - Animate.css: https://daneden.github.io/animate.css/
+   
+   - Lightbox2: https://lokeshdhakar.com/projects/lightbox2/
 
 Credit to Freepik for the social media icons: https://www.flaticon.com/authors/freepik
