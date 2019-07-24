@@ -101,12 +101,12 @@ function setSidebarVisibility() {
 }
 
 //Change Gallery Imaage
-$(".postContent .galleryItem").click(function() {
-    alert('a');
-    var imageUrl = $(this).finc("img").attr("src");
+/*$(".postContent .galleryItem").click(function() {
+    var imageUrl = $(this).find("img").attr("src");
     
     $(".hero").css({
         "background-attachment" : "scroll", 
+        "background-size" : "contain",
         "background-image" : "url('" + imageUrl + "')"
     });
-});
+});*/
