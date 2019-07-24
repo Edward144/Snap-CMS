@@ -1159,6 +1159,7 @@
         private $postTitle;
         private $categoryPre;
         private $homepage;
+        public $sideOptions;
         public $displaySidebar = 1;
         
         public function __construct($type = '') {
@@ -1202,6 +1203,12 @@
             
             if($homepage != null && $homepage != '') {
                 $this->homepage = $mysqli->query("SELECT url FROM `pages` WHERE id = {$homepage}")->fetch_array()[0];
+            }
+        }
+        
+        public function sideOptions($sideOptions = false) {
+            if($sideOptions == true) {
+                $this->sideOptions = true;
             }
         }
 
@@ -1283,8 +1290,7 @@
                         }
                     
                         $postOutput .= 
-                                '<div class="content ' . $this->postType . '">
-                                    <div class="postContent">';
+                                '<div class="content ' . $this->postType . '">';
                         
                         if($option['gallery_images'] != null) {
                             $galleryItems = explode(';', rtrim($option['gallery_images'], ';'));
@@ -1315,8 +1321,83 @@
                             $postOutput .= '</div>';
                         }
                     
+                        $sideOptions = '';
+                    
+                        if($this->sideOptions == true) {
+                            $sideOptions .= 
+                                '<div class="sideOptions">
+                                    <ul>';
+                            
+                            if($option['features'] != null && $option['features'] != '') {
+                                $sideOptions .= 
+                                    '<li class="features" id="inactive">
+                                        <h3>Features</h3>
+                                        
+                                        <div class="sideOptionInner">
+                                            ' . $option['features'] . '
+                                        </div>
+                                    </li>';
+                            }
+                            
+                            if($option['specifications'] != null && $option['specifications'] != '') {
+                                $specs = explode(';', rtrim($option['specifications'], ';'));
+                                
+                                $sideOptions .= 
+                                        '<li class="output" id="inactive">
+                                            <h3>Specifications</h3>
+
+                                            <div class="sideOptionInner">
+                                                <table>';
+                                            
+                                foreach($specs as $specRow) {
+                                    $specRow = explode('","', $specRow);
+                                    $specName = ltrim($specRow[0], '"');
+                                    $specValue = rtrim($specRow[1], '"');
+                                    
+                                    $sideOptions .=
+                                        '<tr>
+                                            <td>' . $specName . '</td>
+                                            <td>' . $specValue . '</td>
+                                        </tr>';
+                                }
+                                
+                                $sideOptions .= 
+                                                '</table>
+                                            </div>
+                                        </li>';
+                            }
+                            
+                            if($option['output'] != null && $option['output'] != '') {
+                                $sideOptions .= 
+                                    '<li class="output" id="inactive">
+                                        <h3>Output</h3>
+                                        
+                                        <div class="sideOptionInner">
+                                            ' . $option['output'] . '
+                                        </div>
+                                    </li>';
+                            }
+                            
+                            if($option['options'] != null && $option['options'] != '') {
+                                $sideOptions .= 
+                                    '<li class="output" id="inactive">
+                                        <h3>Options</h3>
+                                        
+                                        <div class="sideOptionInner">
+                                            ' . $option['options'] . '
+                                        </div>
+                                    </li>';
+                            }
+                            
+                            $sideOptions .= 
+                                    '</ul>
+                                </div>';
+                        }
+                    
                                 $postOutput .=
-                                            $row['content'] .
+                                        '<div class="postContent">'
+                                            . $sideOptions
+                                            . $row['content'] .
                                         '</div>
                                     </div>
                                 </div>';

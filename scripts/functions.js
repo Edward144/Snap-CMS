@@ -110,3 +110,17 @@ function setSidebarVisibility() {
         "background-image" : "url('" + imageUrl + "')"
     });
 });*/
+
+//Side Options Show/Hide
+$(".sideOptions .sideOptionInner").click(function() {
+    return;
+});
+    
+$(".sideOptions").on("click", "li#active > h3", function() {
+    $(".sideOptions li").attr("id", "inactive");
+});
+
+$(".sideOptions").on("click", "li#inactive", function() {
+    $(".sideOptions li").attr("id", "inactive");
+    $(this).attr("id", "active");
+});

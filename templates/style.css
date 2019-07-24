@@ -281,6 +281,69 @@ nav ul li a:hover {
     right: 0;
 }
 
+.sideOptions {
+    float: right;
+    width: 300px;
+    margin-left: 2em;
+    margin-bottom: 0.5em;
+}
+
+.sideOptions ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sideOptions ul li {
+    cursor: pointer;
+    border-width: 3px 3px 0; 
+    border-style: solid;
+    border-color: #aaa;
+}
+
+.sideOptions ul li:last-child {
+    border-width: 3px;
+}
+
+.sideOptions ul li h3 {
+    margin: 0 auto;
+}
+
+.sideOptions ul li > h3, .sideOptions ul li > .sideOptionInner {
+    padding: 0.75em;
+    box-sizing: border-box;
+}
+
+.sideOptions ul li > .sideOptionInner {
+    cursor: auto;
+    display: none;
+}
+
+.sideOptions ul li#active > .sideOptionInner {
+    display: block;
+}
+
+.sideOptions ul li#active > h3:after {
+    content: "-";
+    float: right;
+}
+
+.sideOptions ul li#inactive > h3:after {
+    content: "+";
+    float: right;
+}
+
+.sideOptions table {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.sideOptions table tr td {
+    border: 1px solid #aaa;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {
