@@ -1308,8 +1308,41 @@
 
             if($posts->num_rows > 0) {
                 while($row = $posts->fetch_assoc()) {
-                    $postOutput .= '<div class="' . $this->postType . '">
-                        <h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
+                    $postOutput .= '<a href="' . $this->postType . 's/' . $row['url'] . '"><div class="' . $this->postType . '">';
+                    
+                    if($this->postType != 'page' && $this->postType != 'post') {
+                        $galleryItems = $mysqli->query("SELECT gallery_images, gallery_main FROM `{$this->postType}s_options` WHERE post_type_id = {$row['id']}");
+                        
+                        if($galleryItems->num_rows > 0) {
+                            $galleryItem = $galleryItems->fetch_assoc();
+                            if($galleryItem['gallery_main'] != null && $galleryItem['gallery_main'] != '') {
+                                $postOutput .= '<div class="imageWrap">
+                                    <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem['gallery_main'] . '">
+                                </div>';
+                            }
+                            else if($row['image_url'] != null && $row['image_url'] != '') {
+                                $postOutput .= '<div class="imageWrap">
+                                    <img src="' . $row['image_url'] . '">
+                                </div>';
+                            }
+                            else if($galleryItem['gallery_images'] != null && $galleryItem['gallery_images'] != '') {
+                                $galleryFirst = ltrim(explode('";', $galleryItem['gallery_images'])[0], '"');
+                                
+                                $postOutput .= '<div class="imageWrap">
+                                    <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryFirst . '">
+                                </div>';
+                            }
+                        }
+                    }
+                    else if($this->postType == 'post') {
+                        if($row['image_url'] != null && $row['image_url'] != '') {
+                            $postOutput .= '<div class="imageWrap">
+                                <img src="' . $row['image_url'] . '">
+                            </div>';
+                        }
+                    }
+                    
+                    $postOutput .= '<h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
 
                     $length = strlen($row['description']); 
 
@@ -1320,7 +1353,7 @@
                         $postOutput .= '<p>' . substr($row['description'], 0, 200) . '...<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
                     }
 
-                    $postOutput .= '</div><hr>';
+                    $postOutput .= '</div></a><hr>';
                 }                              
             }
             else {
