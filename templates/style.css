@@ -344,6 +344,10 @@ nav ul li a:hover {
     box-sizing: border-box;
 }
 
+.postContent {
+    min-height: 55px;
+}
+
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {
