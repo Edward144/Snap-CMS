@@ -266,7 +266,12 @@ nav ul li a:hover {
     left: 0;
     right: 0;
     margin: auto;
+    width: 100%;
+}
+
+.product.hero #heroImage {
     height: 100%;
+    width: auto;
 }
 
 .gallery {
@@ -346,7 +351,7 @@ nav ul li a:hover {
 }
 
 .sideOptions ul li#inactive > .sideOptionInner {
-    transition: max-height 0.25s ease-out;
+    transition: max-height 0.5s ease-out;
 }
 
 .sideOptions ul li#active > .sideOptionInner {
