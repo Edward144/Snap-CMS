@@ -770,7 +770,7 @@
             }
             elseif($parentId != 0) {
                 if($mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = {$_GET['category']}")->fetch_array()[0] > 0) {
-                    echo '<h3>' . $parentName . '</h3>';
+                    echo '<h3>' . $parentName . '<a href="' . $postTable . '" style="margin-left: 0.5em; text-decoration: none;">[X]</a></h3>';
                 }
             }
             

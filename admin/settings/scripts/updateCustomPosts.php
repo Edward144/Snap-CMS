@@ -134,24 +134,27 @@
             fclose($file);
         }
         
+        //Create Front End Category File
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php')) { 
             $frontFile = 
                 '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/header.php\'); ?>
+                    
+                    <div class="mainInner">
+                        <div class="content">
+                            <h1>' . ucwords($name) .'s Categories</h1>
 
-                    <div class="content">
-                        <h1>' . ucwords($name) .'s Categories</h1>
+                            <?php
+                                $categories = new categories();
 
-                        <?php
-                            $categories = new categories();
+                                if(isset($_GET[\'c\'])) {
+                                    $categories->listCategories($_GET[\'c\'], \'' . $name . 's\');
+                                }
+                                else {
+                                    $categories->listCategories(0, \'' . $name . 's\');
+                                }
 
-                            if(isset($_GET[\'c\'])) {
-                                $categories->listCategories($_GET[\'c\'], \'' . $name . 's\');
-                            }
-                            else {
-                                $categories->listCategories(0, \'' . $name . 's\');
-                            }
-
-                        ?>
+                            ?>
+                        </div>
                     </div>
 
                 <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/footer.php\'); ?>';
