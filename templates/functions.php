@@ -700,6 +700,12 @@
                                                 echo '<img src="' . $category['image_url'] . '">';
                                             echo '</div>';
                                         }
+                                        else {
+                                            echo '<div class="categoryImage">';
+                                                echo '<img src="/admin/images/missingImage.png">';
+                                            echo '</div>';
+                                        }
+                        
                                    echo '<h3 class="categoryName">' . $category['name'] . '</h3>';
 
                                         $this->postsCount($category['id'], $postTable);
@@ -890,8 +896,12 @@
             
             $children = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
             
+            if(strpos($postType, '_') !== false) {
+                $postType = explode('_', $postType)[0];
+            }
+            
             if($children->num_rows > 0) {
-                new categoryTree($level, $parent, ($level - 1));
+                new categoryTree($level, $parent, ($level - 1), $postType);
             }
             else {
                 echo 
