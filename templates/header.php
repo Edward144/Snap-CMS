@@ -8,9 +8,7 @@
 ?>
 
 <html>
-    <head>
-        <link href="/templates/style.css" rel="stylesheet" type="text/css">
-        
+    <head>        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <?php 
@@ -36,10 +34,15 @@
             }
         ?>
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        
+        <link href="/templates/style.css" rel="stylesheet" type="text/css">
         <link href="/scripts/lightbox.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.css">
+        <link rel="stylesheet" href="/scripts/OwlCarousel2-2.3.4/owl.theme.default.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <script src="/scripts/lightbox.js"></script>
+        <script src="/scripts/color-thief.min.js"></script>
+        <script src="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.js"></script>
     </head>
     
     <body>
