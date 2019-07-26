@@ -18,10 +18,9 @@
     $type = $_GET['type'] . 's';
     $user = $_SESSION['username'];
 
-    $nextItem = $mysqli->query("SELECT COUNT(*) FROM `{$type}`")->fetch_array()[0] + 1;
     $id = $mysqli->query("SELECT id FROM `{$type}` ORDER BY id DESC LIMIT 1")->fetch_array()[0] + 1;
 
-    $title = ucwords($_GET['type'] . ' ' . $nextItem);
+    $title = ucwords($_GET['type'] . ' ' . $id);
     $url = slugify($_GET['type'] . '-' . $id);
 
     $add = $mysqli->prepare(
