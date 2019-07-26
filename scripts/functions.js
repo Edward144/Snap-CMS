@@ -100,17 +100,6 @@ function setSidebarVisibility() {
     }
 }
 
-//Change Gallery Imaage
-/*$(".postContent .galleryItem").click(function() {
-    var imageUrl = $(this).find("img").attr("src");
-    
-    $(".hero").css({
-        "background-attachment" : "scroll", 
-        "background-size" : "contain",
-        "background-image" : "url('" + imageUrl + "')"
-    });
-});*/
-
 //Side Options Show/Hide
 $(".sideOptions .sideOptionInner").click(function() {
     return;

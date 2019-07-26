@@ -1263,7 +1263,8 @@
                     }
                     
                     $postOutput .= 
-                        '<div class="hero ' . $this->postType . '" style="' . (isset($featuredUrl) ? 'background-image: url(\'' . $featuredUrl . '\')' : '') . '">
+                        '<div class="hero ' . $this->postType . '" style="' . (isset($featuredUrl) ? '//background-image: url(\'' . $featuredUrl . '\')' : '') . '">'
+                        . (isset($featuredUrl) ? '<img src="' . $featuredUrl . '" id="heroImage">' : '') . '
                         <div class="postDetails">
                             <h1>' . $row['name'] . '</h1>';
 
@@ -1295,7 +1296,7 @@
                         if($option['gallery_images'] != null) {
                             $galleryItems = explode(';', rtrim($option['gallery_images'], ';'));
                     
-                            $postOutput .= '<div class="gallery">';
+                            $postOutput .= '<div class="gallery owl-carousel">';
                             
                             if($row['image_url'] != null && $row['image_url'] != '') {
                                 $postOutput .= 
@@ -1334,7 +1335,7 @@
                                         <h3>Features</h3>
                                         
                                         <div class="sideOptionInner">
-                                            ' . $option['features'] . '
+                                            <span>' . $option['features'] . '</span>
                                         </div>
                                     </li>';
                             }
@@ -1373,7 +1374,7 @@
                                         <h3>Output</h3>
                                         
                                         <div class="sideOptionInner">
-                                            ' . $option['output'] . '
+                                            <span>' . $option['output'] . '</span>
                                         </div>
                                     </li>';
                             }
@@ -1384,7 +1385,7 @@
                                         <h3>Options</h3>
                                         
                                         <div class="sideOptionInner">
-                                            ' . $option['options'] . '
+                                            <span>' . $option['options'] . '</span>
                                         </div>
                                     </li>';
                             }
@@ -1439,8 +1440,10 @@
             }
 
             if($posts->num_rows > 0) {
+                $postOutput .= '<div class="' . $this->postType . 'sList">';
+                
                 while($row = $posts->fetch_assoc()) {
-                    $postOutput .= '<a href="' . $this->postType . 's/' . $row['url'] . '"><div class="' . $this->postType . '">';
+                    $postOutput .= '<div class="' . $this->postType . '">';
                     
                     if($this->postType != 'page' && $this->postType != 'post') {
                         $galleryItems = $mysqli->query("SELECT gallery_images, gallery_main FROM `{$this->postType}s_options` WHERE post_type_id = {$row['id']}");
@@ -1448,21 +1451,38 @@
                         if($galleryItems->num_rows > 0) {
                             $galleryItem = $galleryItems->fetch_assoc();
                             if($galleryItem['gallery_main'] != null && $galleryItem['gallery_main'] != '') {
-                                $postOutput .= '<div class="imageWrap">
-                                    <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem['gallery_main'] . '">
-                                </div>';
+                                $postOutput .= 
+                                    '<div class="imageWrap">
+                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
+                                            <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem['gallery_main'] . '">
+                                        </a>
+                                    </div>';
                             }
                             else if($row['image_url'] != null && $row['image_url'] != '') {
-                                $postOutput .= '<div class="imageWrap">
-                                    <img src="' . $row['image_url'] . '">
-                                </div>';
+                                $postOutput .= 
+                                    '<div class="imageWrap">
+                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
+                                            <img src="' . $row['image_url'] . '">
+                                        </a>
+                                    </div>';
                             }
                             else if($galleryItem['gallery_images'] != null && $galleryItem['gallery_images'] != '') {
                                 $galleryFirst = ltrim(explode('";', $galleryItem['gallery_images'])[0], '"');
                                 
-                                $postOutput .= '<div class="imageWrap">
-                                    <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryFirst . '">
-                                </div>';
+                                $postOutput .= 
+                                    '<div class="imageWrap">
+                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
+                                            <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryFirst . '">
+                                        </a>
+                                    </div>';
+                            }
+                            else {
+                                $postOutput .= 
+                                    '<div class="imageWrap">
+                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
+                                            <img src="/admin/images/missingImage.png">
+                                        </a>
+                                    </div>';
                             }
                         }
                     }
@@ -1485,8 +1505,10 @@
                         $postOutput .= '<p>' . substr($row['description'], 0, 200) . '...<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
                     }
 
-                    $postOutput .= '</div></a><hr>';
-                }                              
+                    $postOutput .= '</div><hr>';
+                }    
+                
+                $postOutput .= '</div>';
             }
             else {
                 $postOutput = '<p>There are currently no ' . strtolower($this->postTitle) . 's.</p>';
@@ -1608,10 +1630,25 @@
         public $postType = '';
 
         public function __construct($postType = '') {
+            $mysqli = $GLOBALS['mysqli'];
+            
             if(isset($postType) && $postType != '') {
                 $this->postType = $postType;
             }
-
+            
+            $checkId = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}` WHERE id = {$_GET['p']}")->fetch_array()[0];
+            $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
+            
+            if($checkId <= 0) {
+                exit();
+            }
+            
+            if($checkOptions <= 0) {
+                echo '<h3>Product options are missing for this post.</h3>';
+                
+                exit();
+            }
+            
             echo '<div class="formBlock productOptions ' . $postType . 'Options" style="max-width: 100%; border-bottom: 0;">' .
                     '<form style="max-width: 100%;" enctype="multipart/formdata">';
         }
