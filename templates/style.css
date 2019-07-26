@@ -34,13 +34,18 @@ a:hover {
     height: 200px;
     overflow: hidden;
     text-align: center;
-    display: table;
+    position: relative;
 }
 
 .imageWrap img {
     max-width: 100%;
-    height: 100%;
-    display: table-cell;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     margin: auto;
     vertical-align: middle;
 }
@@ -225,6 +230,11 @@ nav ul li a:hover {
 
 .hero {
     min-height: 300px;
+    min-height: 90vh;
+    min-height: -webkit-calc(100vh - 82px);
+    min-height: -moz-calc(100vh - 82px);
+    min-height: -o-calc(100vh - 82px);
+    min-height: calc(100vh - 82px);
     padding: 1em;
     box-sizing: border-box;
     background-size: cover;
@@ -234,6 +244,7 @@ nav ul li a:hover {
     background-color: #333;
     color: #fff;
     position: relative;
+    overflow: hidden;
 }
 
 .hero > h1, .hero > .postDetails {
@@ -246,6 +257,16 @@ nav ul li a:hover {
     bottom: 0;
     padding: 0.5em;
     box-sizing: border-box;
+}
+
+.hero #heroImage {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 100%;
 }
 
 .gallery {
@@ -299,6 +320,8 @@ nav ul li a:hover {
     border-width: 3px 3px 0; 
     border-style: solid;
     border-color: #aaa;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .sideOptions ul li:last-child {
@@ -309,17 +332,31 @@ nav ul li a:hover {
     margin: 0 auto;
 }
 
-.sideOptions ul li > h3, .sideOptions ul li > .sideOptionInner {
+.sideOptions ul li > h3 {
     padding: 0.75em;
     box-sizing: border-box;
 }
 
 .sideOptions ul li > .sideOptionInner {
     cursor: auto;
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 0.75em;
+    box-sizing: border-box;
+}
+
+.sideOptions ul li#inactive > .sideOptionInner {
+    transition: max-height 0.25s ease-out;
 }
 
 .sideOptions ul li#active > .sideOptionInner {
+    max-height: 100vh;
+    transition: max-height 0.5s ease-in;
+}
+
+.sideOptions ul li > .sideOptionInner > *:last-child {
+    margin-bottom: 0.75em;
+    box-sizing: border-box;
     display: block;
 }
 
@@ -346,6 +383,48 @@ nav ul li a:hover {
 
 .postContent {
     min-height: 55px;
+}
+
+/* PRODUCTS */
+
+.productsList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.productsList > hr {
+    display: none;
+}
+
+.productsList .product {
+    width: 33.33%;
+    width: -webkit-calc(100% / 3);
+    width: -moz-calc(100% / 3);
+    width: -o-calc(100% / 3);
+    width: calc(100% / 3);
+    text-align: center;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: #f3f3f3;
+    box-sizing: border-box;
+    margin: 0.5em 0;
+}
+
+.productsList .product .imageWrap {
+    margin: auto;
+}
+
+.productsList .product p {
+    display: none;
+}
+
+.productsList .product a {
+    color: #333;
+    text-decoration: none;
+}
+
+.productsList .product:hover a {
+    text-decoration: underline;
 }
 
 /* RESPONSIVE */
