@@ -199,17 +199,3 @@ function matchHeight(element) {
         
     }, 100);
 }
-
-$(document).ready(function() {
-    squareBlock(".workBlocks > div");
-    squareBlock(".homeBlocks .imageWrap");
-    
-    matchHeight(".homeBlocks > div");
-});
-
-$(window).resize(function() {
-    squareBlock(".workBlocks > div");
-    squareBlock(".homeBlocks .imageWrap");
-    
-    matchHeight(".homeBlocks > div");
-});
