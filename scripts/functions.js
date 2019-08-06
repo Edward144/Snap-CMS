@@ -113,3 +113,103 @@ $(".sideOptions").on("click", "li#inactive", function() {
     $(".sideOptions li").attr("id", "inactive");
     $(this).attr("id", "active");
 });
+
+//Open Close Hamburger Menu
+function hamburgerMenu() {    
+    $("header nav").css({
+        "height" : ""
+    });
+    
+    var oHeight = $("header nav").outerHeight();
+    
+    if($(this).attr("id") == "hidden") {
+        $(this).attr("id", "visible");  
+        
+        $("header nav").css({
+            "height" : "0",
+            "display" : "block"
+        });
+        
+        $("header nav").animate({
+            "height" : oHeight
+        }, 500);
+    }
+    else {
+        $(this).attr("id", "hidden");
+        
+        $("header nav").animate({
+            "height" : "0"
+        }, 500);
+    }
+}
+
+$(".navToggle").click(hamburgerMenu);
+
+$(window).resize(function() {
+    if($(".navToggle").attr("id") == "visible") {
+        $("header nav").animate({
+            "height" : "0"
+        }, 500, function() {
+            $("header nav").css({
+                "height" : "",
+                "display" : ""
+            });
+        });
+
+        $(".navToggle").attr("id", "hidden");
+    }
+    else {
+        $("header nav").css({
+            "height" : "",
+            "display" : ""
+        });
+    }
+});
+
+//Home Blocks Size
+function squareBlock(element) {
+    setTimeout(function() {
+        height = 0;
+
+        $(element).each(function() {
+            if($(this).outerWidth() > height) {
+                height = $(this).outerWidth();
+            }
+        });
+
+        $(element).css("height", height);
+        
+    }, 100);
+}
+
+//Set Elements To Same Height
+function matchHeight(element) {
+    setTimeout(function() {    
+        $(element).css("height", "");
+
+        height = 0;
+        
+        $(element).each(function() {
+            if($(this).outerHeight() > height) {
+                height = $(this).outerHeight();
+            }
+        });
+
+        $(element).css("height", height);
+        
+    }, 100);
+}
+
+$(document).ready(function() {
+    squareBlock(".workBlocks > div");
+    squareBlock(".homeBlocks .imageWrap");
+    
+    matchHeight(".homeBlocks > div");
+});
+
+$(window).resize(function() {
+    squareBlock(".workBlocks > div");
+    squareBlock(".homeBlocks .imageWrap");
+    
+    matchHeight(".homeBlocks > div");
+});
