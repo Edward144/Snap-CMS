@@ -69,15 +69,15 @@ header .left, header .right {
 }
 
 header .left {
-    width: 40%;
+    width: 35%;
 }
 
 header .right {
-    width: 59%;
-    width: -webkit-calc(60% - 5px);
-    width: -moz-calc(60% - 5px);
-    width: -o-calc(60% - 5px);
-    width: calc(60% - 5px);
+    width: 64%;
+    width: -webkit-calc(65% - 5px);
+    width: -moz-calc(65% - 5px);
+    width: -o-calc(65% - 5px);
+    width: calc(65% - 5px);
 }
 
 header .logo {
@@ -159,6 +159,30 @@ footer .footerAfterInner {
 }
 
 /* NAVIGATION */
+
+header .navToggle {
+    display: none;
+    width: 45px;
+    height: 45px;
+    margin: auto 0 auto auto;
+    cursor: pointer;
+    background-image: url('../admin/images/icons/hamburger-dark-icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-color: #ebebeb;
+    border-radius: 100%;
+    transition: background-color 0.5s ease-out, background-image 0.5s ease-out;
+    position: absolute; 
+    top: 1em;
+    right: 1em;
+}
+
+header .navToggle:hover {
+    background-image: url('../admin/images/icons/hamburger-icon.png');
+    background-color: #333;
+    transition: background-color 0.5s ease-in, background-image 0.5s ease-in;
+}
 
 nav ul {
     text-align: right;
@@ -477,7 +501,44 @@ nav ul li a:hover {
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {
+    header .navToggle {
+        display: block;
+    }
     
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 300px;
+        background: #ebebeb;
+        overflow: hidden;
+        display: none;
+    }
+    
+    nav ul {
+        padding: 0;
+        margin: 0;
+    }
+    
+    nav ul li {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    nav ul li a {
+        display: block;
+        padding: 1em;
+        box-sizing: border-box;
+    }
+    
+    nav ul li a:hover {
+        text-decoration: none;
+        background: #dedede;
+    }
 }
 
 @media only screen and (max-width: 768px) {
