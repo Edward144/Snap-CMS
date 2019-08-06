@@ -1205,7 +1205,8 @@
             $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
             $hidePosts = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name ='hide_posts'")->fetch_array()[0];
 
-            if($hidePosts == 1 && ($homepage != '' && $homepage != null) && ($this->postType == 'post' || $this->postType == 'page')) {
+            if($hidePosts == 1 && $homepage != null && $homepage != '' && $this->postType == 'post') {
+                header('HTTP/1.1 301 Moved Permenantly');
                 header('Location: /');
 
                 exit();
