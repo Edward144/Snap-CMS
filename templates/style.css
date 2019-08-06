@@ -514,6 +514,7 @@ nav ul li a:hover {
         background: #ebebeb;
         overflow: hidden;
         display: none;
+        z-index: 100;
     }
     
     nav ul {
