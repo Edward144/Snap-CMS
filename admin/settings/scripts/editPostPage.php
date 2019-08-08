@@ -26,59 +26,61 @@
     $category = $_POST['category'];
     $image = $_POST['imageUrl'];
 
-    if($type != 'posts' && $type != 'pages') {
-        $galleryExist = $_POST['galleryExist'];
-        $galleryNew = $_POST['galleryNew'];
-        $galleryMain = $_POST['galleryMain'];
-        $features = $_POST['features'];
-        $output = $_POST['output'];
-        $spec = $_POST['spec'];
+    if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {
+        if($type != 'posts' && $type != 'pages') {
+            $galleryExist = $_POST['galleryExist'];
+            $galleryNew = $_POST['galleryNew'];
+            $galleryMain = $_POST['galleryMain'];
+            $features = $_POST['features'];
+            $output = $_POST['output'];
+            $spec = $_POST['spec'];
 
-        if($galleryExist == '" ";') {
-            $galleryExist = '';
-        }
-
-        if($galleryNew == '" ";') {
-            $galleryNew = '';
-        }
-
-        $gallery = $galleryExist . $galleryNew;
-
-        if($galleryNew != null && $galleryNew != '" ";') {
-            if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id)) {
-                mkdir($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id, 0777, true);
+            if($galleryExist == '" ";') {
+                $galleryExist = '';
             }
 
-            $tempFiles = glob($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/*');
+            if($galleryNew == '" ";') {
+                $galleryNew = '';
+            }
 
-            foreach($tempFiles as $tempFile) {            
-                if(is_file($tempFile)) {
-                    $tempFile = explode('/', $tempFile);
-                    $count = count($tempFile);
-                    $tempFile = $tempFile[$count - 1];
+            $gallery = $galleryExist . $galleryNew;
 
-                    rename($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $tempFile, $_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id . '/' . $tempFile);
+            if($galleryNew != null && $galleryNew != '" ";') {
+                if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id)) {
+                    mkdir($_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id, 0777, true);
+                }
+
+                $tempFiles = glob($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/*');
+
+                foreach($tempFiles as $tempFile) {            
+                    if(is_file($tempFile)) {
+                        $tempFile = explode('/', $tempFile);
+                        $count = count($tempFile);
+                        $tempFile = $tempFile[$count - 1];
+
+                        rename($_SERVER['DOCUMENT_ROOT'] . '/admin/images/tempuploads/' . $tempFile, $_SERVER['DOCUMENT_ROOT'] . '/gallery/' . $type . '/' . $id . '/' . $tempFile);
+                    }
                 }
             }
-        }
 
-        if($galleryMain == null || $galleryMain == '') {
-            $galleryMain = ltrim(explode('";', $gallery)[0], '"');
-        }
-        
-        $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$type}_options` WHERE post_type_id = {$id}")->fetch_array()[0];
-        
-        if($checkOptions > 0) {
-            $updateOptions = $mysqli->prepare("UPDATE `{$type}_options` SET gallery_images = ?, gallery_main = ?, features = ?, specifications = ?, output = ? WHERE post_type_id = ?");
-            $updateOptions->bind_param('sssssi', $gallery, $galleryMain, $features, $spec, $output, $id);
-            $updateOptions->execute();
-            $updateOptions->close();
-        }
-        else {
-            $addOptions = $mysqli->prepare("INSERT INTO `{$type}_options` (post_type_id, gallery_images, gallery_main, features, specifications, output) VALUES(?, ?, ?, ?, ?, ?, ?)");
-            $addOptions->bind_param('isssss', $id, $gallery, $galleryMain, $features, $spec, $output);
-            $addOptions->execute();
-            $addOptions->close();
+            if($galleryMain == null || $galleryMain == '') {
+                $galleryMain = ltrim(explode('";', $gallery)[0], '"');
+            }
+
+            $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$type}_options` WHERE post_type_id = {$id}")->fetch_array()[0];
+
+            if($checkOptions > 0) {
+                $updateOptions = $mysqli->prepare("UPDATE `{$type}_options` SET gallery_images = ?, gallery_main = ?, features = ?, specifications = ?, output = ? WHERE post_type_id = ?");
+                $updateOptions->bind_param('sssssi', $gallery, $galleryMain, $features, $spec, $output, $id);
+                $updateOptions->execute();
+                $updateOptions->close();
+            }
+            else {
+                $addOptions = $mysqli->prepare("INSERT INTO `{$type}_options` (post_type_id, gallery_images, gallery_main, features, specifications, output) VALUES(?, ?, ?, ?, ?, ?, ?)");
+                $addOptions->bind_param('isssss', $id, $gallery, $galleryMain, $features, $spec, $output);
+                $addOptions->execute();
+                $addOptions->close();
+            }
         }
     }
 
