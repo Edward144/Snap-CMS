@@ -12,6 +12,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <?php 
+            $companyName = $mysqli->query("SELECT company_name FROM `company_info` WHERE company_name <> '' AND company_name IS NOT NULL")->fetch_array()[0];
+            
+            if($companyName != null && $companyName != '') {
+                $companyName = ' | ' . $companyName;
+            }
+        
             if(isset($_GET['url'])) {
                 $checkPosts = $mysqli->query("SELECT * FROM `posts` WHERE url = '{$_GET['url']}' LIMIT 1");
                 $checkPages = $mysqli->query("SELECT * FROM `pages` WHERE url = '{$_GET['url']}' LIMIT 1");
@@ -20,17 +26,20 @@
                     $row = $checkPosts->fetch_assoc();
                     $author = $mysqli->query("SELECT first_name, last_name FROM `users` WHERE username = '{$row['author']}'")->fetch_assoc();
                     
-                    echo '<title>' . $row['name'] . '</title>';
+                    echo '<title>' . $row['name'] . $companyName . '</title>';
                     echo '<meta name="description" content="' . $row['description'] . '">';
                     echo '<meta name="author" content="' . $author['first_name'] . ' ' . $author['last_name'] . '">';
                 }
                 elseif($checkPages->num_rows > 0) {
                     $row = $checkPages->fetch_assoc();
                     
-                    echo '<title>' . $row['name'] . '</title>';
+                    echo '<title>' . $row['name'] . $companyName . '</title>';
                     echo '<meta name="description" content="' . $row['description'] . '">';
                     echo '<meta name="author" content="' . $author['first_name'] . ' ' . $author['last_name'] . '">';
                 }
+            }
+            elseif($_SERVER['REQUEST_URI'] == '/') {
+                echo '<title>Welcome' . $companyName . '</title>';
             }
         ?>
         
