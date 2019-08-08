@@ -22,7 +22,9 @@ ErrorDocument 404 /404.php
     RewriteRule ^post-type/(.*)/$ /custom_$1.php [L]
     RedirectMatch 301 ^/post-type/(.*)/$ /post-type/$1
     
+    RewriteRule ^post-type/(.*)/(.*)-(.*)$ /custom_$1.php\?url=$2_$3 [L]
     RewriteRule ^post-type/(.*)/(.*) /custom_$1.php\?url=$2 [L]
+    RewriteRule ^post-type/(.*)-(.*)$ /custom_$1_$2.php [L]
     RewriteRule ^post-type/(.*) /custom_$1.php [L]
     
     RedirectMatch 301 ^/admin/categories/$ /admin/categories
