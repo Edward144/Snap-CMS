@@ -97,6 +97,7 @@ ErrorDocument 404 /404.php
     #Media
     ExpiresByType audio/ogg                             "access plus 1 month"
     ExpiresByType image/gif                             "access plus 1 month"
+    ExpiresByType image/jpg                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
     ExpiresByType image/png                             "access plus 1 month"
     ExpiresByType video/mp4                             "access plus 1 month"
