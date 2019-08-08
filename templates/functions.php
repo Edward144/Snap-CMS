@@ -1,7 +1,7 @@
 <?php
     //Global Variable
     $baseUrl = $_SERVER['DOCUMENT_ROOT'];
-    $baseName = $_SERVER['SEVER_NAME'];
+    $baseName = $_SERVER['SERVER_NAME'];
 
     //Check If Database Connect File Exists
     if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php') != 1) {
