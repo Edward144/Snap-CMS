@@ -43,8 +43,10 @@
     $add->execute();
     $add->close();
 
-    if($type != 'pages' && $type != 'posts') {
-        $mysqli->query("INSERT INTO `{$type}_options` (post_type_id) VALUES({$id})");
+    if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {
+        if($type != 'pages' && $type != 'posts') {
+            $mysqli->query("INSERT INTO `{$type}_options` (post_type_id) VALUES({$id})");
+        }
     }
 
     if(!$mysqli->error) {
