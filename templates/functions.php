@@ -990,7 +990,7 @@
                         <p class="message"></p>
                     </form>
 
-                    <form id="searchPost">
+                    <form id="search' . ucwords($this->postType) . '">
                         <p>
                             <input type="text" name="search" placeholder="Search..." id="' . $pagination->itemLimit .'">
                         </p>
