@@ -26,7 +26,13 @@ $("#customPosts input[name='addRow']").click(function() {
     $("#customPosts table").append(
         "<tr>" + 
             "<td><input type='text' name='postTypeName' placeholder='Name'></td>" + 
-            "<td></td>" + 
+            "<td>" +
+                "<select name='postTypeType'>" +
+                    "<option value=''>Standard</option>" +
+                    "<option value='product'>Product</option>" +
+                "</select>" +
+            "</td>" + 
+            "<td></td>" +
         "</tr>"
     );
 });
@@ -41,6 +47,7 @@ $("#customPosts input[type='submit']").click(function() {
     
     $("#customPosts table tr:not(.headers)").each(function() {
         var name = $(this).find("input[name='postTypeName']").val();
+        var type = $(this).find("select[name='postTypeType']").val();
         
         if(name == "") {
             $("#customPosts .message").append("Row " + i + " skipped, missing name.<br>");
@@ -50,7 +57,7 @@ $("#customPosts input[type='submit']").click(function() {
                 url: "scripts/updateCustomPosts.php",
                 method: "POST",
                 dataType: "json",
-                data: ({name}),
+                data: ({name, type}),
                 success: function(data) {
                     $("#customPosts .message").append(data);
                 }
