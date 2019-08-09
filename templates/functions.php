@@ -1519,6 +1519,13 @@
                                     </div>';
                             }
                         }
+                        else {
+                            if($row['image_url'] != null && $row['image_url'] != '') {
+                                $postOutput .= '<div class="imageWrap">
+                                    <img src="' . $row['image_url'] . '">
+                                </div>';
+                            }
+                        }
                     }
                     else if($this->postType == 'post') {
                         if($row['image_url'] != null && $row['image_url'] != '') {
