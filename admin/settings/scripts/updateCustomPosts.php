@@ -44,7 +44,7 @@
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     post_type_id INT UNIQUE,
                     gallery_images TEXT DEFAULT NULL,
-                    main_gallery VARCHAR(255) DEFAULT NULL,
+                    gallery_main VARCHAR(255) DEFAULT NULL,
                     features VARCHAR(255) DEFAULT NULL,
                     specifications TEXT DEFAULT NULL,
                     output VARCHAR(255) DEFAULT NULL,
