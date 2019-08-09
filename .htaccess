@@ -22,7 +22,9 @@ ErrorDocument 404 /404.php
     RewriteRule ^post-type/(.*)/$ /custom_$1.php [L]
     RedirectMatch 301 ^/post-type/(.*)/$ /post-type/$1
     
+    RewriteRule ^post-type/(.*)-(.*)/(.*)$ /custom_$1_$2.php\?url=$3 [L]
     RewriteRule ^post-type/(.*)/(.*) /custom_$1.php\?url=$2 [L]
+    RewriteRule ^post-type/(.*)-(.*)$ /custom_$1_$2.php [L]
     RewriteRule ^post-type/(.*) /custom_$1.php [L]
     
     RedirectMatch 301 ^/admin/categories/$ /admin/categories
@@ -95,6 +97,7 @@ ErrorDocument 404 /404.php
     #Media
     ExpiresByType audio/ogg                             "access plus 1 month"
     ExpiresByType image/gif                             "access plus 1 month"
+    ExpiresByType image/jpg                             "access plus 1 month"
     ExpiresByType image/jpeg                            "access plus 1 month"
     ExpiresByType image/png                             "access plus 1 month"
     ExpiresByType video/mp4                             "access plus 1 month"

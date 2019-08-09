@@ -50,6 +50,88 @@ a:hover {
     vertical-align: middle;
 }
 
+.contactForm {
+    background: #f3f3f3;
+    padding: 1em;
+    box-sizing: border-box;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.contactForm p label, .contactForm p input {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+}
+
+.contactForm p input:not([type="button"]):not([type="submit"]) {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.contactForm p select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.contactForm p textarea {
+    vertical-align: top;
+    width: 100%;
+    max-width: 300px;
+    min-width: 300px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 0;
+    min-height: 150px;
+}
+
+.contactForm p {
+    max-width: 404px;
+}
+
+.contactForm p:first-child {
+    margin-top: 0;
+}
+
+.contactForm p:last-child {
+    margin-bottom: 0;
+}
+
+.contactForm #required:after {
+    content: " *";
+    color: #ff0000;
+}
+
+.contactForm input[type="button"],
+.contactForm input[type="submit"] {
+    min-width: 150px;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    background: #0271ba;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.contactForm input[type="button"]:hover,
+.contactForm input[type="submit"]:hover {
+    background: #01538b;
+}
+
+.contactForm #message {
+    color: #ff0000;
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
 /* HEADER */
 
 header {
@@ -69,15 +151,15 @@ header .left, header .right {
 }
 
 header .left {
-    width: 40%;
+    width: 35%;
 }
 
 header .right {
-    width: 59%;
-    width: -webkit-calc(60% - 5px);
-    width: -moz-calc(60% - 5px);
-    width: -o-calc(60% - 5px);
-    width: calc(60% - 5px);
+    width: 64%;
+    width: -webkit-calc(65% - 5px);
+    width: -moz-calc(65% - 5px);
+    width: -o-calc(65% - 5px);
+    width: calc(65% - 5px);
 }
 
 header .logo {
@@ -160,6 +242,30 @@ footer .footerAfterInner {
 
 /* NAVIGATION */
 
+header .navToggle {
+    display: none;
+    width: 45px;
+    height: 45px;
+    margin: auto 0 auto auto;
+    cursor: pointer;
+    background-image: url('../admin/images/icons/hamburger-dark-icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-color: #ebebeb;
+    border-radius: 100%;
+    transition: background-color 0.5s ease-out, background-image 0.5s ease-out;
+    position: absolute; 
+    top: 1em;
+    right: 1em;
+}
+
+header .navToggle:hover {
+    background-image: url('../admin/images/icons/hamburger-icon.png');
+    background-color: #333;
+    transition: background-color 0.5s ease-in, background-image 0.5s ease-in;
+}
+
 nav ul {
     text-align: right;
     list-style: none;
@@ -186,6 +292,73 @@ nav ul li a {
 
 nav ul li a:hover {
     text-decoration: underline;
+}
+
+nav a {
+    font-weight: bold;
+    transition: color 0.25s ease-out;
+}
+
+nav a:hover {
+    text-decoration: none !important;
+    transition: color 0.25s ease-in;
+}
+
+nav li {
+    position: relative;
+}
+
+nav li > ul {
+    display: none;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background: #ebebeb;
+    width: 300%;
+}
+
+nav li > ul:after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    box-shadow: 2px 2px 10px -4px #333;
+    height: calc(100% - 39px);
+    height: -webkit-calc(100% - 39px);
+    height: -moz-calc(100% - 39px);
+    height: -o-calc(100% - 39px);
+}
+
+nav li > ul li {
+    display: block;
+    margin: 0;
+    max-width: 100%;
+    text-align: left;
+    z-index: 100;
+    background: #ebebeb;
+}
+
+nav li > ul li a {
+    display: block;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+nav li > ul li a:hover {
+    background: #dedede;
+}
+
+nav li:hover > ul {
+    display: block;
+}
+
+nav li > ul li > ul {
+    width: 100%;
+    left: 100%;
+    top: 0;
 }
 
 /* MAIN */
@@ -477,7 +650,66 @@ nav ul li a:hover {
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {
+    header .navToggle {
+        display: block;
+    }
     
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 300px;
+        background: #ebebeb;
+        overflow: hidden;
+        display: none;
+        z-index: 100;
+    }
+    
+    nav ul {
+        padding: 0;
+        margin: 0;
+    }
+    
+    nav ul li {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    nav ul li a {
+        display: block;
+        padding: 1em;
+        box-sizing: border-box;
+    }
+    
+    nav ul li:hover {
+        background: #dedede;
+    }
+    
+    nav ul li a:hover {
+        text-decoration: none;
+        background: #dedede;
+    }
+    
+    nav li > ul {
+        position: static;
+        width: 100%;
+    }
+    
+    nav li > ul li {
+       text-align: center;
+    }
+    
+    nav li > ul li a {
+        padding: 1em;
+    }
+    
+    nav li > ul:after {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 768px) {

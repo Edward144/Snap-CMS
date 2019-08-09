@@ -15,6 +15,7 @@
 
     $name = slugify(strtolower($_POST['name']));
     $name = str_replace('-', '_', $name);
+    $type = $_POST['type'];
 
     $checkExisting = $mysqli->prepare("SELECT COUNT(*) FROM `custom_posts` WHERE name = ?");
     $checkExisting->bind_param('s', $name);
@@ -37,18 +38,20 @@
         $mysqli->query("CREATE TABLE `{$name}s_categories` LIKE `categories`");
         
         //Create Post Type Options
-        $mysqli->query(
-            "CREATE TABLE IF NOT EXISTS `{$name}s_options` (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                post_type_id INT UNIQUE,
-                gallery_images TEXT DEFAULT NULL,
-                main_gallery VACHAR(255) DEFAULT NULL,
-                features VARCHAR(255) DEFAULT NULL,
-                specifications TEXT DEFAULT NULL,
-                output VARCHAR(255) DEFAULT NULL,
-                options VARCHAR(255) DEFAULT NULL
-            )"
-        );
+        if($type == 'product') {
+            $mysqli->query(
+                "CREATE TABLE IF NOT EXISTS `{$name}s_options` (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    post_type_id INT UNIQUE,
+                    gallery_images TEXT DEFAULT NULL,
+                    gallery_main VARCHAR(255) DEFAULT NULL,
+                    features VARCHAR(255) DEFAULT NULL,
+                    specifications TEXT DEFAULT NULL,
+                    output VARCHAR(255) DEFAULT NULL,
+                    options VARCHAR(255) DEFAULT NULL
+                )"
+            );
+        }
         
         //Add Links To Admin Sidebar        
         if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
@@ -69,8 +72,18 @@
                 <div class="content">
                     <?php 
                         $posts = new postAdmin(\'' . $name . '\');
-                        $posts->getPost();
-                    ?>
+                        $posts->getPost();';
+            
+            if($type == 'product') {
+                $adminFile .= 
+                            'if(isset($_GET[\'p\'])) {
+                                $options = new productOptions(\'' . $name . 's\');
+                                $options->addAll();
+                                unset($options);
+                            }';
+            }
+            
+            $adminFile .= '?>
                 </div>
 
                 <script src="/admin/settings/scripts/postPage.js"></script>
@@ -120,8 +133,14 @@
                 '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/header.php\'); ?>
                     
                     <?php 
-                        $posts = new postUser(\'' . $name . '\');
-                        $posts->getPost();
+                        $posts = new postUser(\'' . $name . '\');';
+                        
+            
+            if($type == 'product') {
+                $frontFile .= '$posts->sideOptions(true);';
+            }
+            
+            $frontFile .= '$posts->getPost();
                     ?>
 
             <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/footer.php\'); ?>';

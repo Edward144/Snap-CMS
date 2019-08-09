@@ -45,6 +45,7 @@
                 <table>
                     <tr class="headers">
                         <td>Name</td>
+                        <td>Type</td>
                         <td>Actions</td>
                     </tr>
                     
@@ -54,6 +55,13 @@
                         <tr>
                             <td>
                                 <input type="text" name="postTypeName" placeholder="Name" value="<?php echo $row['name']; ?>" disabled>
+                            </td>
+                            
+                            <td>
+                                <select name="postTypeType" disabled>
+                                    <option value="">Standard</option>
+                                    <option value="product">Product</option>
+                                </select>
                             </td>
 
                             <td>
