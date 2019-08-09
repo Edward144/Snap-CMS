@@ -8,3 +8,9 @@ admin/custom_*
 custom_*
 gallery/*
 !gallery/.gitkeep
+scripts/revolution/*
+scripts/revolution-addons/*
+scripts/assets/*
+contact-us.php
+contact_form.php
+home_banner.php
