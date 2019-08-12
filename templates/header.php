@@ -53,6 +53,23 @@
         <script src="/scripts/lightbox.js"></script>
         <script src="/scripts/color-thief.min.js"></script>
         <script src="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.js"></script>
+        
+        <?php
+            $analyticsCode = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'analytics'")->fetch_array()[0];
+        
+            if($analyticsCode != null && $analyticsCode != '') {
+                echo
+                    '<!-- Global site tag (gtag.js) - Google Analytics -->
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=' . $analyticsCode . '"></script>
+                    <script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag("js", new Date());
+
+                    gtag("config", "' . $analyticsCode . '");
+                    </script>';
+            }
+        ?>
     </head>
     
     <body>

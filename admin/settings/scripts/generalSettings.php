@@ -4,6 +4,7 @@
     
     $homepage = $_POST['homepage'];
     $hidePosts = $_POST['hidePosts'];
+    $analytics = $_POST['analytics'];
     
     if($hidePosts == 0) {
         $hidePosts = '';
@@ -16,6 +17,11 @@
     
     $updatePosts = $mysqli->prepare("UPDATE `settings` SET setting_value = ? WHERE setting_name = 'hide_posts'");
     $updatePosts->bind_param('s', $hidePosts);
+    $updatePosts->execute();
+    $updatePosts->close();
+
+    $updatePosts = $mysqli->prepare("UPDATE `settings` SET setting_value = ? WHERE setting_name = 'analytics'");
+    $updatePosts->bind_param('s', $analytics);
     $updatePosts->execute();
     $updatePosts->close();
     

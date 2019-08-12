@@ -31,6 +31,12 @@
                 </p>
                 
                 <p>
+                    <label id="helper">Analytics: <span id="helperText">Enter your google analytics Gtag, to automatically add analytics to the header of every page.</span></label>
+                    
+                    <input type="text" name="analyticsCode" placeholder="UA-12345678-9">
+                </p>
+                
+                <p>
                     <input type="submit" value="Submit">
                 </p>
                 

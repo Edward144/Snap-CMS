@@ -2,6 +2,7 @@ $("#generalSettings input[type='submit']").click(function() {
     event.preventDefault();
     
     var homepage = $("#generalSettings select[name='homepage']").val();
+    var analytics = $("#generalSettings input[name='analyticsCode']").val();
     
     if($("#generalSettings input[name='hidePosts']").is(":checked")) {
         var hidePosts = 1;
@@ -14,7 +15,7 @@ $("#generalSettings input[type='submit']").click(function() {
         url: "scripts/generalSettings.php",
         method: "POST",
         dataType: "json",
-        data: ({homepage, hidePosts}),
+        data: ({homepage, hidePosts, analytics}),
         success: function(data) {
             $("#generalSettings .message").text(data);
         }

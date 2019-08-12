@@ -277,10 +277,9 @@
 
     //Create Default Settings
     $mysqli->query("INSERT IGNORE INTO `settings` (setting_name, setting_value) VALUE('setupcomplete', '1')");
-
     $mysqli->query("INSERT IGNORE INTO `settings` (setting_name, setting_value) VALUE('homepage', '')");
-
     $mysqli->query("INSERT IGNORE INTO `settings` (setting_name, setting_value) VALUE('hide_posts', '0')");
+    $mysqli->query("INSERT IGNORE INTO `settings` (setting_name, setting_value) VALUE('analytics', NULL)");
 
     //write Output
     if(!$mysqli->error) {
