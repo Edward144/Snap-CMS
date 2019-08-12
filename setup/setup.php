@@ -209,7 +209,7 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `custom_posts` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(200) UNIQUE
+            name VARCHAR(191) UNIQUE
         )"
     );
 
