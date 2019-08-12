@@ -1039,7 +1039,10 @@ table .icon img {
 }
 
 .previewSlider .previewItem {
-    height: 50vh;
+    height: -webkit-calc(100vh - 82px);
+    height: -moz-calc(100vh - 82px);
+    height: -o-calc(100vh - 82px);
+    height: calc(100vh - 82px);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1049,17 +1052,17 @@ table .icon img {
 }
 
 .previewSlider .previewContent {
-    max-width: 500px;
+    max-width: 1024px;
     margin: auto;
 }
 
 .previewSlider .previewContentInner {
-    background: #fff;
-    max-width: 70%;
+    background: rgba(255, 255, 255, 0.5);
+    max-width: 55%;
     margin: auto auto auto 0;
     vertical-align: middle;
-    padding: 0.5em;
     box-sizing: border-box;
+    padding: 1em;
 }
 
 /* RESPONSIVE */

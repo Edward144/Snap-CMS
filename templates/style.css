@@ -647,6 +647,33 @@ nav li > ul li > ul {
     text-decoration: underline;
 }
 
+.liveSlider .liveItem {
+    height: -webkit-calc(100vh - 82px);
+    height: -moz-calc(100vh - 82px);
+    height: -o-calc(100vh - 82px);
+    height: calc(100vh - 82px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1em;
+    box-sizing: border-box;
+    background-color: #f3f3f3;
+}
+
+.liveSlider .liveContent {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.liveSlider .liveContentInner {
+    background: rgba(255, 255, 255, 0.5);
+    max-width: 55%;
+    margin: auto 0 auto auto;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {

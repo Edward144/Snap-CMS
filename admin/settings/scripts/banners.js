@@ -254,20 +254,22 @@ $("#editContent").on("click", "input[name='deleteSlide']", function() {
     var position = $.trim($(this).closest("tr").find("#position").text());
     var row = $(this).closest("tr");
     
-    $.ajax({
-        url: "/admin/settings/scripts/deleteBannerSlides.php",
-        method: "POST",
-        dataType: "json",
-        data: ({bannerId, position}), 
-        success: function(data) {
-            if(data[0] == 1) {
-                row.remove();
+    if(confirm("Are you sure you want to delete this slide?")) {
+        $.ajax({
+            url: "/admin/settings/scripts/deleteBannerSlides.php",
+            method: "POST",
+            dataType: "json",
+            data: ({bannerId, position}), 
+            success: function(data) {
+                if(data[0] == 1) {
+                    row.remove();
+                }
+                else {
+                    alert(data[1]);
+                }
             }
-            else {
-                alert(data[1]);
-            }
-        }
-    });
+        });
+    }
 });
 
 //Image Browser

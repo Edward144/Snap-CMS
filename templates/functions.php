@@ -1171,6 +1171,8 @@
         private $homepage;
         public $sideOptions;
         public $displaySidebar = 1;
+        private $slider = 0;
+        private $sliderOutput = [];
         
         public function __construct($type = '') {
             if($type != null) {
@@ -1231,6 +1233,51 @@
                 $this->getPostList();
             }
         }
+        
+        private function liveSlider($postId) {
+            $mysqli = $GLOBALS['mysqli'];
+            $settings = $mysqli->query("SELECT * FROM `banners` WHERE post_type = '{$this->postType}s' AND post_type_id = {$postId} AND visible = 1");
+            
+            if($settings->num_rows > 0) {
+                $this->slider = 1;
+                
+                $settings = $settings->fetch_assoc();
+                $slides = $mysqli->query("SELECT * FROM `banners_slides` WHERE banner_id = {$settings['id']} ORDER BY position ASC");
+                $sliderOutput = [];
+                
+                if($slides->num_rows > 0) {
+                    array_push($this->sliderOutput, '<div class="owl-carousel liveSlider">');
+                    
+                        while($slide = $slides->fetch_assoc()) {
+                            array_push($this->sliderOutput,
+                                '<div class="liveItem" style="background-image: url(\'' . $slide['live_background'] . '\')">
+                                    <div class="liveContent">
+                                        <div class="liveContentInner">' .
+                                            $slide['live_content'] .
+                                        '</div>
+                                    </div>
+                                </div>'
+                            );
+                        }
+                    
+                    array_push($this->sliderOutput, '</div>');
+                    
+                    array_push($this->sliderOutput, 
+                        '<script>
+                            $(document).ready(function() {
+                                $(".owl-carousel").owlCarousel({
+                                    ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
+                                    items: 1,
+                                    loop: true,
+                                    ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
+                                    ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
+                                });
+                            });
+                        </script>'
+                    );
+                }
+            }
+        }
 
         private function getPostSingle() {
             $mysqli = $GLOBALS['mysqli'];
@@ -1273,26 +1320,33 @@
                         }
                     }
                     
-                    $postOutput .= 
-                        '<div class="hero ' . $this->postType . '" style="' . (isset($featuredUrl) ? '//background-image: url(\'' . $featuredUrl . '\')' : '') . '">'
-                        . (isset($featuredUrl) ? '<img src="' . $featuredUrl . '" id="heroImage">' : '') . '
-                        <div class="postDetails">
-                            <h1>' . $row['name'] . '</h1>';
+                    $this->liveSlider($row['id']);
+                    
+                    if($this->slider == 1) {
+                        $postOutput .= implode($this->sliderOutput);
+                    }
+                    else {
+                        $postOutput .= 
+                            '<div class="hero ' . $this->postType . '" style="' . (isset($featuredUrl) ? '//background-image: url(\'' . $featuredUrl . '\')' : '') . '">'
+                            . (isset($featuredUrl) ? '<img src="' . $featuredUrl . '" id="heroImage">' : '') . '
+                            <div class="postDetails">
+                                <h1>' . $row['name'] . '</h1>';
 
-                            if($category != null && $category != '' && $this->postType != 'page') {
-                                $postOutput .= '<h3>' . $category . '</h3>';
+                                if($category != null && $category != '' && $this->postType != 'page') {
+                                    $postOutput .= '<h3>' . $category . '</h3>';
+                                }
+                            if($this->postType != 'page') {
+                                $postOutput .=
+                                    '<div class="author">
+                                        <p>
+                                            <strong>By: </strong><span>' . ucwords($author) . '</span>
+                                            <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
+                                        </p>
+                                    </div>';
                             }
-                        if($this->postType != 'page') {
-                            $postOutput .=
-                                '<div class="author">
-                                    <p>
-                                        <strong>By: </strong><span>' . ucwords($author) . '</span>
-                                        <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
-                                    </p>
+                            $postOutput .= '</div>
                                 </div>';
-                        }
-                        $postOutput .= '</div>
-                            </div>';
+                    }
 
                     $postOutput .=
                         '<div class="mainInner">';
