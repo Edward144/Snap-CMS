@@ -1265,7 +1265,7 @@
                     array_push($this->sliderOutput, 
                         '<script>
                             $(document).ready(function() {
-                                $(".owl-carousel").owlCarousel({
+                                $(".liveSlider").owlCarousel({
                                     ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
                                     items: 1,
                                     loop: true,
@@ -2000,6 +2000,9 @@
             $result = $banner->get_result();
 
             if($result->num_rows > 0) {
+                $postTypes = $mysqli->query("SELECT name FROM `custom_posts`");
+                
+                
                 while($row = $result->fetch_assoc()) {
                     $posts = $mysqli->query("SELECT id, name FROM `{$row['post_type']}`");
 
@@ -2036,17 +2039,26 @@
                                             <select name="postType">
                                                 <option value="" selected disabled>--Select Post Type--</option>
                                                 <option value="pages" ' . ($row['post_type'] == 'pages' ? 'selected' : '') . '>Page</options>
-                                                <option value="posts" ' . ($row['post_type'] == 'posts' ? 'selected' : '') . '>Post</options>
-                                            </select>
+                                                <option value="posts" ' . ($row['post_type'] == 'posts' ? 'selected' : '') . '>Post</options>';
+                                                
+                                                if($postTypes->num_rows > 0) {
+                                                    while($type = $postTypes->fetch_assoc()) {
+                                                        echo '<option value="' . $type['name'] . 's" ' . ($type['name'] . 's' == $row['post_type'] ? 'selected' : '') . '>' . ucwords($type['name']) . 's</option>';
+                                                    }
+                                                }
+                    
+                                        echo '</select>
                                         </p>
 
                                         <p>
                                             <label>Post Name: </label>
                                             <select name="postName">
                                                 <option value="" selected disabled>--Select Post Name--</option>';
-
-                                                while($post = $posts->fetch_assoc()) {
-                                                    echo '<option value="' . $post['id'] . '" ' . ($post['id'] == $row['post_type_id'] ? 'selected' : '') . '>' . $post['name'] . '</option>';
+                                                
+                                                if($posts->num_rows > 0) {
+                                                    while($post = $posts->fetch_assoc()) {
+                                                        echo '<option value="' . $post['id'] . '" ' . ($post['id'] == $row['post_type_id'] ? 'selected' : '') . '>' . $post['name'] . '</option>';
+                                                    }
                                                 }
 
                                         echo '</select>
@@ -2070,17 +2082,11 @@
 
                                     <div class="right">
                                         <p>
-                                            <select name="animationIn">
-                                                <option value="" selected disabled>--Select Incoming Animation--</option>
-                                                <option value="flipInX" ' . ($row['animation_in'] == 'flipInX' ? 'selected' : '') . '>FlipInX</option>
-                                            </select>
+                                            <input type="text" name="animationIn" placeholder="Incoming Animation" value="' .($row['animation_in'] != null && $row['animation_in'] != '' ? $row['animation_in'] : 'flipInX') . '">
                                         </p>
 
                                         <p>
-                                            <select name="animationOut">
-                                                <option value="" selected disabled>--Select Outgoing Animation--</option>
-                                                <option value="slideOutDown" ' . ($row['animation_out'] == 'slideOutDown' ? 'selected' : '') . '>SlideOutDown</option>
-                                            </select>
+                                            <input type="text" name="animationOut" placeholder="Outgoing Animation" value="' .($row['animation_out'] != null && $row['animation_out'] != '' ? $row['animation_out'] : 'slideOutDown') . '">
                                         </p>
 
                                         <p>

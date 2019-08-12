@@ -216,8 +216,8 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `banners` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            post_type VARCHAR(100) DEFAULT 'pages',
-            post_type_id INT DEFAULT 1,
+            post_type VARCHAR(100) DEFAULT NULL,
+            post_type_id INT DEFAULT NULL,
             name VARCHAR(100) UNIQUE,
             visible TINYINT(1) DEFAULT 0,
             animation_in VARCHAR(100) DEFAULT 'flipInX',
