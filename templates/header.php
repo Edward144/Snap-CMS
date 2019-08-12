@@ -47,6 +47,7 @@
         <link href="/scripts/lightbox.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.css">
         <link rel="stylesheet" href="/scripts/OwlCarousel2-2.3.4/owl.theme.default.min.css">
+        <link href="/scripts/animate.min.css" rel="stylesheet">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <script src="/scripts/lightbox.js"></script>
