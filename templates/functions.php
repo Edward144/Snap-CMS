@@ -1837,4 +1837,298 @@
         }
     }
 
+    class bannerAdmin {
+        public $postType;
+        public $postId;
+        public $postTitle;
+        public $categoryPre;
+
+        public function __construct() {
+            if(isset($_GET['p'])) {
+                $this->getBannerSingle();
+            }
+            else {
+                $this->getBannerList();
+            }
+        }
+
+        public function getBannerList() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            echo '<h1>Sliding Banners</h1>';
+
+            $bannerCount = $mysqli->query("SELECT COUNT(*) FROM `banners`")->fetch_array()[0];
+            $pagination = new pagination($bannerCount);
+            $pagination->load();
+
+            echo
+                '<div class="formBlock">
+                    <form class="addContent" id="addBanner">
+                        <p>
+                            <input type="submit" value="New Banner">
+                        </p>
+
+                        <p class="message"></p>
+                    </form>
+
+                    <form id="searchBanner">
+                        <p>
+                            <input type="text" name="search" placeholder="Search..." id="' . $pagination->itemLimit .'">
+                        </p>
+                    </form>
+                </div>';
+
+            echo
+                '<table>
+                    <tr class="headers">
+                        <td style="width: 40px;">ID</td>
+                        <td style="text-align: left;">Details</td>
+                        <td style="width: 100px;">Actions</td>
+                    </tr>';
+
+                    $banners = $mysqli->query("SELECT * FROM `banners` ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+
+                    if($banners->num_rows > 0) {
+                        while($banner = $banners->fetch_assoc()) {
+                            $postName = $mysqli->query("SELECT name FROM `{$banner['post_type']}` WHERE id = {$banner['post_type_id']}");
+
+                            if($postName->num_rows <= 0) {
+                                $postName = 'N/A';
+                            }
+                            else {
+                                $postName = ' - ' . $postName->fetch_array()[0];
+                            }
+
+                            echo
+                                '<tr class="postRow bannerRow contentRow">
+                                    <td>
+                                        <span class="id">' . $banner['id'] . '</span>
+                                    </td>
+
+                                    <td style="text-align: left;">
+                                        <h4>' . $banner['name'] . '</h4>
+                                        <p>Displayed On: ' . ucwords(rtrim($banner['post_type'], 's')) . $postName  . '</p>
+                                    </td>
+
+                                    <td>';
+
+                                        if($banner['visible'] == 1) {
+                                            echo '<p class="icon" id="view"><img src="/admin/images/icons/view.png"></p>';
+                                        }
+                                        else {
+                                            echo '<p class="icon" id="hide"><img src="/admin/images/icons/hide.png"></p>';
+                                        }
+
+                                    echo
+                                        '<p class="icon" id="edit"><img src="/admin/images/icons/edit.png"></p>
+                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png"></p>
+                                    </td>
+                                </tr>';
+                        }
+                    }
+                    else {
+                        echo
+                            '<tr>
+                                <td colspan="3">There are currently no banners.</td>
+                            </tr>';
+                    }
+                echo '</table>';
+
+            $pagination->display();
+        }
+
+        public function getBannerSingle() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $banner = $mysqli->prepare("SELECT * FROM `banners` WHERE id = ?");
+            $banner->bind_param('i', $_GET['p']);
+            $banner->execute();
+            $result = $banner->get_result();
+
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $posts = $mysqli->query("SELECT id, name FROM `{$row['post_type']}`");
+
+                    echo 
+                        "<script>
+                            tinymce.init({
+                                selector:'.tinyBanner',
+                                plugins: 'paste image imagetools table code save link moxiemanager media fullscreen',
+                                menubar: '',
+                                toolbar: 'styleselect | bold italic | alignleft aligncenter alignright | link insert | code fullscreen',
+                                relative_urls: false,
+                                remove_script_host: false,
+                                image_title: true,
+                                height: 100
+                            });
+                        </script>";
+
+                    echo
+                        '<div class="banner contentWrap">
+                            <form id="editContent">
+                                <div class="details">
+                                    <div class="left">
+                                        <p style="display: none;">
+                                            <span class="id">' . $row['id'] . '</span>
+                                        </p>
+
+                                        <p>
+                                            <label>Title: </label>
+                                            <input type="text" name="title" value="' . $row['name'] . '">
+                                        </p>
+
+                                        <p>
+                                            <label>Post Type: </label>
+                                            <select name="postType">
+                                                <option value="" selected disabled>--Select Post Type--</option>
+                                                <option value="pages" ' . ($row['post_type'] == 'pages' ? 'selected' : '') . '>Page</options>
+                                                <option value="posts" ' . ($row['post_type'] == 'posts' ? 'selected' : '') . '>Post</options>
+                                            </select>
+                                        </p>
+
+                                        <p>
+                                            <label>Post Name: </label>
+                                            <select name="postName">
+                                                <option value="" selected disabled>--Select Post Name--</option>';
+
+                                                while($post = $posts->fetch_assoc()) {
+                                                    echo '<option value="' . $post['id'] . '" ' . ($post['id'] == $row['post_type_id'] ? 'selected' : '') . '>' . $post['name'] . '</option>';
+                                                }
+
+                                        echo '</select>
+                                        </p>';
+
+                                    echo '<p class="message"></p>
+                                        <table class="bannerSlides">
+                                            <tr class="headers">
+                                                <td>Slide Number</td>
+                                                <td>Background Image</td>
+                                                <td>Content</td>
+                                                <td>Actions</td>
+                                            </tr>';
+                                            $this->getSlides($row['id']);
+                                    echo '</table>
+
+                                        <p>
+                                            <input type="button" name="addSlide" value="Add Slide">
+                                        </p>
+                                    </div>
+
+                                    <div class="right">
+                                        <p>
+                                            <select name="animationIn">
+                                                <option value="" selected disabled>--Select Incoming Animation--</option>
+                                                <option value="flipInX" ' . ($row['animation_in'] == 'flipInX' ? 'selected' : '') . '>FlipInX</option>
+                                            </select>
+                                        </p>
+
+                                        <p>
+                                            <select name="animationOut">
+                                                <option value="" selected disabled>--Select Outgoing Animation--</option>
+                                                <option value="slideOutDown" ' . ($row['animation_out'] == 'slideOutDown' ? 'selected' : '') . '>SlideOutDown</option>
+                                            </select>
+                                        </p>
+
+                                        <p>
+                                            <label style="width: 100%; margin-bottom: 0.5em;">Transition Time (Seconds): </label>
+                                            <input type="number" name="speed" min="1" max="60" step="1" placeholder="5" value="' . ($row['speed'] / 1000) . '">
+                                        </p>
+
+                                        <div class="actions">';
+
+                                        if($row['visible'] == 1) {
+                                            echo '<p class="icon" id="view"><img src="/admin/images/icons/view.png" alt="Visible"></p>';
+                                        }
+                                        else {
+                                            echo '<p class="icon" id="hide"><img src="/admin/images/icons/hide.png" alt="Hidden"></p>';
+                                        }
+
+                                    echo 
+                                        '<p class="icon" id="apply"><img src="/admin/images/icons/check.png" alt="Save Changes"></p>
+                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png" alt="Delete"></p>
+                                        </div>
+
+                                        <p>
+                                            <input type="button" name="preview" value="Preview">
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>';
+                            $this->previewSlider($row['id']);
+                        echo '</div>';
+                }
+            }
+            else {
+                echo '<h1>Banner ' .  $_GET['p'] . ' does not exist</h1>';
+            }
+        }
+
+        private function getSlides($id) {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $slides = $mysqli->query("SELECT * FROM `banners_slides` WHERE banner_id = {$id} ORDER BY position ASC");
+
+            $bannerSlides = [];
+
+            if($slides->num_rows > 0) {
+                while($slide = $slides->fetch_assoc()) {
+                    array_push($bannerSlides, 
+                        '<tr class="slide" id="slide' . $slide['position'] . '">' .
+                            '<td id="position">' . $slide['position'] . '</td>' .
+                            '<td id="backgroundImage"><input type="text" id="bannerImage" name="bannerImage" value="' . $slide['live_background'] . '"><input type="button" name="bannerBrowse" value="Browse"></td>' .
+                            '<td id="content"><textarea class="tinyBanner">' . $slide['live_content'] . '</textarea></td>' .
+                            '<td><input type="button" name="deleteSlide" class="badButton" value="Delete Slide"></td>' .
+                        '</tr>'
+                    );
+                }
+            }
+
+            echo implode($bannerSlides);
+        }
+
+        private function previewSlider($id) {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $slides = $mysqli->query("SELECT * FROM `banners_slides` WHERE banner_id = {$id} ORDER BY position ASC");
+
+            if($slides->num_rows > 0) {
+                $settings = $mysqli->query("SELECT * FROM `banners` WHERE id = {$id}");
+
+                echo
+                    '<div class="owl-carousel previewSlider">';
+
+                    while($slide = $slides->fetch_assoc()) {
+                        echo
+                            '<div class="previewItem" style="background-image: url(\'' . $slide['preview_background'] . '\')">
+                                <div class="previewContent">
+                                    <div class="previewContentInner">' .
+                                        $slide['preview_content'] . 
+                                    '</div>
+                                </div>
+                            </div>';
+                    }
+
+                echo
+                    '</div>';
+
+                if($settings->num_rows > 0) {
+                    $settings = $settings->fetch_assoc();
+
+                    echo
+                        '<script>
+                            $(document).ready(function() {
+                                $(".owl-carousel").owlCarousel({
+                                    ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
+                                    items: 1,
+                                    loop: true,
+                                    ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
+                                    ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
+                                });
+                            });
+                        </script>';
+                }
+            }
+        }
+    }
+
 ?>

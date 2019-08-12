@@ -16,15 +16,19 @@
     <head>
         <link href="/admin/templates/admin-style.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
+        <link href="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.css" rel="stylesheet" type="text/css">
+        <link href="/scripts/OwlCarousel2-2.3.4/owl.theme.default.min.css" rel="stylesheet" type="text/css">
+        <link href="/scripts/animate.min.css" rel="stylesheet">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>        
         <script src="/admin/tinymce/tinymce.min.js"></script>
+        <script src="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.js"></script>
         
         <script>
             tinymce.init({
-                selector:'textarea:not(.noTiny)',
+                selector:'textarea:not(.noTiny):not(.tinyBanner)',
                 plugins: 'paste image imagetools table code save link moxiemanager media',
                 menubar: 'file edit format insert table ',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code',
@@ -34,6 +38,8 @@
                 height: 400
             });
         </script>
+        
+        <script src="/admin/tinymce/plugins/moxiemanager/js/moxman.loader.min.js"></script>
     </head>
     
     <body>

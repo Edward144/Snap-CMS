@@ -13,6 +13,7 @@
             <li><a class="sidebarLink" href="/admin/categories">Categories</a></li>
             <li><a class="sidebarLink" href="/admin/navigation">Navigation</a></li>
             <li><a class="sidebarLink" href="/admin/media">Media</a></li>
+            <li><a class="sidebarLink" href="/admin/banners">Sliding Banners</a></li>
             
             <?php while($file = $files->fetch_assoc()) : ?>
                 <li><a class="sidebarLink" href="/admin/<?php echo $file['link']; ?>"><?php echo ucwords(str_replace('_', ' ', $file['name'])); ?></a></li>

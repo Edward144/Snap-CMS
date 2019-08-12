@@ -79,7 +79,9 @@ body {
 .formBlock p input[type="button"],
 .formBlock p input[type="submit"],
 .formBlock table input[type="button"],
-.formBlock table input[type="submit"] {
+.formBlock table input[type="submit"],
+.banner.contentWrap input[name="addSlide"],
+.banner.contentWrap input[name="deleteSlide"] {
     min-width: 120px;
     width: auto;
     padding: 0.5em;
@@ -92,14 +94,17 @@ body {
 }
 
 .formBlock table input[type="button"],
-.formBlock table input[type="submit"] {
+.formBlock table input[type="submit"],
+.banner.contentWrap input[name="addSlide"], 
+.banner.contentWrap input[name="deleteSlide"] {
     min-width: 100px;
 }
 
 .formBlock p input[type="button"]:hover,
 .formBlock p input[type="submit"]:hover,
 .formBlock table input[type="button"]:hover,
-.formBlock table input[type="submit"]:hover {
+.formBlock table input[type="submit"]:hover,
+.banner.contentWrap input[name="addSlide"]:hover {
     background: #01538b;
 }
 
@@ -1005,6 +1010,56 @@ table .icon img {
     border-bottom: 1px solid #000;
     top: 10px;
     left: -16px;
+}
+
+/* BANNERS */
+
+.banner.contentWrap input[name="preview"] {
+    cursor: pointer;
+}
+
+.banner.contentWrap input[name="preview"]:hover {
+    background: #d3d3d3;
+}
+
+.mce-fullscreen {
+    z-index: 9999 !important;
+}
+
+.bannerSlides .mce-tinymce iframe,
+.bannerSlides .mce-statusbar,
+.bannerSlides .mce-flow-layout-item:not(.mce-last) {
+    display: none !important;
+}
+
+.mce-tinymce.mce-fullscreen iframe,
+.bannerSlides .mce-fullscreen .mce-statusbar,
+.bannerSlides .mce-fullscreen .mce-flow-layout-item:not(.mce-last) {
+    display: block !important;
+}
+
+.previewSlider .previewItem {
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1em;
+    box-sizing: border-box;
+    background-color: #f3f3f3;
+}
+
+.previewSlider .previewContent {
+    max-width: 500px;
+    margin: auto;
+}
+
+.previewSlider .previewContentInner {
+    background: #fff;
+    max-width: 70%;
+    margin: auto auto auto 0;
+    vertical-align: middle;
+    padding: 0.5em;
+    box-sizing: border-box;
 }
 
 /* RESPONSIVE */
