@@ -1033,9 +1033,12 @@ table .icon img {
 }
 
 .mce-tinymce.mce-fullscreen iframe,
-.bannerSlides .mce-fullscreen .mce-statusbar,
-.bannerSlides .mce-fullscreen .mce-flow-layout-item:not(.mce-last) {
+.bannerSlides .mce-fullscreen .mce-statusbar {
     display: block !important;
+}
+
+.bannerSlides .mce-fullscreen .mce-flow-layout-item:not(.mce-last) {
+    display: inline-block !important;
 }
 
 .previewSlider .previewItem {

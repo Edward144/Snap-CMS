@@ -2009,7 +2009,7 @@
                                 selector:'.tinyBanner',
                                 plugins: 'paste image imagetools table code save link moxiemanager media fullscreen',
                                 menubar: '',
-                                toolbar: 'styleselect | bold italic | alignleft aligncenter alignright | link insert | code fullscreen',
+                                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code fullscreen',
                                 relative_urls: false,
                                 remove_script_host: false,
                                 image_title: true,
@@ -2105,6 +2105,8 @@
                                         <p>
                                             <input type="button" name="preview" value="Preview">
                                         </p>
+                                        
+                                        <p>Preview will only show content changes, animations can only be updated live.</p>
                                     </div>
                                 </div>
                             </form>';

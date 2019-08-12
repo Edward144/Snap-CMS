@@ -176,9 +176,11 @@ function updateSlides() {
     
     if($(this).attr("id") == "apply") {
         var live = true;
+        var reloadPage = false;
     }
     else {
         var live = false;
+        var reloadPage = true;
     }
     
     var id = $.trim($("#editContent .id").text());
@@ -195,6 +197,10 @@ function updateSlides() {
             data: ({live, id, position, image, content}),
             success: function(data) {
                 console.log(data);
+                
+                if(reloadPage == true) {
+                    window.location.reload();
+                }
             }
         });
     });
@@ -240,7 +246,7 @@ $("#editContent input[name='addSlide']").click(function() {
         selector:'.tinyBanner',
         plugins: 'paste image imagetools table code save link moxiemanager media fullscreen',
         menubar: '',
-        toolbar: 'styleselect | bold italic | alignleft aligncenter alignright | link insert | code fullscreen',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code fullscreen',
         relative_urls: false,
         remove_script_host: false,
         image_title: true,
