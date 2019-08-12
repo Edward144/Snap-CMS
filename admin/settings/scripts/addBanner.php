@@ -17,6 +17,8 @@
     $add->bind_param('s', $title);
     $add->execute();
     $add->close();
+    
+    $id = $mysqli->insert_id;
 
     if(!$mysqli->error) {
         echo json_encode([1, $id]);
