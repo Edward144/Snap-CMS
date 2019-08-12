@@ -213,6 +213,31 @@
         )"
     );
 
+    $mysqli->query(
+        "CREATE TABLE IF NOT EXISTS `banners` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            post_type VARCHAR(100) DEFAULT 'pages',
+            post_type_id INT DEFAULT 1,
+            name VARCHAR(100) UNIQUE,
+            visible TINYINT(1) DEFAULT 0,
+            animation_in VARCHAR(100) DEFAULT 'flipInX',
+            animation_out VARCHAR(100) DEFAULT 'slideOutDown',
+            speed INT DEFAULT 5000
+        )"
+    );
+
+    $mysqli->query(
+        "CREATE TABLE IF NOT EXISTS `banners_slides` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            banner_id INT,
+            position INT,
+            live_background VARCHAR(255) DEFAULT NULL,
+            live_content TEXT DEFAULT NULL,
+            preview_background VARCHAR(255) DEFAULT NULL,
+            preview_content TEXT DEFAULT NULL
+        )"
+    );
+
     //CREATE Database Connection File
     $dbConn = fOpen($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php', 'w');
 
