@@ -109,8 +109,8 @@
 	$moxieManagerConfig['thumbnail.allow_override'] = '*';
 
 	// Authentication
-	$moxieManagerConfig['authenticator'] = 'BasicAuthenticator';
-	$moxieManagerConfig['authenticator.login_page'] = '';
+	/*$moxieManagerConfig['authenticator'] = 'BasicAuthenticator';
+	$moxieManagerConfig['authenticator.login_page'] = '';*/
 
 	// SessionAuthenticator
 	$moxieManagerConfig['SessionAuthenticator.logged_in_key'] = 'isLoggedIn';
