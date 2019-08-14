@@ -1329,9 +1329,10 @@
             if($post->num_rows > 0) {
                 while($row = $post->fetch_assoc()) {
                     $author = $row['author'];
-                    $authorF = $mysqli->query("SELECT first_name FROM `users` WHERE username = '{$author}'")->fetch_array()[0];
-                    $authorL = $mysqli->query("SELECT last_name FROM `users` WHERE username = '{$author}'")->fetch_array()[0];
-                    $author = $authorF . ' ' . $authorL;
+                   
+                    if($author == null || $author == '') {
+                        $author = 'Anonymous';
+                    }
                     
                     if($this->postType != 'page') {
                         $catId = $row['category_id'];
@@ -1370,7 +1371,7 @@
                                 if($category != null && $category != '' && $this->postType != 'page') {
                                     $postOutput .= '<h3>Category: ' . $category . '</h3>';
                                 }
-                            if($this->postType != 'page') {
+                            if($this->postType != 'page') {                                
                                 $postOutput .=
                                     '<div class="author">
                                         <p>
