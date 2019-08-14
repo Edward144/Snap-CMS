@@ -54,16 +54,16 @@
         }
         
         //Add Links To Admin Sidebar        
-        if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
+        /*if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
             $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");
         }
         
         if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s_categories'")->fetch_array()[0] == 0) {
             $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s_categories', 0, 'categories/{$name}s')");
-        }
+        }*/
         
         //Create Admin File
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php')) { 
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php')) { 
             $adminFile = 
                 '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
 
@@ -90,16 +90,16 @@
 
             <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
 
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php', 'w');
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php', 'w');
             
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's.php', 0775);
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php', 0775);
             
             fwrite($file, $adminFile);
             fclose($file);
         }
         
         //Create Admin Category File
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php')) { 
+        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php')) { 
             $adminFile = 
                 '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
     
@@ -119,9 +119,9 @@
 
             <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
 
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php', 'w');
+            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php', 'w');
             
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/custom_' . $name . 's_categories.php', 0775);
+            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php', 0775);
             
             fwrite($file, $adminFile);
             fclose($file);

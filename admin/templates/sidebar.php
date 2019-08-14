@@ -25,7 +25,7 @@
                 sidebarFolder($folder['name']);
             }
         
-            sidebarFolder('appearance');
+            sidebarFolder('post_types');
             sidebarFolder('settings');
         ?>
     </div>
