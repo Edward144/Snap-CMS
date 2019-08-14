@@ -5,26 +5,7 @@
     <div class="content">
         <h1><?php adminTItle(); ?></h1>
         
-        <div class="formBlock">
-            <form id="mediaUpload">                
-                <p>
-                    <label>Upload File: </label>
-                    <input type="file" name="mediaFile">
-                    <input type="submit" value="Upload">
-                </p>
-                
-                <p class="message"></p>
-            </form>
-        </div>
-        
-        <?php 
-            if(isset($_GET['f'])) {
-                new mediaTree($_GET['f']); 
-            }
-            else {
-                new mediaTree();
-            }
-        ?>
+        <iframe src="/admin/tinymce/plugins/moxiemanager/index" style="width: 100%; height: 100%;"></iframe>
     </div>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/admin/templates/footer.php'); ?>
