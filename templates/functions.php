@@ -1624,7 +1624,7 @@
                         }
                     }
                     
-                    $postOutput .= '<div class="content"><h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
+                    $postOutput .= '<div class="smallContent"><h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
 
                     $length = strlen($row['description']); 
 
