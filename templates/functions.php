@@ -344,9 +344,8 @@
                                     echo $name;
                                 } 
                             echo '</a>';
+                            $this->checkChildren($item['custom_id'], $item['level']);
                         echo '</li>';
-
-                        $this->checkChildren($item['custom_id'], $item['level']);
                     }
                 }
             
