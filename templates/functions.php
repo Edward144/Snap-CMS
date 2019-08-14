@@ -2137,7 +2137,7 @@
                     array_push($bannerSlides, 
                         '<tr class="slide" id="slide' . $slide['position'] . '">' .
                             '<td id="position">' . $slide['position'] . '</td>' .
-                            '<td id="backgroundImage"><input type="text" id="bannerImage" name="bannerImage" value="' . $slide['live_background'] . '"><input type="button" name="bannerBrowse" value="Browse"></td>' .
+                            '<td id="backgroundImage"><input type="text" id="bannerImage' . $slide['position'] . '" name="bannerImage" value="' . $slide['live_background'] . '"><input type="button" name="bannerBrowse" value="Browse"></td>' .
                             '<td id="content"><textarea class="tinyBanner">' . $slide['live_content'] . '</textarea></td>' .
                             '<td><input type="button" name="deleteSlide" class="badButton" value="Delete Slide"></td>' .
                         '</tr>'

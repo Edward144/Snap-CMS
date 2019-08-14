@@ -236,7 +236,7 @@ $("#editContent input[name='addSlide']").click(function() {
     $("#editContent .bannerSlides").append(
         "<tr class='slide' id='slide" + slideNumber + "'>" +
             "<td id='position'>" + slideNumber + "</td>" +
-            "<td id='backgroundImage'><input type='text' id='bannerImage' name='bannerImage'><input type='button' name='bannerBrowse' value='Browse'></td>" +
+            "<td id='backgroundImage'><input type='text' id='bannerImage" + slideNumber + "' name='bannerImage'><input type='button' name='bannerBrowse' value='Browse'></td>" +
             "<td id='content'><textarea class='tinyBanner'></textarea></td>" +
             "<td><input type='button' name='deleteSlide' class='badButton' value='Delete Slide'></td>" +
         "</tr>"
@@ -280,5 +280,7 @@ $("#editContent").on("click", "input[name='deleteSlide']", function() {
 
 //Image Browser
 $(".bannerSlides").on("click", ".slide input[name='bannerBrowse']", function() {
-    moxman.browse({fields: 'bannerImage'});
+    var slideId = $(this).closest("tr").attr("id").split("slide")[1];
+    
+    moxman.browse({fields: 'bannerImage' + slideId});
 });
