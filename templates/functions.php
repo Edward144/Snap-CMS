@@ -87,7 +87,7 @@
                                 $setting = explode('.', $setting[$settingCount - 1])[0];
                                 
                                 if($setting != 'scripts') {
-                                    if(strpos($setting, 'custom_') == 0) {
+                                    if(strpos($setting, 'custom_') === 0) {
                                         $setting = str_replace('custom_', '', $setting);
                                         
                                         if(strpos($setting, '_categories') !== false) {
