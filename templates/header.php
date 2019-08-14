@@ -89,5 +89,5 @@
         
         <?php include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/navigation.php'); ?>
 
-        <div class="main">
+        <div class="main <?php echo str_replace('/', '_', $_SERVER['REQUEST_URI']); ?>">
             
