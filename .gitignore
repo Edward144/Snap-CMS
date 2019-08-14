@@ -11,6 +11,4 @@ gallery/*
 scripts/revolution/*
 scripts/revolution-addons/*
 scripts/assets/*
-contact-us.php
-contact_form.php
-home_banner.php
+admin/tinymce/plugins/moxiemanager/data/storage/user.admin.json
