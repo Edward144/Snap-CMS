@@ -394,10 +394,10 @@ table .icon img {
 
 .main {
     margin: 0 auto;
-    height: -webkit-calc(100vh - 135px);
-    height: -moz-calc(100vh - 135px);
-    height: -o-calc(100vh - 135px);
-    height: calc(100vh - 135px);
+    height: -webkit-calc(100vh - 140px);
+    height: -moz-calc(100vh - 140px);
+    height: -o-calc(100vh - 140px);
+    height: calc(100vh - 140px);
     overflow: hidden;
     position: relative;
     width: 100%;
