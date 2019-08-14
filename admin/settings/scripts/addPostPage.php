@@ -44,10 +44,13 @@
     $add->close();
     
     $id = $mysqli->insert_id;
-
-    if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {
-        if($type != 'pages' && $type != 'posts') {
+    
+    if($type != 'pages' && $type != 'posts') {
+        if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {
             $mysqli->query("INSERT INTO `{$type}_options` (post_type_id) VALUES({$id})");
+        }
+        elseif($mysqli->query("SHOW TABLES LIKE '{$type}_additional'")->num_rows > 0) {
+            $mysqli->query("INSERT INTO `{$type}_additional` (post_type_id) VALUES({$id})");
         }
     }
 

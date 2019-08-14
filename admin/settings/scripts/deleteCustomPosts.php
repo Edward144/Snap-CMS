@@ -17,19 +17,11 @@
         $deletePost->bind_param('s', $name);
         $deletePost->execute();
         
-        //Delete From admin_sidebar
-        /*$deletePost = $mysqli->prepare("DELETE FROM `admin_sidebar` WHERE name = ?");
-        $deletePost->bind_param('s', $names);
-        $deletePost->execute();
-        
-        $deletePost = $mysqli->prepare("DELETE FROM `admin_sidebar` WHERE name = ?");
-        $deletePost->bind_param('s', $categories);
-        $deletePost->execute();*/
-        
         //Delete Custom Tables
         $mysqli->query("DROP TABLE `{$name}s`");
         $mysqli->query("DROP TABLE `{$name}s_categories`");
         $mysqli->query("DROP TABLE `{$name}s_options`");
+        $mysqli->query("DROP TABLE `{$name}s_additional`");
         
         //Delete Files
         unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php');

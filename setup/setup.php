@@ -149,7 +149,7 @@
         "CREATE TABLE IF NOT EXISTS `posts` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
-            description VARCHAR(255),
+            description VARCHAR(500),
             url VARCHAR(191) UNIQUE,
             author VARCHAR(200),
             date_posted DATETIME,
@@ -164,7 +164,7 @@
         "CREATE TABLE IF NOT EXISTS `pages` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
-            description VARCHAR(255),
+            description VARCHAR(500),
             url VARCHAR(191) UNIQUE,
             author VARCHAR(200),
             date_posted DATETIME,

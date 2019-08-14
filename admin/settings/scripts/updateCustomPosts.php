@@ -52,15 +52,15 @@
                 )"
             );
         }
-        
-        //Add Links To Admin Sidebar        
-        /*if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s'")->fetch_array()[0] == 0) {
-            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s', 0, 'post-type/{$name}s')");
+        elseif($type == 'review') {
+            $mysqli->query(
+                "CREATE TABLE IF NOT EXISTS `{$name}s_additional` (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    post_type_id INT UNIQUE,
+                    author VARCHAR(200) DEFAULT NULL
+                )"
+            );
         }
-        
-        if($mysqli->query("SELECT COUNT(*) FROM `admin_sidebar` WHERE name = '{$name}s_categories'")->fetch_array()[0] == 0) {
-            $mysqli->query("INSERT IGNORE INTO `admin_sidebar` (name, type, link) VALUES('{$name}s_categories', 0, 'categories/{$name}s')");
-        }*/
         
         //Create Admin File
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php')) { 

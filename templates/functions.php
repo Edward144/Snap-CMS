@@ -518,7 +518,7 @@
             echo '</div>';
         }
 
-        public function findDirectories($path) {
+        public function findDirectories($path) {            
             $dir = new RecursiveDirectoryIterator($path);
             $dir = new RecursiveIteratorIterator($dir);
             $dir->setMaxDepth(1);
@@ -609,7 +609,7 @@
                 </div>';
         }
 
-        public function findFiles($path) {
+        public function findFiles($path) {            
             $dir = new RecursiveDirectoryIterator($path);
             $dir = new RecursiveIteratorIterator($dir);
             $dir->setMaxDepth(0);
@@ -1333,7 +1333,7 @@
                                 <h1>' . $row['name'] . '</h1>';
 
                                 if($category != null && $category != '' && $this->postType != 'page') {
-                                    $postOutput .= '<h3>' . $category . '</h3>';
+                                    $postOutput .= '<h3>Category: ' . $category . '</h3>';
                                 }
                             if($this->postType != 'page') {
                                 $postOutput .=
