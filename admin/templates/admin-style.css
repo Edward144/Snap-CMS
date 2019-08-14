@@ -334,6 +334,17 @@ table .icon img {
     width: calc(50% - 4px);
 }
 
+.header .left {
+    width: 200px;
+}
+
+.header .right {
+    width: -webkit-calc(100% - 204px);
+    width: -moz-calc(100% - 204px);
+    width: -o-calc(100% - 204px);
+    width: calc(100% - 204px);
+}
+
 .header .logo {
     max-height: 80px;
     max-width: 100%;
