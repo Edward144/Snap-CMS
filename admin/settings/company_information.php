@@ -7,7 +7,7 @@
         
         <div class="formBlock" id="companyInfo">
             <?php
-                $checkCompany = $mysqli->query("SELECT * FROM `company_info");
+                $checkCompany = $mysqli->query("SELECT * FROM `company_info`");
             
                 if($checkCompany->num_rows > 0) {
                     $company = $checkCompany->fetch_assoc();
