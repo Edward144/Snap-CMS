@@ -85,14 +85,36 @@
                                 $setting = explode('/', $setting);
                                 $settingCount = count($setting);
                                 $setting = explode('.', $setting[$settingCount - 1])[0];
-
+                                
                                 if($setting != 'scripts') {
-                                    echo 
-                                        '<li>
-                                            <a class="sidebarLink" href="/admin/' . $directory . '/' . strtolower($setting) . '">' .
-                                                ucwords(str_replace('_', ' ', $setting)) .     
-                                            '</a>
-                                        </li>';
+                                    if(strpos($setting, 'custom_') == 0) {
+                                        $setting = str_replace('custom_', '', $setting);
+                                        
+                                        if(strpos($setting, '_categories') !== false) {
+                                            echo 
+                                                '<li>
+                                                    <a class="sidebarLink" href="/admin/categories/' . strtolower(str_replace('_categories', '', $setting)) . '">' .
+                                                        ucwords(str_replace('_', ' ', $setting)) .     
+                                                    '</a>
+                                                </li>';
+                                        }
+                                        else {
+                                            echo 
+                                                '<li>
+                                                    <a class="sidebarLink" href="/admin/' . $directory . '/' . strtolower('custom_' . $setting) . '">' .
+                                                        ucwords(str_replace('_', ' ', $setting)) .     
+                                                    '</a>
+                                                </li>';
+                                        }
+                                    }
+                                    else {
+                                        echo 
+                                            '<li>
+                                                <a class="sidebarLink" href="/admin/' . $directory . '/' . strtolower($setting) . '">' .
+                                                    ucwords(str_replace('_', ' ', $setting)) .     
+                                                '</a>
+                                            </li>';
+                                    }
                                 }
                             }
             echo

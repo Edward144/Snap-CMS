@@ -30,7 +30,7 @@ ErrorDocument 404 /404.php
     RedirectMatch 301 ^/admin/categories/$ /admin/categories
     RedirectMatch 301 ^/categories/$ /categories
     
-    RewriteRule ^admin/categories/(.*) /admin/custom_$1_categories.php [L]
+    RewriteRule ^admin/categories/(.*) /admin/post_types/custom_$1_categories.php [L]
     
     RewriteRule ^categories/(.*) custom_$1_categories.php [L]
     
