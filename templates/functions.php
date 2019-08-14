@@ -967,14 +967,6 @@
                         <img src="' . $imageUrl . '" id="featuredImage">
                     </div>';
             }
-
-
-            if(isset($_GET['f'])) {
-                new mediaTree($_GET['f'], true); 
-            }
-            else {
-                new mediaTree('useruploads', true);
-            }
         }
 
         public function getPostList() {
