@@ -13,3 +13,4 @@ scripts/revolution-addons/*
 scripts/assets/*
 admin/tinymce/plugins/moxiemanager/data/storage/user.admin.json
 admin/tinymce/plugins/moxiemanager/data/storage/user.anonymous.json
+admin/tinymce/plugins/moxiemanager/data/storage/user.anonymous.json

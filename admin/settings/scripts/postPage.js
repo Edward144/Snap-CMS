@@ -219,9 +219,13 @@ $("#editContent .actions #apply").click(function() {
     }
     
     if(author == null) {
-        alert("Author is missing.");
+        author = $("#editContent input[name='author']").val();
         
-        return;
+        if(author == null) {
+            alert("Author is missing.");
+        
+            return;
+        }
     }
     
     if(datetime == "") {

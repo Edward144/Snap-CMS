@@ -116,6 +116,13 @@
     $update->execute();
     $update->close();
 
+    if($mysqli->query("SHOW TABLES LIKE '{$type}_additional'")->num_rows > 0) {
+        $update = $mysqli->prepare("UPDATE `{$type}_additional` SET author = ? WHERE post_type_id = ?");
+        $update->bind_param('si', $author, $id);
+        $update->execute();
+        $update->close();
+    }
+
     if(!$mysqli->error) {
         echo json_encode([1, ucfirst($_POST['type']) . ' has been updated.']);
     }

@@ -1099,8 +1099,8 @@
                                         </p>
 
                                         <p>
-                                            <label>Description: </label>
-                                            <input type="text" name="description" value="' . $row['description'] . '">
+                                            <label>Short Content: </label>
+                                            <input type="text" name="description" value="' . $row['description'] . '" maxlength="500">
                                         </p>
 
                                         <p>
@@ -1129,8 +1129,23 @@
                                     echo '<p class="message"></p>                  
                                     </div>
 
-                                    <div class="right">
-                                        <p>
+                                    <div class="right">';
+                    
+                                    if($mysqli->query("SHOW TABLES LIKE '{$this->postType}s_additional'")->num_rows > 0) {
+                                        $author = $mysqli->query("SELECT author FROM `{$this->postType}s_additional` WHERE post_type_id = {$_GET['p']}");
+                                        
+                                        if($author->num_rows > 0) {
+                                            $author = $author->fetch_array()[0];
+                                            
+                                            echo 
+                                                '<p>
+                                                    <label>Author: </label>
+                                                    <input type="text" name="author" value="' . ucwords($author) .'">
+                                                </p>';
+                                        }
+                                    }
+                                    else {
+                                        echo '<p>
                                             <label>Author: </label>
                                             <select name="author">
                                                 <option value="" selected disabled>--Select Author--</option>';
@@ -1142,9 +1157,10 @@
                                                 }
 
                                         echo '</select>
-                                        </p>
-
-                                        <p>
+                                        </p>';
+                                    }
+                    
+                                    echo '<p>
                                             <label>Date Posted: </label>
                                             <input type="datetime-local" step="1" name="date" value="' . str_replace(' ', 'T', $row['date_posted']) . '">
                                         </p>
@@ -1609,18 +1625,35 @@
                         }
                     }
                     
-                    $postOutput .= '<h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
+                    $postOutput .= '<div class="content"><h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
 
                     $length = strlen($row['description']); 
 
-                    if($length <= 200) {
+                    if($length < 500) {
                         $postOutput .= '<p>' . $row['description'] . '<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
                     }
                     else {
-                        $postOutput .= '<p>' . substr($row['description'], 0, 200) . '...<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
+                        $postOutput .= '<p>' . substr($row['description'], 0, 500) . '...<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
+                    }
+                    
+                    //if additional add author and date
+                    if($mysqli->query("SHOW TABLES LIKE '{$this->postType}s_additional'")->num_rows > 0) {
+                        $author = $mysqli->query("SELECT author FROM `{$this->postType}s_additional` WHERE post_type_id = {$row['id']}");
+                        
+                        if($author->num_rows > 0) {
+                            $author = $author->fetch_array()[0];
+                            
+                            if($author != null && $author != '') {
+                                $postOutput .=
+                                    '<div class="author">
+                                        <h3> - ' . $author . '</h3>
+                                        <h4>' . date('d/m/Y', strtotime($row['date_posted'])) . '</h4>
+                                    </div>';
+                            }
+                        }
                     }
 
-                    $postOutput .= '</div><hr>';
+                    $postOutput .= '</div></div><hr>';
                 }    
                 
                 $postOutput .= '</div>';
