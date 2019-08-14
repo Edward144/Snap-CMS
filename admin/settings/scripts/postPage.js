@@ -129,35 +129,29 @@ function deleteContent() {
 
 //Delete Featured Image
 $(".featuredImage").on("click", ".featuredDelete", function() {
-    $(".featuredInner").html("<span>Select Image</span>");
+    $(".featuredInner > span:first-of-type").css("display", "");
+    $("#featuredImage").prop("src", "");
+    $("#featuredImage").css("display", "none");
+    $(".featuredDelete").css("display", "none");
     
     $(".featuredInner").addClass("noFeatured");
 });
 
 //Find Featured Image
-$(".featuredImage").on("click", ".noFeatured", showMedia);
-$(".featuredImage").on("click", "#featuredImage", showMedia);
-
-function showMedia() {
-    $(".featuredImage .mediaList.popup").attr("id", "");
-}
-
-$(".mediaList.popup .mediaFile").click(function() {
-    var extensions = ["jpg", "png", "gif", "svg", "webp"];
-    
-    if(!$.inArray(copyFile.split(".")[1], extensions)) {
-        $(".featuredInner").html(
-            "<span class='featuredDelete'><span>X</span></span>" + 
-            "<img src='" + copyFile + "' id='featuredImage'>"
-        );
-        
-        $(".featuredInner").removeClass("noFeatured");
-    }
-    else {
-        alert('This does not appear to be an image.');
-        
-        $(".mediaList.popup").attr("id", "");
-    }
+$(".featuredImage").on("click", ".noFeatured", function() {
+    moxman.browse({
+        extensions: 'png, jpg, jpeg, gif, webp, svg',
+        oninsert: function(args) {
+            var image = args.files[0].url;
+            
+            $("#featuredImage").prop("src", image);
+            $("#featuredImage").css("display", "");
+            $(".featuredDelete").css("display", "");
+            
+            $(".noFeatured").find("> span:first-of-type").css("display", "none");
+            $(".featuredImage .featuredInner").removeClass("noFeatured");
+        }
+    });
 });
 
 //Update Content

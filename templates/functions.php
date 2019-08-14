@@ -951,11 +951,17 @@
                 echo 
                     '<div class="noFeatured featuredInner">
                         <span>Select Image</span>
+                        
+                        <span class="featuredDelete" style="display: none;"><span>X</span></span>
+
+                        <img src="" id="featuredImage" style="display: none">
                     </div>';
             }
             else {
                 echo 
                     '<div class="featuredInner">
+                        <span style="display: none;">Select Image</span>
+                        
                         <span class="featuredDelete"><span>X</span></span>
 
                         <img src="' . $imageUrl . '" id="featuredImage">
