@@ -92,13 +92,8 @@ function setPageHeight() {
     $(".main").css("min-height", totalH);
 }
 
-//Set Sidebar Visibility
-function setSidebarVisibility() {          
-    if($.trim($(".sidebarInner").html()).length == 0) {
-        $(".sidebar").css("display", "none");
-        $(".main .content").css("width", "100%");
-    }
-}
+$(document).ready(setPageHeight);
+$(window).resize(setPageHeight);
 
 //Side Options Show/Hide
 $(".sideOptions .sideOptionInner").click(function() {
@@ -166,7 +161,7 @@ $(window).resize(function() {
     }
 });
 
-//Home Blocks Size
+//Force Element Square
 function squareBlock(element) {
     setTimeout(function() {
         height = 0;
@@ -182,7 +177,7 @@ function squareBlock(element) {
     }, 100);
 }
 
-//Set Elements To Same Height
+//Match Elements Height
 function matchHeight(element) {
     setTimeout(function() {    
         $(element).css("height", "");

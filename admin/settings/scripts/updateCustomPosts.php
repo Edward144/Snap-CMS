@@ -52,15 +52,6 @@
                 )"
             );
         }
-        elseif($type == 'review') {
-            $mysqli->query(
-                "CREATE TABLE IF NOT EXISTS `{$name}s_additional` (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    post_type_id INT UNIQUE,
-                    author VARCHAR(200) DEFAULT NULL
-                )"
-            );
-        }
         
         //Create Admin File
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php')) { 
@@ -124,32 +115,6 @@
             chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php', 0775);
             
             fwrite($file, $adminFile);
-            fclose($file);
-        }
-        
-        //Create Front End File
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php')) { 
-            $frontFile = 
-                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/header.php\'); ?>
-                    
-                    <?php 
-                        $posts = new postUser(\'' . $name . '\');';
-                        
-            
-            if($type == 'product') {
-                $frontFile .= '$posts->sideOptions(true);';
-            }
-            
-            $frontFile .= '$posts->getPost();
-                    ?>
-
-            <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/footer.php\'); ?>';
-
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php', 'w');
-            
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's.php', 0775);
-            
-            fwrite($file, $frontFile);
             fclose($file);
         }
         

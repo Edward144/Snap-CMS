@@ -6,33 +6,44 @@ ErrorDocument 404 /404.php
     RewriteEngine On
     RewriteBase /
     
-    #Remove Trailing Slash
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [R=301,L]
-    
     ##Custom Rules
     
     #Admin
     RewriteRule ^admin/post-type/(.*) /admin/custom_$1.php [L]
     RedirectMatch 301 ^/admin/$ /admin/dashboard
     
-    #Custom Content   
+    #Posts
+    RewriteRule ^posts/(.*) /posts.php\?url=$1 [L]
+    
+    #Custom Post Types
     RedirectMatch 301 ^/post-type/$ /
     RedirectMatch 301 ^/post-type$ /
-    RewriteRule ^post-type/pages$ / [L,R=301]
     
-    RewriteRule ^post-type/(.*)/category-(.*)/page-(.*)$ /index.php\?postType=$1&category=$2&page=$3 [L]
-    RewriteRule ^post-type/(.*)/category-(.*)$ /index.php\?postType=$1&category=$2 [L]
-    RewriteRule ^post-type/(.*)/page-(.*)$ /index.php\?postType=$1&page=$2 [L]
-    RewriteRule ^post-type/(.*)/(.*)$ /index.php\?postType=$1&url=$2 [L]
-    RewriteRule ^post-type/(.*)$ /index.php\?postType=$1 [L]
+    RewriteRule ^post-type/(.*)/$ /custom_$1.php [L]
+    RedirectMatch 301 ^/post-type/(.*)/$ /post-type/$1
+    
+    RewriteRule ^post-type/(.*)-(.*)/(.*)$ /custom_$1_$2.php\?url=$3 [L]
+    RewriteRule ^post-type/(.*)/(.*) /custom_$1.php\?url=$2 [L]
+    RewriteRule ^post-type/(.*)-(.*)$ /custom_$1_$2.php [L]
+    RewriteRule ^post-type/(.*) /custom_$1.php [L]
     
     RedirectMatch 301 ^/admin/categories/$ /admin/categories
     RedirectMatch 301 ^/categories/$ /categories
     
     RewriteRule ^admin/categories/(.*) /admin/post_types/custom_$1_categories.php [L]
+    
     RewriteRule ^categories/(.*) custom_$1_categories.php [L]
+    
+    
+    #Pages
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^pages/(.*).php /pages.php\?url=$1 [L]
+    RedirectMatch 301 ^/pages$ /
+    
+    #Remove Trailing Slash
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [R=301,L]
     
     #Force Non WWW
     #RewriteEngine on

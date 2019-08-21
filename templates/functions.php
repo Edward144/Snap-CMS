@@ -1,4 +1,5 @@
 <?php
+
     //Global Variable
     $baseUrl = $_SERVER['DOCUMENT_ROOT'];
     $baseName = $_SERVER['SERVER_NAME'];
@@ -139,7 +140,7 @@
         public $i;
         public $offset;
         public $items = 0;
-        public $prefix = '?';
+        public $prefix = '';
         
         function __construct($last) {
             if($last != null) {
@@ -147,8 +148,8 @@
                 $this->items = $last;
             }
             
-            if(isset($_GET['category'])) {
-                $this->prefix = '?category=' . $_GET['category'] . '&';
+            if(isset($_GET['category']) && !isset($_GET['page'])) {
+                $this->prefix = $_SERVER['REQUEST_URI'] . '/';
             }
         }
         
@@ -246,14 +247,14 @@
                     $nextPage = $this->currentPage + 1;
                 }
                 
-                echo '<div class="pagination">';
+                $output = '<div class="pagination">';
                 
                     if($this->showFirst == true) {
-                        echo '<a href="' . $this->prefix . 'page=' . $this->firstPage . '"><< First</a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $this->firstPage . '"><< First</a>';
                     }
                 
                     if($this->showPrev == true) {
-                        echo '<a href="' . $this->prefix . 'page=' . $prevPage . '">< Prev</a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $prevPage . '">< Prev</a>';
                     }
                 
                     if($this->showPageNumbers == true) {
@@ -268,19 +269,21 @@
                         }
                         
                         for($this->i; $this->i <= $end; $this->i++) {
-                            echo '<a href="' . $this->prefix . 'page=' . $this->i . '">' . $this->i . '</a>';
+                            $output .= '<a href="' . $this->prefix . 'page-' . $this->i . '">' . $this->i . '</a>';
                         }
                     }
                 
                     if($this->showNext == true) {
-                        echo '<a href="' . $this->prefix . 'page=' . $nextPage . '">Next ></a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $nextPage . '">Next ></a>';
                     }
                 
                     if($this->showLast == true) {
-                        echo '<a href="' . $this->prefix . 'page=' . $this->lastPage . '">Last >></a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $this->lastPage . '">Last >></a>';
                     }
                 
-                echo '</div>';
+                $output .= '</div>';
+                
+                return $output;
             }
         }
         
@@ -314,14 +317,14 @@
                 while($item = $items->fetch_assoc()) {
                     $itemInfo = $mysqli->query("SELECT * FROM `pages` WHERE id = {$item['page_id']}")->fetch_assoc();
                         $name = $itemInfo['name'];
-                        $url = 'pages/' . $itemInfo['url'];
+                        $url = 'post-type/pages/' . $itemInfo['url'];
                         $visible = $itemInfo['visible'];
                         
                     $customUrl = $item['custom_url'];
                     
                     if($item['page_id'] == -1) {
                         if($customUrl == '' || $customUrl == null) {
-                            $customUrl = '/posts';
+                            $customUrl = '/post-type/posts';
                         }
                         
                         $name = 'Posts';
@@ -485,188 +488,6 @@
                             </p>
                         </li>
                     </ul>';
-            }
-        }
-    }
-
-    class mediaTree {                    
-        public function __construct($path = 'useruploads', $isPopup = false) {
-            if($isPopup == false) {
-                echo '<div class="mediaInfo">
-                        <h2>Filename</h2>
-
-                        <p><strong>URL: </strong><span id="url"></span></p>
-                        <p><strong>Filesize: </strong><span id="filesize"></span></p>
-                        <p id="dimensions"><strong>Dimensions: </strong><span></span></p>
-                        <p id="imageLink"><a href="#" target="_blank">View Full Size</a></p>
-                        <p id="download"><a href="#" download>Download</a></p>
-                    </div>';
-                
-                echo '<div class="mediaList">';
-            }
-            else {                
-                echo '<div class="mediaList popup"' . (isset($_GET['f']) ? 'id=""' : 'id="hidden"') . '>
-                        <span class="mediaClose"><span>X</span></span>';
-            }
-            
-            $this->findDirectories($path);
-            $this->findFiles($path);
-            
-            if($isPopup == false) {
-                echo '<div id="mediaEditOverlay">
-                    <div class="formBlock" id="mediaEdit">
-                        <div>
-                            <span id="mediaEditClose"><span>X</span></span>
-
-                            <form id="mediaEditInput">
-                                <p>
-                                    <label>Name: </label>
-                                    <input type="text" name="newName">
-                                </p>
-
-                                <p>
-                                    <input type="submit" value="Rename Folder">
-                                </p>
-
-                                <p class="message"></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>';
-            }
-            
-            echo '<script src="/admin/settings/scripts/mediaUploads.js"></script>';
-            echo '</div>';
-        }
-
-        public function findDirectories($path) {            
-            $dir = new RecursiveDirectoryIterator($path);
-            $dir = new RecursiveIteratorIterator($dir);
-            $dir->setMaxDepth(1);
-            
-            foreach($dir as $directory) {
-                if(!$directory->getExtension()) {
-                    $dirname = explode('/', $directory->getPathName())[1];
-
-                    if(substr($dirname, 0, 1) !== '.' && $directory->getPathName() != $path . '/' . $dirname . '/..') {
-                        $dirs = explode('/', $directory->getPathName());
-                        $dirsCount = count($dirs) - 1;
-
-                        if($dirs[$dirsCount] == '..') {
-                            $url = '';
-                            for($i = 0; $i <= $dirsCount - 2; $i++) {
-                                $url .= $dirs[$i] . '/';
-                            }
-
-                            $url = rtrim($url, '/');
-
-                            $dirname = '..';
-                        }
-                        elseif($dirs[$dirsCount] == '.') {
-                            $url = explode('/.', $directory->getPathName())[0];
-
-                            $dirname = $dirs[$dirsCount - 1];
-                        }
-
-                        if($_GET['f'] != $url) {
-                            echo
-                                '<div class="mediaDir">';
-                                
-                            if($dirname != '..') {
-                                echo '<span class="mediaEdit"><img src="/admin/images/icons/edit.png"></span>
-                                <span class="mediaDelete"><img src="/admin/images/icons/bin.png"></span>';
-                            }
-                            
-                            if($_GET['p']) {
-                                $query = '?p=' . $_GET['p'] . '&f=';
-                            }
-                            else {
-                                $query = '?f=';
-                            }
-                            
-                            echo 
-                                '<a href="' . $query . $url . '">
-                                    <div class="mediaImage">
-                                        <img src="/admin/images/icons/folder.svg">
-                                    </div>
-
-                                    <span class="mediaName">' . $dirname . '</span>
-                                </a>
-                            </div>';
-                        }
-                    }
-                }
-            }
-            
-            echo
-                '<div class="mediaDir" id="mediaAddDirectory">
-                    <div class="mediaImage">
-                        <img src="/admin/images/icons/folder.svg" style="-webkit-filter: hue-rotate(160deg); filter: hue-rotate(160deg);">
-                    </div>
-
-                    <span class="mediaName">Add New Folder</span>
-                </div>';
-            
-            echo
-                '<div id="mediaAddOverlay">
-                    <div class="formBlock" id="mediaAddHidden">
-                        <div>
-                            <span id="mediaAddClose"><span>X</span></span>
-
-                            <form id="mediaAddInput">
-                                <p>
-                                    <label>Folder Name: </label>
-                                    <input type="text" name="directoryName">
-                                </p>
-
-                                <p>
-                                    <input type="Submit" value="Create Folder">
-                                </p>
-
-                                <p class="message"></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>';
-        }
-
-        public function findFiles($path) {            
-            $dir = new RecursiveDirectoryIterator($path);
-            $dir = new RecursiveIteratorIterator($dir);
-            $dir->setMaxDepth(0);
-            
-
-            $imgs = ['jpg', 'png', 'gif', 'jpeg', 'svg'];
-
-            foreach($dir as $file) {
-                $filename = $file->getFileName();
-                $extension = $file->getExtension();
-                $dirname = $file->getPathName();
-                
-                if(in_array($extension, $imgs)) {
-                    $mediaImage = $dirname;
-                }
-                else {
-                    $mediaImage = 'images/icons/' . $extension . '.svg';
-
-                    if(!file_exists($mediaImage)) {
-                        $mediaImage = 'images/icons/unknown.svg';
-                    }
-                }
-
-                if(substr($filename, 0, 1) !== '.') {
-                    echo
-                        '<div class="mediaFile">
-                            <span class="mediaEdit"><img src="/admin/images/icons/edit.png"></span>
-                            <span class="mediaDelete"><img src="/admin/images/icons/bin.png"></span>
-                            
-                            <div class="mediaImage">
-                                <img src="/admin/' . $mediaImage . '">
-                            </div>
-
-                            <span class="mediaName">' . $filename . '</span>
-                        </div>';
-                }
             }
         }
     }
@@ -997,6 +818,7 @@
 
             $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}s`")->fetch_array()[0];
             $pagination = new pagination($postCount);
+            $pagination->prefix = '?';
             $pagination->load();
 
             echo
@@ -1070,7 +892,7 @@
                     }
                 echo '</table>';
 
-            $pagination->display();
+            echo $pagination->display();
         }
 
         public function getPostSingle() {
@@ -1128,38 +950,13 @@
                                     echo '<p class="message"></p>                  
                                     </div>
 
-                                    <div class="right">';
-                    
-                                    if($mysqli->query("SHOW TABLES LIKE '{$this->postType}s_additional'")->num_rows > 0) {
-                                        $author = $mysqli->query("SELECT author FROM `{$this->postType}s_additional` WHERE post_type_id = {$_GET['p']}");
-                                        
-                                        if($author->num_rows > 0) {
-                                            $author = $author->fetch_array()[0];
-                                            
-                                            echo 
-                                                '<p>
-                                                    <label>Author: </label>
-                                                    <input type="text" name="author" value="' . ucwords($author) .'">
-                                                </p>';
-                                        }
-                                    }
-                                    else {
-                                        echo '<p>
+                                    <div class="right">
+                                        <p>
                                             <label>Author: </label>
-                                            <select name="author">
-                                                <option value="" selected disabled>--Select Author--</option>';
-
-                                                $authors = $mysqli->query("SELECT username, first_name, last_name FROM `users` ORDER BY username ASC");
-
-                                                while($author = $authors->fetch_assoc()) {
-                                                    echo '<option value="' . $author['username'] . '" ' . ($author['username'] == $row['author'] ? 'selected' : '') . '>' . $author['username'] . ': ' . $author['first_name'] . ' ' . $author['last_name'] . '</option>';
-                                                }
-
-                                        echo '</select>
-                                        </p>';
-                                    }
+                                            <input type="text" name="author" value="' . ucwords($row['author']) .'">
+                                        </p>
                     
-                                    echo '<p>
+                                        <p>
                                             <label>Date Posted: </label>
                                             <input type="datetime-local" step="1" name="date" value="' . str_replace(' ', 'T', $row['date_posted']) . '">
                                         </p>
@@ -2243,6 +2040,450 @@
                         </script>';
                 }
             }
+        }
+    }
+
+    class post {
+        private $postType;
+        public $showTitle = true;
+        public $showAuthor = true;
+        public $showCategory = true;
+        public $showPosted = true;
+        public $showShort = true;
+        public $showContent = true;
+        public $showThumb = true;
+        public $showHero = true;
+        public $showSidebar = false;
+        public $itemLimit = 10;
+
+        private $categoryTable = 'categories';
+        private $productTable;
+        private $additionalTable;
+        private $isHome = false;
+        private $homeUrl;
+
+        private $output;
+
+        public function __construct($postType = 'post') {
+            $postType = strtolower($postType);
+
+            if($postType != '' && $postType != null) {
+                $this->postType = $postType . 's';
+            }
+            else {
+                $this->postType = 'posts';
+            }
+
+            if($this->postType != 'pages' && $this->postType != 'posts') {
+                $this->categoryTable = $this->postType . '_categories';
+            }
+            elseif($this->postType == 'pages') {
+                $this->categoryTable = null;
+            }
+
+            $this->redirectPost();
+        }
+
+        private function redirectPost() {
+            $mysqli = $GLOBALS['mysqli'];
+            $homeId = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
+            $homeUrl = $mysqli->query("SELECT url FROM `pages` WHERE id = {$homeId}");
+            $hidePosts = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'hide_posts'")->fetch_array()[0];
+
+            //Redirect to / if url matches homepage
+            if($homeUrl->num_rows > 0) {
+                $homeUrl = $homeUrl->fetch_array()[0];
+
+                if($this->postType == 'pages' && $_SERVER['REQUEST_URI'] == '/pages/' . $homeUrl) {
+                    header('HTTP/1.1 301 Moved Permenantly');
+                    header('Location: /');
+
+                    exit();
+                }
+            }
+
+            //Redirect to / if posts are hidden
+            if($this->postType == 'posts' && explode('/', $_SERVER['REQUEST_URI'])[0] == 'posts' && $hidePosts == 1) {
+                header('HTTP/1.1 301 Moved Permenantly');
+                header('Location: /');
+
+                exit();
+            }
+
+            if($_SERVER['REQUEST_URI'] == '/') {
+                $this->isHome = true;
+                $this->homeUrl = $homeUrl;
+
+                if($this->homeUrl != null) {
+                    $this->postType = 'pages';
+                }
+                elseif($hidePosts != 1) {
+                    $this->postType = 'posts';
+                }
+                else {
+                    http_response_code(404);
+                    header('Location: /404');
+
+                    exit();
+                }
+            }
+        }
+        
+        private function postHeader($id, $name, $author, $image, $date, $category) {
+            $mysqli = $GLOBALS['mysqli'];
+            $slider = $mysqli->query("SELECT * FROM `banners` WHERE post_type = '{$this->postType}' AND post_type_id = {$id} AND visible = 1");
+            $hero = '';
+
+            if($slider->num_rows > 0) {
+                $slider = $slider->fetch_assoc();
+                $sliderId = $slider['id'];
+                $slides = $mysqli->query("SELECT * FROM `banners_slides` WHERE banner_id = {$sliderId} ORDER BY position ASC");
+
+                if($slides->num_rows > 0) {
+                    $hero .=
+                        '<div class="slider owl-carousel" id="' . $this->postType . 'Slider">';
+
+                        while($slide = $slides->fetch_assoc()) {
+                            $hero .= 
+                                '<div class="sliderItem" style="background-image: url(\'' . $slide['live_background'] . '\')">
+                                    <div class="sliderContent">'
+                                        . $slide['live_content'] .
+                                    '</div>
+                                </div>';
+                        }
+
+                    $hero .=
+                        '</div>';
+
+                    $hero .=
+                        '<script>
+                            $(document).ready(function() {
+                                $(".slider").owlCarousel({
+                                    ' . ($slider['animation_out'] != null && $slider['animation_out'] != '' ? 'animateOut: "' . $slider['animation_out'] . '", ' : '') . ($slider['animation_in'] != null && $slider['animation_in'] != '' ? 'animateIn: "' . $slider['animation_in'] . '", ' : '') . '                                         
+                                    items: 1,
+                                    loop: true,
+                                    ' . ($slider['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $slider['speed'] . ',' : '') . 
+                                    ($slider['speed'] == 0 ? 'autoplay: false,' : '') . 'autoplay: false
+                                });
+                            });
+                        </script>';
+                }
+            }
+            else {
+                $hero .=
+                    '<div class="hero" id="' . $this->postType . 'Hero">'
+                        . (isset($image) && $image != '' ? '<img class="heroImage" src="' . $image . '" alt="' . $name . '">' : '') .
+
+                        '<div class="heroContent">'
+                            . ($this->showTitle == true ? '<h1>' . $name . '</h1>' : '') 
+                            . ($this->showCategory == true && $category != 0 ? '<h2>Category: ' . $category . '</h2>' : '') 
+                            . ($this->showAuthor == true && $author != null && $author != '' ? '<h3>By: ' . ucwords($author) . '</h3>' : '') 
+                            . ($this->showPosted == true ? '<h4>' . date('d/m/Y H:i:s', strtotime($date)) . '</h4>' : '') .
+                        '</div>
+                    </div>';
+            }
+
+            return $hero;
+        }
+        
+        private function sidebar() {
+            if($this->postType == 'posts') {
+                $this->showSidebar = true;
+            }
+            
+            if($this->showSidebar == true) {                
+                $sidebar = 
+                    '<div class="sidebar">
+                        <div class="sidebarInner">
+                        
+                        </div>
+                    </div>';
+            }
+            else {
+                $sidebar = '';
+            }
+            
+            return $sidebar;
+        }
+
+
+        public function display() {
+            if(isset($_GET['url']) || ($this->isHome == true && $this->postType == 'pages')) {
+                $this->showSingle();
+            }
+            else {
+                $this->showList();
+            }
+
+            echo $this->output;
+        }
+
+        private function showList() {
+            $mysqli = $GLOBALS['mysqli'];
+            $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}` WHERE visible = 1");
+
+            if($postCount->num_rows > 0) {
+                $postCount = $postCount->fetch_array()[0];
+            }
+            else {
+                http_response_code(404);
+                header('Location: /404');
+
+                exit();
+            }
+
+            $postName = str_replace('_', ' ', $this->postType);
+
+            if($mysqli->query("SHOW TABLES LIKE '{$this->postType}_options'")->num_rows > 0) {
+                $hasProductOptions = true;
+            }
+
+            $pagination = new pagination($postCount);
+            $pagination->setItemLimit($this->itemLimit);
+            $pagination->load();
+
+            if(isset($_GET['category'])) {
+                $posts = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE visible = 1 AND category_id = {$_GET['category']} ORDER BY date_posted DESC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+            }
+            else {
+                $posts = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE visible = 1 ORDER BY date_posted DESC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+            }
+
+            $postOutput = 
+                '<div class="postWrap postList ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">
+                 <h1 class="postTitle">' . ucwords($postName) . '</h1>';
+
+            if($postCount > 0 && $posts->num_rows > 0) {
+                $postOutput .= 
+                    '<div class="postList" id="' . $this->postType . 'List">';
+
+                while($row = $posts->fetch_assoc()) {
+                    if(strlen($row['description']) > 500) {
+                        $shortDesc = substr($row['description'], 0, 500) . '...';
+                    }
+                    else {
+                        $shortDesc = $row['description'];
+                    }
+
+                    $missingImage = false;
+
+                    if($row['image_url'] != null && $row['image_url'] != '') {
+                        $imageSource = $row['image_url'];
+                    }
+                    elseif(isset($hasProductOptions) && $hasProductOptions == true) {
+                        $galleryItems = $mysqli->query("SELECT gallery_images, gallery_main FROM `{$this->postType}_options` WHERE post_type_id = {$row['id']}")->fetch_assoc();
+
+                        if($galleryItems['galleryMain'] != null && $galleryItems['gallery_main'] != '') {
+                            $imageSource = '/gallery/' . $this->postType . '/' . $row['id'] . '/' . $galleryItems['gallery_main'];
+                        }
+                        elseif($galleryItems['gallery_images'] != null & $galleryItems['gallery_images'] != '') {
+                            $imageSource = '/gallery/' . $this->postType . '/' . $row['id'] . '/' . ltrim(explode('";', $galleryItems['gallery_images'])[0], '"');
+                        }
+                        else {
+                            $imageSource = '/admin/images/missingImage.png';
+                            $missingImage = true;
+                        }
+                    }
+                    else {
+                        $imageSource = '/admin/images/missingImage.png';
+                        $missingImage = true;
+                    }
+
+                    $postOutput .= 
+                        '<div class="postListItem" id="' . $this->postType . 'Item">';
+
+                            if($this->showThumb == true) {
+                                $postOutput .=
+                                    '<div class="imageWrap ' . ($missingImage == true ? 'missingImage' : '') . '">
+                                        <img src="' . $imageSource . '" alt="' . $row['name'] .'">
+                                    </div>';
+                            }
+
+                    $postOutput .=
+                            '<div class="smallContent">'
+                                . ($this->showTitle == true ? '<h2><a href="/post-type/' . $this->postType . '/' . $row['url'] . '">' . $row['name'] . '</a></h2>' : '')
+                                . ($this->showShort == true ? '<p>' . $shortDesc .'<a href="/post-type/' . $this->postType . '/' . $row['url'] . '">Read More</a></p>' : '') .
+
+                                '<div class="author">'
+                                    . ($this->showAuthor == true ? '<h3>' . $row['author'] . '</h3>' : '')
+                                    . ($this->showPosted == true ? '<h4>' . date('d/m/Y', strtotime($row['date_posted'])) . '</h4>' : '') .
+                                '</div>
+                            </div>
+                        </div>';
+                }
+
+                $postOutput .= 
+                    '</div>';
+            }
+            else {
+                $postOutput .= '<p>There are currently no ' . $postName . '.</p>';
+            }
+
+            $postOutput .=
+                '</div>';
+
+            $this->output =
+                '<div class="mainInner">
+                    <div class="postInner">'
+                        . $this->sidebar() .
+                    
+                          '<div class="content ' . ($this->showSidebar == true ? 'withSidebar' : '') .'">' .
+                              $postOutput .
+                              $pagination->display() .
+                         '</div>
+                     </div>
+                </div>';
+        }
+
+
+        private function showSingle() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            if($this->isHome == true) {
+                $post = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE url = '{$this->homeUrl}'");
+            }
+            else {
+                $post = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE url = '{$_GET['url']}'");
+            }
+
+            if($post->num_rows > 0) {                    
+                $postOutput = 
+                    '<div class="postWrap postSingle ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">';
+
+                while($row = $post->fetch_assoc()) {
+                    if($mysqli->query("SHOW TABLES LIKE '{$this->postType}_options'")->num_rows > 0) {
+                        $hasProductOptions = true;
+                    }
+
+                    $missingImage = false;
+
+                    if($row['image_url'] != null && $row['image_url'] != '') {
+                        $imageSource = $row['image_url'];
+                    }
+                    elseif(isset($hasProductOptions) && $hasProductOptions == true) {
+                        $galleryItems = $mysqli->query("SELECT gallery_images, gallery_main FROM `{$this->postType}_options` WHERE post_type_id = {$row['id']}")->fetch_assoc();
+
+                        if($galleryItems['galleryMain'] != null && $galleryItems['gallery_main'] != '') {
+                            $imageSource = '/gallery/' . $this->postType . '/' . $row['id'] . '/' . $galleryItems['gallery_main'];
+                        }
+                        elseif($galleryItems['gallery_images'] != null & $galleryItems['gallery_images'] != '') {
+                            $imageSource = '/gallery/' . $this->postType . '/' . $row['id'] . '/' . ltrim(explode('";', $galleryItems['gallery_images'])[0], '"');
+                        }
+                        else {
+                            $imageSource = '/admin/images/missingImage.png';
+                            $missingImage = true;
+                        }
+                    }
+                    else {
+                        $imageSource = '/admin/images/missingImage.png';
+                        $missingImage = true;
+                    }
+
+                    $postOutput .= $this->postHeader($row['id'], $row['name'], $row['author'], $imageSource, $row['date_posted'], $row['category_id']);
+                    
+                    $postOutput .= 
+                        '<div class="postInner">' .
+                            $this->sidebar();
+                    
+                    $postOutput .=
+                        '<div class="postContent ' . ($this->showSidebar == true ? 'withSidebar' : '') . '">';
+
+                    if(isset($hasProductOptions) && $hasProductOptions == true) {
+                        $productOptions = $mysqli->query("SELECT * FROM `{$this->postType}_options` WHERE post_type_id = {$row['id']}");
+
+                        if($productOptions->num_rows > 0) {
+                            $productOption = $productOptions->fetch_assoc();
+
+                            $postOutput .=
+                                '<div class="sideOptions">
+                                    <ul>';
+
+                            if($productOption['features'] != null && $productOption['features'] != '') {
+                                $postOutput .= 
+                                    '<li class="features" id="inactive">
+                                        <h3>Features</h3>
+
+                                        <div class="sideOptionInner">
+                                            <span>' . $productOption['features'] . '</span>
+                                        </div>
+                                    </li>';
+                            }
+
+                            if($productOption['specifications'] != null && $productOption['specifications'] != '') {
+                                $specs = explode(';', rtrim($productOption['specifications'], ';'));
+
+                                $postOutput .= 
+                                    '<li class="output" id="inactive">
+                                        <h3>Specifications</h3>
+
+                                        <div class="sideOptionInner">
+                                            <table>';
+
+                                foreach($specs as $specRow) {
+                                    $specRow = explode('","', $specRow);
+                                    $specName = ltrim($specRow[0], '"');
+                                    $specValue = rtrim($specRow[1], '"');
+
+                                    $postOutput .=
+                                        '<tr>
+                                            <td>' . $specName . '</td>
+                                            <td>' . $specValue . '</td>
+                                        </tr>';
+                                }
+
+                                $postOutput .= 
+                                            '</table>
+                                        </div>
+                                    </li>';
+                            }
+
+                            $postOutput .=        
+                                    '</ul>
+                                </div>';
+                        }
+                    }
+
+                    $postOutput .=
+                            ($this->showContent == true ? $row['content'] : '') .
+                        '</div>';
+
+                }
+
+                $postOutput .=
+                        '</div>
+                    </div>';
+            }
+            else {
+                http_response_code(404);
+                header('Location: /404');
+
+                exit();
+            }           
+
+            $this->output =
+                '<div class="mainInner">
+                      <div class="content">' .
+                          $postOutput .
+                     '</div>
+                </div>';
+        }
+
+        public function debug() {
+            $parameters = get_object_vars($this);
+
+            echo '<div style="font-family: sans-serif; border: 1px solid #000; margin: 1em 0; padding: 1em; box-sizing: border-box;">' .
+                 '<h3 style="margin: 0 0 0.5em 0;">Debug Info: </h3>' . 
+                 '<ul style="margin: 0; list-style: none; padding-left: 1em;">';
+
+            foreach($parameters as $parameter => $value) {
+                if($value == null) {
+                    $value = 'null';
+                }
+
+                echo '<li>' . $parameter . ': ' . $value . '</li>';
+            }
+
+            echo '</div>';
         }
     }
 
