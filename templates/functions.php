@@ -361,7 +361,7 @@
             $items = $mysqli->query("SELECT * FROM `navigation` WHERE parent_id = {$parent}");
             
             if($items->num_rows > 0) {
-                new navigation($parent, $level);
+                new navigation($parent, $level + 1);
             }
         }
     }

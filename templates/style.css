@@ -688,9 +688,14 @@ nav li > ul li > ul {
         margin: 0;
     }
     
+    nav li > ul {
+        display: block;
+        background: #333;
+    }
+    
     nav ul li a {
         display: block;
-        padding: 1em;
+        padding: 0.5em;
         box-sizing: border-box;
     }
     
@@ -700,7 +705,7 @@ nav li > ul li > ul {
     
     nav ul li a:hover {
         text-decoration: none;
-        background: #dedede;
+        background: #dedede !important;
     }
     
     nav li > ul {
@@ -713,7 +718,7 @@ nav li > ul li > ul {
     }
     
     nav li > ul li a {
-        padding: 1em;
+        padding: 0.5em;
     }
     
     nav li > ul:after {
