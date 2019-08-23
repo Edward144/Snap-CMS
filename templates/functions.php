@@ -1739,6 +1739,7 @@
                         '<h3>Gallery</h3>
                         
                         <input type="file" name="galleryOption" multiple>
+                        <input type="button" name="galleryOptionNew" value="Choose Images">
                         
                         <div class="galleryItems current">';
                     
@@ -1919,7 +1920,7 @@
                                 <span class="id">' . $row['id'] .'</span>
                             </td>
 
-                            <td>
+                            <td style="text-align: left;">
                                 <h4>' . $row['name'] . '</h4>
                                 <p>' . $row['description'] . '</p>
                                 <p style="font-size: 0.75em;">URL: ' . $row['url'] . '</p>

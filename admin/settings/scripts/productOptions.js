@@ -34,41 +34,38 @@ $(document).ready(function() {
     });
 });
 
-//Upload Gallery Items
-$("input[name='galleryOption']").on("change", function() {
-    var file = $("input[name='galleryOption']").val();
-    var file_data = $("input[name='galleryOption']").prop('files');
-    var form_data = new FormData();
-
-    if(file == "") {
-        $(".galleryMessage").text("No file selected.");
-
-        return;
-    }
-    else {
-        $(".galleryMessage").text("");
-    }
-
-    $.each(file_data, function(index, fdata) {
-        form_data.append("file[" + index + "]", fdata); 
-    });
-
-    $.ajax({
-        url: "/admin/settings/scripts/galleryUpload.php",
-        method: "POST",
-        dataType: "json",
-        contentType: false,
-        processData: false,
-        data: form_data,
-        success: function(data){
-            $(".galleryMessage").append(data);
-
+//Upload Gallery Items New
+$("input[name='galleryOptionNew']").on("click", function() {
+    moxman.browse({
+        extensions: 'png, jpg, jpeg, gif, webp, svg',
+        no_host: true,
+        oninsert: function(args) {
+            var file = $("input[name='galleryOptionNew']").val();
+            var images = args.files;
+            var imageUrls = [];
+            
+            $.each(images, function(index, value) {
+                imageUrls.push(value.url);
+            });
+            
+            console.log(imageUrls);
+            
             $.ajax({
-                url: "/admin/settings/scripts/galleryList.php",
+                url: "/admin/settings/scripts/galleryUploadNew.php",
                 method: "POST",
                 dataType: "json",
-                success: function(data) {
-                    $(".galleryItems.uploaded").html(data);
+                data: ({imageUrls}),
+                success: function(data){
+                    $(".galleryMessage").html(data);
+
+                    $.ajax({
+                        url: "/admin/settings/scripts/galleryList.php",
+                        method: "POST",
+                        dataType: "json",
+                        success: function(data) {
+                            $(".galleryItems.uploaded").html(data);
+                        }
+                    });
                 }
             });
         }
