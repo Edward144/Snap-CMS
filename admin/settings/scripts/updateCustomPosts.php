@@ -53,42 +53,6 @@
             );
         }
         
-        //Create Admin File
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php')) { 
-            $adminFile = 
-                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
-
-                <?php include_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/sidebar.php\'); ?>
-
-                <div class="content">
-                    <?php 
-                        $posts = new postAdmin(\'' . $name . '\');
-                        $posts->getPost();';
-            
-            if($type == 'product') {
-                $adminFile .= 
-                            'if(isset($_GET[\'p\'])) {
-                                $options = new productOptions(\'' . $name . 's\');
-                                $options->addAll();
-                                unset($options);
-                            }';
-            }
-            
-            $adminFile .= '?>
-                </div>
-
-                <script src="/admin/settings/scripts/postPage.js"></script>
-
-            <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
-
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php', 'w');
-            
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php', 0775);
-            
-            fwrite($file, $adminFile);
-            fclose($file);
-        }
-        
         //Create Admin Category File
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php')) { 
             $adminFile = 

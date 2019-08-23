@@ -23,7 +23,6 @@
         $mysqli->query("DROP TABLE `{$name}s_options`");
         
         //Delete Files
-        unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's.php');
         unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php');
         
         unlink($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php');

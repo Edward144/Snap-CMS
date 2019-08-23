@@ -31,7 +31,6 @@ $("#customPosts input[name='addRow']").click(function() {
                 "<select name='postTypeType'>" +
                     "<option value=''>Standard</option>" +
                     "<option value='product'>Product</option>" +
-                    "<option value='review'>Review</option>" +
                 "</select>" +
             "</td>" + 
             "<td></td>" +

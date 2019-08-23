@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php');
     
     $id = $_GET['id'];
-    $type = $_GET['type'] . 's';
+    $type = $_GET['type'];
     $action = $_GET['action'];
     
     if($action == 'view') {

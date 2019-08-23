@@ -16,7 +16,7 @@
     }
     
     $id = $_POST['id'];
-    $type = $_POST['type'] . 's';
+    $type = $_POST['type'];
     $title = $_POST['title'];
     $desc = $_POST['desc'];
     $url = slugify($_POST['url']);
@@ -32,7 +32,6 @@
             $galleryNew = $_POST['galleryNew'];
             $galleryMain = $_POST['galleryMain'];
             $features = $_POST['features'];
-            $output = $_POST['output'];
             $spec = $_POST['spec'];
 
             if($galleryExist == '" ";') {
@@ -70,14 +69,14 @@
             $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$type}_options` WHERE post_type_id = {$id}")->fetch_array()[0];
 
             if($checkOptions > 0) {
-                $updateOptions = $mysqli->prepare("UPDATE `{$type}_options` SET gallery_images = ?, gallery_main = ?, features = ?, specifications = ?, output = ? WHERE post_type_id = ?");
-                $updateOptions->bind_param('sssssi', $gallery, $galleryMain, $features, $spec, $output, $id);
+                $updateOptions = $mysqli->prepare("UPDATE `{$type}_options` SET gallery_images = ?, gallery_main = ?, features = ?, specifications = ? WHERE post_type_id = ?");
+                $updateOptions->bind_param('ssssi', $gallery, $galleryMain, $features, $spec, $id);
                 $updateOptions->execute();
                 $updateOptions->close();
             }
             else {
-                $addOptions = $mysqli->prepare("INSERT INTO `{$type}_options` (post_type_id, gallery_images, gallery_main, features, specifications, output) VALUES(?, ?, ?, ?, ?, ?, ?)");
-                $addOptions->bind_param('isssss', $id, $gallery, $galleryMain, $features, $spec, $output);
+                $addOptions = $mysqli->prepare("INSERT INTO `{$type}_options` (post_type_id, gallery_images, gallery_main, features, specifications) VALUES(?, ?, ?, ?, ?, ?)");
+                $addOptions->bind_param('issss', $id, $gallery, $galleryMain, $features, $spec);
                 $addOptions->execute();
                 $addOptions->close();
             }
@@ -115,13 +114,6 @@
     }
     $update->execute();
     $update->close();
-
-    if($mysqli->query("SHOW TABLES LIKE '{$type}_additional'")->num_rows > 0) {
-        $update = $mysqli->prepare("UPDATE `{$type}_additional` SET author = ? WHERE post_type_id = ?");
-        $update->bind_param('si', $author, $id);
-        $update->execute();
-        $update->close();
-    }
 
     if(!$mysqli->error) {
         echo json_encode([1, ucfirst($_POST['type']) . ' has been updated.']);

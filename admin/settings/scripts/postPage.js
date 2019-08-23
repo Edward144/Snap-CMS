@@ -89,7 +89,7 @@ $(".content table").on("click", ".contentRow #edit", function() {
     var id = row.find(".id").text();
     var type = row.attr("class").split("Row")[0];
     
-    window.location.href = "?p=" + id;
+    window.location.href = "/admin/editor/" + type + "/id-" + id;
 });
 
 //Delete Content
@@ -109,7 +109,7 @@ function deleteContent() {
         var type = row.attr("class").split("Row")[0];
     }
     
-    if(confirm("Are you sure you want to delete this " + type + "?")) {
+    if(confirm("Are you sure you want to delete this " + type.slice(0, -1) + "?")) {
         $.ajax({
             url: "/admin/settings/scripts/deletePostPage.php",
             method: "GET",
@@ -155,12 +155,13 @@ $(".featuredImage").on("click", ".noFeatured", function() {
 });
 
 //Update Content
+var productOptions;
+
 $("#editContent .actions #apply").click(function() {
     tinyMCE.triggerSave();
     
     if(typeof productOptions !== 'undefined' && productOptions == true) {
         var features = $("textarea[name='featuresOption']").val();
-        var output = $("textarea[name='outputOption']").val();
         var spec = "";
         var galleryExist = "";
         var galleryNew = "";
@@ -184,7 +185,6 @@ $("#editContent .actions #apply").click(function() {
     }
     else {
         var features = "";
-        var output = "";
         var spec = "";
         var galleryExist = "";
         var galleryNew = "";
@@ -264,12 +264,11 @@ $("#editContent .actions #apply").click(function() {
     }
     
     $("#editContent .message").text("");
-    
     $.ajax({
         url: "/admin/settings/scripts/editPostPage.php",
         method: "POST",
         dataType: "json",
-        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, output, features, galleryMain}),
+        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, features, galleryMain}),
         success: function(data) {
             if(data[0] == 1) {
                 $("#editContent .message").text(data[1]);

@@ -8,15 +8,15 @@
     $search = '%' . $_GET['searchTerm'] . '%';
     $limit = $_GET['limit'];
 
-    $searchContent = $mysqli->prepare("SELECT * FROM `{$type}` WHERE name LIKE ? OR description LIKE ? OR author LIKE ? OR url LIKE ? or content LIKE ? ORDER BY id ASC LIMIT ?");
+    $searchContent = $mysqli->prepare("SELECT * FROM `{$type}` WHERE name LIKE ? OR description LIKE ? OR author LIKE ? OR url LIKE ? OR content LIKE ? ORDER BY id ASC LIMIT ?");
     $searchContent->bind_param('sssssi', $search, $search, $search, $search, $search, $limit);
     $searchContent->execute();
     $result = $searchContent->get_result();
     
     $headerContent = 
         '<tr class="headers">
-            <td style="width: 40px;">ID</td>
-            <td style="text-align: left;">Post Details</td>
+            <td style="width: 50px;">ID</td>
+            <td style="text-align: left;">Details</td>
             <td style="width: 180px;">Published</td>
             <td style="width: 100px;">Actions</td>
         </tr>';
@@ -33,7 +33,7 @@
             }
 
             $rowContent = 
-                '<tr class="postRow contentRow">
+                '<tr class="' . $type . 'Row contentRow">
                     <td>
                         <span class="id">' . $row['id'] . '</span>
                     </td>
@@ -46,7 +46,7 @@
 
                     <td>
                         <p>' . $row['author'] . '</p>
-                        <p>' . $row['date_posted'] . '</p>
+                        <p>' . date('d/m/Y H:i:s', strtotime($row['date_posted'])) . '</p>
                     </td>
 
                     <td>
@@ -70,12 +70,5 @@
     }
     
     echo json_encode(implode($json));
-
-    /*if(!$mysqli->error) {
-        echo json_encode([1, $id]);
-    }
-    else {
-        echo json_encode([0, 'Error: Could not amend ' . $_GET['type'] . '.']);
-    }*/
 
 ?>

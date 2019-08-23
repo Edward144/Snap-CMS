@@ -2,8 +2,13 @@
     
     <?php include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/templates/sidebar.php'); ?>
 
-    <div class="content">        
-        <iframe id="mediaNavigator" src="/admin/tinymce/plugins/moxiemanager/index"></iframe>
-    </div>
+    <?php 
+        
+    ?>
+
+    <?php 
+        $editor = new editor(rtrim($_GET['postType'], 's'));
+        $editor->display();
+    ?>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/admin/templates/footer.php'); ?>

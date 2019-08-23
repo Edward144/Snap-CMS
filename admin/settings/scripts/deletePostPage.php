@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php');
     
     $id = $_GET['id'];
-    $type = $_GET['type'] . 's';
+    $type = $_GET['type'];
     
     $delete = $mysqli->prepare("DELETE FROM `{$type}` WHERE id = ?");
     $delete->bind_param('i', $id);

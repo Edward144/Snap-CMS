@@ -512,6 +512,33 @@ nav li > ul li > ul {
     right: 0;
 }
 
+.gallery.owl-carousel {
+    position: relative;
+}
+
+.gallery.owl-carousel .owl-next, 
+.gallery.owl-carousel .owl-prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 100%;
+    background: #f3f3f3;
+} 
+
+.gallery.owl-carousel .owl-next {
+    right: 0.5em;
+}
+
+.gallery.owl-carousel .owl-prev {
+    left: 0.5em;
+}
+
+.gallery.owl-carousel .owl-next > span, 
+.gallery.owl-carousel .owl-prev > span {
+    font-size: 4em;
+}
+
 .sideOptions {
     float: right;
     width: 300px;

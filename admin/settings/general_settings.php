@@ -67,7 +67,6 @@
                                 <select name="postTypeType" disabled>
                                     <option value="">Standard</option>
                                     <option value="product">Product</option>
-                                    <option value="review">Review</option>
                                 </select>
                             </td>
 

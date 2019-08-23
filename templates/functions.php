@@ -758,723 +758,6 @@
         }
     }
 
-    class postAdmin {
-        public $postType;
-        public $postTitle;
-        public $categoryPre;
-
-        public function __construct($type) {
-            if($type != null) {
-                $this->postType = $type;            
-                $this->postTitle = ucwords(str_replace('_', ' ', $type));
-
-                if($type != 'post') {
-                    $this->categoryPre = $this->postType . 's_';
-                }
-            }
-            else {
-                echo 'Post type is not defined.';
-            }
-        }
-
-        public function getPost() {
-            if(isset($_GET['p'])) {
-                $this->getPostSingle();
-            }
-            else {
-                $this->getPostList();
-            }
-        }
-
-        private function getFeatured($imageUrl) {
-            echo '<h2>Featured Image</h2>';
-
-            if($imageUrl == null || $imageUrl == '') {
-                echo 
-                    '<div class="noFeatured featuredInner">
-                        <span>Select Image</span>
-                        
-                        <span class="featuredDelete" style="display: none;"><span>X</span></span>
-
-                        <img src="" id="featuredImage" style="display: none">
-                    </div>';
-            }
-            else {
-                echo 
-                    '<div class="featuredInner">
-                        <span style="display: none;">Select Image</span>
-                        
-                        <span class="featuredDelete"><span>X</span></span>
-
-                        <img src="' . $imageUrl . '" id="featuredImage">
-                    </div>';
-            }
-        }
-
-        public function getPostList() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            echo '<h1>' . $this->postTitle . 's</h1>';
-
-            $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}s`")->fetch_array()[0];
-            $pagination = new pagination($postCount);
-            $pagination->prefix = '?';
-            $pagination->load();
-
-            echo
-                '<div class="formBlock">
-                    <form class="addContent" id="add' . $this->postType . '">
-                        <p>
-                            <input type="submit" value="New ' . $this->postTitle . '">
-                        </p>
-
-                        <p class="message"></p>
-                    </form>
-
-                    <form id="search' . ucwords($this->postType) . '">
-                        <p>
-                            <input type="text" name="search" placeholder="Search..." id="' . $pagination->itemLimit .'">
-                        </p>
-                    </form>
-                </div>';
-
-            echo
-                '<table>
-                    <tr class="headers">
-                        <td style="width: 40px;">ID</td>
-                        <td style="text-align: left;">' . $this->postTitle . ' Details</td>
-                        <td style="width: 180px;">Published</td>
-                        <td style="width: 100px;">Actions</td>
-                    </tr>';
-
-                    $posts = $mysqli->query("SELECT * FROM `{$this->postType}s` ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
-
-                    if($posts->num_rows > 0) {
-                        while($post = $posts->fetch_assoc()) {
-                            echo
-                                '<tr class="' . $this->postType . 'Row contentRow">
-                                    <td>
-                                        <span class="id">' . $post['id'] . '</span>
-                                    </td>
-
-                                    <td style="text-align: left;">
-                                        <h4>' . $post['name'] . '</h4>
-                                        <p>' . $post['description'] . '</p>
-                                        <p style="font-size: 0.75em;">URL: ' . $post['url'] . '</p>
-                                    </td>
-
-                                    <td>
-                                        <p>' . $post['author'] . '</p>
-                                        <p>' . $post['date_posted'] . '</p>
-                                    </td>
-
-                                    <td>';
-
-                                        if($post['visible'] == 1) {
-                                            echo '<p class="icon" id="view"><img src="/admin/images/icons/view.png"></p>';
-                                        }
-                                        else {
-                                            echo '<p class="icon" id="hide"><img src="/admin/images/icons/hide.png"></p>';
-                                        }
-
-                                    echo
-                                        '<p class="icon" id="edit"><img src="/admin/images/icons/edit.png"></p>
-                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png"></p>
-                                    </td>
-                                </tr>';
-                        }
-                    }
-                    else {
-                        echo
-                            '<tr>
-                                <td colspan="4">There are currently no ' . $this->postTitle . 's.</td>
-                            </tr>';
-                    }
-                echo '</table>';
-
-            echo $pagination->display();
-        }
-
-        public function getPostSingle() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $post = $mysqli->prepare("SELECT * FROM `{$this->postType}s` WHERE id = ?");
-            $post->bind_param('i', $_GET['p']);
-            $post->execute();
-            $result = $post->get_result();
-
-            if($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo
-                        '<div class="' . $this->postType . ' contentWrap">
-                            <form id="editContent">
-                                <div class="details">
-                                    <div class="left">
-                                        <p style="display: none;">
-                                            <span class="id">' . $row['id'] . '</span>
-                                        </p>
-
-                                        <p>
-                                            <label>Title: </label>
-                                            <input type="text" name="title" value="' . $row['name'] . '">
-                                        </p>
-
-                                        <p>
-                                            <label>Short Content: </label>
-                                            <input type="text" name="description" value="' . $row['description'] . '" maxlength="500">
-                                        </p>
-
-                                        <p>
-                                            <label>Url: </label>
-                                            <input type="text" name="url" value="' . $row['url'] . '">
-                                        </p>';
-
-                                        if($this->postType != 'page') {
-                                            echo '<p>
-                                                <label>Category: </label>
-                                                <select name="categories">
-                                                    <option value="" selected>--Select Category--</option>';
-
-                                                    $categories = $mysqli->query("SELECT id, name FROM `{$this->categoryPre}categories` ORDER BY name ASC");
-
-                                                    while($category = $categories->fetch_assoc()) {
-                                                        echo 
-                                                            '<option value="' . $category['id'] . '" ' . ($row['category_id'] == $category['id'] ? 'selected' : '') . '>' .
-                                                            $category['name'] .
-                                                        '</option>';
-                                                    }
-                                            echo '</select>
-                                            </p>';
-                                        }
-                    
-                                    echo '<p class="message"></p>                  
-                                    </div>
-
-                                    <div class="right">
-                                        <p>
-                                            <label>Author: </label>
-                                            <input type="text" name="author" value="' . ucwords($row['author']) .'">
-                                        </p>
-                    
-                                        <p>
-                                            <label>Date Posted: </label>
-                                            <input type="datetime-local" step="1" name="date" value="' . str_replace(' ', 'T', $row['date_posted']) . '">
-                                        </p>
-
-                                        <div class="actions">';
-                                        
-                                        if($row['visible'] == 1) {
-                                            echo '<p class="icon" id="view"><img src="/admin/images/icons/view.png" alt="Visible"></p>';
-                                        }
-                                        else {
-                                            echo '<p class="icon" id="hide"><img src="/admin/images/icons/hide.png" alt="Hidden"></p>';
-                                        }
-
-                                    echo 
-                                        '<p class="icon" id="apply"><img src="/admin/images/icons/check.png" alt="Save Changes"></p>
-                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png" alt="Delete"></p>
-                    
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="editor">
-                                    <textarea name="content">' . $row['content'] . '</textarea>
-                                </div>
-
-                                <div class="featuredImage">';
-                                    $this->getFeatured($row['image_url']);
-                            echo '</div>
-                            </form>
-                        </div>';
-
-                }
-            }
-            else {
-                echo '<h1>' . $this->postTitle . ' ' .  $_GET['p'] . ' does not exist</h1>';
-            }
-        }
-    }
-
-    class postUser {
-        public $postType;
-        private $postTitle;
-        private $categoryPre;
-        private $homepage;
-        public $sideOptions;
-        public $displaySidebar = 1;
-        private $slider = 0;
-        private $sliderOutput = [];
-        
-        public function __construct($type = '') {
-            if($type != null) {
-                $this->postType = $type;
-                $this->postTitle = ucwords(str_replace('_', ' ', $type));
-
-                if($type != 'post') {
-                    $this->categoryPre = $this->postType . 's_';
-                }
-                
-                if($type == 'page') {
-                    $this->displaySidebar = 0;
-                }
-            }
-            else {
-                echo 
-                    '<div class="mainInner">
-                        <div class="content">
-                            <h2>Post type is not defined.</h2>
-                        </div>
-                    </div>';
-
-                exit();
-            }
-
-            $this->checkSettings();
-        }
-
-        private function checkSettings() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
-            $hidePosts = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name ='hide_posts'")->fetch_array()[0];
-
-            if($hidePosts == 1 && $homepage != null && $homepage != '' && $this->postType == 'post') {
-                header('HTTP/1.1 301 Moved Permenantly');
-                header('Location: /');
-
-                exit();
-            }
-            
-            if($homepage != null && $homepage != '') {
-                $this->homepage = $mysqli->query("SELECT url FROM `pages` WHERE id = {$homepage}")->fetch_array()[0];
-            }
-        }
-        
-        public function sideOptions($sideOptions = false) {
-            if($sideOptions == true) {
-                $this->sideOptions = true;
-            }
-        }
-
-        public function getPost() {
-            if(isset($_GET['url'])) {
-                $this->getPostSingle();
-            }
-            else {
-                $this->getPostList();
-            }
-        }
-        
-        private function liveSlider($postId) {
-            $mysqli = $GLOBALS['mysqli'];
-            $settings = $mysqli->query("SELECT * FROM `banners` WHERE post_type = '{$this->postType}s' AND post_type_id = {$postId} AND visible = 1");
-            
-            if($settings->num_rows > 0) {
-                $this->slider = 1;
-                
-                $settings = $settings->fetch_assoc();
-                $slides = $mysqli->query("SELECT * FROM `banners_slides` WHERE banner_id = {$settings['id']} ORDER BY position ASC");
-                $sliderOutput = [];
-                
-                if($slides->num_rows > 0) {
-                    array_push($this->sliderOutput, '<div class="owl-carousel liveSlider">');
-                    
-                        while($slide = $slides->fetch_assoc()) {
-                            array_push($this->sliderOutput,
-                                '<div class="liveItem" style="background-image: url(\'' . $slide['live_background'] . '\')">
-                                    <div class="liveContent">
-                                        <div class="liveContentInner">' .
-                                            $slide['live_content'] .
-                                        '</div>
-                                    </div>
-                                </div>'
-                            );
-                        }
-                    
-                    array_push($this->sliderOutput, '</div>');
-                    
-                    array_push($this->sliderOutput, 
-                        '<script>
-                            $(document).ready(function() {
-                                $(".liveSlider").owlCarousel({
-                                    ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
-                                    items: 1,
-                                    loop: true,
-                                    ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
-                                    ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
-                                });
-                            });
-                        </script>'
-                    );
-                }
-            }
-        }
-
-        private function getPostSingle() {
-            $mysqli = $GLOBALS['mysqli'];
-            
-            if(isset($this->homepage) && $this->homepage == $_GET['url'] && $this->postType == 'page') {
-                header('HTTP/1.1 301 Moved Permenantly');
-                header('Location: /');
-
-                exit();
-            }
-            
-            $post = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE url = '{$_GET['url']}' AND visible = 1");
-
-            if($post->num_rows > 0) {
-                while($row = $post->fetch_assoc()) {
-                    $author = $row['author'];
-                   
-                    if($author == null || $author == '') {
-                        $author = 'Anonymous';
-                    }
-                    
-                    if($this->postType != 'page') {
-                        $catId = $row['category_id'];
-                        $category = $mysqli->query("SELECT name FROM {$this->categoryPre}categories where id = {$catId}")->fetch_array()[0];
-                    }
-                    
-                    if($row['image_url'] != null && $row['image_url'] != '') {
-                        $featuredUrl = $row['image_url'];
-                    }
-                    
-                    $productOptions = $mysqli->query("SELECT * FROM `{$this->categoryPre}options` WHERE post_type_id = {$row['id']}");
-                    
-                    if($productOptions->num_rows > 0) {
-                        $option = $productOptions->fetch_assoc();
-                        
-                        if($option['gallery_main'] != null && $option['gallery_main'] != '') {
-                            $featuredUrl = '/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $option['gallery_main'];
-                        }
-                        else if($option['gallery_images'] != null && $option['gallery_images'] != '') {
-                            $featuredUrl = '/gallery/' . $this->postType . 's/' . $row['id'] . '/' . ltrim(explode('";', $option['gallery_images'])[0], '"');
-                        }
-                    }
-                    
-                    $this->liveSlider($row['id']);
-                    
-                    if($this->slider == 1) {
-                        $postOutput .= implode($this->sliderOutput);
-                    }
-                    else {
-                        $postOutput .= 
-                            '<div class="hero ' . $this->postType . '" style="' . (isset($featuredUrl) ? '//background-image: url(\'' . $featuredUrl . '\')' : '') . '">'
-                            . (isset($featuredUrl) ? '<img src="' . $featuredUrl . '" id="heroImage">' : '') . '
-                            <div class="postDetails">
-                                <h1>' . $row['name'] . '</h1>';
-
-                                if($category != null && $category != '' && $this->postType != 'page') {
-                                    $postOutput .= '<h3>Category: ' . $category . '</h3>';
-                                }
-                            if($this->postType != 'page') {                                
-                                $postOutput .=
-                                    '<div class="author">
-                                        <p>
-                                            <strong>By: </strong><span>' . ucwords($author) . '</span>
-                                            <strong>On: </strong><span>' . date('d/m/Y - H:i:s', strtotime($row['date_posted'])) . '</span>
-                                        </p>
-                                    </div>';
-                            }
-                            $postOutput .= '</div>
-                                </div>';
-                    }
-
-                    $postOutput .=
-                        '<div class="mainInner">';
-                        
-                        if($this->displaySidebar == 1) {
-                            include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php');
-                        }
-                    
-                        $postOutput .= 
-                                '<div class="content ' . $this->postType . '">';
-                        
-                        if($option['gallery_images'] != null) {
-                            $galleryItems = explode(';', rtrim($option['gallery_images'], ';'));
-                    
-                            $postOutput .= '<div class="gallery owl-carousel">';
-                            
-                            if($row['image_url'] != null && $row['image_url'] != '') {
-                                $postOutput .= 
-                                    '<a href="' . $row['image_url'] . '" data-lightbox="gallery">
-                                        <div class="galleryItem">
-                                            <img src="' . $row['image_url'] . '">
-                                        </div>
-                                    </a>';
-                            }
-                            
-                            foreach($galleryItems as $galleryItem) {
-                                $galleryItem = ltrim($galleryItem, '"');
-                                $galleryItem = rtrim($galleryItem, '"');
-                                
-                                $postOutput .=
-                                    '<a href="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem . '" data-lightbox="gallery">
-                                        <div class="galleryItem">
-                                            <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem . '">
-                                        </div>
-                                    </a>';
-                            }
-                            
-                            $postOutput .= '</div>';
-                            
-                            $postOutput .= 
-                                '<script>
-                                    $(document).ready(function(){
-                                        $(".owl-carousel").owlCarousel({
-                                            loop:false,
-                                            margin:0,
-                                            nav:true,
-                                            responsive:{
-                                                0:{
-                                                    items:1
-                                                },
-                                                600:{
-                                                    items:3
-                                                },
-                                                1000:{
-                                                    items:6
-                                                }
-                                            },
-                                            dots: false
-                                        });
-                                    });
-                                </script>';
-                        }
-                    
-                        $sideOptions = '';
-                    
-                        if($this->sideOptions == true) {
-                            $sideOptions .= 
-                                '<div class="sideOptions">
-                                    <ul>';
-                            
-                            if($option['features'] != null && $option['features'] != '') {
-                                $sideOptions .= 
-                                    '<li class="features" id="inactive">
-                                        <h3>Features</h3>
-                                        
-                                        <div class="sideOptionInner">
-                                            <span>' . $option['features'] . '</span>
-                                        </div>
-                                    </li>';
-                            }
-                            
-                            if($option['specifications'] != null && $option['specifications'] != '') {
-                                $specs = explode(';', rtrim($option['specifications'], ';'));
-                                
-                                $sideOptions .= 
-                                        '<li class="output" id="inactive">
-                                            <h3>Specifications</h3>
-
-                                            <div class="sideOptionInner">
-                                                <table>';
-                                            
-                                foreach($specs as $specRow) {
-                                    $specRow = explode('","', $specRow);
-                                    $specName = ltrim($specRow[0], '"');
-                                    $specValue = rtrim($specRow[1], '"');
-                                    
-                                    $sideOptions .=
-                                        '<tr>
-                                            <td>' . $specName . '</td>
-                                            <td>' . $specValue . '</td>
-                                        </tr>';
-                                }
-                                
-                                $sideOptions .= 
-                                                '</table>
-                                            </div>
-                                        </li>';
-                            }
-                            
-                            if($option['output'] != null && $option['output'] != '') {
-                                $sideOptions .= 
-                                    '<li class="output" id="inactive">
-                                        <h3>Output</h3>
-                                        
-                                        <div class="sideOptionInner">
-                                            <span>' . $option['output'] . '</span>
-                                        </div>
-                                    </li>';
-                            }
-                            
-                            if($option['options'] != null && $option['options'] != '') {
-                                $sideOptions .= 
-                                    '<li class="output" id="inactive">
-                                        <h3>Options</h3>
-                                        
-                                        <div class="sideOptionInner">
-                                            <span>' . $option['options'] . '</span>
-                                        </div>
-                                    </li>';
-                            }
-                            
-                            $sideOptions .= 
-                                    '</ul>
-                                </div>';
-                        }
-                    
-                                $postOutput .=
-                                        '<div class="postContent">'
-                                            . $sideOptions
-                                            . $row['content'] .
-                                        '</div>
-                                    </div>
-                                </div>';
-                    
-                    echo $postOutput;
-                }
-            }
-            else {
-                http_response_code(404);
-                header('Location: /404');
-
-                exit();
-            }
-        }
-
-        private function getPostList() {
-            $mysqli = $GLOBALS['mysqli'];
-            
-            if(($this->homepage == null || $this->homepage == '') && $this->postType == 'post') {
-                header('HTTP/1.1 301 Moved Permenantly');
-                header('Location: /');
-
-                exit();
-            }
-
-            $postCount = $mysqli->query("SELECT COUNT(*) from `{$this->postType}s` WHERE visible = 1")->fetch_array()[0];
-
-            if(isset($_GET['category'])) {
-                $postCount = $mysqli->query("SELECT COUNT(*) from `{$this->postType}s` WHERE visible = 1 AND category_id = {$_GET['category']}")->fetch_array()[0];
-            }
-
-            $pagination = new pagination($postCount);
-            $pagination->load();
-
-            $posts = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE visible = 1 ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
-
-            if(isset($_GET['category'])) {
-                $posts = $mysqli->query("SELECT * FROM `{$this->postType}s` WHERE visible = 1 AND category_id = {$_GET['category']} ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
-            }
-
-            if($posts->num_rows > 0) {
-                $postOutput .= '<div class="' . $this->postType . 'sList">';
-                
-                while($row = $posts->fetch_assoc()) {
-                    $postOutput .= '<div class="' . $this->postType . '">';
-                    
-                    if($this->postType != 'page' && $this->postType != 'post') {
-                        $galleryItems = $mysqli->query("SELECT gallery_images, gallery_main FROM `{$this->postType}s_options` WHERE post_type_id = {$row['id']}");
-                        
-                        if($galleryItems->num_rows > 0) {
-                            $galleryItem = $galleryItems->fetch_assoc();
-                            if($galleryItem['gallery_main'] != null && $galleryItem['gallery_main'] != '') {
-                                $postOutput .= 
-                                    '<div class="imageWrap">
-                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
-                                            <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryItem['gallery_main'] . '">
-                                        </a>
-                                    </div>';
-                            }
-                            else if($row['image_url'] != null && $row['image_url'] != '') {
-                                $postOutput .= 
-                                    '<div class="imageWrap">
-                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
-                                            <img src="' . $row['image_url'] . '">
-                                        </a>
-                                    </div>';
-                            }
-                            else if($galleryItem['gallery_images'] != null && $galleryItem['gallery_images'] != '') {
-                                $galleryFirst = ltrim(explode('";', $galleryItem['gallery_images'])[0], '"');
-                                
-                                $postOutput .= 
-                                    '<div class="imageWrap">
-                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
-                                            <img src="/gallery/' . $this->postType . 's/' . $row['id'] . '/' . $galleryFirst . '">
-                                        </a>
-                                    </div>';
-                            }
-                            else {
-                                $postOutput .= 
-                                    '<div class="imageWrap">
-                                        <a href="' . $this->postType . 's/' . $row['url'] . '">
-                                            <img src="/admin/images/missingImage.png">
-                                        </a>
-                                    </div>';
-                            }
-                        }
-                        else {
-                            if($row['image_url'] != null && $row['image_url'] != '') {
-                                $postOutput .= '<div class="imageWrap">
-                                    <img src="' . $row['image_url'] . '">
-                                </div>';
-                            }
-                        }
-                    }
-                    else if($this->postType == 'post') {
-                        if($row['image_url'] != null && $row['image_url'] != '') {
-                            $postOutput .= '<div class="imageWrap">
-                                <img src="' . $row['image_url'] . '">
-                            </div>';
-                        }
-                    }
-                    
-                    $postOutput .= '<div class="smallContent"><h2><a href="' . $this->postType . 's/' . $row['url'] . '">' . $row['name'] . '</a></h2>';
-
-                    $length = strlen($row['description']); 
-
-                    if($length < 500) {
-                        $postOutput .= '<p>' . $row['description'] . '<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
-                    }
-                    else {
-                        $postOutput .= '<p>' . substr($row['description'], 0, 500) . '...<br><a href="' . $this->postType . 's/' . $row['url'] . '">View More</a></p>';
-                    }
-                    
-                    //if additional add author and date
-                    if($mysqli->query("SHOW TABLES LIKE '{$this->postType}s_additional'")->num_rows > 0) {
-                        $author = $mysqli->query("SELECT author FROM `{$this->postType}s_additional` WHERE post_type_id = {$row['id']}");
-                        
-                        if($author->num_rows > 0) {
-                            $author = $author->fetch_array()[0];
-                            
-                            if($author != null && $author != '') {
-                                $postOutput .=
-                                    '<div class="author">
-                                        <h3> - ' . $author . '</h3>
-                                        <h4>' . date('d/m/Y', strtotime($row['date_posted'])) . '</h4>
-                                    </div>';
-                            }
-                        }
-                    }
-
-                    $postOutput .= '</div></div><hr>';
-                }    
-                
-                $postOutput .= '</div>';
-            }
-            else {
-                $postOutput = '<p>There are currently no ' . strtolower($this->postTitle) . 's.</p>';
-            }
-
-            echo 
-                '<div class="mainInner">';
-                if($this->postType != 'page') {
-                    include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/sidebar.php');
-                }
-            
-                echo '<div class="content">
-                        <h1>' . $this->postTitle . 's</h1>'
-                        . $postOutput;
-
-                    echo $pagination->display() .
-                    '</div>
-                </div>';
-        }
-    }
-
     class dashboardBlock {
         public $postType;
         public $blockId;
@@ -1571,176 +854,6 @@
         }
     }
 
-    class productOptions {
-        public $postType = '';
-
-        public function __construct($postType = '') {
-            $mysqli = $GLOBALS['mysqli'];
-            
-            if(isset($postType) && $postType != '') {
-                $this->postType = $postType;
-            }
-            
-            $checkId = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}` WHERE id = {$_GET['p']}")->fetch_array()[0];
-            $checkOptions = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
-            
-            if($checkId <= 0) {
-                exit();
-            }
-            
-            if($checkOptions <= 0) {
-                echo '<h3>Product options are missing for this post.</h3>';
-                
-                exit();
-            }
-            
-            echo '<div class="formBlock productOptions ' . $postType . 'Options" style="max-width: 100%; border-bottom: 0;">' .
-                    '<form style="max-width: 100%;" enctype="multipart/formdata">';
-        }
-
-        public function __destruct() {
-            echo '</form></div>';
-
-            echo '<script src="/admin/settings/scripts/productOptions.js"></script>';
-        }
-
-        public function addFeatures() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $feature = $mysqli->query("SELECT features FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
-
-            echo 
-                '<h3>Features</h3>
-                <p>
-                    <textarea class="noTiny" name="featuresOption">' . $feature .'</textarea>
-                </p>
-                <hr>';
-        }
-
-        public function addOutput() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $output = $mysqli->query("SELECT output FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
-
-            echo 
-                '<h3>Output</h3>
-                <p>
-                    <textarea class="noTiny" name="outputOption">' . $output . '</textarea>
-                </p>
-                <hr>';
-        }
-
-        public function addSpecs() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $specs = $mysqli->query("SELECT specifications FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
-            $specRow = 1;
-
-            if($specs != null && $specs != '') {
-                $specRows = explode(';', rtrim($specs, ';'));
-
-                foreach($specRows as $specRow) {
-                    $specCols = explode('","', $specRow);
-                    $specName = ltrim($specCols[0], '"');
-                    $specValue = rtrim($specCols[1], '"');
-
-                    $tableData .=
-                        '<tr id="spec' . $specRow . '">
-                            <td><input type="text" name="specName" value="' . htmlspecialchars($specName, ENT_COMPAT, 'UTF-8') . '"></td>
-                            <td><input type="text" name="specValue" value="' . htmlspecialchars($specValue, ENT_COMPAT, 'UTF-8') .'"></td>
-                            <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
-                        </tr>';
-
-                    $specRow++;
-                }
-            }
-            else {
-                $tableData = 
-                    '<tr id="spec1">
-                        <td><input type="text" name="specName" value="Height"></td>
-                        <td><input type="text" name="specValue"></td>
-                        <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
-                    </tr>
-
-                    <tr id="spec2">
-                        <td><input type="text" name="specName" value="Width"></td>
-                        <td><input type="text" name="specValue"></td>
-                        <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
-                    </tr>
-
-                    <tr id="spec3">
-                        <td><input type="text" name="specName" value="Depth"></td>
-                        <td><input type="text" name="specValue"></td>
-                        <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
-                    </tr>';
-            }
-
-
-            echo '<h3>Specifications</h3>';
-
-                echo
-                    '<table class="specificationOption" style="max-width: 650px;">
-                        <tr class="headers">
-                            <td>Specification Name</td>
-                            <td>Specification Value</td>
-                            <td></td>
-                        </tr>' .
-                        $tableData .
-                    '</table>';
-
-            echo 
-                '<p class="specActions">
-                    <input type="button" name="addSpec" value="Add Spec Row">
-                </p>';
-
-            echo '<hr>';
-        }
-
-        public function addGallery() {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $galleryImages = $mysqli->query("SELECT gallery_images FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
-            $galleryImages = explode(';', rtrim($galleryImages, ';'));                    
-            $galleryMain = $mysqli->query("SELECT gallery_main FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['p']}")->fetch_array()[0];
-            
-            echo '<h3>Gallery</h3>';
-
-                echo 
-                    '<input type="file" name="galleryOption" multiple>
-                    <div class="galleryItems current">';
-
-                foreach($galleryImages as $image) {
-                    $image = ltrim($image, '"');
-                    $image = rtrim($image, '"');
-                    
-                    if($image != null && $image != '') {
-                        echo
-                            '<div class="galleryItem"' . ($galleryMain == $image ? 'id="galleryMain"' : '') . '>
-                                <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
-                                <img class="galleryImage" src="/gallery/products/1/' . $image . '" alt="' . $image . '">
-                            </div>';
-                    }
-                }
-
-                echo
-                    '</div>
-
-                    <div class="galleryItems uploaded">
-                    </div>';
-
-            echo 
-                '<p class="galleryMessage"></p>
-                <hr>';
-        }
-
-        public function addAll() {
-            $this->addGallery();
-            $this->addFeatures();
-            $this->addSpecs();
-            $this->addOutput();
-        }
-    }
-
     class bannerAdmin {
         public $postType;
         public $postId;
@@ -1763,6 +876,7 @@
 
             $bannerCount = $mysqli->query("SELECT COUNT(*) FROM `banners`")->fetch_array()[0];
             $pagination = new pagination($bannerCount);
+            $pagination->prefix = '/admin/banners/';
             $pagination->load();
 
             echo
@@ -1785,7 +899,7 @@
             echo
                 '<table>
                     <tr class="headers">
-                        <td style="width: 40px;">ID</td>
+                        <td style="width: 50px;">ID</td>
                         <td style="text-align: left;">Details</td>
                         <td style="width: 100px;">Actions</td>
                     </tr>';
@@ -1838,7 +952,7 @@
                     }
                 echo '</table>';
 
-            $pagination->display();
+            echo $pagination->display();
         }
 
         public function getBannerSingle() {
@@ -1893,7 +1007,7 @@
                                                 
                                                 if($postTypes->num_rows > 0) {
                                                     while($type = $postTypes->fetch_assoc()) {
-                                                        echo '<option value="' . $type['name'] . 's" ' . ($type['name'] . 's' == $row['post_type'] ? 'selected' : '') . '>' . ucwords($type['name']) . 's</option>';
+                                                        echo '<option value="' . $type['name'] . 's" ' . ($type['name'] . 's' == $row['post_type'] ? 'selected' : '') . '>' . ucwords(str_replace('_', ' ', $type['name'])) . '</option>';
                                                     }
                                                 }
                     
@@ -2042,7 +1156,7 @@
             }
         }
     }
-
+    
     class post {
         private $postType;
         public $showTitle = true;
@@ -2204,6 +1318,58 @@
             }
             
             return $sidebar;
+        }
+        
+        private function gallery($productOptions, $id) {
+            $mysqli = $GLOBALS['mysqli'];
+            
+            if($productOptions == true) {
+                
+                $galleryImages = $mysqli->query("SELECT gallery_images FROM `{$this->postType}_options` WHERE post_type_id = {$id}")->fetch_array()[0];
+                $galleryImages = explode(';', rtrim($galleryImages, ';'));
+                
+                $gallery = 
+                    '<div class="gallery owl-carousel">';
+                
+                foreach($galleryImages as $galleryImage) {
+                    $galleryImage = ltrim($galleryImage, '"');
+                    $galleryImage = rtrim($galleryImage, '"');
+                    
+                    $gallery .=
+                        '<a href="/gallery/' . $this->postType . '/' . $id .'/' . $galleryImage . '" data-lightbox="gallery" data-title="' . explode('.', ucwords(str_replace('-', ' ', $galleryImage)))[0] . '">
+                            <div class="galleryItem">
+                                <img src="/gallery/' . $this->postType . '/' . $id . '/' . $galleryImage . '" alt="">
+                            </div>
+                        </a>';
+                }   
+                
+                $gallery .=
+                    '</div>
+                    
+                    <script>
+                        $(document).ready(function() {
+                            $(".gallery").owlCarousel({
+                                loop: false,
+                                margin: 0,
+                                nav: true,
+                                dots: false,
+                                responsive: {
+                                    0: {
+                                        items: 1
+                                    },
+                                    600: {
+                                        items: 3
+                                    },
+                                    1000: {
+                                        items: 8
+                                    }
+                                }
+                            });
+                        });
+                    </script>';
+                
+                return $gallery;
+            }
         }
 
 
@@ -2381,12 +1547,16 @@
 
                     $postOutput .= $this->postHeader($row['id'], $row['name'], $row['author'], $imageSource, $row['date_posted'], $row['category_id']);
                     
+                    
+                    
                     $postOutput .= 
                         '<div class="postInner">' .
                             $this->sidebar();
                     
                     $postOutput .=
                         '<div class="postContent ' . ($this->showSidebar == true ? 'withSidebar' : '') . '">';
+                    
+                    $postOutput .= $this->gallery($hasProductOptions, $row['id']);
 
                     if(isset($hasProductOptions) && $hasProductOptions == true) {
                         $productOptions = $mysqli->query("SELECT * FROM `{$this->postType}_options` WHERE post_type_id = {$row['id']}");
@@ -2484,6 +1654,432 @@
             }
 
             echo '</div>';
+        }
+    }
+
+    class editor {
+        protected $postType;
+        protected $categoryTable = 'categories';
+        protected $output;
+
+        public function __construct($postType = 'post') {
+            $postType = strtolower($postType);
+
+            if($postType != null && $postType != '') {
+                $this->postType = $postType . 's';
+            }
+            else {
+                $this->postType = 'posts';
+            }
+
+            if($this->postType != 'pages' && $this->postType != 'posts') {
+                $this->categoryTable = $this->postType . '_categories';
+            }
+            elseif($this->postType == 'pages') {
+                $this->categoryTable = null;
+            }
+        }
+
+        public function display() {
+            if($_GET['id'] && $_GET['id'] > 0) {
+                $this->showSingle();
+            }
+            else {
+                $this->showList();
+            }
+
+            echo $this->output;
+        }
+
+        private function getFeatured($imageUrl) {
+            $featured = '';
+
+            if($imageUrl == null || $imageUrl == '') {
+                $featured = 
+                    '<div class="noFeatured featuredInner">
+                        <span>Select Image</span>
+                        <span class="featuredDelete" style="display: none;"><span>X</span></span>
+                        <img src="/admin/images/missingImage.png" id="featuredImage" style="display: none;">
+                    </div>';
+            }
+            else {
+                $featured = 
+                    '<div class="featuredInner">
+                        <span style="display: none;">Select Image</span>
+                        <span class="featuredDelete"><span>X</span></span>
+                        <img src="' . $imageUrl .'" id="featuredImage">
+                    </div>';
+            }
+
+            return $featured;
+        }
+
+        private function showProductOptions($postName) {
+            $mysqli = $GLOBALS['mysqli'];
+            
+            $productCheck = $mysqli->query("SHOW TABLES LIKE '{$this->postType}_options'");
+            
+            if($productCheck->num_rows > 0) {
+                $checkId = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['id']}");
+                
+                if($checkId->num_rows > 0) {
+                    $product = 
+                        '<div class="productOptionsWrap">
+                            <h2>' . ucwords($postName) . 's Additional Options</h2>
+                            
+                            <div class="formBlock productOptions ' . $this->postType . 'Options" style="width: 100%; border-bottom: 0;">
+                                <form style="max-width: 100%;" enctype="multipart/formdata">';
+                    
+                    //Gallery
+                    $images = $mysqli->query("SELECT gallery_images, gallery_main FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['id']}")->fetch_assoc();
+                    $galleryImages = explode(';', rtrim($images['gallery_images'], ';'));
+                    $galleryMain = $images['gallery_main'];
+                    
+                    $product .=
+                        '<h3>Gallery</h3>
+                        
+                        <input type="file" name="galleryOption" multiple>
+                        
+                        <div class="galleryItems current">';
+                    
+                    foreach ($galleryImages as $galleryImage) {
+                        $galleryImage = ltrim($galleryImage, '"');
+                        $galleryImage = rtrim($galleryImage, '"');
+                        
+                        $product .=
+                            '<div class="galleryItem"' . ($galleryImage == $galleryMain ? ' id="galleryMain"' : '') . '> 
+                                <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
+                                <img class="galleryImage" src="/gallery/' . $this->postType . '/' . $_GET['id'] . '/' . $galleryImage . '" alt="' . $galleryImage . '">
+                            </div>';
+                    }
+                        
+                    $product .=
+                        '</div>
+                        
+                        <div class="galleryItems uploaded">
+                        
+                        </div>
+                        
+                        <p class="galleryMessage"></p>
+                        
+                        <hr>';
+                    
+                    //Features
+                    $features = $mysqli->query("SELECT features FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['id']}")->fetch_array()[0];
+                    
+                    $product .=
+                        '<h3>Features</h3>
+                        
+                        <p>
+                            <textarea class="noTiny" name="featuresOption">' . $features . '</textarea>
+                        </p>
+                        
+                        <hr>';
+                    
+                    //Specifications
+                    $specs = $mysqli->query("SELECT specifications FROM `{$this->postType}_options` WHERE post_type_id = {$_GET['id']}")->fetch_array()[0];
+                    $specRow = 1;
+                    
+                    if($specs != null && $specs != '') {
+                        $specsRows = explode(';', rtrim($specs, ';'));
+                        
+                        foreach($specsRows as $specRow) {
+                            $specCols = explode('","', $specRow);
+                            $specName = ltrim($specCols[0], '"');
+                            $specValue = rtrim($specCols[1], '"');
+                            
+                            $specData .=
+                                '<tr id="spec' . $specRow . '">
+                                    <td>
+                                        <input type="text" name="specName" value="' . htmlspecialchars($specName, ENT_COMPAT, 'UTF-8') . '">
+                                    </td>
+                                    
+                                    <td>
+                                        <input type="text" name="specValue" value="' . htmlspecialchars($specValue, ENT_COMPAT, 'UTF-8') . '">
+                                    </td>
+                                    
+                                    <td>
+                                        <input type="button" class="badButton" name="deleteSpec" value="Delete Spec">
+                                    </td>
+                                </tr>';
+                            
+                            $specRow++;
+                        }
+                    }
+                    else {
+                        $specData =
+                            '<tr id="spec1">
+                                <td><input type="text" name="specName" value="Height"></td>
+                                <td><input type="text" name="specValue"></td>
+                                <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                            </tr>
+
+                            <tr id="spec2">
+                                <td><input type="text" name="specName" value="Width"></td>
+                                <td><input type="text" name="specValue"></td>
+                                <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                            </tr>
+
+                            <tr id="spec3">
+                                <td><input type="text" name="specName" value="Depth"></td>
+                                <td><input type="text" name="specValue"></td>
+                                <td><input class="badButton" type="button" name="deleteSpec" value="Delete Spec"></td>
+                            </tr>';
+                    }
+                    
+                    $product .=
+                        '<h3>Specifications</h3>
+                        
+                        <table class="specificationOption" style="max-width: 650px;">
+                            <tr class="headers">
+                                <td>Specification Name</td>
+                                <td>Specification Value</td>
+                                <td></td>
+                            </tr>'
+                            . $specData .
+                        '</table>
+                        
+                        <p class="specActions">
+                            <input type="button" name="addSpec" value="Add Spec Row">
+                        </p>
+                        
+                        <hr>';
+                    
+                    $product .=    
+                                '</form>
+                            </div>
+                        </div>
+                        <script src="/admin/settings/scripts/productOptions.js"></script>';
+                }
+                else {
+                    $product = 
+                        '<div class="productOptions">
+                            <h2 style="color: red;">Unable to access additional options for this ' . $postName . '</h2>
+                        </div>';
+                }
+                
+                return $product;
+            }
+        }
+        
+        private function showList() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $postCheck = $mysqli->query("SHOW TABLES LIKE '{$this->postType}'");
+
+            if($postCheck->num_rows <= 0) {
+                http_response_code(404);
+                header('Location: /404');
+
+                exit();
+            }
+
+            $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}`")->fetch_array()[0];
+            $postName = rtrim(str_replace('_', ' ', $this->postType), 's');
+
+            $pagination = new pagination($postCount);
+            $pagination->prefix = '/admin/editor/' . $this->postType . '/';
+            $pagination->load();
+
+            $posts = $mysqli->query("SELECT * FROM `{$this->postType}` ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+
+            $output = 
+                '<div class="content">
+                    <h1>' . ucwords($postName) . 's</h1>
+
+                    <div class="formBlock">
+                        <form class="addContent" id="add' . ucwords(rtrim($this->postType, 's')) . '">
+                            <p>
+                                <input type="submit" value="New ' . ucwords($postName) .'">
+                            </p>
+
+                            <p class="message"></p>
+                        </form>
+
+                        <form class="searchContent" id="search' . ucwords(rtrim($this->postType, 's')) . '">
+                            <p>
+                                <input type="text" name="search" placeholder="Search ' . ucwords($postName) . 's..." id="' . $pagination->itemLimit . '">
+                            </p>
+                        </form>
+                    </div>
+
+                    <table>
+                        <tr class="headers">
+                            <td style="width: 50px;">ID</td>
+                            <td style="text-align: left;">Details</td>
+                            <td style="width: 180px;">Published</td>
+                            <td style="width: 100px;">Actions</td>
+                        </tr>';
+
+            if($posts->num_rows > 0) {
+                while($row = $posts->fetch_assoc()) {
+                    $output .=
+                        '<tr class="' . $this->postType . 'Row contentRow">
+                            <td>
+                                <span class="id">' . $row['id'] .'</span>
+                            </td>
+
+                            <td>
+                                <h4>' . $row['name'] . '</h4>
+                                <p>' . $row['description'] . '</p>
+                                <p style="font-size: 0.75em;">URL: ' . $row['url'] . '</p>
+                            </td>
+
+                            <td>
+                                <p>' . ucwords($row['author']) .'</p>
+                                <p>' . date('d/m/Y H:i:s', strtotime($row['date_posted'])) .'</p>
+                            </td>
+
+                            <td>
+                                <p class="icon" id="' . ($row['visible'] == 1 ? 'view' : 'hide') . '"><img src="/admin/images/icons/' . ($row['visible'] == 1 ? 'view' : 'hide') . '.png"></p>
+                                <p class="icon" id="edit"><img src="/admin/images/icons/edit.png"></p>
+                                <p class="icon" id="delete"><img src="/admin/images/icons/bin.png"></p>
+                            </td>
+                        </tr>';
+                }
+            }
+            else {
+                $output .=
+                    '<tr>
+                        <td colspan="4">There are currently no ' . $postName .'s</td>
+                    </tr>';
+            }
+
+            $output .=
+                    '</table>' .
+                    $pagination->display();
+
+            $output .= 
+                '</div>
+                <script src="/admin/settings/scripts/postPage.js"></script>';
+
+            $this->output = $output;
+        }
+
+        private function showSingle() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $postName = rtrim(str_replace('_', ' ', $this->postType), 's');
+            $post = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE id = {$_GET['id']}");
+
+            $output = 
+                '<div class="content">
+                    <div class="' . $this->postType . ' contentWrap">';
+
+            if($post->num_rows > 0) {
+                while($row = $post->fetch_assoc()) {
+                    $output .=
+                        '<form id="editContent">
+                            <div class="details">
+                                <div class="left">
+                                    <p style="display: none;">
+                                        <span class="id">' . $row['id'] . '</span>
+                                    </p>
+
+                                    <p>
+                                        <label>Title: </label>
+                                        <input type="text" name="title" value="' . $row['name'] . '">
+                                    </p>
+
+                                    <p>
+                                        <label>Short Content: </label>
+                                        <input type="text" name="description" value="' . $row['description'] . '" maxlength="500">
+                                    </p>
+
+                                    <p>
+                                        <label>URL: </label>
+                                        <input type="text" name="url" value="' . $row['url'] . '">
+                                    </p>';
+
+                                    if($this->postType != 'pages') {
+                                        $categories = $mysqli->query("SELECT id, name FROM `{$this->categoryTable}` ORDER BY name ASC");
+
+                                        $output .=
+                                            '<p>
+                                                <label>Category: </label>
+                                                <select name="categories">
+                                                    <option value="" selected disabled>--Select Category--</option>';
+
+                                                    if($categories->num_rows > 0) {
+                                                        while($category = $categories->fetch_assoc()) {
+                                                            $output .=
+                                                                '<option value="' . $category['id'] . '" ' . ($category['id'] == $row['category_id'] ? 'selected' : '') . '>' . $category['name'] . '</option>';
+                                                        }
+                                                    }
+
+                                        $output .=
+                                                '</select>
+                                            </p>';
+                                    }
+
+                    $output .=        
+                                    '<p class="message"></p>
+                                </div>
+
+                                <div class="right">
+                                    <p>
+                                        <label>Author: </label>
+                                        <input type="text" name="author" value="' . ucwords($row['author']) . '">
+                                    </p>
+
+                                    <p>
+                                        <label>Date Posted: </label>
+                                        <input type="datetime-local" name="date" step="1" value="' . str_replace(' ', 'T', $row['date_posted']) . '">
+                                    </p>
+
+                                    <div class="actions">
+                                        <p class="icon" id="' . ($row['visible'] == 1 ? 'view' : 'hide') . '"><img src="/admin/images/icons/' . ($row['visible'] == 1 ? 'view.png" alt="Visible"' : 'hide.png" alt="Hidden"') . '></p>
+                                        <p class="icon" id="apply"><img src="/admin/images/icons/check.png" alt="Save Changes"></p>
+                                        <p class="icon" id="delete"><img src="/admin/images/icons/bin.png" alt="Delete"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="editor">
+                                <textarea name="content">' . $row['content'] . '</textarea>
+                            </div>
+
+                            <div class="featuredImage">'
+                                . $this->getFeatured($row['image_url']) .
+                            '</div>
+                        </form>
+                        <script src="/admin/settings/scripts/postPage.js"></script>';
+                    
+                        $output .= $this->showProductOptions($postName);
+                }
+            }
+            else {
+                $output .= 
+                    '<h1>' . ucwords($postName) . ' ' . $_GET['id'] . ' does not exist!</h1>
+                    <a href="./">Return To ' . ucwords($postName) . 's</a>';
+            }
+
+            $output .=
+                    '</div>
+                </div>';
+
+            $this->output = $output;
+        }
+
+        public function debug() {
+            $parameters = get_object_vars($this);
+
+            echo
+                '<div style="font-family: sans-serif; border: 1px solid #000; margin: 1em 0; padding: 1em; box-sizing: border-box;">
+                    <h3 style="margin: 0 0 0.5em 0;">Debug Info: </h3>
+                    <ul style="margin: 0; list-style: none; padding-left: 1em;">';
+
+            foreach($parameters as $parameter => $value) {
+                if($value == null) {
+                    $value = 'null';
+                }
+
+                echo '<li>' . $parameter . ': ' . $value . '</li>';
+            }
+
+            echo    
+                    '</ul>
+                </div>';
         }
     }
 

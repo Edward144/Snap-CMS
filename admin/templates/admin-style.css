@@ -991,6 +991,11 @@ table .icon img {
     display: block;
 }
 
+#mediaNavigator {
+    width: 99%;
+    height: 98%;
+}
+
 /* SETUP */
 
 #setup, #login, #reset, #newPassword {
@@ -1119,8 +1124,18 @@ table .icon img {
     
     .main {
         overflow-x: hidden;
-        min-height: 100vh;
+        min-height: -webkit-calc(100vh - 237px);
+        min-height: -moz-calc(100vh - 237px);
+        min-height: -o-calc(100vh - 237px);
+        min-height: calc(100vh - 237px);
         height: 100%;
+    }
+    
+    #mediaNavigator {
+        height: -webkit-calc(100vh - 237px);
+        height: -moz-calc(100vh - 237px);
+        height: -o-calc(100vh - 237px);
+        height: calc(100vh - 237px);
     }
 }
 

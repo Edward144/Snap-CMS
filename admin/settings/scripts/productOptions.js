@@ -1,4 +1,4 @@
-var productOptions = true;
+productOptions = true;
 
 //Add Spec Row
 $("input[name='addSpec']").click(function() {
