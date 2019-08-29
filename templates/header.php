@@ -44,6 +44,7 @@
         ?>
         
         <link href="/templates/style.css" rel="stylesheet" type="text/css">
+        <link href="/templates/custom.css" rel="stylesheet" type="text/css">
         <link href="/scripts/lightbox.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="/scripts/OwlCarousel2-2.3.4/owl.carousel.min.css">
         <link rel="stylesheet" href="/scripts/OwlCarousel2-2.3.4/owl.theme.default.min.css">
