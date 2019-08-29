@@ -1169,7 +1169,8 @@
         public $showHero = true;
         public $showSidebar = false;
         public $itemLimit = 10;
-
+        public $customHero;
+        
         private $categoryTable = 'categories';
         private $productTable;
         private $additionalTable;
@@ -1179,7 +1180,7 @@
         private $output;
 
         public function __construct($postType = 'post') {
-            $postType = strtolower($postType);
+            $postType = str_replace('-', '_', strtolower($postType));
 
             if($postType != '' && $postType != null) {
                 $this->postType = $postType . 's';
@@ -1208,7 +1209,7 @@
             if($homeUrl->num_rows > 0) {
                 $homeUrl = $homeUrl->fetch_array()[0];
 
-                if($this->postType == 'pages' && $_SERVER['REQUEST_URI'] == '/pages/' . $homeUrl) {
+                if($this->postType == 'pages' && $_SERVER['REQUEST_URI'] == '/post-type/pages/' . $homeUrl) {
                     header('HTTP/1.1 301 Moved Permenantly');
                     header('Location: /');
 
@@ -1406,6 +1407,7 @@
 
             $pagination = new pagination($postCount);
             $pagination->setItemLimit($this->itemLimit);
+            $pagination->prefix = '/post-type/' . str_replace('-', '_', $this->postType) . '/';
             $pagination->load();
 
             if(isset($_GET['category'])) {
@@ -1544,10 +1546,14 @@
                         $imageSource = '/admin/images/missingImage.png';
                         $missingImage = true;
                     }
-
-                    $postOutput .= $this->postHeader($row['id'], $row['name'], $row['author'], $imageSource, $row['date_posted'], $row['category_id']);
                     
                     
+                    if(isset($this->customHero)) {
+                        $postOutput .= include_once($this->customHero);
+                    }
+                    else {
+                        $postOutput .= $this->postHeader($row['id'], $row['name'], $row['author'], $imageSource, $row['date_posted'], $row['category_id']);
+                    }                    
                     
                     $postOutput .= 
                         '<div class="postInner">' .
