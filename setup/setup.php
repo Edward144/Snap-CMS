@@ -177,13 +177,13 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `categories` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(200),
-            description VARCHAR(255),
-            image_url VARCHAR(255),
+            post_type VARCHAR(255),
+            name VARCHAR(255),
+            description VARCHAR(500),
+            image VARCHAR(255),
+            url VARCHAR(255),
             parent_id INT DEFAULT 0,
-            position INT DEFAULT 0,
-            level INT DEFAULT 0,
-            custom_id INT DEFAULT 1
+            level INT DEFAULT 0
         )"
     );
 

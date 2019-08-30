@@ -1084,7 +1084,50 @@ table .icon img {
     padding: 1em;
 }
 
+/* CATEGORIES */
+
+.categoryTree:first-child {
+    padding: 0;
+}
+
+.categoryTree {
+    list-style: none;
+}
+
+.categoryTree .categoryDetails {
+    background: #efefef;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.categoryTree > li {
+    margin: 0.5em auto;
+    max-width: 500px;
+    margin-left: 0;
+}
+
+.categoryTree .categoryDetails .actions, .categoryTree .categoryDetails .actions > p {
+    margin: 0 auto;
+}
+
+.categoryTree .categoryDetails .actions {
+    display: inline-block;
+    margin-left: 1em;
+    float: right;
+}
+
 /* RESPONSIVE */
+
+@media only screen and (max-width: 1331px) {
+    #hideSmall {
+        display: none;
+    }
+    
+    #createCategory > p:nth-child(2) {
+        margin-top: 0;
+    }
+}
 
 @media only screen and (max-width: 1024px) {
     body {

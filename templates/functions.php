@@ -643,121 +643,6 @@
         }
     }
 
-    class categoryTree {
-        public function __construct($level = 0, $parent = 0, $prevLevel = 0, $postType = '') {
-            if(isset($postType) && $postType != '') {
-                $postType = $postType . '_';
-            }
-            
-            $this->createLevel($level, $parent, $prevLevel, $postType);
-        }
-        
-        public function createLevel($level, $parent, $prevLevel, $postType) {
-            $mysqli = $GLOBALS['mysqli'];
-            
-            $items = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
-            
-            if($items->num_rows > 0) {
-                echo '<ul class="level catEditor" id="level' . $level . '">';
-                    while($item = $items->fetch_assoc()) {
-                        echo
-                            '<li class="catSelector">
-                                <p>
-                                    <span type="text" class="catId">' . ($item['id'] ? '(' . $item['id'] . ')' : '(?)') . '</span>
-                                    <input type="text" name="catName" placeholder="Name" style="width: 200px;" value="' . $item['name'] . '">
-
-                                    <input type="text" name="catDesc" placeholder="Description" style="width: 200px;" value="' . $item['description'] . '">
-                                    
-                                    <input type="text" name="catImage" placeholder="Image URL" style="width: 200px;" ' . ($item['image_url'] != '' && $item['custom_url'] != null ? 'value="' . $item['custom_url'] . '"' : '') . '>
-
-                                    <input type="button" class="badButton" style="min-width: 0; width: 24px; height: 24px; border-radius: 100%;" value="X" name="delete">
-                                </p>';
-                            $this->checkChildren($item['custom_id'], $item['level'], $postType);
-
-                            echo '</li>';
-                    }
-                    
-                    echo 
-                        '<li id="levelAddition">
-                            <p>
-                                <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                            </p>
-                        </li>';
-                echo '</ul>';
-            }
-            else {
-                echo 
-                    '<ul class="level catEditor" id="level' . $level . '">
-                        <li id="levelAddition">
-                            <p>
-                                <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                            </p>
-                        </li>
-                    </ul>';
-            }
-            
-            if($level == 0) {
-                echo '<p>
-                        <input type="submit" value="Update Categories">
-                    </p>
-
-                    <p class="message"></p>';
-            
-            
-                //Add Hidden Selector To Be Used For Copying
-                echo 
-                    '<div id="catSelectorMain" style="display: none;">
-                        <li class="catSelector">
-                            <p>
-                                <span type="text" class="catId">(-)</span>
-                                <input type="text" name="catName" placeholder="Name" style="width: 200px;" value="">
-
-                                <input type="text" name="catDesc" placeholder="Description" style="width: 200px;" value="">
-
-                                <input type="text" name="catImage" placeholder="Image URL" style="width: 200px;">
-
-                                <input type="button" class="badButton" style="min-width: 0; width: 24px; height: 24px; border-radius: 100%;" value="X" name="delete">
-                            </p>
-
-                            <ul class="level catEditor" id="level1">
-                                <li id="levelAddition">
-                                    <p>
-                                        <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                                    </p>
-                                </li>
-                            </ul>
-                        </li>
-                    </div>
-                ';
-            }
-        }
-        
-        public function checkChildren($parent, $level, $postType) {
-            $mysqli = $GLOBALS['mysqli'];
-            $level++;
-            
-            $children = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
-            
-            if(strpos($postType, '_') !== false) {
-                $postType = explode('_', $postType)[0];
-            }
-            
-            if($children->num_rows > 0) {
-                new categoryTree($level, $parent, ($level - 1), $postType);
-            }
-            else {
-                echo 
-                    '<ul class="level catEditor" id="level' . $level . '">
-                        <li id="levelAddition">
-                            <p>
-                                <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                            </p>
-                        </li>
-                    </ul>';
-            }
-        }
-    }
-
     class dashboardBlock {
         public $postType;
         public $blockId;
@@ -2087,6 +1972,260 @@
             echo    
                     '</ul>
                 </div>';
+        }
+    }
+
+    class categoryEditor {
+        public $postType;
+
+        public function __construct($postType = 'post') {                
+            $postType = str_replace('-', '_', strtolower($postType));
+
+            if($postType != '' && $postType != null) {
+                $this->postType = $postType . 's';
+            }
+            else {
+                $this->postType = 'posts';
+            }
+        }
+
+        private function postTypeSelector() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $postTypes = $mysqli->query("SELECT name FROM `custom_posts` ORDER BY name ASC");
+            $categories = $mysqli->query("SELECT name, id FROM `categories` WHERE post_type = '{$this->postType}' AND level <= 2");
+            $selector =
+                '<div class="formBlock">
+                    <form id="categorySelector">
+                        <p>
+                            <label>Edit Categories For: </label>
+                            <select name="categoryType">
+                                <option value="posts" ' . ($this->postType == 'posts' ? 'selected' : '') . '>Posts</option>';
+
+                                while($row = $postTypes->fetch_assoc()) {
+                                    $selector .= 
+                                        '<option value="' . $row['name'] . 's"' . ($this->postType == $row['name'] . 's' ? 'selected' : '') . '>' . ucwords(str_replace('_', ' ', $row['name'])) . 's</option>';
+                                }
+
+                        $selector .= 
+                            '</select>
+                        </p>
+                    </form>
+                </div>
+
+                <div class="formBlock">
+                    <form id="createCategory">
+                        <h3>Add New Category</h3>
+
+                        <input type="hidden" value="' . $this->postType . '" name="catPostType">
+
+                        <p>
+                            <label>Name: </label>
+                            <input type="text" name="catName">
+                        </p>
+
+                        <p>
+                            <label>Description: </label>
+                            <input type="text" name="catDesc">
+                        </p>
+                    </form>
+
+                    <form id="createCategory">
+                        <h3 id="hideSmall">&nbsp;</h3>
+
+                        <p>
+                            <label>Image: </label>
+                            <input type="text" name="catImage" style="width: calc(100% - 232px - 46px);">
+                            <input type="button" name="catImageSelect" value="Choose Image">
+                        </p>
+
+                        <p>
+                            <label>Parent Category: </label>
+                            <select name="catParent">
+                                <option value="0">No Parent Category</option>';
+
+                            while($row = $categories->fetch_assoc()) {
+                                $selector .=
+                                    '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+                            }
+
+                        $selector .=
+                            '</select>
+                        </p>
+
+                        <p>
+                            <input type="submit" value="Create Category">
+                        </p>
+
+                        <p class="message">' . (isset($_SESSION['categoryMessage']) ? $_SESSION['categoryMessage'] : '') . '</p>
+                    </form>
+                </div>';
+
+            unset($_SESSION['categoryMessage']);
+
+            return $selector;
+        }
+
+        private function createTree($parent = 0) {
+            $mysqli = $GLOBALS['mysqli'];
+            $tree = '';
+
+            $categories = $mysqli->query("SELECT * FROM `categories` WHERE post_type = '{$this->postType}' AND parent_id = {$parent} ORDER BY name ASC");
+
+            if($categories->num_rows > 0) {
+                $tree .= 
+                    '<ul class="categoryTree" id="parent' . $parent . '">';
+
+                while($row = $categories->fetch_assoc()) {
+                    $catCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}` WHERE category_id = {$row['id']}");
+
+                    if($catCount->num_rows > 0) {
+                        $catCount = $catCount->fetch_array()[0];
+                    }
+                    else {
+                        $catCount = 0;
+                    }
+
+                    $tree .= 
+                        '<li id="category' . $row['id'] . '">
+                            <div class="categoryDetails">
+                                ' . $row['name'] . ' <i style="color: #aaa;">(' . $catCount . ')</i>
+
+                                <div class="actions formBlock">
+                                    <p>
+                                        <input type="button" id="category' . $row['id'] . '" name="editCategory" value="Edit">
+                                        <input type="button" style="min-width: 0;" class="badButton" id="category' . $row['id'] . '" value="X" name="deleteCategory">
+                                    </p>
+                                </div>
+                            </div>
+
+                            ' . $this->createTree($row['id']) . '
+                        </li>';
+                }
+
+                $tree .= 
+                    '</ul>';
+            }
+            elseif($parent == 0 && $categories->num_rows <= 0) {
+                $tree = '<h2>There are currently no categories.</h2>';
+            }
+
+            return $tree;
+        }
+        
+        public function display() {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $this->showEditor();
+            }
+            else {
+                $this->showTree();
+            }
+        }
+        
+        private function showTree() {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $output = 
+                '<div class="content" style="overflow-x: auto;">
+                    <div class="' . $this->postType . ' contentWrap">
+                        <h1>Categories: ' . ucwords(str_replace('_', ' ', $this->postType)) . '</h1>';
+
+            $output .= $this->postTypeSelector();
+
+            $output .=
+                '<div class="categoryTree">
+                    ' . $this->createTree() . '
+                </div>';
+
+            $output .=
+                    '</div>
+                </div>
+
+                <script src="/admin/settings/scripts/categories.js"></script>';
+
+            echo $output;
+        }
+        
+        private function showEditor() {
+            $mysqli = $GLOBALS['mysqli'];
+            
+            $category = $mysqli->query("SELECT * FROM `categories` WHERE post_type = '{$this->postType}' AND id = {$_GET['id']}");
+            $categories = $mysqli->query("SELECT name, id FROM `categories` WHERE post_type = '{$this->postType}' AND level <= 2");
+            
+            $output = 
+                '<div class="content" style="overflow-x: auto;">
+                    <div class="' . $this->postType . ' contentWrap">';
+                    
+            if($category->num_rows > 0) {
+                $category = $category->fetch_assoc();
+                
+                $output .= 
+                    '<h1>Categories: ' . ucwords(str_replace('_', ' ', $this->postType)) . ' ' . $_GET['id'] . '</h1>
+                    <a href="./' . str_replace('_', '-', $this->postType) . '">Return to categories</a>
+                    
+                    <div class="formBlock">
+                        <form id="updateCategory">
+                            <h3>Edit Category</h3>
+
+                            <input type="hidden" value="' . $category['post_type'] . '" name="catPostType">
+                            <input type="hidden" value="' . $_GET['id'] . '" name="catId">
+
+                            <p>
+                                <label>Name: </label>
+                                <input type="text" name="catName" value="' . $category['name'] . '">
+                            </p>
+
+                            <p>
+                                <label>Description: </label>
+                                <input type="text" name="catDesc" value="' . $category['description'] . '">
+                            </p>
+
+                            <p>
+                                <label>Image: </label>
+                                <input type="text" name="catImage" style="width: calc(100% - 232px - 46px);" value="' . $category['image'] . '">
+                                <input type="button" name="catImageSelect" value="Choose Image">
+                            </p>
+
+                            <p>
+                                <label>Parent Category: </label>
+                                <select name="catParent">
+                                    <option value="0">No Parent Category</option>';
+
+                                while($row = $categories->fetch_assoc()) {
+                                    $output .=
+                                        '<option value="' . $row['id'] . '" ' . ($row['id'] == $category['parent_id'] ? 'selected' : '') . '>' . $row['name'] . '</option>';
+                                }
+
+                            $output .=
+                                '</select>
+                            </p>
+
+                            <p>
+                                <input type="submit" value="Update Category">
+                            </p>
+
+                            <p class="message">' . (isset($_SESSION['categoryMessage']) ? $_SESSION['categoryMessage'] : '') . '</p>
+                        </form>
+                    </div>';
+            }
+            else {
+                $output .=
+                    '<h1>Categories: ' . ucwords(str_replace('_', ' ', $this->postType)) . '</h1>
+                    
+                    <h2>Category ' . $_GET['id'] . ' does not exist.</h2>
+                    
+                    <a href="./' . str_replace('_', '-', $this->postType) . '">Return to categories</a>';
+            }
+
+            //$output .= $this->postTypeSelector();
+
+            $output .=
+                    '</div>
+                </div>
+
+                <script src="/admin/settings/scripts/categories.js"></script>';
+
+            echo $output;
         }
     }
 

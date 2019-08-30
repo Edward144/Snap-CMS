@@ -20,8 +20,7 @@
             <li><a class="sidebarLink" href="/admin/banners">Sliding Banners</a></li>
         </ul>
         
-        <?php        
-            sidebarFolder('post_types');
+        <?php
             sidebarFolder('settings');
         ?>
     </div>
