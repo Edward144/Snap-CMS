@@ -19,13 +19,7 @@
         
         //Delete Custom Tables
         $mysqli->query("DROP TABLE `{$name}s`");
-        $mysqli->query("DROP TABLE `{$name}s_categories`");
         $mysqli->query("DROP TABLE `{$name}s_options`");
-        
-        //Delete Files
-        unlink($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php');
-        
-        unlink($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php');
         
         echo json_encode([1, $name . ' has been deleted.']);
     }

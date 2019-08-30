@@ -53,68 +53,6 @@
             );
         }
         
-        //Create Admin Category File
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php')) { 
-            $adminFile = 
-                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/header.php\'); ?>
-    
-                <?php include_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/sidebar.php\'); ?>
-
-                <div class="content" style="overflow-x: auto;">
-                    <h1 id="postType"><?php adminTitle(); ?></h1>
-
-                    <div class="formBlock">
-                        <form id="catLayout" style="max-width: 100%;">
-                            <?php new categoryTree(0, 0, 0, \'' . $name . 's\'); ?>
-                        </form>
-                    </div>
-                </div>
-
-                <script src="/admin/settings/scripts/updateCategories.js"></script>
-
-            <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/admin/templates/footer.php\'); ?>';
-
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php', 'w');
-            
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/admin/post_types/custom_' . $name . 's_categories.php', 0775);
-            
-            fwrite($file, $adminFile);
-            fclose($file);
-        }
-        
-        //Create Front End Category File
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php')) { 
-            $frontFile = 
-                '<?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/header.php\'); ?>
-                    
-                    <div class="mainInner">
-                        <div class="content">
-                            <h1>' . ucwords($name) .'s Categories</h1>
-
-                            <?php
-                                $categories = new categories();
-
-                                if(isset($_GET[\'c\'])) {
-                                    $categories->listCategories($_GET[\'c\'], \'' . $name . 's\');
-                                }
-                                else {
-                                    $categories->listCategories(0, \'' . $name . 's\');
-                                }
-
-                            ?>
-                        </div>
-                    </div>
-
-                <?php require_once($_SERVER[\'DOCUMENT_ROOT\'] . \'/templates/footer.php\'); ?>';
-
-            $file = fopen($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php', 'w');
-            
-            chmod($_SERVER['DOCUMENT_ROOT'] . '/custom_' . $name . 's_categories.php', 0775);
-            
-            fwrite($file, $frontFile);
-            fclose($file);
-        }
-        
         //Echo Output
         echo json_encode($name . ' has been added.<br>');
     }
