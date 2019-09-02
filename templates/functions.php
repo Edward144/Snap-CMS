@@ -674,36 +674,23 @@
 
             //Check Tables Exist
             $checkTable = $mysqli->prepare("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name = ?");
-
-            if($type == 'pages' || $type == 'comments') {
-                $tableNames = [$type];
-            }
-            elseif($type == 'posts') {
-                $tableNames = [$type, 'categories'];
-            }
-            else {
-                $tableNames = [$type, $type . '_categories'];
-            }
-
+            $checkTable->bind_param('ss', $database, $type);
+            $checkTable->execute();
+            $checkResult = $checkTable->get_result();
+            
             $missingTable = false;
 
-            foreach($tableNames as $tableName) {
-                $checkTable->bind_param('ss', $database, $tableName);
-                $checkTable->execute();
-                $checkResult = $checkTable->get_result();
+            if($checkResult->fetch_array()[0] == 0) {
+                $tableError .= 'Error (' . $type . '): ' . $tableName . ' does not exist.<br>';
 
-                if($checkResult->fetch_array()[0] == 0) {
-                    $tableError .= 'Error (' . $type . '): ' . $tableName . ' does not exist.<br>';
-
-                    $missingTable = true;
-                }
+                $missingTable = true;
             }
 
             if($missingTable == false) {
                 $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$type}`")->fetch_array()[0];
                 $postLatest = $mysqli->query("SELECT name, date_posted FROM `{$type}` ORDER BY id DESC LIMIT 5");
 
-                echo
+                $output =
                     '<div id="' . $id . '">
                         <div class="totalHeader">
                             <span>
@@ -713,30 +700,32 @@
                         </div>';
 
                         if($postLatest->num_rows > 0) {
-                            echo 
+                            $output .= 
                                 '<div class="latest">
                                     <h4>Latest</h4>';
 
                                     $i = 1; 
 
                                     while($post = $postLatest->fetch_assoc()) {
-                                        echo
+                                        $output .=
                                             '<p>
                                                 <strong>' . $i++ . '. </strong>' . $post['name'] . ' (' . $post['date_posted'] . ')
                                             </p>';
                                     }
-                            echo 
+                            $output .= 
                                 '</div>';
                         }
-                echo 
+                $output .= 
                     '</div>';
             }
             else {
-                echo
+                $output =
                     '<div id="' . $id . '">'
                         . $tableError .
                     '</div>';
             }
+            
+            echo $output;
         }
     }
 
@@ -1056,8 +1045,6 @@
         public $showSidebar = false;
         public $itemLimit = 10;
         public $customHero;
-        
-        private $categoryTable = 'categories';
         private $productTable;
         private $additionalTable;
         private $isHome = false;
@@ -1073,13 +1060,6 @@
             }
             else {
                 $this->postType = 'posts';
-            }
-
-            if($this->postType != 'pages' && $this->postType != 'posts') {
-                $this->categoryTable = $this->postType . '_categories';
-            }
-            elseif($this->postType == 'pages') {
-                $this->categoryTable = null;
             }
 
             $this->redirectPost();
@@ -1133,7 +1113,17 @@
         private function postHeader($id, $name, $author, $image, $date, $category) {
             $mysqli = $GLOBALS['mysqli'];
             $slider = $mysqli->query("SELECT * FROM `banners` WHERE post_type = '{$this->postType}' AND post_type_id = {$id} AND visible = 1");
+            $catName = $mysqli->query("SELECT name FROM `categories` WHERE id = {$category} AND post_type = '{$this->postType}'");
             $hero = '';
+            
+            
+            
+            if($catName->num_rows > 0) {
+                $catName = $catName->fetch_array()[0];
+            }
+            else {
+                $category = 0;
+            }
 
             if($slider->num_rows > 0) {
                 $slider = $slider->fetch_assoc();
@@ -1177,7 +1167,7 @@
 
                         '<div class="heroContent">'
                             . ($this->showTitle == true ? '<h1>' . $name . '</h1>' : '') 
-                            . ($this->showCategory == true && $category != 0 ? '<h2>Category: ' . $category . '</h2>' : '') 
+                            . ($this->showCategory == true && $category != 0 ? '<h2>Category: ' . $catName . '</h2>' : '') 
                             . ($this->showAuthor == true && $author != null && $author != '' ? '<h3>By: ' . ucwords($author) . '</h3>' : '') 
                             . ($this->showPosted == true ? '<h4>' . date('d/m/Y H:i:s', strtotime($date)) . '</h4>' : '') .
                         '</div>
@@ -1551,7 +1541,6 @@
 
     class editor {
         protected $postType;
-        protected $categoryTable = 'categories';
         protected $output;
 
         public function __construct($postType = 'post') {
@@ -1562,13 +1551,6 @@
             }
             else {
                 $this->postType = 'posts';
-            }
-
-            if($this->postType != 'pages' && $this->postType != 'posts') {
-                $this->categoryTable = $this->postType . '_categories';
-            }
-            elseif($this->postType == 'pages') {
-                $this->categoryTable = null;
             }
         }
 
@@ -1885,7 +1867,7 @@
                                     </p>';
 
                                     if($this->postType != 'pages') {
-                                        $categories = $mysqli->query("SELECT id, name FROM `{$this->categoryTable}` ORDER BY name ASC");
+                                        $categories = $mysqli->query("SELECT id, name FROM `categories` WHERE post_type = '{$this->postType}' ORDER BY name ASC");
 
                                         $output .=
                                             '<p>

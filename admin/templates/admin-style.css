@@ -519,6 +519,7 @@ table .icon img {
     border-radius: 0.5em;
     box-sizing: border-box;
     padding: 1em;
+    min-height: 417px;
 }
 
 .dashboardBlocks h2, 
