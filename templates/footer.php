@@ -17,7 +17,6 @@
                         echo ($details['address_3'] ? $details['address_3'] . '<br>' : ''); 
                         echo ($details['address_4'] ? $details['address_4'] . '<br>' : ''); 
                         echo ($details['postcode'] ? $details['postcode'] . '<br>' : '');
-                        echo ($details['country'] ? $details['country'] . '<br>' : '');
                     ?>
                 </address>
             </div>
@@ -25,9 +24,9 @@
             <div class="middle">
                 <div class="contact">
                     <?php 
-                        echo ($details['company_name'] ? '<span class="phone"><strong>Phone: </strong>' . $details['phone'] . '</span><br>' : ''); 
-                        echo ($details['company_name'] ? '<span class="fax"><strong>Fax: </strong>' . $details['fax'] . '</span><br>' : '');
-                        echo ($details['company_name'] ? '<span class="email"><strong>Email: </strong>' . $details['email'] . '</span><br>' : ''); 
+                        echo ($details['phone'] ? '<span class="phone"><strong>Phone: </strong>' . $details['phone'] . '</span><br>' : ''); 
+                        echo ($details['fax'] ? '<span class="fax"><strong>Fax: </strong>' . $details['fax'] . '</span><br>' : '');
+                        echo ($details['email'] ? '<span class="email"><strong>Email: </strong>' . $details['email'] . '</span><br>' : ''); 
                     ?>
                 </div>
             </div>
@@ -35,8 +34,8 @@
             <div class="right">
                 <div class="companyNums">
                     <?php 
-                        echo ($details['company_name'] ? '<span class="vat"><strong>VAT Number: </strong>' . $details['vat_number'] . '</span><br>' : ''); 
-                        echo ($details['company_name'] ? '<span class="reg"><strong>Reg Number: </strong>' . $details['reg_number'] . '</span><br>' : '');
+                        echo ($details['vat_number'] ? '<span class="vat"><strong>VAT Number: </strong>' . $details['vat_number'] . '</span><br>' : ''); 
+                        echo ($details['reg_number'] ? '<span class="reg"><strong>Reg Number: </strong>' . $details['reg_number'] . '</span><br>' : '');
                     ?>
                 </div>
                 
