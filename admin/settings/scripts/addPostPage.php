@@ -49,9 +49,6 @@
         if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {
             $mysqli->query("INSERT INTO `{$type}_options` (post_type_id) VALUES({$id})");
         }
-        elseif($mysqli->query("SHOW TABLES LIKE '{$type}_additional'")->num_rows > 0) {
-            $mysqli->query("INSERT INTO `{$type}_additional` (post_type_id) VALUES({$id})");
-        }
     }
 
     if(!$mysqli->error) {

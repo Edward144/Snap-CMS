@@ -493,157 +493,6 @@
         }
     }
 
-    class categories { 
-        public $displayEmptyCount = false;
-        
-        public function setEmptyDisplay($value = false) {
-            $this->displayEmptyCount = $value;
-        }
-
-        public function listCategories($parentId = 0, $postType = '') {
-            if(isset($postType) && $postType != '') {
-                $postTable = $postType;
-                $postType = $postType . '_';
-            }
-            else {
-                $postType = '';
-                $postTable = 'posts';
-            }
-            
-            $mysqli = $GLOBALS['mysqli'];
-
-            $categories = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
-            
-            if($categories->num_rows > 0) {
-                echo '<div class="categories">';
-
-                    while($category = $categories->fetch_assoc()) {
-                        $postsCheck = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = '{$category['id']}'")->fetch_array()[0];
-                        $subsCheck = $mysqli->query("SELECT COUNT(*) FROM `{$postType}categories` WHERE parent_id = '{$category['id']}'")->fetch_array()[0];
-                        
-                        echo
-                            '<div class="category" id="category' . $category['id'] . '">
-                                <div class="categoryDetails">';
-                                    if($postsCheck == 0 && $subsCheck > 0) {
-                                        echo '<a href="?c=' . $category['id'] . '">';
-                                    }
-                                    elseif($postsCheck == 0 && $subsCheck == 0) {
-                                        echo '<a href="">';
-                                    }
-                                    elseif($postsCheck > 0) {
-                                        if($postTable == 'posts') {
-                                            echo '<a href="/' . $postTable . '?category=' . $category['id'] . '">';
-                                        }
-                                        else {
-                                            echo '<a href="/post-type/' . $postTable . '?category=' . $category['id'] . '">';
-                                        }
-                                    }
-                                        if($category['image_url']) {
-                                            echo '<div class="categoryImage">';
-                                                echo '<img src="' . $category['image_url'] . '">';
-                                            echo '</div>';
-                                        }
-                                        else {
-                                            echo '<div class="categoryImage">';
-                                                echo '<img src="/admin/images/missingImage.png">';
-                                            echo '</div>';
-                                        }
-                        
-                                   echo '<h3 class="categoryName">' . $category['name'] . '</h3>';
-
-                                        $this->postsCount($category['id'], $postTable);
-
-                                   echo '<p class="categoryDescription">' . $category['description'] . '</p>
-                                    </a>
-                                </div>';
-
-                            $this->subCategories($category['id'], $postType);
-
-                        echo '</div>';
-                    }
-
-                echo '</div>';
-            }
-            else {
-                echo '<p>There are currently no categories.</p>';
-            }
-        }
-
-        private function postsCount($categoryId, $postTable) {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $postsCheck = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = '{$categoryId}'")->fetch_array()[0];
-
-            if(($postsCheck == 0 && $this->displayEmptyCount == true) || ($postsCheck > 0)) {
-                echo '<h5>' . $postsCheck . ' Items</h5>';
-            }
-        }
-
-        private function subCategories($categoryId, $postType) {
-            $mysqli = $GLOBALS['mysqli'];
-
-            $categories = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = '{$categoryId}' ORDER BY position ASC");
-
-            if($categories->num_rows > 0) {
-                echo '<hr><ul class="subCategories">';
-
-                    while($category = $categories->fetch_assoc()) {
-                        echo
-                            '<li class="subCategory" id="subCategory' . $category['id'] . '">
-                                <a href="?c=' . $category['parent_id'] . '">' . $category['name'] . '</a>
-                            </li>';
-                    }
-
-                echo '</ul>';
-            }
-        }
-        
-        public function sidebar($parentId = 0, $postType = null) {
-            if(isset($postType) && $postType != '') {
-                $postTable = $postType;
-                $postType = $postType . '_';
-            }
-            else {
-                $postType = '';
-                $postTable = 'posts';
-            }
-            
-            $mysqli = $GLOBALS['mysqli'];
-            
-            $parentName = $mysqli->query("SELECT name FROM `{$postType}categories` WHERE id = '{$parentId}'")->fetch_array()[0];
-            $categories = $mysqli->query("SELECT * FROM `{$postType}categories` WHERE parent_id = {$parentId} ORDER BY position ASC");
-            $postsWithCats = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id > 0 AND visible = 1")->fetch_array()[0];
-            
-            if($categories->num_rows > 0 && $parentId == 0 && $postsWithCats) {
-                echo '<h3>Categories</h3>';
-            }
-            elseif($parentId != 0) {
-                if($mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE category_id = {$_GET['category']}")->fetch_array()[0] > 0) {
-                    echo '<h3>' . $parentName . '<a href="' . $postTable . '" style="margin-left: 0.5em; text-decoration: none;">[X]</a></h3>';
-                }
-            }
-            
-            if($categories->num_rows > 0 && $postsWithCats) {                
-                echo '<ul class="sidebarCategories">';
-                
-                    while($category = $categories->fetch_assoc()) {
-                        $posts = $mysqli->query("SELECT COUNT(*) FROM `{$postTable}` WHERE visible = 1 and category_id = {$category['id']}")->fetch_array()[0];
-                        
-                        if($posts > 0) {
-                            echo
-                                '<li>
-                                    <a href="?category=' . $category['id'] . '">
-                                        ' . $category['name'] . '
-                                    </a>
-                                </li>';
-                        }
-                    }
-                
-                echo '</ul>';
-            }
-        }
-    }
-
     class dashboardBlock {
         public $postType;
         public $blockId;
@@ -1043,7 +892,7 @@
         public $showThumb = true;
         public $showHero = true;
         public $showSidebar = false;
-        public $itemLimit = 10;
+        public $itemLimit = 12;
         public $customHero;
         private $productTable;
         private $additionalTable;
@@ -1182,11 +1031,13 @@
                 $this->showSidebar = true;
             }
             
-            if($this->showSidebar == true) {                
+            if($this->showSidebar == true) {    
+                $sidebarClass = new category(rtrim($_GET['postType'], 's'));
+                
                 $sidebar = 
                     '<div class="sidebar">
                         <div class="sidebarInner">
-                        
+                            ' . $sidebarClass->sidebarTree() . '
                         </div>
                     </div>';
             }
@@ -1294,7 +1145,7 @@
             }
 
             $postOutput = 
-                '<div class="postWrap postList ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">
+                '<div class="postWrap ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">
                  <h1 class="postTitle">' . ucwords($postName) . '</h1>';
 
             if($postCount > 0 && $posts->num_rows > 0) {
@@ -1346,7 +1197,7 @@
                     $postOutput .=
                             '<div class="smallContent">'
                                 . ($this->showTitle == true ? '<h2><a href="/post-type/' . $this->postType . '/' . $row['url'] . '">' . $row['name'] . '</a></h2>' : '')
-                                . ($this->showShort == true ? '<p>' . $shortDesc .'<a href="/post-type/' . $this->postType . '/' . $row['url'] . '">Read More</a></p>' : '') .
+                                . ($this->showShort == true ? '<p>' . $shortDesc .'<a href="/post-type/' . $this->postType . '/' . $row['url'] . '" class="readMore">Read More</a></p>' : '') .
 
                                 '<div class="author">'
                                     . ($this->showAuthor == true ? '<h3>' . $row['author'] . '</h3>' : '')
@@ -1540,8 +1391,8 @@
     }
 
     class editor {
-        protected $postType;
-        protected $output;
+        private $postType;
+        private $output;
 
         public function __construct($postType = 'post') {
             $postType = strtolower($postType);
@@ -2209,6 +2060,138 @@
                 <script src="/admin/settings/scripts/categories.js"></script>';
 
             echo $output;
+        }
+    }
+
+    class category {
+        private $postType;
+        private $output;
+        
+        public function __construct($postType = 'post') {
+            $postType = str_replace('-', '_', strtolower($postType));
+
+            if($postType != '' && $postType != null) {
+                $this->postType = $postType . 's';
+            }
+            else {
+                $this->postType = 'posts';
+            }
+        }
+        
+        public function display() {
+            $mysqli = $GLOBALS['mysqli'];
+            
+            if($_GET['url']){
+                $parentId = $mysqli->query("SELECT id FROM `categories` WHERE url = '{$_GET['url']}' AND post_type = '{$this->postType}' LIMIT 1");
+                
+                if($parentId->num_rows > 0) {
+                    $parentId = $parentId->fetch_array()[0];
+                }
+                else {
+                    http_response_code(404);
+                    header('Location: /404');
+                    
+                    exit();
+                }
+            }
+            else {
+                $parentId = 0;
+            }
+            
+            $categories = $mysqli->query("SELECT * FROM categories WHERE post_type = '{$this->postType}' AND parent_id = {$parentId} ORDER BY name ASC");
+            
+            if($categories->num_rows > 0) {
+                $catList = 
+                    '<div class="categoryList" id="' . $this->postType . 'CategoryList">';
+                
+                while($row = $categories->fetch_assoc()) {
+                    $subCategories = $mysqli->query("SELECT COUNT(*) FROM `categories` WHERE parent_id = {$row['id']}");
+                    
+                    if($subCategories->fetch_array()[0] > 0) {
+                        $catLink = '/categories/' . str_replace('_', '-', $this->postType) . '/' . $row['url'];
+                    }
+                    else {
+                        $catLink = '/post-type/' . str_replace('_', '-', $this->postType) . '/category-' . $row['id'];
+                    }
+                    
+                    $catList .=
+                        '<div class="categoryListItem" id="' . $this->postType . 'CategoryListItem">
+                            <div class="imageWrap">
+                                <img src="/admin/images/missingImage.png">
+                            </div>
+                            
+                            <div class="smallContent">
+                                <h2><a href="' . $catLink . '">' . $row['name'] . '</a></h2>
+                                
+                                <p>' . $row['description'] . '</p>
+                            </div>
+                        </div>';
+                }
+                
+                $catList .=
+                    '</div>';
+            }
+            
+            if($parentId == 0) {
+                $pageTitle = ucwords(str_replace('_', ' ', $this->postType))  . ' Categories';
+            }
+            else {
+                $pageTitle = ucwords(str_replace('_', ' ', $this->postType))  . ' ' . ucwords(str_replace('-', ' ', $_GET['url']));
+            }
+            
+            $this->output = 
+                '<div class="mainInner">
+                    <div class="categoryInner" id="' . $this->postType . 'Category">
+                        <h1>' . $pageTitle . '</h1>
+                        ' . $catList . '
+                    </div>
+                </div>';
+            
+            echo $this->output;
+        }
+        
+        public function sidebarTree() {
+            $mysqli = $GLOBALS['mysqli'];
+            
+            $levels = $mysqli->query("SELECT COUNT(*) FROM `categories` WHERE post_type = '{$this->postType}'");
+            
+            if($levels > 0) {
+                if(isset($_GET['category'])) {
+                    $clearCat = '<a id="clearCat" href="/post-type/' . str_replace('_', '-', $this->postType) . '">Clear Category [X]</a>';
+                }
+                
+                $output =
+                    '<div class="categories sidebarCategories">
+                        <h3>Categories</h3>
+                        ' . $clearCat . $this->subCategories(0) . '
+                    </div>';
+            }
+            
+            return $output;
+        }
+        
+        private function subCategories($parentId) {
+            $mysqli = $GLOBALS['mysqli'];
+            
+            $categories = $mysqli->query("SELECT * FROM `categories` WHERE post_type = '{$this->postType}' AND parent_id = {$parentId} ORDER BY name ASC");
+            
+            if($categories->num_rows > 0) {
+                $output =
+                    '<ul>';
+                
+                while($row = $categories->fetch_assoc()) {
+                    $output .=
+                        '<li ' . ($row['id'] == $_GET['category'] ? 'class="active"' : '') . '>
+                            <a href="/post-type/' . str_replace('_', '-', $this->postType) . '/category-' . $row['id'] . '">' . $row['name'] . '</a>
+                            ' . $this->subCategories($row['id']) . '
+                        </li>';
+                }
+                
+                $output .=
+                    '</ul>';
+            
+                return $output;
+            }
         }
     }
 

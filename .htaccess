@@ -14,7 +14,6 @@ ErrorDocument 404 /404.php
     ##Custom Rules
     
     #Admin
-    RewriteRule ^admin/post-type/(.*) /admin/custom_$1.php [L]
     RedirectMatch 301 ^/admin/$ /admin/dashboard
     RedirectMatch 301 ^/admin/editor$ /admin/editor/posts
     
@@ -37,8 +36,9 @@ ErrorDocument 404 /404.php
     RewriteRule ^post-type/(.*)/(.*)$ /index.php\?postType=$1&url=$2 [L]
     RewriteRule ^post-type/(.*)$ /index.php\?postType=$1 [L]
     
-    
-    RewriteRule ^categories/(.*) custom_$1_categories.php [L]
+    RedirectMatch 301 ^/categories$ /categories/posts
+    RewriteRule ^categories/(.*)/(.*)$ categories.php?postType=$1&url=$2 [L]
+    RewriteRule ^categories/(.*)$ categories.php?postType=$1 [L]
     
     #Force Non WWW
     #RewriteEngine on
