@@ -1276,7 +1276,11 @@
                     
                     
                     if(isset($this->customHero)) {
-                        $postOutput .= include_once($this->customHero);
+                        ob_start();
+                        
+                        include_once($this->customHero);
+                        
+                        $postOutput .= ob_get_clean();
                     }
                     else {
                         $postOutput .= $this->postHeader($row['id'], $row['name'], $row['author'], $imageSource, $row['date_posted'], $row['category_id']);
