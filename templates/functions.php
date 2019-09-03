@@ -933,7 +933,7 @@
             }
 
             //Redirect to / if posts are hidden
-            if($this->postType == 'posts' && explode('/', $_SERVER['REQUEST_URI'])[0] == 'posts' && $hidePosts == 1) {
+            if($this->postType == 'posts' && explode('/', $_SERVER['REQUEST_URI'])[2] == 'posts' && $hidePosts == 1) {
                 header('HTTP/1.1 301 Moved Permenantly');
                 header('Location: /');
 
