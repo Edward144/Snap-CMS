@@ -24,9 +24,9 @@
             <div class="middle">
                 <div class="contact">
                     <?php 
-                        echo ($details['phone'] ? '<span class="phone"><strong>Phone: </strong>' . $details['phone'] . '</span><br>' : ''); 
-                        echo ($details['fax'] ? '<span class="fax"><strong>Fax: </strong>' . $details['fax'] . '</span><br>' : '');
-                        echo ($details['email'] ? '<span class="email"><strong>Email: </strong>' . $details['email'] . '</span><br>' : ''); 
+                        echo ($details['phone'] ? '<span class="phone"><strong>Phone: </strong><a href="tel: ' . $details['phone'] . '"' . $details['phone'] . '</a></span><br>' : ''); 
+                        echo ($details['fax'] ? '<span class="fax"><strong>Fax: </strong><a href="tel: ' . $details['fax'] . '">' . $details['fax'] . '</a></span><br>' : '');
+                        echo ($details['email'] ? '<span class="email"><strong>Email: </strong><a href="mailto: ' . $details['email'] . '">' . $details['email'] . '</a></span><br>' : ''); 
                     ?>
                 </div>
             </div>
