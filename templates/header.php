@@ -19,27 +19,26 @@
             }
         
             if(isset($_GET['url'])) {
-                $checkPosts = $mysqli->query("SELECT * FROM `posts` WHERE url = '{$_GET['url']}' LIMIT 1");
-                $checkPages = $mysqli->query("SELECT * FROM `pages` WHERE url = '{$_GET['url']}' LIMIT 1");
+                if(!isset($_GET['postType'])) {
+                    $checkPosts = $mysqli->query("SELECT * FROM `posts` WHERE url = '{$_GET['url']}' LIMIT 1");
+                }
+                else {
+                    $checkPosts = $mysqli->query("SELECT * FROM `{$_GET['postType']}` WHERE url = '{$_GET['url']}' LIMIT 1");
+                }
                 
                 if($checkPosts->num_rows > 0) {
                     $row = $checkPosts->fetch_assoc();
-                    $author = $mysqli->query("SELECT first_name, last_name FROM `users` WHERE username = '{$row['author']}'")->fetch_assoc();
                     
                     echo '<title>' . $row['name'] . $companyName . '</title>';
                     echo '<meta name="description" content="' . $row['description'] . '">';
-                    echo '<meta name="author" content="' . $author['first_name'] . ' ' . $author['last_name'] . '">';
-                }
-                elseif($checkPages->num_rows > 0) {
-                    $row = $checkPages->fetch_assoc();
-                    
-                    echo '<title>' . $row['name'] . $companyName . '</title>';
-                    echo '<meta name="description" content="' . $row['description'] . '">';
-                    echo '<meta name="author" content="' . $author['first_name'] . ' ' . $author['last_name'] . '">';
+                    echo '<meta name="author" content="' . $row['author'] . '">';
                 }
             }
             elseif($_SERVER['REQUEST_URI'] == '/') {
                 echo '<title>Welcome' . $companyName . '</title>';
+            }
+            elseif(isset($_GET['postType'])) {
+                echo '<title>' . ucwords(str_replace('-', ' ', $_GET['postType'])) . $companyName . '</title>';
             }
         ?>
         
