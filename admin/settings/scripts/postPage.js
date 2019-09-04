@@ -23,8 +23,7 @@ function addContent() {
 }
 
 //Search Content
-$("#searchPost input[name='search']").on("keyup", searchContent);
-$("#searchPage input[name='search']").on("keyup", searchContent);
+$(".searchContent input[name='search']").on("keyup", searchContent);
 
 function searchContent() {
     var searchTerm = $(this).val();
