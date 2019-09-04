@@ -1146,7 +1146,7 @@
 
             $postOutput = 
                 '<div class="postWrap ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">
-                 <h1 class="postTitle">' . ucwords($postName) . '</h1>';
+                    <h1 class="postTitle"><span>' . ucwords($postName) . '</span></h1>';
 
             if($postCount > 0 && $posts->num_rows > 0) {
                 $postOutput .= 
