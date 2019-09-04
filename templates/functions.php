@@ -1211,7 +1211,7 @@
                     '</div>';
             }
             else {
-                $postOutput .= '<p>There are currently no ' . $postName . '.</p>';
+                $postOutput .= '<p id="noPosts">There are currently no ' . $postName . '.</p>';
             }
 
             $postOutput .=
