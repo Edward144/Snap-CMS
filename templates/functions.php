@@ -1139,6 +1139,8 @@
 
             if(isset($_GET['category'])) {
                 $posts = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE visible = 1 AND category_id = {$_GET['category']} ORDER BY date_posted DESC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
+                
+                $catName = $mysqli->query("SELECT name FROM `categories` WHERE post_type = '{$this->postType}' AND id = {$_GET['category']}")->fetch_array()[0];
             }
             else {
                 $posts = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE visible = 1 ORDER BY date_posted DESC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
@@ -1146,7 +1148,7 @@
 
             $postOutput = 
                 '<div class="postWrap ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">
-                    <h1 class="postTitle"><span>' . ucwords($postName) . '</span></h1>';
+                    <h1 class="postTitle"><span>' . ucwords($postName) . (isset($catName) ? ': ' . $catName : '') . '</span></h1>';
 
             if($postCount > 0 && $posts->num_rows > 0) {
                 $postOutput .= 
