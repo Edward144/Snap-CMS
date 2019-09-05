@@ -2161,14 +2161,10 @@
             
             $levels = $mysqli->query("SELECT COUNT(*) FROM `categories` WHERE post_type = '{$this->postType}'");
             
-            if($levels > 0) {
-                if(isset($_GET['category'])) {
-                    $clearCat = '<a id="clearCat" href="/post-type/' . str_replace('_', '-', $this->postType) . '">Clear Category [X]</a>';
-                }
-                
+            if($levels->fetch_array()[0] > 0) {                
                 $output =
                     '<div class="categories sidebarCategories">
-                        <h3>Categories</h3>
+                        
                         ' . $clearCat . $this->subCategories(0) . '
                     </div>';
             }
@@ -2181,8 +2177,17 @@
             
             $categories = $mysqli->query("SELECT * FROM `categories` WHERE post_type = '{$this->postType}' AND parent_id = {$parentId} ORDER BY name ASC");
             
-            if($categories->num_rows > 0) {
+            if(isset($_GET['category'])) {
+                $clearCat = '<a id="clearCat" href="/post-type/' . str_replace('_', '-', $this->postType) . '">Clear Category [X]</a>';
+            }
+            
+            if($parentId = 0) {
                 $output =
+                    '<h3>Categories</h3>' . $clearCat;
+            }
+            
+            if($categories->num_rows > 0) {
+                $output .=
                     '<ul>';
                 
                 while($row = $categories->fetch_assoc()) {
