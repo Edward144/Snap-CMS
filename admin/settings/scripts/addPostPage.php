@@ -16,7 +16,8 @@
     }
 
     $type = $_GET['type'] . 's';
-    $user = $_SESSION['username'];
+    $author = $mysqli->query("SELECT first_name, last_name FROM `users` WHERE username = '{$_SESSION['username']}'")->fetch_assoc();
+    $author = $author['first_name'] . ' ' . $author['last_name'];
 
     $id = $mysqli->query("SELECT id FROM `{$type}` ORDER BY id DESC LIMIT 1")->fetch_array()[0] + 1;
 
@@ -39,7 +40,7 @@
         )"
     );
 
-    $add->bind_param('sss', $title, $url, $user);
+    $add->bind_param('sss', $title, $url, $author);
     $add->execute();
     $add->close();
     
