@@ -40,6 +40,12 @@
             elseif(isset($_GET['postType'])) {
                 echo '<title>' . ucwords(str_replace('-', ' ', $_GET['postType'])) . $companyName . '</title>';
             }
+            else {
+                $url = explode('/post-type/', $_SERVER['REQUEST_URI'])[1];
+                $count = count($url) - 1;
+                
+                echo '<title>' . ucwords(explode('/', str_replace('-', ' ', $url))[0]) . $companyName . '</title>';
+            }
         ?>
         
         <link href="/templates/style.css" rel="stylesheet" type="text/css">
