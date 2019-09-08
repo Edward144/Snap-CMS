@@ -963,9 +963,7 @@
             $mysqli = $GLOBALS['mysqli'];
             $slider = $mysqli->query("SELECT * FROM `banners` WHERE post_type = '{$this->postType}' AND post_type_id = {$id} AND visible = 1");
             $catName = $mysqli->query("SELECT name FROM `categories` WHERE id = {$category} AND post_type = '{$this->postType}'");
-            $hero = '';
-            
-            
+            $hero = '';            
             
             if($catName->num_rows > 0) {
                 $catName = $catName->fetch_array()[0];
@@ -1015,9 +1013,9 @@
                         . (isset($image) && $image != '' ? '<img class="heroImage" src="' . $image . '" alt="' . $name . '">' : '') .
 
                         '<div class="heroContent">'
-                            . ($this->showTitle == true ? '<h1>' . $name . '</h1>' : '') 
-                            . ($this->showCategory == true && $category != 0 ? '<h2>Category: ' . $catName . '</h2>' : '') 
-                            . ($this->showAuthor == true && $author != null && $author != '' ? '<h3>By: ' . ucwords($author) . '</h3>' : '') 
+                            . ($this->showTitle == true ? '<h1><span>' . $name . '</span></h1>' : '') 
+                            . ($this->showCategory == true && $category != 0 ? '<h2><span id="label">Category: </span>' . $catName . '</h2>' : '') 
+                            . ($this->showAuthor == true && $author != null && $author != '' ? '<h3><span id="label">By: </span>' . ucwords($author) . '</h3>' : '') 
                             . ($this->showPosted == true ? '<h4>' . date('d/m/Y H:i:s', strtotime($date)) . '</h4>' : '') .
                         '</div>
                     </div>';
