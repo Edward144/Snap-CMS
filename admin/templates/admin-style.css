@@ -673,6 +673,14 @@ table .icon img {
     vertical-align: top;
 }
 
+.customCode {
+    width: 100%;
+    max-width: 70%;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+}
+
 .featuredImage {
     display: inline-block;
     vertical-align: top;

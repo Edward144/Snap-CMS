@@ -1240,10 +1240,12 @@
             else {
                 $post = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE url = '{$_GET['url']}'");
             }
+            
+            $postId = $mysqli->query("SELECT id FROM `{$this->postType}` WHERE url = '{$_GET['url']}'")->fetch_array()[0];
 
             if($post->num_rows > 0) {                    
                 $postOutput = 
-                    '<div class="postWrap postSingle ' . ($this->isHome == true ? 'homeWrap' : '') . '" id="' . $this->postType . 'Wrap">';
+                    '<div class="postWrap postSingle ' . ($this->isHome == true ? 'homeWrap ' : '') . $this->postType . 'Wrap" id="_' . $postId . 'Wrap">';
 
                 while($row = $post->fetch_assoc()) {
                     if($mysqli->query("SHOW TABLES LIKE '{$this->postType}_options'")->num_rows > 0) {
@@ -1351,9 +1353,16 @@
                     }
 
                     $postOutput .=
-                            ($this->showContent == true ? $row['content'] : '') .
-                        '</div>';
+                            ($this->showContent == true ? $row['content'] : '');
+                    
+                    ob_start();
+                        
+                    include_once($_SERVER['DOCUMENT_ROOT'] . $row['custom_content']);
 
+                    $postOutput .= ob_get_clean();
+                    
+                    $postOutput .= 
+                        '</div>';
                 }
 
                 $postOutput .=
@@ -1369,9 +1378,9 @@
 
             $this->output =
                 '<div class="mainInner">
-                      <div class="content">' .
-                          $postOutput .
-                     '</div>
+                    <div class="content">' .
+                        $postOutput .
+                    '</div>
                 </div>';
         }
 
@@ -1772,6 +1781,12 @@
                             <div class="featuredImage">'
                                 . $this->getFeatured($row['image_url']) .
                             '</div>
+                            
+                            <div>
+                                <h3>Custom PHP File</h3>
+                                <p>Enter the relative url of a PHP file you wish to include (Appears at end of page).</p>
+                                <input class="customCode" name="customContent" value="' . $row['custom_content'] . '">
+                            </div>
                         </form>
                         <script src="/admin/settings/scripts/postPage.js"></script>';
                     

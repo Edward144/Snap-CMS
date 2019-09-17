@@ -25,6 +25,7 @@
     $content = $_POST['content'];
     $category = $_POST['category'];
     $image = $_POST['imageUrl'];
+    $custom = $_POST['custom'];
 
     if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {
         if($type != 'posts' && $type != 'pages') {
@@ -93,10 +94,11 @@
                 date_posted = ?,
                 content = ?,
                 category_id = ?,
-                image_url = ?
+                image_url = ?,
+                custom_content = ?
             WHERE id = ?"
         );
-        $update->bind_param('ssssssisi', $title, $desc, $url, $author, $datetime, $content, $category, $image, $id);
+        $update->bind_param('ssssssissi', $title, $desc, $url, $author, $datetime, $content, $category, $image, $custom, $id);
     }
     else {
         $update = $mysqli->prepare(
@@ -107,10 +109,11 @@
                 author = ?,
                 date_posted = ?,
                 content = ?,
-                image_url = ?
+                image_url = ?,
+                custom_content = ?
             WHERE id = ?"
         );
-        $update->bind_param('sssssssi', $title, $desc, $url, $author, $datetime, $content, $image, $id);
+        $update->bind_param('ssssssssi', $title, $desc, $url, $author, $datetime, $content, $image, $custom, $id);
     }
     $update->execute();
     $update->close();

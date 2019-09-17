@@ -199,6 +199,7 @@ $("#editContent .actions #apply").click(function() {
     var datetime = $("#editContent input[name='date']").val();
     var content = $("#editContent textarea[name='content']").val();
     var category = $("#editContent select[name='categories']").val();
+    var custom = $("#editContent input[name='customContent']").val();
     var imageUrl;
     
     if($(".featuredImage").find("#featuredImage").length) {
@@ -267,7 +268,7 @@ $("#editContent .actions #apply").click(function() {
         url: "/admin/settings/scripts/editPostPage.php",
         method: "POST",
         dataType: "json",
-        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, features, galleryMain}),
+        data: ({id, type, title, desc, url, author, datetime, content, category, imageUrl, spec, galleryExist, galleryNew, features, galleryMain, custom}),
         success: function(data) {
             if(data[0] == 1) {
                 $("#editContent .message").text(data[1]);
