@@ -156,7 +156,8 @@
             visible TINYINT(1),
             content TEXT,
             category_id INT DEFAULT 0,
-            image_url VARCHAR(255)
+            image_url VARCHAR(255),
+            custom_content VARCHAR(500)
         )"
     );
 
@@ -170,7 +171,8 @@
             date_posted DATETIME,
             visible TINYINT(1),
             content TEXT,
-            image_url VARCHAR(255)
+            image_url VARCHAR(255),
+            custom_content VARCHAR(500)
         )"
     );
 
