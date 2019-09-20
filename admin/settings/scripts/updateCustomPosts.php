@@ -34,9 +34,6 @@
         //Create Post Type Table
         $mysqli->query("CREATE TABLE `{$name}s` LIKE `posts`");
         
-        //Create Post Type Categories
-        $mysqli->query("CREATE TABLE `{$name}s_categories` LIKE `categories`");
-        
         //Create Post Type Options
         if($type == 'product') {
             $mysqli->query(

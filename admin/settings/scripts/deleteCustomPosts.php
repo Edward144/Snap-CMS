@@ -4,7 +4,6 @@
     
     $name = $_POST['name'];
     $names = $_POST['name'] . 's';
-    $categories = $_POST['name'] . 's_categories';
 
     $checkExisting = $mysqli->prepare("SELECT COUNT(*) FROM `custom_posts` WHERE name = ?");
     $checkExisting->bind_param('s', $name);
