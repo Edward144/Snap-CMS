@@ -1061,12 +1061,14 @@
                     $galleryImage = ltrim($galleryImage, '"');
                     $galleryImage = rtrim($galleryImage, '"');
                     
-                    $gallery .=
-                        '<a href="/gallery/' . $this->postType . '/' . $id .'/' . $galleryImage . '" data-lightbox="gallery" data-title="' . explode('.', ucwords(str_replace('-', ' ', $galleryImage)))[0] . '">
-                            <div class="galleryItem">
-                                <img src="/gallery/' . $this->postType . '/' . $id . '/' . $galleryImage . '" alt="">
-                            </div>
-                        </a>';
+                    if($galleryImage != '') {
+                        $gallery .=
+                            '<a href="/gallery/' . $this->postType . '/' . $id .'/' . $galleryImage . '" data-lightbox="gallery" data-title="' . explode('.', ucwords(str_replace('-', ' ', $galleryImage)))[0] . '">
+                                <div class="galleryItem">
+                                    <img src="/gallery/' . $this->postType . '/' . $id . '/' . $galleryImage . '" alt="">
+                                </div>
+                            </a>';
+                    }
                 }   
                 
                 $gallery .=
@@ -1485,11 +1487,13 @@
                         $galleryImage = ltrim($galleryImage, '"');
                         $galleryImage = rtrim($galleryImage, '"');
                         
-                        $product .=
-                            '<div class="galleryItem"' . ($galleryImage == $galleryMain ? ' id="galleryMain"' : '') . '> 
-                                <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
-                                <img class="galleryImage" src="/gallery/' . $this->postType . '/' . $_GET['id'] . '/' . $galleryImage . '" alt="' . $galleryImage . '">
-                            </div>';
+                        if($galleryImage != '') {
+                            $product .=
+                                '<div class="galleryItem"' . ($galleryImage == $galleryMain ? ' id="galleryMain"' : '') . '> 
+                                    <span class="galleryDelete"><img src="/admin/images/icons/bin.png"></span>
+                                    <img class="galleryImage" src="/gallery/' . $this->postType . '/' . $_GET['id'] . '/' . $galleryImage . '" alt="' . $galleryImage . '">
+                                </div>';
+                        }
                     }
                         
                     $product .=
