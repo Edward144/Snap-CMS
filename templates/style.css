@@ -174,6 +174,8 @@ header .logo {
 footer {
     min-height: 50px;
     background: #f3f3f3;
+    float: left;
+    width: 100%;
 }
 
 footer .footerInner {
@@ -370,6 +372,10 @@ nav li > ul li > ul {
     position: relative;
 }
 
+.main .postContent {
+    float: left;
+}
+
 .main .postList, .main .postContent, .main .postInner {
     max-width: 1024px;
     margin: 0 auto;
@@ -504,13 +510,13 @@ nav li > ul li > ul {
     background: #fff;
 }
 
-.sideOptions ul {
+.sideOptions > ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.sideOptions ul li {
+.sideOptions > ul > li {
     cursor: pointer;
     border-width: 3px 3px 0; 
     border-style: solid;
@@ -519,20 +525,20 @@ nav li > ul li > ul {
     box-sizing: border-box;
 }
 
-.sideOptions ul li:last-child {
+.sideOptions > ul > li:last-child {
     border-width: 3px;
 }
 
-.sideOptions ul li h3 {
+.sideOptions ul > li h3 {
     margin: 0 auto;
 }
 
-.sideOptions ul li > h3 {
+.sideOptions > ul > li > h3 {
     padding: 0.75em;
     box-sizing: border-box;
 }
 
-.sideOptions ul li > .sideOptionInner {
+.sideOptions > ul > li > .sideOptionInner {
     cursor: auto;
     max-height: 0;
     overflow: hidden;
@@ -540,27 +546,27 @@ nav li > ul li > ul {
     box-sizing: border-box;
 }
 
-.sideOptions ul li#inactive > .sideOptionInner {
+.sideOptions > ul > li#inactive > .sideOptionInner {
     transition: max-height 0.5s ease-out;
 }
 
-.sideOptions ul li#active > .sideOptionInner {
+.sideOptions > ul > li#active > .sideOptionInner {
     max-height: 100vh;
     transition: max-height 0.5s ease-in;
 }
 
-.sideOptions ul li > .sideOptionInner > *:last-child {
+.sideOptions > ul > li > .sideOptionInner > *:last-child {
     margin-bottom: 0.75em;
     box-sizing: border-box;
     display: block;
 }
 
-.sideOptions ul li#active > h3:after {
+.sideOptions > ul > li#active > h3:after {
     content: "-";
     float: right;
 }
 
-.sideOptions ul li#inactive > h3:after {
+.sideOptions > ul > li#inactive > h3:after {
     content: "+";
     float: right;
 }
@@ -574,6 +580,7 @@ nav li > ul li > ul {
     border: 1px solid #aaa;
     padding: 0.5em;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .postContent {
