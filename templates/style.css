@@ -589,44 +589,25 @@ nav li > ul li > ul {
 
 /* PRODUCTS */
 
-.productsList {
+.main .postList {
     display: flex;
     flex-wrap: wrap;
 }
 
-.productsList > hr {
-    display: none;
-}
-
-.productsList .product {
-    width: 33.33%;
-    width: -webkit-calc(100% / 3);
-    width: -moz-calc(100% / 3);
-    width: -o-calc(100% / 3);
-    width: calc(100% / 3);
-    text-align: center;
-    border-width: 0 1px;
-    border-style: solid;
-    border-color: #f3f3f3;
+.postList .postListItem {
+    width: 30%;
+    width: -webkit-calc(1024px / 3 - 2em);
+    width: -moz-calc(1024px / 3 - 2em);
+    width: -o-calc(1024px / 3 - 2em);
+    width: calc(1024px / 3 - 2em);
+    margin: 0.5em;
+    background: #efefef;
+    padding: 1em;
     box-sizing: border-box;
-    margin: 0.5em 0;
 }
 
-.productsList .product .imageWrap {
+.postList .postListItem .imageWrap {
     margin: auto;
-}
-
-.productsList .product p {
-    display: none;
-}
-
-.productsList .product a {
-    color: #333;
-    text-decoration: none;
-}
-
-.productsList .product:hover a {
-    text-decoration: underline;
 }
 
 .slider .sliderItem {
