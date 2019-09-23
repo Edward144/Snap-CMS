@@ -21,7 +21,7 @@
 
     $id = $mysqli->query("SELECT id FROM `{$type}` ORDER BY id DESC LIMIT 1")->fetch_array()[0] + 1;
 
-    $title = ucwords(rtrim($_GET['type'], 's') . ' ' . $id);
+    $title = ucwords(rtrim(str_replace('_', ' ', $_GET['type']), 's') . ' ' . $id);
     $url = slugify(rtrim($_GET['type'], 's') . '-' . $id);
 
     $add = $mysqli->prepare(
@@ -45,6 +45,11 @@
     $add->close();
     
     $id = $mysqli->insert_id;
+    
+    $title = ucwords(rtrim(str_replace('_', ' ', $_GET['type']), 's') . ' ' . $id);
+    $url = slugify(rtrim($_GET['type'], 's') . '-' . $id);
+
+    $mysqli->query("UPDATE `{$type}` SET name = '{$title}', url = '{$url}' WHERE id = {$id}");
     
     if($type != 'pages' && $type != 'posts') {
         if($mysqli->query("SHOW TABLES LIKE '{$type}_options'")->num_rows > 0) {

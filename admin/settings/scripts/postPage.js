@@ -108,7 +108,7 @@ function deleteContent() {
         var type = row.attr("class").split("Row")[0];
     }
     
-    if(confirm("Are you sure you want to delete this " + type.slice(0, -1) + "?")) {
+    if(confirm("Are you sure you want to delete this " + type + "?")) {
         $.ajax({
             url: "/admin/settings/scripts/deletePostPage.php",
             method: "GET",
@@ -116,7 +116,7 @@ function deleteContent() {
             data: ({id, type}),
             success: function(data) {
                 if(data[0] == 1) {
-                    location.reload();
+                    window.location.href = '/admin/editor/' + type;
                 }
                 else {
                     alert(data[1]);
