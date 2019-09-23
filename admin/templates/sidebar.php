@@ -10,7 +10,7 @@
             
             <?php if($editors->num_rows > 0) : ?>
                 <?php while($editor = $editors->fetch_assoc()) : ?>
-                    <li><a href="/admin/editor/<?php echo $editor['name']; ?>s"><?php echo ucwords(str_replace('_', ' ', $editor['name'])); ?>s</a></li>
+                    <li><a href="/admin/editor/<?php echo $editor['name']; ?>"><?php echo ucwords(str_replace('_', ' ', $editor['name'])); ?></a></li>
                 <?php endwhile; ?>
             <?php endif; ?>
             

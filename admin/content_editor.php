@@ -3,7 +3,7 @@
     <?php include_once($_SERVER['DOCUMENT_ROOT'] . '/admin/templates/sidebar.php'); ?>
 
     <?php 
-        $editor = new editor(rtrim($_GET['postType'], 's'));
+        $editor = new editor($_GET['postType']);
         $editor->display();
     ?>
 

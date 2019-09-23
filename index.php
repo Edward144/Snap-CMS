@@ -2,8 +2,7 @@
     
     <?php 
         
-        $post = new post(rtrim($_GET['postType'], 's'));
-        //$post->debug();
+        $post = new post($_GET['postType']);
         $post->display();
 
     ?>

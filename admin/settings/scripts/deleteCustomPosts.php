@@ -17,8 +17,8 @@
         $deletePost->execute();
         
         //Delete Custom Tables
-        $mysqli->query("DROP TABLE `{$name}s`");
-        $mysqli->query("DROP TABLE `{$name}s_options`");
+        $mysqli->query("DROP TABLE `{$name}`");
+        $mysqli->query("DROP TABLE `{$name}_options`");
         
         echo json_encode([1, $name . ' has been deleted.']);
     }

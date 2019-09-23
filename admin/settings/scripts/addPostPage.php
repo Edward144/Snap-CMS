@@ -15,14 +15,14 @@
         return $url;
     }
 
-    $type = $_GET['type'] . 's';
+    $type = $_GET['type'];
     $author = $mysqli->query("SELECT first_name, last_name FROM `users` WHERE username = '{$_SESSION['username']}'")->fetch_assoc();
     $author = $author['first_name'] . ' ' . $author['last_name'];
 
     $id = $mysqli->query("SELECT id FROM `{$type}` ORDER BY id DESC LIMIT 1")->fetch_array()[0] + 1;
 
-    $title = ucwords($_GET['type'] . ' ' . $id);
-    $url = slugify($_GET['type'] . '-' . $id);
+    $title = ucwords(rtrim($_GET['type'], 's') . ' ' . $id);
+    $url = slugify(rtrim($_GET['type'], 's') . '-' . $id);
 
     $add = $mysqli->prepare(
         "INSERT INTO `{$type}` (

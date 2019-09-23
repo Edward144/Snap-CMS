@@ -32,7 +32,7 @@
         $addCustom->execute();
         
         //Create Post Type Table
-        $mysqli->query("CREATE TABLE `{$name}s` LIKE `posts`");
+        $mysqli->query("CREATE TABLE `{$name}` LIKE `posts`");
         
         //Create Post Type Options
         if($type == 'product') {

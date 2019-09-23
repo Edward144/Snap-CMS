@@ -13,7 +13,7 @@ function addContent() {
         data: ({type}),
         success: function(data) {
             if(data[0] == 1) {
-                window.location.href = "/admin/editor/" + type + "s/id-" + data[1];
+                window.location.href = "/admin/editor/" + type + "/id-" + data[1];
             }
             else {
                 alert(data[1]);

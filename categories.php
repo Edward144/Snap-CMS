@@ -1,7 +1,7 @@
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/header.php'); ?>
 
     <?php
-        $categories = new category(rtrim($_GET['postType'], 's'));
+        $categories = new category($_GET['postType']);
         $categories->display();
     ?>
 
