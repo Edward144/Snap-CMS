@@ -2282,4 +2282,207 @@
         }
     }
 
+    class navigationEditor {                
+        public function __construct($parentId = 0) {
+            $this->getNavigationLevel($parentId);
+        }
+
+        private function getNavigationLevel($parentId) {
+            $mysqli = $GLOBALS['mysqli'];
+            $output = '';
+
+            if(isset($_GET['menu'])) {
+                $menuId = $_GET['menu'];
+            }
+            else {
+                $menuId = 1;
+            }
+
+            $checkMenu = $mysqli->query("SELECT id FROM `menus` WHERE id = {$menuId}");
+
+            if($parentId == 0 && $checkMenu->num_rows >= 1) {
+                $output .=
+                    '<div class="content" style="overflow-x: auto;">
+                        <h1>Navigation</h1>
+
+                        <div class="formBlock">
+                            <form id="navigationSelector">';
+
+                                $menus = $mysqli->query("SELECT * FROM `menus` ORDER BY menu_name ASC"); 
+                                $menuId = 1;
+
+                                if(isset($_GET['menu']) && $_GET['menu'] > 0) {
+                                    $menuId = $_GET['menu'];
+                                }
+
+                                if($menus->num_rows > 0) {
+                                    $output .=
+                                        '<p>
+                                            <label>Edit Menu: </label>
+                                            <select name="menuSelect">';
+                                                while($row = $menus->fetch_assoc()) {
+                                                    $output .=
+                                                        '<option value="' . $row['id'] . '" ' . ($menuId == $row['id'] ? 'selected' : '') . '>' . $row['menu_name'] . '</option>';
+                                                }
+                                    $output .=        
+                                            '</select>
+                                        </p>';
+                                }
+
+                        $output .=
+                            '</form>
+
+                            <form id="createMenu">                
+                                <p>
+                                    <label>New Menu Name:</label>
+                                    <input type="text" name="menuName">
+                                </p>
+
+                                <p>
+                                    <input type="submit" value="Create Menu">
+                                </p>
+
+                                <p class="message"></p>
+                            </form>
+                        </div>';
+
+                    $output .=
+                        '<div class="menuStructure">
+                            <ul id="parent' . $parentId . '" data-level="0" style="padding: 0;">
+                                ' . $this->checkChildren($parentId, $menuId) . '
+                                <li id="addNav">
+                                    <input type="button" name="addNav" value="Add Item">
+                                    <input type="button" name="saveMenu" value="Save Menu Structure">
+                                    <p class="message"></p>
+                                </li>
+                            </ul>
+                        </div>';
+
+                $output .=
+                    '</div>
+
+                    <script src="/admin/settings/scripts/updateNavigation.js"></script>';
+            }
+            else {
+                $output .= '<h1>This menu does not exist.</h1>';
+            }
+
+            echo $output;
+        }
+
+        private function checkChildren($parentId, $menuId = 1) {
+            $mysqli = $GLOBALS['mysqli'];
+
+            $output = '';
+
+            $navItems = $mysqli->query("SELECT * FROM `navigation_new` WHERE parent_id = {$parentId} AND menu_id = {$menuId} ORDER BY position ASC"); 
+
+            if($navItems->num_rows > 0) {
+
+                if($parentId > 0) {
+                    $output .= 
+                        '<ul id="parent' . $parentId . '" data-level="">';
+                }
+
+                while($navItem = $navItems->fetch_assoc()) {
+                    $postType = explode('/', explode('/post-type/', $navItem['page_url'])[1])[0];
+                    $urlSects = explode('/', $navItem['page_url']);
+                    $urlCount = count($urlSects);
+                    $url = $urlSects[$urlCount - 1];
+
+                    $output .=
+                        '<li class="navItem" id="navItem' . $navItem['item_id'] . '">
+                            <div>
+                                <span id="id">' . $navItem['item_id'] . '</span>
+                                <span id="position">' . $navItem['position'] . '</span>
+                                <select name="postTypes">
+                                    <option value="" selected disabled>--Select Page--</option>
+                                    <option value="customUrl" ' . ($postType == '' ? 'selected' : '') . '>Custom Link</option>
+                                    ' . $this->getPostTypes($postType . ';' . $navItem['display_name'] . ';' . $url) . '
+                                </select>
+                                <div class="hiddenValues" style="' . ($postType != '' ? 'display: none;' : '') . ' margin: 0.5em 0;">
+                                    Displayed Name: <input type="text" name="displayName" value="' . $navItem['display_name'] . '">
+                                    Link: <input type="text" name="postUrl" value="' . $navItem['page_url'] . '">
+                                </div>
+                                Image: <input type="text" name="image" value="' . $navItem['image_url'] .'"> <input type="button" name="imageSearch" value="&#128269;" title="Search Image">
+                                <input type="button" name="deleteItem" data-item="' . $navItem['item_id'] . '" value="Delete">
+                            </div>
+                            ' . $this->checkChildren($navItem['item_id']) .  '
+                        </li>';
+                }
+
+                if($parentId > 0) {
+                    $output .= 
+                        '</ul>';
+                }
+            }
+            else {
+                $output = 
+                    '<ul id="parent' . $parentId . '" data-level=""></ul>';
+            }
+
+            return $output;
+        }
+
+        private function getPostTypes($optionValue) {
+            $mysqli = $GLOBALS['mysqli'];
+            $json = [];
+
+            $pages = $mysqli->query("SELECT name, url FROM pages");
+
+            if($pages->num_rows > 0) {
+                array_push($json, 
+                    '<option value="pages;Pages;" id="group" ' . ($optionValue == 'pages;Pages;' ? 'selected' : '') . '>Pages</option>'      
+                );
+
+                while($row = $pages->fetch_assoc()) {
+                    array_push($json, 
+                        '<option value="pages;' . $row['name'] . ';' . $row['url'] . '" ' . ($optionValue == 'pages;' . $row['name'] . ';' . $row['url'] ? 'selected' : '') . '>&nbsp;&nbsp;' . $row['name'] . '</option>'      
+                    );
+                }
+            }
+
+            //Get Posts
+            $posts = $mysqli->query("SELECT name, url FROM pages");
+
+            if($posts->num_rows > 0) {
+                array_push($json, 
+                    '<option value="posts;Posts;" id="group" ' . ($optionValue == 'posts;Posts;' ? 'selected' : '') . '>Posts</option>'      
+                );
+
+                while($row = $pages->fetch_assoc()) {
+                    array_push($json, 
+                        '<option value="posts;' . $row['name'] . ';' . $row['url'] . '" ' . ($optionValue == 'posts;Posts;' . $row['url'] ? 'selected' : '') . '>&nbsp;&nbsp;' . $row['name'] . '</option>'      
+                    );
+                }
+            }
+
+            //Get Custom
+            $postTypes = $mysqli->query("SELECT name FROM `custom_posts`");
+
+            if($postTypes->num_rows > 0) {
+                while($row = $postTypes->fetch_assoc()) {
+                    $postType = str_replace('_', '-', $row['name']);
+                    $oPostType = $row['name'];
+
+                    array_push($json, 
+                        '<option value="' . $postType . ';' . ucwords(str_replace('-', ' ', $postType)) . ';" id="group" ' . ($optionValue == $postType . ';' . ucwords(str_replace('-', ' ', $postType)) . ';' ? 'selected' : '') . '>' . ucwords(str_replace('-', ' ', $postType)) . '</option>'      
+                    );
+
+                    $subPages = $mysqli->query("SELECT name, url FROM `{$oPostType}`");
+
+                    if($subPages->num_rows > 0) {
+                        while($row = $subPages->fetch_assoc()) {
+                            array_push($json,
+                                '<option value="' . $postType . ';' . $row['name'] . ';' . $row['url'] . '" ' . ($optionValue == $postType . ';' . $row['name'] . ';' . $row['url'] ? 'selected' : '') . '>&nbsp;&nbsp;' . $row['name'] . '</option>' 
+                            );
+                        }
+                    }
+                }
+            }
+
+            return implode($json);
+        }
+    }
+
 ?>
