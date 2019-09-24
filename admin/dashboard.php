@@ -19,7 +19,7 @@
                 //new dashboardBlock('comments');
             
                 while($postType = $postTypes->fetch_assoc()) {
-                    new dashboardBlock($postType['name'] . 's'); 
+                    new dashboardBlock($postType['name']); 
                 }
             
             ?>
