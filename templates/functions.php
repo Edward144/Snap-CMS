@@ -314,7 +314,21 @@
             $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
             
             echo '<ul class="level' . $level . '">';
-            
+                
+                if($level == 1) {
+                    echo '<div class="levelInner">';
+                    
+                    $info = $mysqli->query("SELECT nav_name, image FROM `navigation` WHERE custom_id = {$parent}")->fetch_assoc();
+                    
+                    if($info['image'] != '' && $info['image'] != null) {
+                        echo 
+                            '<div class="navImage">
+                                <h2>' . $info['nav_name'] . '</h2>
+                                <img src="' . $info['image'] . '">
+                            </div>';
+                    }
+                }
+                
                 while($item = $items->fetch_assoc()) {
                     $itemInfo = $mysqli->query("SELECT * FROM `pages` WHERE id = {$item['page_id']}")->fetch_assoc();
                         $name = $itemInfo['name'];
@@ -352,6 +366,10 @@
                         echo '</li>';
                     }
                 }
+            
+            if($level == 1) {
+                echo '</div>';
+            }
             
             echo '</ul>';
         }
@@ -649,7 +667,7 @@
 
                                     <td style="text-align: left;">
                                         <h4>' . $banner['name'] . '</h4>
-                                        <p>Displayed On: ' . ucwords(rtrim($banner['post_type'], 's')) . $postName  . '</p>
+                                        <p>Displayed On: ' . ucwords($banner['post_type']) . $postName  . '</p>
                                     </td>
 
                                     <td>';
@@ -726,12 +744,12 @@
                                             <label>Post Type: </label>
                                             <select name="postType">
                                                 <option value="" selected disabled>--Select Post Type--</option>
-                                                <option value="pages" ' . ($row['post_type'] == 'pages' ? 'selected' : '') . '>Page</options>
-                                                <option value="posts" ' . ($row['post_type'] == 'posts' ? 'selected' : '') . '>Post</options>';
+                                                <option value="pages" ' . ($row['post_type'] == 'pages' ? 'selected' : '') . '>Pages</options>
+                                                <option value="posts" ' . ($row['post_type'] == 'posts' ? 'selected' : '') . '>Posts</options>';
                                                 
                                                 if($postTypes->num_rows > 0) {
                                                     while($type = $postTypes->fetch_assoc()) {
-                                                        echo '<option value="' . $type['name'] . 's" ' . ($type['name'] . 's' == $row['post_type'] ? 'selected' : '') . '>' . ucwords(str_replace('_', ' ', $type['name'])) . '</option>';
+                                                        echo '<option value="' . $type['name'] . '" ' . ($type['name'] == $row['post_type'] ? 'selected' : '') . '>' . ucwords(str_replace('_', ' ', $type['name'])) . '</option>';
                                                     }
                                                 }
                     
@@ -863,19 +881,40 @@
 
                 if($settings->num_rows > 0) {
                     $settings = $settings->fetch_assoc();
-
-                    echo
-                        '<script>
-                            $(document).ready(function() {
-                                $(".owl-carousel").owlCarousel({
-                                    ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
-                                    items: 1,
-                                    loop: true,
-                                    ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
-                                    ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
+                    
+                    if($slides->num_rows == 1) {
+                        echo
+                            '<script>
+                                $(document).ready(function() {
+                                    $(".owl-carousel").owlCarousel({
+                                        ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
+                                        items: 1,
+                                        loop: false,
+                                        ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
+                                        ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
+                                        mouseDrag: false, 
+                                        touchDrag: false,
+                                        pullDrag: false,
+                                        freeDrag: false
+                                    });
                                 });
-                            });
-                        </script>';
+                            </script>';
+                    }
+                    else {
+                        echo
+                            '<script>
+                                $(document).ready(function() {
+                                    $(".owl-carousel").owlCarousel({
+                                        ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
+                                        items: 1,
+                                        loop: true,
+                                        ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
+                                        ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
+                                    });
+                                });
+                            </script>';
+                    }
+                    
                 }
             }
         }
@@ -901,11 +940,11 @@
 
         private $output;
 
-        public function __construct($postType = 'post') {
+        public function __construct($postType = 'posts') {
             $postType = str_replace('-', '_', strtolower($postType));
 
             if($postType != '' && $postType != null) {
-                $this->postType = $postType . 's';
+                $this->postType = $postType;
             }
             else {
                 $this->postType = 'posts';
@@ -992,19 +1031,39 @@
 
                     $hero .=
                         '</div>';
-
-                    $hero .=
-                        '<script>
-                            $(document).ready(function() {
-                                $(".slider").owlCarousel({
-                                    ' . ($slider['animation_out'] != null && $slider['animation_out'] != '' ? 'animateOut: "' . $slider['animation_out'] . '", ' : '') . ($slider['animation_in'] != null && $slider['animation_in'] != '' ? 'animateIn: "' . $slider['animation_in'] . '", ' : '') . '                                         
-                                    items: 1,
-                                    loop: true,
-                                    ' . ($slider['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $slider['speed'] . ',' : '') . 
-                                    ($slider['speed'] == 0 ? 'autoplay: false,' : '') . 'autoplay: false
+                    
+                    if($slides->num_rows == 1) {
+                        $hero .=
+                            '<script>
+                                $(document).ready(function() {
+                                    $(".owl-carousel").owlCarousel({
+                                        ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
+                                        items: 1,
+                                        loop: false,
+                                        ' . ($settings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $settings['speed'] . ',' : '') . 
+                                        ($settings['speed'] == 0 ? 'autoplay: false,' : '') . '
+                                        mouseDrag: false, 
+                                        touchDrag: false,
+                                        pullDrag: false,
+                                        freeDrag: false
+                                    });
                                 });
-                            });
-                        </script>';
+                            </script>';
+                    }
+                    else {
+                        $hero .=
+                            '<script>
+                                $(document).ready(function() {
+                                    $(".slider").owlCarousel({
+                                        ' . ($slider['animation_out'] != null && $slider['animation_out'] != '' ? 'animateOut: "' . $slider['animation_out'] . '", ' : '') . ($slider['animation_in'] != null && $slider['animation_in'] != '' ? 'animateIn: "' . $slider['animation_in'] . '", ' : '') . '                                         
+                                        items: 1,
+                                        loop: true,
+                                        ' . ($slider['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $slider['speed'] . ',' : '') . 
+                                        ($slider['speed'] == 0 ? 'autoplay: false,' : '') . 'autoplay: false
+                                    });
+                                });
+                            </script>';
+                    }
                 }
             }
             else {
@@ -1030,7 +1089,7 @@
             }
             
             if($this->showSidebar == true) {    
-                $sidebarClass = new category(rtrim($_GET['postType'], 's'));
+                $sidebarClass = new category($_GET['postType']);
                 
                 $sidebar = 
                     '<div class="sidebar">
@@ -1198,8 +1257,8 @@
 
                     $postOutput .=
                             '<div class="smallContent">'
-                                . ($this->showTitle == true ? '<h2><a href="/post-type/' . $this->postType . '/' . $row['url'] . '">' . $row['name'] . '</a></h2>' : '')
-                                . ($this->showShort == true ? '<p>' . $shortDesc .'<a href="/post-type/' . $this->postType . '/' . $row['url'] . '" class="readMore">Read More</a></p>' : '') .
+                                . ($this->showTitle == true ? '<h2><a href="/post-type/' . str_replace('_', '-', $this->postType) . '/' . $row['url'] . '">' . $row['name'] . '</a></h2>' : '')
+                                . ($this->showShort == true ? '<p>' . $shortDesc .'<a href="/post-type/' . str_replace('_', '-', $this->postType) . '/' . $row['url'] . '" class="readMore">Read More</a></p>' : '') .
 
                                 '<div class="author">'
                                     . ($this->showAuthor == true ? '<h3>' . $row['author'] . '</h3>' : '')
@@ -1409,11 +1468,11 @@
         private $postType;
         private $output;
 
-        public function __construct($postType = 'post') {
+        public function __construct($postType = 'posts') {
             $postType = strtolower($postType);
 
             if($postType != null && $postType != '') {
-                $this->postType = $postType . 's';
+                $this->postType = $postType;
             }
             else {
                 $this->postType = 'posts';
@@ -1618,7 +1677,7 @@
             }
 
             $postCount = $mysqli->query("SELECT COUNT(*) FROM `{$this->postType}`")->fetch_array()[0];
-            $postName = rtrim(str_replace('_', ' ', $this->postType), 's');
+            $postName = str_replace('_', ' ', $this->postType);
 
             $pagination = new pagination($postCount);
             $pagination->prefix = '/admin/editor/' . $this->postType . '/';
@@ -1628,18 +1687,18 @@
 
             $output = 
                 '<div class="content">
-                    <h1>' . ucwords($postName) . 's</h1>
+                    <h1>' . ucwords($postName) . '</h1>
 
                     <div class="formBlock">
-                        <form class="addContent" id="add' . ucwords(rtrim($this->postType, 's')) . '">
+                        <form class="addContent" id="add' . ucwords($this->postType) . '">
                             <p>
-                                <input type="submit" value="New ' . ucwords($postName) .'">
+                                <input type="submit" value="New ' . rtrim(ucwords($postName), 's') .'">
                             </p>
 
                             <p class="message"></p>
                         </form>
 
-                        <form class="searchContent" id="search' . ucwords(rtrim($this->postType, 's')) . '">
+                        <form class="searchContent" id="search' . ucwords($this->postType) . '">
                             <p>
                                 <input type="text" name="search" placeholder="Search ' . ucwords($postName) . 's..." id="' . $pagination->itemLimit . '">
                             </p>
@@ -1702,7 +1761,7 @@
         private function showSingle() {
             $mysqli = $GLOBALS['mysqli'];
 
-            $postName = rtrim(str_replace('_', ' ', $this->postType), 's');
+            $postName = str_replace('_', ' ', $this->postType);
             $post = $mysqli->query("SELECT * FROM `{$this->postType}` WHERE id = {$_GET['id']}");
 
             $output = 
@@ -1835,11 +1894,11 @@
     class categoryEditor {
         public $postType;
 
-        public function __construct($postType = 'post') {                
+        public function __construct($postType = 'posts') {                
             $postType = str_replace('-', '_', strtolower($postType));
 
             if($postType != '' && $postType != null) {
-                $this->postType = $postType . 's';
+                $this->postType = $postType;
             }
             else {
                 $this->postType = 'posts';
@@ -1861,7 +1920,7 @@
 
                                 while($row = $postTypes->fetch_assoc()) {
                                     $selector .= 
-                                        '<option value="' . $row['name'] . 's"' . ($this->postType == $row['name'] . 's' ? 'selected' : '') . '>' . ucwords(str_replace('_', ' ', $row['name'])) . 's</option>';
+                                        '<option value="' . $row['name'] . '"' . ($this->postType == $row['name'] ? 'selected' : '') . '>' . ucwords(str_replace('_', ' ', $row['name'])) . '</option>';
                                 }
 
                         $selector .= 
@@ -2090,11 +2149,11 @@
         private $postType;
         private $output;
         
-        public function __construct($postType = 'post') {
+        public function __construct($postType = 'posts') {
             $postType = str_replace('-', '_', strtolower($postType));
 
             if($postType != '' && $postType != null) {
-                $this->postType = $postType . 's';
+                $this->postType = $postType;
             }
             else {
                 $this->postType = 'posts';
