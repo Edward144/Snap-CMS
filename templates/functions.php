@@ -2375,7 +2375,7 @@
 
             $output = '';
 
-            $navItems = $mysqli->query("SELECT * FROM `navigation_new` WHERE parent_id = {$parentId} AND menu_id = {$menuId} ORDER BY position ASC"); 
+            $navItems = $mysqli->query("SELECT * FROM `navigation` WHERE parent_id = {$parentId} AND menu_id = {$menuId} ORDER BY position ASC"); 
 
             if($navItems->num_rows > 0) {
 
