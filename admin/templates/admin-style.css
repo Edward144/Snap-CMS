@@ -364,6 +364,50 @@ table .icon img {
     box-sizing: border-box;
 }
 
+.menuStructure #id, 
+.menuStructure #position {
+    display: none;
+}
+
+.menuStructure option#group {
+    font-weight: bold;
+}
+
+.menuStructure ul {
+    list-style: none;
+}
+
+.menuStructure ul li {
+    max-width: 750px;
+}
+
+.menuStructure ul li > div {
+    background: #f3f3f3;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    box-sizing: border-box;
+    margin: 0.5em 0;
+}
+
+.menuStructure input[type="text"],
+.menuStructure select {
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 0;
+    min-width: 200px;
+}
+
+.menuStructure input[name="imageSearch"] {
+    padding: 0.5em;
+    border-radius: 0.5em;
+    box-sizing: border-box;
+    border: 0;
+}
+
+.menuStructure input[name="imageSearch"]:hover {
+    background: #efefef;
+}
+
 /* FOOTER */
 
 .footer {
