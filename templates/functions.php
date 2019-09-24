@@ -301,216 +301,6 @@
         }
     }
 
-    class navigation {        
-        public function __construct($parent = 0, $level = 0) {            
-            $this->createLevel($parent, $level);
-        }
-        
-        public function createLevel($parent, $level) {            
-            $mysqli = $GLOBALS['mysqli'];
-            
-            $items = $mysqli->query("SELECT * FROM `navigation` WHERE parent_id = {$parent} ORDER BY position ASC");
-            $hidePosts = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'hide_posts'")->fetch_array()[0];
-            $homepage = $mysqli->query("SELECT setting_value FROM `settings` WHERE setting_name = 'homepage'")->fetch_array()[0];
-            
-            echo '<ul class="level' . $level . '">';
-                
-                if($level == 1) {
-                    echo '<div class="levelInner">';
-                    
-                    $info = $mysqli->query("SELECT nav_name, image FROM `navigation` WHERE custom_id = {$parent}")->fetch_assoc();
-                    
-                    if($info['image'] != '' && $info['image'] != null) {
-                        echo 
-                            '<div class="navImage">
-                                <h2>' . $info['nav_name'] . '</h2>
-                                <img src="' . $info['image'] . '">
-                            </div>';
-                    }
-                }
-                
-                while($item = $items->fetch_assoc()) {
-                    $itemInfo = $mysqli->query("SELECT * FROM `pages` WHERE id = {$item['page_id']}")->fetch_assoc();
-                        $name = $itemInfo['name'];
-                        $url = 'post-type/pages/' . $itemInfo['url'];
-                        $visible = $itemInfo['visible'];
-                        
-                    $customUrl = $item['custom_url'];
-                    
-                    if($item['page_id'] == -1) {
-                        if($customUrl == '' || $customUrl == null) {
-                            $customUrl = '/post-type/posts';
-                        }
-                        
-                        $name = 'Posts';
-                    }
-                    
-                    if($customUrl != '' && $customUrl != null) {
-                        $url = $customUrl;                          
-                    }
-                    else {
-                        $url = '/' . $url;
-                    }
-                    
-                    if(($item['page_id'] == 0 && $item['custom_url'] != '' && $item['custom_url'] != '') || ($item['page_id'] = -1 && $hidePosts != '1' && $homepage != '') || ($visible == 1)) {
-                        echo '<li>';
-                            echo '<a href="' . $url . '">';
-                                if($item['nav_name'] != null) {
-                                    echo ucwords($item['nav_name']); 
-                                }
-                                else {
-                                    echo $name;
-                                } 
-                            echo '</a>';
-                            $this->checkChildren($item['custom_id'], $item['level']);
-                        echo '</li>';
-                    }
-                }
-            
-            if($level == 1) {
-                echo '</div>';
-            }
-            
-            echo '</ul>';
-        }
-        
-        public function checkChildren($parent, $level) {
-            $mysqli = $GLOBALS['mysqli'];
-            
-            $items = $mysqli->query("SELECT * FROM `navigation` WHERE parent_id = {$parent}");
-            
-            if($items->num_rows > 0) {
-                new navigation($parent, $level + 1);
-            }
-        }
-    }
-
-    class navigationTree {
-        public function __construct($level = 0, $parent = 0, $prevLevel = 0) {
-            $this->createLevel($level, $parent, $prevLevel);
-        }
-        
-        public function createLevel($level, $parent, $prevLevel) {
-            $mysqli = $GLOBALS['mysqli'];
-            
-            $items = $mysqli->query("SELECT * FROM `navigation` WHERE parent_id = {$parent} AND level = {$level} ORDER BY position ASC");
-            
-            if($items->num_rows > 0) {
-                echo '<ul class="level navEditor" id="level' . $level . '">';
-                    while($item = $items->fetch_assoc()) {
-                        $itemInfo = $mysqli->query("SELECT * FROM `pages` WHERE id = {$item['page_id']}")->fetch_assoc();
-                            $id = $itemInfo['id'];
-                            $name = $itemInfo['name'];
-                            $visible = $itemInfo['visible'];
-                                                   
-                        echo
-                            '<li class="pageSelector">
-                                <p>
-                                    <select name="pages" style="width: 200px;">
-                                        <option value="" selected disabled>--Select Item--</option>';
-                                        $pages = $mysqli->query("SELECT * FROM `pages`");
-                                        while($page = $pages->fetch_assoc()) {
-                                            echo '<option value="' . $page['id'] . '"' . ($page['id'] == $item['page_id'] ? 'selected' : '') . '>' . $page['name'] . '</option>';
-                                        }
-                                    echo '<option value="0"' . ($item['page_id'] == 0 ? 'selected' : '') . '>Custom URL</option>
-                                        <option value="-1"' . ($item['page_id'] == -1 ? 'selected' : '') . '>Posts Page</option>
-                                    </select>
-
-                                    <input type="text" name="customNav" placeholder="Custom Name" style="width: 200px;" value="' . $item['nav_name'] . '">
-                                    
-                                    <input type="text" name="customUrl" placeholder="Custom URL" style="width: 200px;" ' . ($item['custom_url'] != '' && $item['custom_url'] != null ? 'value="' . $item['custom_url'] . '"' : '') . '>
-
-                                    <input type="button" class="badButton" style="min-width: 0; width: 24px; height: 24px; border-radius: 100%;" value="X" name="delete">
-                                </p>';
-                            $this->checkChildren($item['custom_id'], $item['level']);
-
-                            echo '</li>';
-                    }
-                    
-                    echo 
-                        '<li id="levelAddition">
-                            <p>
-                                <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                            </p>
-                        </li>';
-                echo '</ul>';
-            }
-            else {
-                echo 
-                    '<ul class="level navEditor" id="level' . $level . '">
-                        <li id="levelAddition">
-                            <p>
-                                <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                            </p>
-                        </li>
-                    </ul>';
-            }
-            
-            if($level == 0) {
-                echo '<p>
-                        <input type="submit" value="Update Navigation">
-                    </p>
-
-                    <p class="message"></p>';
-            
-            
-                //Add Hidden Selector To Be Used For Copying
-                echo 
-                    '<div id="pageSelectorMain" style="display: none;">
-                        <li class="pageSelector">
-                            <p>
-                                <select name="pages" style="width: 200px;">
-                                    <option value="" selected disabled>--Select Item--</option>';
-                                    $pages = $mysqli->query("SELECT * FROM `pages`");
-                                    while($page = $pages->fetch_assoc()) {
-                                        echo '<option value="' . $page['id'] . '">' . $page['name'] . '</option>';
-                                    }
-                            echo '<option value="0">Custom URL</option>
-                                 <option value="-1">Posts Page</option>
-                                </select>
-
-                                <input type="text" name="customNav" placeholder="Custom Name" style="width: 200px;">
-                                
-                                <input type="text" name="customUrl" placeholder="Custom URL" style="width: 200px;">
-                                
-                                <input type="button" class="badButton" style="min-width: 0; width: 24px; height: 24px; border-radius: 100%;" value="X" name="delete">
-                            </p>
-
-                            <ul class="level navEditor" id="level1">
-                                <li id="levelAddition">
-                                    <p>
-                                        <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                                    </p>
-                                </li>
-                            </ul>
-                        </li>
-                    </div>
-                ';
-            }
-        }
-        
-        public function checkChildren($parent, $level) {
-            $mysqli = $GLOBALS['mysqli'];
-            $level++;
-            
-            $children = $mysqli->query("SELECT * FROM `navigation` WHERE parent_id = {$parent} AND level = {$level}");
-            
-            if($children->num_rows > 0) {
-                new navigationTree($level, $parent, ($level - 1));
-            }
-            else {
-                echo 
-                    '<ul class="level navEditor" id="level' . $level . '">
-                        <li id="levelAddition">
-                            <p>
-                                <input type="button" value="+" name="addNext" style="min-width: 0; border-radius: 100%; height: 24px; width: 24px;">
-                            </p>
-                        </li>
-                    </ul>';
-            }
-        }
-    }
-
     class dashboardBlock {
         public $postType;
         public $blockId;
@@ -2482,6 +2272,78 @@
             }
 
             return implode($json);
+        }
+    }
+
+    class navigation {
+        public $menuID;
+        public $hasToggle = true;
+        
+        public function __construct($menuId = 1) {
+            if($menuId != null && $menuId >= 1) {
+                $this->menuID = $menuId;
+            }
+            
+            $this->getNavigationMenu($this->menuID);
+        }
+        
+        private function getNavigationMenu($menuId, $parentId = 0) {
+            $mysqli = $GLOBALS['mysqli'];
+            $output = '';
+            
+            $checkMenu = $mysqli->query("SELECT menu_name from `menus` WHERE id = {$menuId}");
+            
+            if($checkMenu->num_rows > 0) {
+                $menu = $checkMenu->fetch_array()[0];
+                $menuItems = $mysqli->query("SELECT * FROM `navigation` WHERE menu_id = {$menuId}");
+                
+                if($menuItems->num_rows > 0) {
+                    if($this->hasToggle == true) {
+                        $output .=
+                            '<div class="navToggle" id="hidden"></div>';
+                    }
+                    
+                    $output .=    
+                        '<nav>
+                            <div class="navInner">
+                                ' . $this->getParent($menuId, $parentId) . '
+                            </div>
+                        </nav>';
+                }
+            }
+            
+            echo $output;
+        }
+        
+        private function getParent($menuId = 1, $parentId = 0) {
+            $mysqli= $GLOBALS['mysqli'];
+            $output = '';
+            
+            $menu = $mysqli->query("SELECT * FROM `navigation` WHERE menu_id = {$menuId} AND parent_id = {$parentId} ORDER BY position ASC");
+            
+            if($menu->num_rows > 0) {
+                $output .=
+                    '<ul id="nav' . $parentId . '">';
+                
+                while($row = $menu->fetch_assoc()) {
+                    $hasChildren = $mysqli->query("SELECT COUNT(*) FROM `navigation` WHERE menu_id = {$menuId} AND parent_id = {$row['item_id']}")->fetch_array()[0];
+                    
+                    $output .=
+                        '<li class="navItem ' . ($parentId > 1 ? 'child ' : '') . ($_SERVER['REQUEST_URI'] == $row['page_url'] ? ' active' : '') . '" id="navItem' . $row['item_id'] . '">
+                            <a href="' . $row['page_url'] . '">' . $row['display_name'] . '</a>
+                            <div class="navItemInner" ' . ($hasChildren <= 0 ? 'style="display: none;"' : '') .'>
+                                <div>
+                                    ' . ($row['image_url'] != '' && $row['image_url'] != null ? '<div class="navImage"><img src="' . $row['image_url'] . '"></div>' : '') . $this->getParent($menuId, $row['item_id']) . '
+                                </div>
+                            </div>
+                        </li>';
+                }
+                
+                $output .=
+                    '</ul>';
+            }
+            
+            return $output;
         }
     }
 
