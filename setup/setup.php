@@ -135,13 +135,20 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `navigation` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            page_id INT,
-            parent_id INT DEFAULT 0,
+            item_it INT,
+            menu_id INT,
+            parent_id INT,
             position INT,
-            level INT DEFAULT 0,
-            custom_id INT,
-            nav_name VARCHAR(255) DEFAULT null,
-            custom_url VARCHAR(255) DEFAULT null
+            display_name VARCHAR(255),
+            page_url VARCHAR(255),
+            image_url VARCHAR(255)
+        )"
+    );
+
+    $mysqli->query(
+        "CREATE TABLE IF NOT EXISTS `menus` (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            menu_name VARCHAR(255) UNIQUE,
         )"
     );
 
