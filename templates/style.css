@@ -313,6 +313,7 @@ header .navToggle:hover {
         margin: auto;
         box-sizing: border-box;
         padding: 1em;
+        min-height: 300px;
     }
 
     nav .navItemInner > div > ul {
