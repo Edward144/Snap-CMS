@@ -480,10 +480,10 @@ nav li:hover > a {
 .hero {
     height: 300px;
     height: 90vh;
-    height: -webkit-calc(100vh - 82px);
-    height: -moz-calc(100vh - 82px);
-    height: -o-calc(100vh - 82px);
-    height: calc(100vh - 82px);
+    height: -webkit-calc(100vh - 66px);
+    height: -moz-calc(100vh - 66px);
+    height: -o-calc(100vh - 66px);
+    height: calc(100vh - 66px);
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -680,10 +680,10 @@ nav li:hover > a {
 }
 
 .slider .sliderItem {
-    height: -webkit-calc(100vh - 82px);
-    height: -moz-calc(100vh - 82px);
-    height: -o-calc(100vh - 82px);
-    height: calc(100vh - 82px);
+    height: -webkit-calc(100vh - 66px);
+    height: -moz-calc(100vh - 66px);
+    height: -o-calc(100vh - 66px);
+    height: calc(100vh - 66px);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

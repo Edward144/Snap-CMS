@@ -130,8 +130,8 @@ $(".menuStructure").on("change", "select[name='postTypes']", function() {
     if(postValues == "customUrl") {
         thisLi.find(".hiddenValues").first().css("display", "block");
 
-        thisLi.find("input[name='displayName']").val("Item " + thisLi.attr("id").split("navItem")[1]);
-        thisLi.find("input[name='postUrl']").val("/");
+        thisLi.find("input[name='displayName']").first().val("Item " + thisLi.attr("id").split("navItem")[1]);
+        thisLi.find("input[name='postUrl']").first().val("/");
     }
     else if(postValues != null && postValues != "") {
         postValues = postValues.split(";");
@@ -141,8 +141,8 @@ $(".menuStructure").on("change", "select[name='postTypes']", function() {
 
         thisLi.find(".hiddenValues").first().css("display", "none");
 
-        thisLi.find("input[name='displayName']").val(postName);
-        thisLi.find("input[name='postUrl']").val("/post-type/" + postType + "/" + postUrl);
+        thisLi.find("input[name='displayName']").first().val(postName);
+        thisLi.find("input[name='postUrl']").first().val("/post-type/" + postType + "/" + postUrl);
     }
 });
 

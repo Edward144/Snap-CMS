@@ -1990,9 +1990,15 @@
                     
                     $catList .=
                         '<div class="categoryListItem" id="' . $this->postType . 'CategoryListItem">
-                            <div class="imageWrap">
-                                <img src="/admin/images/missingImage.png">
-                            </div>
+                            <div class="imageWrap">';
+                    if($row['image'] == null || $row['image'] == '') {
+                        $catList .= '<img src="/admin/images/missingImage.png">';
+                    }
+                    else {
+                        $catList .= '<img src="' . $row['image'] . '">';
+                    }
+                    $catList .=
+                            '</div>
                             
                             <div class="smallContent">
                                 <h2><a href="' . $catLink . '">' . $row['name'] . '</a></h2>
