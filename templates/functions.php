@@ -828,7 +828,7 @@
                         $hero .=
                             '<script>
                                 $(document).ready(function() {
-                                    $(".owl-carousel").owlCarousel({
+                                    $(".slider").owlCarousel({
                                         ' . ($settings['animation_out'] != null && $settings['animation_out'] != '' ? 'animateOut: "' . $settings['animation_out'] . '", ' : '') . ($settings['animation_in'] != null && $settings['animation_in'] != '' ? 'animateIn: "' . $settings['animation_in'] . '", ' : '') . '                                         
                                         items: 1,
                                         loop: false,
@@ -1584,6 +1584,15 @@
                                         <label>URL: </label>
                                         <input type="text" name="url" value="' . $row['url'] . '">
                                     </p>';
+                                    
+                                    if($this->postType == 'events') {
+                                        $output .=
+                                            '<p>
+                                                <label>Event Dates: </label>
+                                                <input type="date" name="start_date" value="' . $row['start_date'] . '" style="width: auto;"> - 
+                                                <input type="date" name="end_date" value="' . $row['end_date'] . '" style="width: auto;">
+                                            </p>';
+                                    }
 
                                     if($this->postType != 'pages') {
                                         $categories = $mysqli->query("SELECT id, name FROM `categories` WHERE post_type = '{$this->postType}' ORDER BY name ASC");
