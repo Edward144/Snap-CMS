@@ -90,6 +90,13 @@ function setPageHeight() {
     var totalH = windowH - (headerH + footerH) - mainMargin;
     
     $(".main").css("min-height", totalH);
+    
+    if($(window).width() <= 1024) {
+        $(".main").css("margin-top", headerH);
+    }
+    else {
+        $(".main").css("margin-top", "");
+    }
 }
 
 $(document).ready(setPageHeight);

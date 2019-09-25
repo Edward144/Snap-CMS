@@ -16,7 +16,7 @@ $(document).ready(function() {
             $(this).attr("data-level", parseInt(level) + 1);
         }
 
-        if(level <= 3) {
+        if(level <= 1) {
             $(' <input type="button" name="addChild" value="Add Child" style="margin-left: 4px;">').insertAfter($(this).closest("li:not(#addNav)").find("> div > input[name='imageSearch']"));
         }
     });
@@ -69,7 +69,7 @@ $(".menuStructure").on("click", "input[name='addChild']", function() {
     var allowChildren = true;
     var parentLevel = parseInt(thisLi.find("ul").first().attr("data-level")) + 1;
 
-    if(thisLi.find("ul").first().attr("data-level") >= 3) {                
+    if(thisLi.find("ul").first().attr("data-level") >= 2) {                
         allowChildren = false;
     }
 
