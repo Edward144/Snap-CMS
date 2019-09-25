@@ -313,7 +313,7 @@ header .navToggle:hover {
         margin: auto;
         box-sizing: border-box;
         padding: 1em;
-        min-height: 300px;
+        min-height: 332px;
     }
 
     nav .navItemInner > div > ul {
@@ -335,6 +335,7 @@ header .navToggle:hover {
 
     nav .navImage {
         width: 400px;
+        height: 300px;
         vertical-align: top;
         margin-right: 1em;
         display: block;
@@ -343,6 +344,9 @@ header .navToggle:hover {
 
     nav .navImage img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 
     nav .navItemInner li {
