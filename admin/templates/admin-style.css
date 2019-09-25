@@ -81,7 +81,8 @@ body {
 .formBlock table input[type="button"],
 .formBlock table input[type="submit"],
 .banner.contentWrap input[name="addSlide"],
-.banner.contentWrap input[name="deleteSlide"] {
+.banner.contentWrap input[name="deleteSlide"],
+.menuStructure ul input[type="button"] {
     min-width: 120px;
     width: auto;
     padding: 0.5em;
@@ -378,7 +379,7 @@ table .icon img {
 }
 
 .menuStructure ul li {
-    max-width: 750px;
+    max-width: 760px;
 }
 
 .menuStructure ul li > div {
@@ -402,10 +403,8 @@ table .icon img {
     border-radius: 0.5em;
     box-sizing: border-box;
     border: 0;
-}
-
-.menuStructure input[name="imageSearch"]:hover {
-    background: #efefef;
+    width: auto;
+    min-width: 0 !important;
 }
 
 /* FOOTER */
