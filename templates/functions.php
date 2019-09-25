@@ -1925,8 +1925,6 @@
                     <a href="./' . str_replace('_', '-', $this->postType) . '">Return to categories</a>';
             }
 
-            //$output .= $this->postTypeSelector();
-
             $output .=
                     '</div>
                 </div>
@@ -2013,7 +2011,7 @@
             }
             
             if($parentId == 0) {
-                $pageTitle = ucwords(str_replace('_', ' ', $this->postType))  . ' Categories';
+                $pageTitle = ucwords(str_replace('_', ' ', $this->postType))  . ' <span id="categories">Categories</span>';
             }
             else {
                 $pageTitle = ucwords(str_replace('_', ' ', $this->postType))  . ' ' . ucwords(str_replace('-', ' ', $_GET['url']));
@@ -2080,7 +2078,9 @@
         }
     }
 
-    class navigationEditor {                
+    class navigationEditor {
+        private $showHidden = true;
+        
         public function __construct($parentId = 0) {
             $this->getNavigationLevel($parentId);
         }
@@ -2187,7 +2187,8 @@
                     $urlSects = explode('/', $navItem['page_url']);
                     $urlCount = count($urlSects);
                     $url = $urlSects[$urlCount - 1];
-
+                    $this->showHidden = true;
+                    
                     $output .=
                         '<li class="navItem" id="navItem' . $navItem['item_id'] . '">
                             <div>
@@ -2195,10 +2196,10 @@
                                 <span id="position">' . $navItem['position'] . '</span>
                                 <select name="postTypes">
                                     <option value="" selected disabled>--Select Page--</option>
-                                    <option value="customUrl" ' . ($postType == '' ? 'selected' : '') . '>Custom Link</option>
+                                    <option value="customUrl" ' . ($navItem['page_url'] != '' || $navItem['display_name'] != '' ? 'selected' : '') . '>Custom Link</option>
                                     ' . $this->getPostTypes($postType . ';' . $navItem['display_name'] . ';' . $url) . '
                                 </select>
-                                <div class="hiddenValues" style="' . ($postType != '' ? 'display: none;' : '') . ' margin: 0.5em 0;">
+                                <div class="hiddenValues" style="' . ($this->showHidden == false ? 'display: none;' : '') . ' margin: 0.5em 0;">
                                     Displayed Name: <input type="text" name="displayName" value="' . $navItem['display_name'] . '">
                                     Link: <input type="text" name="postUrl" value="' . $navItem['page_url'] . '">
                                 </div>
@@ -2237,6 +2238,10 @@
                     array_push($json, 
                         '<option value="pages;' . $row['name'] . ';' . $row['url'] . '" ' . ($optionValue == 'pages;' . $row['name'] . ';' . $row['url'] ? 'selected' : '') . '>&nbsp;&nbsp;' . $row['name'] . '</option>'      
                     );
+                    
+                    if($optionValue == 'pages;' . $row['name'] . ';' . $row['url']) {
+                        $this->showHidden = false;
+                    }
                 }
             }
 
@@ -2252,6 +2257,10 @@
                     array_push($json, 
                         '<option value="posts;' . $row['name'] . ';' . $row['url'] . '" ' . ($optionValue == 'posts;Posts;' . $row['url'] ? 'selected' : '') . '>&nbsp;&nbsp;' . $row['name'] . '</option>'      
                     );
+                    
+                    if($optionValue == 'posts;Posts;' . $row['url']) {
+                        $this->showHidden = false;
+                    }
                 }
             }
 
@@ -2275,6 +2284,10 @@
                                 '<option value="' . $postType . ';' . $row['name'] . ';' . $row['url'] . '" ' . ($optionValue == $postType . ';' . $row['name'] . ';' . $row['url'] ? 'selected' : '') . '>&nbsp;&nbsp;' . $row['name'] . '</option>' 
                             );
                         }
+                    }
+                    
+                    if($optionValue == $postType . ';' . ucwords(str_replace('-', ' ', $postType)) . ';') {
+                        $this->showHidden = false;
                     }
                 }
             }
