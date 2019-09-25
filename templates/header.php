@@ -2,7 +2,7 @@
 
 <?php 
     session_start(); 
-
+    ob_start();
     include_once($_SERVER['DOCUMENT_ROOT'] . '/templates/database_connect.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/templates/functions.php');
 ?>

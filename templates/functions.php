@@ -730,7 +730,7 @@
 
         private $output;
 
-        public function __construct($postType = 'posts') {
+        public function __construct($postType = 'posts') {            
             $postType = str_replace('-', '_', strtolower($postType));
 
             if($postType != '' && $postType != null) {
@@ -741,6 +741,8 @@
             }
 
             $this->redirectPost();
+            
+            ob_end_flush();
         }
 
         private function redirectPost() {
@@ -752,11 +754,11 @@
             //Redirect to / if url matches homepage
             if($homeUrl->num_rows > 0) {
                 $homeUrl = $homeUrl->fetch_array()[0];
-
-                if($this->postType == 'pages' && $_SERVER['REQUEST_URI'] == '/post-type/pages/' . $homeUrl) {
+                
+                if($_SERVER['REQUEST_URI'] == '/post-type/pages/' . $homeUrl) {
                     header('HTTP/1.1 301 Moved Permenantly');
                     header('Location: /');
-
+                    
                     exit();
                 }
             }
@@ -2329,7 +2331,7 @@
                     $hasChildren = $mysqli->query("SELECT COUNT(*) FROM `navigation` WHERE menu_id = {$menuId} AND parent_id = {$row['item_id']}")->fetch_array()[0];
                     
                     $output .=
-                        '<li class="navItem ' . ($parentId > 1 ? 'child ' : '') . ($_SERVER['REQUEST_URI'] == $row['page_url'] ? ' active' : '') . '" id="navItem' . $row['item_id'] . '">
+                        '<li class="navItem' . ($parentId > 1 ? ' child' : '') . ($_SERVER['REQUEST_URI'] == $row['page_url'] ? ' active' : '') . ($hasChildren > 0 ? ' hasChildren' : '') . '" id="navItem' . $row['item_id'] . '">
                             <a href="' . $row['page_url'] . '">' . $row['display_name'] . '</a>
                             <div class="navItemInner" ' . ($hasChildren <= 0 ? 'style="display: none;"' : '') .'>
                                 <div>
