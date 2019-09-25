@@ -445,10 +445,6 @@ nav li:hover > a {
     position: relative;
 }
 
-.main .postContent {
-    float: left;
-}
-
 .main .postList, .main .postContent, .main .postInner {
     max-width: 1024px;
     margin: 0 auto;
