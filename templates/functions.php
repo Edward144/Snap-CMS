@@ -25,6 +25,33 @@
         header('Location: /login');
     }
     
+    //Limit String At Space
+    function cleanSubstr($string, $start, $end) {
+        if(strlen($string) > $end) {
+            //Split String At Set Location
+            $string = substr($string, $start, $end);
+            
+            //Remove Special Characters With Proceeding Space
+            $string = preg_replace('/[^\da-zA-Z0-9]\s/', ' ', $string);
+            
+            //Count Number Of Spaces
+            $words = explode(' ', $string);
+            $wordCount = count($words) - 1;
+            
+            //Split at Last Space
+            $string = '';
+            
+            for($i = 0; $i < $wordCount; $i++) {
+                $string .= $words[$i] . ' ';
+            }
+            
+            //Remove Blank Spaces From End
+            rtrim($string, ' ');
+        }
+        
+        return $string;
+    }
+
     //Convert Admin File Name to Page Name
     function adminTitle() {
         $pageTitle = explode('/', $_SERVER['REQUEST_URI']);
@@ -741,8 +768,6 @@
             }
 
             $this->redirectPost();
-            
-            ob_end_flush();
         }
 
         private function redirectPost() {
@@ -760,6 +785,8 @@
                     header('Location: /');
                     
                     exit();
+                    
+                    ob_end_flush();
                 }
             }
 
@@ -786,6 +813,8 @@
                     header('Location: /404');
 
                     exit();
+                    
+                    ob_end_flush();
                 }
             }
         }
@@ -1081,6 +1110,8 @@
                          '</div>
                      </div>
                 </div>';
+            
+            ob_end_flush();
         }
 
 
@@ -1235,6 +1266,8 @@
                         $postOutput .
                     '</div>
                 </div>';
+            
+            ob_end_flush();
         }
 
         public function debug() {
