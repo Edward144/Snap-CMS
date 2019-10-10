@@ -4,71 +4,86 @@
     <div class="column-60 formBlock detailsEditor">
         <h2 class="greyHeader">Company Information</h2>
         
-        <div>
+        <div>            
             <form id="editCompany" method="POST" action="scripts/editCompany.php">
+                <?php
+                    $company = $mysqli->query("SELECT * FROM `company_info` ORDER BY id DESC LIMIT 1");
+                    
+                    if($company->num_rows == 1) {
+                        $row = $company->fetch_assoc();
+                    }
+                ?>
+                
                 <p>
                     <label>Company Name</label>
-                    <input type="text">
+                    <input type="text" name="name" value="<?php echo $row['name']; ?>">
                 </p>
                 
                 <p>
                     <label>Address Line 1</label>
-                    <input type="text">
+                    <input type="text" name="add1" value="<?php echo $row['address_1']; ?>">
                 </p>
                 
                 <p>
                     <label>Address Line 2</label>
-                    <input type="text">
+                    <input type="text" name="add2" value="<?php echo $row['address_2']; ?>">
                 </p>
                 
                 <p>
                     <label>Address Line 3</label>
-                    <input type="text">
+                    <input type="text" name="add3" value="<?php echo $row['address_3']; ?>">
                 </p>
                 
                 <p>
                     <label>Address Line 4</label>
-                    <input type="text">
+                    <input type="text" name="add4" value="<?php echo $row['address_4']; ?>">
                 </p>
                 
                 <p>
                     <label>Postcode</label>
-                    <input type="text">
+                    <input type="text" name="postcode" value="<?php echo $row['postcode']; ?>">
                 </p>
                 
                 <p>
                     <label>County</label>
-                    <input type="text">
+                    <input type="text" name="county" value="<?php echo $row['county']; ?>">
+                </p>
+                
+                <p>
+                    <label>Country</label>
+                    <input type="text" name="country" value="<?php echo $row['country']; ?>">
                 </p>
                 
                 <p>
                     <label>Telephone</label>
-                    <input type="text">
+                    <input type="text" name="phone" value="<?php echo $row['phone']; ?>">
                 </p>
                 
                 <p>
                     <label>Fax</label>
-                    <input type="text">
+                    <input type="text" name="fax" value="<?php echo $row['fax']; ?>">
+                    
                 </p>
                 
                 <p>
                     <label>Email</label>
-                    <input type="text">
+                    <input type="text" name="email" value="<?php echo $row['email']; ?>">
                 </p>
                 
                 <p>
                     <label>VAT Number</label>
-                    <input type="text">
+                    <input type="text" name="vat" value="<?php echo $row['vat_number']; ?>">
                 </p>
                 
                 <p>
                     <label>Registration Number</label>
-                    <input type="text">
+                    <input type="text" name="reg" value="<?php echo $row['registration_number']; ?>">
                 </p>
                 
                 <p>
                     <label>Logo</label>
-                    <input type="text">
+                    <input type="text" name="logo" style="max-width: 200px;" value="<?php echo $row['logo']; ?>">
+                    <input type="button" name="logoSelector" value="Choose File" style="padding: 0.5em;">
                 </p>
                 
                 <input type="submit" value="Update">
@@ -80,6 +95,25 @@
                         }
                     ?></p>
             </form>
+            
+            <script>
+                //Format Postcode
+                $("#editCompany input[name='postcode']").on("keyup", function() {
+                    $(this).val(formatPostcode($(this).val()));
+                });
+                
+                //Select Logo
+                $("#editCompany input[name='logoSelector']").click(function() {
+                    moxman.browse({
+                        extensions: 'png, jpg, jpeg, gif, webp, svg',
+                        oninsert: function(args) {
+                            var image = args.files[0].url;
+                            
+                            $("#editCompany input[name='logo']").val(image);
+                        }
+                    });
+                });
+            </script>
         </div>
     </div>
     

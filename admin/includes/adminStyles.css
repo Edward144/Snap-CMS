@@ -100,6 +100,12 @@ a:hover {
     background: #cc0910;
 }
 
+.formBlock input[type="checkbox"] {
+    transform: scale(1.5);
+    width: 20px !important;
+    margin: auto;
+}
+
 .formattedTable input:not([type="button"]):not([type="submit"]) {
     width: 100%;
 }
