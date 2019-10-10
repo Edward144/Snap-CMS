@@ -5,32 +5,36 @@
         <h2 class="greyHeader">Settings</h2>
         
         <div>            
-            <form id="editSettings" action="POST" method="scripts/editSettings.php">
+            <form id="editSettings" method="POST" action="scripts/editSettings.php">
                 <p>
+                    <?php $hidePosts = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'hide posts'")->fetch_array()[0]; ?>
+                    
                     <label>Hide Posts</label>
-                    <input type="checkbox" name="hidePosts">
+                    <input type="checkbox" name="hide posts" <?php echo ($hidePosts == 1 ? 'checked' : ''); ?>>
                 </p>
                 
                 <p>
-                    <?php $homepage = $mysqli->query("SELECT settings_name, settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_assoc(); ?>
+                    <?php $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0]; ?>
                     
                     <label>Homepage</label>
                     <select name="homepage">
-                        <option value="">Posts Page</option>
+                        <option value="0">No Homepage</option>
                         
                         <?php $posts = $mysqli->query("SELECT `posts`.id, `posts`.name, `post_types`.name as post_type FROM `posts` INNER JOIN `post_types` ON `post_types`.id = `posts`.post_type_id ORDER BY post_type, name ASC"); ?>
                         
                         <?php if($posts->num_rows > 0) : ?>
                             <?php while($row = $posts->fetch_assoc()) : ?>
-                                <option value="<?php echo $row['id']; ?>" <?php echo ($row['id'] == $homepage['settings_value'] ? 'selected' : '');?>><?php echo ucwords(str_replace('-', ' ', $row['post_type'])) . ': ' . $row['name']; ?></option>
+                                <option value="<?php echo $row['id']; ?>" <?php echo ($row['id'] == $homepage ? 'selected' : '');?>><?php echo ucwords(str_replace('-', ' ', $row['post_type'])) . ': ' . $row['name']; ?></option>
                             <?php endwhile; ?>
                         <?php endif; ?>
                     </select>
                 </p>
                 
                 <p>
+                    <?php $analyticsCode = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'google analytics'")->fetch_array()[0]; ?>
+                    
                     <label>Google Analytics</label>
-                    <input type="text" name="analytics" placeholder="UA-12345678-9">
+                    <input type="text" name="google analytics" placeholder="UA-12345678-9" value="<?php echo $analyticsCode; ?>">
                 </p>
                 
                 <input type="submit" value="Save">
