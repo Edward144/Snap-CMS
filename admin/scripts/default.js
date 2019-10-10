@@ -93,7 +93,27 @@ function formWidth() {
             });
         }
     });
+}
+
+//Postcode Formatting
+function formatPostcode(postcode) {
+    var pCode = postcode.replace(/[^0-9a-zA-Z]/g, "").toUpperCase();
+    var len = pCode.length;
     
+    if(len == 5) {
+       pCode = pCode.slice(0, 2) + " " + pCode.slice(2, 5);
+    }
+    else if(len == 6) {
+       pCode = pCode.slice(0, 3) + " " + pCode.slice(3, 6);
+    }
+    else if(len == 7) {
+       pCode = pCode.slice(0, 4) + " " + pCode.slice(4, 7);
+    }
+    else if(len == 8) {
+       pCode = pCode.slice(0, 5) + " " + pCode.slice(5, 8);
+    }
+    
+    return pCode;
 }
 
 $(document).ready(function() {
