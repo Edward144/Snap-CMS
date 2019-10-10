@@ -257,7 +257,6 @@ a:hover {
 /* NAVIGATION */
 
 #adminNav {
-    background: #ff5722;
     z-index: 9999;
 }
 
@@ -269,7 +268,6 @@ a:hover {
 }
 
 #adminNav ul li {
-    margin-right: 1em;
     list-style: none;
     text-align: center;
     width: 100%;
@@ -298,10 +296,6 @@ a:hover {
 
 #adminNav ul li a#active {
     background: #ff9800;
-}
-
-#adminNav ul li:last-child {
-    margin-right: 0;
 }
 
 #adminNav ul li.hasChildren > a:after {
