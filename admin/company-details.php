@@ -106,6 +106,7 @@
                 $("#editCompany input[name='logoSelector']").click(function() {
                     moxman.browse({
                         extensions: 'png, jpg, jpeg, gif, webp, svg',
+                        skin: "snapcms",
                         oninsert: function(args) {
                             var image = args.files[0].url;
                             
