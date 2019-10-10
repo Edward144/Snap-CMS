@@ -158,7 +158,7 @@
         <h2 class="greyHeader" style="margin-top: 1em;">Create New Social Media</h2>
         
         <div>            
-            <p>Icons for social media are stored in <code>/admin/images/social/</code>, if the icon for your social media site is missing then upload a png here with the same name, replaceing spaces with hyphens.</p>
+            <p>Icons for social media are stored in <code>/admin/images/social/</code>, if the icon for your social media site is missing then upload a png here with the same name, replacing spaces with hyphens.</p>
             
             <form id="addSocial"method="POST" action="scripts/addSocial.php">
                 <p>
