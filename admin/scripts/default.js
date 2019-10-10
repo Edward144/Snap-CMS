@@ -143,6 +143,7 @@ $(document).ready(function() {
     $("#adminNav #mediaBrowser").click(function() {
         moxman.browse({
             path: "<?php echo ROOT_DIR; ?>useruploads/",
+            skin: "snapcms"
         });
     })
 });
