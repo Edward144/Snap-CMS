@@ -147,7 +147,7 @@
     );
 
     $mysqli->query(
-        "INSERT IGNORE INTO `settings` (
+        "INSERT IGNORE INTO `social_links` (
             name
         ) VALUES (
             'facebook'
@@ -157,22 +157,6 @@
             'linkedin'
         ), (
             'instagram'
-        ), (
-            'youtube'
-        )"
-    );
-
-    $mysqli->query(
-        "INSERT IGNORE INTO `settings` (
-            name
-        ) VALUES (
-            'facebook'
-        ), (
-            'twitter'
-        ), (
-            'instagram'
-        ), (
-            'linkedin'
         ), (
             'youtube'
         )"
@@ -212,7 +196,7 @@
     );
 
     $mysqli->query(
-        "INSERT IGNORE INTO `settings` (
+        "INSERT IGNORE INTO `post_types` (
             name
         ) VALUES (
             'posts'
@@ -298,6 +282,9 @@
         ), (
             'hide posts',
             '0'
+        ), (
+            'google analytics',
+            ''
         )"
     );
     
