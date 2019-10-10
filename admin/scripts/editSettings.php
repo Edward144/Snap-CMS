@@ -3,7 +3,7 @@
     require_once('../../includes/database.php');
     
     $updateSettings = $mysqli->prepare("UPDATE `settings` SET settings_value = ? WHERE settings_name = ?");
-
+    
     if(!array_key_exists('hide_posts', $_POST)) {
         $_POST['hide_posts'] = '0';
     }

@@ -35,7 +35,7 @@
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/media">Media Manager</a>
+            <a id="mediaBrowser">Media Browser</a>
         </li>
         
         <li class="hasChildren">

@@ -138,6 +138,13 @@ $(document).ready(function() {
             });
         }
     });
+    
+    //Navigation Open Media Browser
+    $("#adminNav #mediaBrowser").click(function() {
+        moxman.browse({
+            path: "<?php echo ROOT_DIR; ?>useruploads/",
+        });
+    })
 });
 
 $(window).resize(function() {
