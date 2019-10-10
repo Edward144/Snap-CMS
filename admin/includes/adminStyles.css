@@ -23,7 +23,7 @@ a:hover {
 }
 
 .adminWrap::-webkit-scrollbar-track {
-    background: #ebebeb;
+    background: #dedede;
     border-radius: 10px;
 }
 
@@ -53,6 +53,8 @@ a:hover {
 }
 
 .formBlock input:not([type="button"]):not([type="submit"]),
+.formBlock select,
+.formBlock textarea,
 .formattedTable input:not([type="button"]):not([type="submit"]){
     display: inline-block;
     vertical-align: middle;
@@ -104,6 +106,7 @@ a:hover {
     transform: scale(1.5);
     width: 20px !important;
     margin: auto;
+    display: inline-block;
 }
 
 .formattedTable input:not([type="button"]):not([type="submit"]) {
@@ -126,7 +129,7 @@ a:hover {
 }
 
 .hasTable::-webkit-scrollbar-track {
-    background: #ebebeb;
+    background: #dedede;
     border-radius: 10px;
 }
 
@@ -164,13 +167,13 @@ a:hover {
 }
 
 .formattedTable tr:nth-child(even) td {
-    background: #ebebeb;
+    background: #dedede;
 }
 
 .column-60 > div, .column-50 > div, .column-40 > div {
     border-bottom: 5px solid #00a1ff;
-    border-left: 1px solid #ebebeb;
-    border-right: 1px solid #ebebeb;
+    border-left: 1px solid #dedede;
+    border-right: 1px solid #dedede;
 }
 
 .column-60 {
@@ -192,7 +195,8 @@ a:hover {
     margin: 0;
     padding: 1em;
     box-sizing: border-box;
-    background: #ebebeb;
+    background: #dedede;
+    text-transform: capitalize;
 }
 
 /* HEADER */
@@ -254,6 +258,7 @@ a:hover {
 
 #adminNav {
     background: #8bc34a;
+    z-index: 9999;
 }
 
 #adminNav ul {
@@ -393,8 +398,8 @@ a:hover {
     width: 100%;
     max-width: 400px;
     border-bottom: 5px solid #00a1ff;
-    border-left: 1px solid #ebebeb;
-    border-right: 1px solid #ebebeb;
+    border-left: 1px solid #dedede;
+    border-right: 1px solid #dedede;
     box-sizing: border-box;
     
 }
@@ -403,7 +408,7 @@ a:hover {
     text-align: center;
     padding: 1em;
     box-sizing: border-box;
-    background: #ebebeb;
+    background: #dedede;
 }
 
 .dashboardBlocks .counter h2 {
@@ -434,22 +439,28 @@ a:hover {
 
 /* SETTINGS */
 
-#userManagement, #companyDetails {
+#userManagement, #companyDetails, #generalSettings {
     display: flex;
     flex-wrap: wrap;
 }
 
-#userManagement > div > div, #companyDetails > div > div {
+#userManagement > div > div, #companyDetails > div > div,
+#generalSettings > div > div {
     padding: 1em;
     box-sizing: border-box;
 }
 
-#userManagement .currentUsers, #companyDetails .detailsEditor {
+#userManagement .currentUsers, #companyDetails .detailsEditor,
+#generalSettings .settings {
     margin-right: 1em;
     width: -webkit-calc(60% - 1em);
     width: -moz-calc(60% - 1em);
     width: -o-calc(60% - 1em);
     width: calc(60% - 1em);
+}
+
+#userManagement .formattedTable tr td:last-child {
+    text-align: left;
 }
 
 #editSocial .socialIcon {
@@ -544,8 +555,13 @@ a:hover {
         max-width: 100%;
     }
     
-    .formBlock label, .formBlock input:not([type="button"]):not([type="submit"]) {
+    .formBlock label, .formBlock input:not([type="button"]):not([type="submit"]), .formBlock select, .formBlock textarea {
         display: block;
         width: 100%;
+    }
+    
+    .formBlock input[type="checkbox"] {
+        margin-left: 0;
+        margin-top: 0.5em;
     }
 }
