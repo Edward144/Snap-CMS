@@ -93,6 +93,15 @@
                             }
                         ?></p>
                     </form>
+                    
+                    <script>
+                        $("#editPostTypes").submit(function() {
+                            if(!confirm("Are you sure you want to delete this post type? All associated posts will also be removed.")) {
+                                event.preventDefault();
+                                return;
+                            }
+                        });
+                    </script>
                 </div>
             <?php else : ?>
                 <h3 style="color: red;">You don't have any custom post types</h3>
