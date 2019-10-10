@@ -133,7 +133,8 @@
             email VARCHAR(100),
             fax VARCHAR(50),
             vat_number VARCHAR(20),
-            registration_number VARCHAR(20)
+            registration_number VARCHAR(20),
+            logo VARCHAR(255)
         )"
     );
 
