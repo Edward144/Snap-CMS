@@ -125,7 +125,7 @@
             address_1 VARCHAR(255),
             address_2 VARCHAR(255),
             address_3 VARCHAR(255),
-            address_5 VARCHAR(255),
+            address_4 VARCHAR(255),
             postcode VARCHAR(50),
             county VARCHAR(100),
             country VARCHAR(100),
