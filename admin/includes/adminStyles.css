@@ -28,7 +28,7 @@ a:hover {
 }
 
 .adminWrap::-webkit-scrollbar-thumb {
-    background: #8bc34a;
+    background: #ff5722;
     border-radius: 10px;
 }
 
@@ -134,12 +134,12 @@ a:hover {
 }
 
 .hasTable::-webkit-scrollbar-thumb {
-    background: #8bc34a;
+    background: #ff5722;
     border-radius: 10px;
 }
 
 .hasTable::-webkit-scrollbar-thumb:hover {
-    background: #6f9c3b;
+    background: #cc461b;
 }
 
 .formattedTable {
@@ -257,7 +257,7 @@ a:hover {
 /* NAVIGATION */
 
 #adminNav {
-    background: #8bc34a;
+    background: #ff5722;
     z-index: 9999;
 }
 
@@ -274,7 +274,7 @@ a:hover {
     text-align: center;
     width: 100%;
     position: relative;
-    background: #8bc34a;
+    background: #ff5722;
     transition: background 0.5s ease-out, color 0.5s ease-out;
 }
 
@@ -286,14 +286,18 @@ a:hover {
     cursor: pointer;
 }
 
+#adminNav ul li > a#active {
+    background: #ff9800;
+}
+
 #adminNav ul li > a:hover, #adminNav ul li:hover {
-    background: #6f9c3b;
+    background: #cc461b;
     font-weight: normal;
     transition: background 0.35s ease-in, color 0.35s ease-in;
 }
 
 #adminNav ul li a#active {
-    background: #4caf50;
+    background: #ff9800;
 }
 
 #adminNav ul li:last-child {
@@ -515,7 +519,7 @@ a:hover {
     }
     
     #adminNav li.hasChildren > .subMenu > li {
-        background: #6db51a;
+        background: #ff6a23;
     }
     
     #adminNav li > .subMenu.active {
@@ -528,6 +532,10 @@ a:hover {
         transform: rotate(90deg);
         margin-left: 4px;
         transition: transform 0.9s ease;
+    }
+    
+    #adminNav ul li.hasChildren > a.active {
+        background: #ff6a23;
     }
     
     #adminNav ul li.hasChildren > a.active:after {
