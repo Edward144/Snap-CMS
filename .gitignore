@@ -1,5 +1,4 @@
 useruploads/*
 !useruploads/.gitkeep
-images/*
 images/gallery/*
 !images/gallery/.gitkeep
