@@ -1,0 +1,545 @@
+/* ADMIN STYLES */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "roboto", sans-serif;
+    overflow: hidden;
+}
+
+a {
+    color: #00a1ff;
+    transition: background 0.5s ease-out, color 0.5s ease-out;
+}
+
+a:hover {
+    color: #0081cc;
+    transition: background 0.35s ease-in, color 0.35s ease-in;
+}
+
+.adminWrap::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.adminWrap::-webkit-scrollbar-track {
+    background: #ebebeb;
+    border-radius: 10px;
+}
+
+.adminWrap::-webkit-scrollbar-thumb {
+    background: #8bc34a;
+    border-radius: 10px;
+}
+
+/* GENERAL */
+
+#message {
+    color: #ff0000;
+    font-weight: bold;
+    text-align: right;
+    margin-top: -2em;
+}
+
+#message:empty {
+    display: none;
+}
+
+.formBlock label {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    text-transform: capitalize;
+}
+
+.formBlock input:not([type="button"]):not([type="submit"]),
+.formattedTable input:not([type="button"]):not([type="submit"]){
+    display: inline-block;
+    vertical-align: middle;
+    width: -webkit-calc(100% - 210px);
+    width: -moz-calc(100% - 210px);
+    width: -o-calc(100% - 210px);
+    width: calc(100% - 210px);
+    max-width: 500px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+.formBlock input[type="button"],
+.formBlock input[type="submit"],
+.formattedTable input[type="button"],
+.formattedTable input[type="submit"] {
+    background: #00a1ff;
+    border: 0;
+    min-width: 120px;
+    color: #fff;
+    padding: 1em;
+    transition: background 0.5s ease-out;
+}
+
+.formBlock input[type="button"]:hover,
+.formBlock input[type="submit"]:hover,
+.formattedTable input[type="button"]:hover,
+.formattedTable input[type="submit"]:hover {
+    background: #0081cc;
+    transition: background 0.35s ease-in;
+}
+
+.formBlock input.redButton[type="button"],
+.formBlock input.redButton[type="submit"],
+.formattedTable input.redButton[type="button"],
+.formattedTable input.redButton[type="submit"] {
+    background: #ff0000;
+}
+
+.formBlock input.redButton[type="button"]:hover,
+.formBlock input.redButton[type="submit"]:hover,
+.formattedTable input.redButton[type="button"]:hover,
+.formattedTable input.redButton[type="submit"]:hover {
+    background: #cc0910;
+}
+
+.formattedTable input:not([type="button"]):not([type="submit"]) {
+    width: 100%;
+}
+
+.formattedTable input[type="button"],
+.formattedTable input[type="submit"] {
+    padding: 0.5em;
+    min-width: 0;
+}
+
+.hasTable {
+    overflow-y: auto;
+}
+
+.hasTable::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.hasTable::-webkit-scrollbar-track {
+    background: #ebebeb;
+    border-radius: 10px;
+}
+
+.hasTable::-webkit-scrollbar-thumb {
+    background: #8bc34a;
+    border-radius: 10px;
+}
+
+.hasTable::-webkit-scrollbar-thumb:hover {
+    background: #6f9c3b;
+}
+
+.formattedTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.formattedTable th {
+    background: #00a1ff;
+    color: #fff;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border-right: 1px solid #fff;
+}
+
+.formattedTable th:last-child {
+    border-right: 0;
+}
+
+.formattedTable tr td {
+    padding: 0.5em;
+    box-sizing: border-box;
+    text-align: center;
+    min-width: 200px;
+}
+
+.formattedTable tr:nth-child(even) td {
+    background: #ebebeb;
+}
+
+.column-60 > div, .column-50 > div, .column-40 > div {
+    border-bottom: 5px solid #00a1ff;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+}
+
+.column-60 {
+    width: 60%;
+    box-sizing: border-box;
+}
+
+.column-50 {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.column-40 {
+    width: 40%;
+    box-sizing: border-box;
+}
+
+.greyHeader {
+    margin: 0;
+    padding: 1em;
+    box-sizing: border-box;
+    background: #ebebeb;
+}
+
+/* HEADER */
+
+#adminHeader {
+    background: #00a1ff;
+    color: #fff;
+    position: relative;
+}
+
+#adminHeader a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#adminHeader a:hover {
+    color: #fff;
+    font-weight: bold;
+}
+
+#adminHeader .logoWrap {
+    margin-right: 1em;
+    width: 200px;
+}
+
+#adminHeader .logoWrap h2 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+#adminHeader .headerInner {
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+#adminHeader .headerInner > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#adminHeader .detailsWrap {
+    text-align: right;
+    width: -webkit-calc(100% - 204px - 1em);
+    width: -moz-calc(100% - 204px - 1em);
+    width: -o-calc(100% - 204px - 1em);
+    width: calc(100% - 204px - 1em);
+    box-sizing: border-box;
+    padding-right: -webkit-calc(50px + 1em);
+    padding-right: -moz-calc(50px + 1em);
+    padding-right: -o-calc(50px + 1em);
+    padding-right: calc(50px + 1em);
+}
+
+#adminHeader .detailsWrap h1 {
+    margin: 0;
+}
+
+/* NAVIGATION */
+
+#adminNav {
+    background: #8bc34a;
+}
+
+#adminNav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0;
+}
+
+#adminNav ul li {
+    margin-right: 1em;
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    background: #8bc34a;
+    transition: background 0.5s ease-out, color 0.5s ease-out;
+}
+
+#adminNav ul li > a {
+    display: block;
+    padding: 1em 0.5em;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#adminNav ul li > a:hover, #adminNav ul li:hover {
+    background: #6f9c3b;
+    font-weight: normal;
+    transition: background 0.35s ease-in, color 0.35s ease-in;
+}
+
+#adminNav ul li a#active {
+    background: #4caf50;
+}
+
+#adminNav ul li:last-child {
+    margin-right: 0;
+}
+
+#adminNav ul li.hasChildren > a:after {
+    content: " ▼";
+    font-size: 0.75em;
+}
+
+#adminNav li > .subMenu {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    visibility: hidden;
+    display: block;
+    transition: visibility 0.51s, opacity 0.5s ease-out;
+}
+
+@media only screen and (min-width: 1170px) {
+    #adminNav li:hover > .subMenu {
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0s, opacity 0.35s ease-in;
+    }
+}
+
+#adminNav .subMenu.active {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.35s ease-in;
+}
+
+.navToggle {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-image: url('../images/icons/hamburger-dark-icon.png');
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+    transition: all 0.5s ease-out;
+}
+
+.navToggle:hover {
+    background-image: url('../images/icons/hamburger-icon.png');
+    background-color: #111;
+    transition: all 0.5s ease-in;
+}
+
+/* FOOTER */
+
+#adminFooter {
+    width: 100%;
+    background: #00a1ff;
+    padding: 1em;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+#adminFooter #currUser {
+    margin: 0;
+    text-align: right;
+}
+
+#adminFooter a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+#adminFooter a:hover {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* MAIN */
+
+.adminWrap {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+/* DASHBOARD */
+
+.dashboardBlocks {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dashboardBlocks > .dashboardBlock {
+    margin: 1em;
+    width: 100%;
+    max-width: 400px;
+    border-bottom: 5px solid #00a1ff;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+    box-sizing: border-box;
+    
+}
+
+.dashboardBlock .counter {
+    text-align: center;
+    padding: 1em;
+    box-sizing: border-box;
+    background: #ebebeb;
+}
+
+.dashboardBlocks .counter h2 {
+    color: #fff;
+    font-weight: normal;
+    font-size: 2em;
+    margin: 0;
+}
+
+.dashboardBlock .counter .count {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.dashboardBlock .postList h3{
+    padding: 0 1em;
+    box-sizing: border-box;
+}
+
+.dashboardBlock .postList ul {
+    margin: 0;
+}
+
+.dashboardBlock .postList ul li {
+    margin: 1em auto;
+    padding: 0 1em;
+}
+
+/* SETTINGS */
+
+#userManagement, #companyDetails {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#userManagement > div > div, #companyDetails > div > div {
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+#userManagement .currentUsers, #companyDetails .detailsEditor {
+    margin-right: 1em;
+    width: -webkit-calc(60% - 1em);
+    width: -moz-calc(60% - 1em);
+    width: -o-calc(60% - 1em);
+    width: calc(60% - 1em);
+}
+
+#editSocial .socialIcon {
+    width: 35px;
+    margin-right: 0.5em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#editSocial p > label > span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 1170px) {
+    .navToggle {
+        display: block;
+    }
+    
+    #adminNav {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        overflow: hidden;
+        display: none;
+        max-width: 300px;
+        right: 0;
+    }
+    
+    #adminNav ul {
+        display: block;
+        overflow: hidden;
+    }
+    
+    #adminNav ul li {
+        display: block; 
+        text-align: left;
+    }
+    
+    #adminNav ul li > a {
+        padding: 1em;
+    }
+    
+    #adminNav li > .subMenu {
+        position: static;
+        max-height: 0;
+        opacity: 1;
+        visibility: visible;
+        transition: all 0.5s ease-out;
+    }
+    
+    #adminNav li.hasChildren > .subMenu > li {
+        background: #6db51a;
+    }
+    
+    #adminNav li > .subMenu.active {
+        max-height: 100vh;
+        transition: max-height 0.5s ease-in;
+    }
+    
+    #adminNav ul li.hasChildren > a:after {
+        display: inline-block;
+        transform: rotate(90deg);
+        margin-left: 4px;
+        transition: transform 0.9s ease;
+    }
+    
+    #adminNav ul li.hasChildren > a.active:after {
+        transform: rotate(0deg);
+        transition: transform 0.5s ease;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #adminHeader .headerInner > div {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 0;
+    }
+    
+    .column-60, .column-50, .column-40 {
+        margin: 0 auto 1em auto !important;
+        width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #adminNav {
+        max-width: 100%;
+    }
+    
+    .formBlock label, .formBlock input:not([type="button"]):not([type="submit"]) {
+        display: block;
+        width: 100%;
+    }
+}
