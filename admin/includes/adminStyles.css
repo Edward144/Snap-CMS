@@ -657,7 +657,10 @@ hr {
         max-width: 100%;
     }
     
-    .formBlock label, .formBlock input:not([type="button"]):not([type="submit"]), .formBlock select, .formBlock textarea {
+    .formBlock label, 
+    .formBlock input:not([type="button"]):not([type="submit"]), 
+    .formBlock select, 
+    .formBlock textarea {
         display: block;
         width: 100%;
     }

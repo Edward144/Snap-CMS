@@ -78,7 +78,7 @@ $(window).resize(function() {
 //Force Full Width Form When Too Small
 function formWidth() {
     $(".formBlock").each(function() {
-        var input = $(this).find("input:not([type='button']):not([type='submit'])");
+        var input = $(this).find("input:not([type='button']):not([type='submit']), select, textarea");
         
         if($(this).outerWidth() <= 450) {
             input.css({
