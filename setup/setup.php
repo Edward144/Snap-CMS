@@ -239,7 +239,7 @@
             id INT AUTO_INCREMENT PRIMARY KEY,
             post_type_id INT DEFAULT 0,
             post_id INT DEFAULT 0,
-            name VARCHAR(255),
+            name VARCHAR(191) UNIQUE,
             animation_in VARCHAR(50) DEFAULT 'flipInX',
             animation_out VARCHAR(50) DEFAULT 'slideOutDown',
             speed INT DEFAULT 5000,
