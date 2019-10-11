@@ -3,3 +3,4 @@ useruploads/*
 images/gallery/*
 !images/gallery/.gitkeep
 .DS_Store
+includes/settings.php
