@@ -20,6 +20,21 @@
         return $breadcrumbs = trim($breadcrumbs, '>');
     }
 
+    function adminTitle() {
+        $levels = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $levelsCount = count($levels) - 1;
+        $level = $levels[$levelsCount];
+        
+        if($level != trim(ROOT_DIR, '/') && $level != 'admin') {
+            $title = ucwords(explode('?', explode('.php', str_replace('-', ' ', $level))[0])[0]);
+        }
+        elseif($level == 'admin') {
+            $title = 'Dashboard';
+        }
+        
+        return $title;
+    }
+
     //Remove Spaces
     function despace($string) {
         $string = preg_replace('/\s+/', '', $string);

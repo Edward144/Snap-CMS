@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php'); ?>
 
-<div id="companyDetails">
-    <div class="column-60 formBlock detailsEditor">
+<div class="flexContainer" id="companyDetails">
+    <div class="column column-60 formBlock detailsEditor">
         <h2 class="greyHeader">Company Information</h2>
         
         <div>            
@@ -118,7 +118,7 @@
         </div>
     </div>
     
-    <div class="column-40 formBlock socialEditor">
+    <div class="column column-40 formBlock socialEditor">
         <h2 class="greyHeader">Social Media</h2>
         
         <div>

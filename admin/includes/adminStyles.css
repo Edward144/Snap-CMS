@@ -17,6 +17,13 @@ a:hover {
     transition: background 0.35s ease-in, color 0.35s ease-in;
 }
 
+hr {
+    margin: 1em auto;
+    background: #dedede;
+    border: 0;
+    height: 1px;
+}
+
 .adminWrap::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -65,7 +72,7 @@ a:hover {
     max-width: 500px;
     padding: 0.5em;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid #dedede;
 }
 
 .formBlock input[type="button"],
@@ -170,10 +177,22 @@ a:hover {
     background: #dedede;
 }
 
-.column-60 > div, .column-50 > div, .column-40 > div {
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column > div {
+    padding: 1em;
+    box-sizing: border-box;
     border-bottom: 5px solid #00a1ff;
     border-left: 1px solid #dedede;
     border-right: 1px solid #dedede;
+}
+
+.column-70 {
+    width: 70%;
+    box-sizing: border-box;
 }
 
 .column-60 {
@@ -191,12 +210,61 @@ a:hover {
     box-sizing: border-box;
 }
 
+.column-30 {
+    width: 30%;
+    box-sizing: border-box;
+}
+
+.flexContainer .column:first-child {
+    margin-right: 1em;
+}
+
+.flexContainer .column.column-70:first-child{
+    width: -webkit-calc(70% - 1em);
+    width: -moz-calc(70% - 1em);
+    width: -o-calc(70% - 1em);
+    width: calc(70% - 1em);
+}
+
+.flexContainer .column.column-60:first-child{
+    width: -webkit-calc(60% - 1em);
+    width: -moz-calc(60% - 1em);
+    width: -o-calc(60% - 1em);
+    width: calc(60% - 1em);
+}
+
+.flexContainer .column.column-50:first-child{
+    width: -webkit-calc(50% - 1em);
+    width: -moz-calc(50% - 1em);
+    width: -o-calc(50% - 1em);
+    width: calc(50% - 1em);
+}
+
+.flexContainer .column.column-40:first-child{
+    width: -webkit-calc(40% - 1em);
+    width: -moz-calc(40% - 1em);
+    width: -o-calc(40% - 1em);
+    width: calc(40% - 1em);
+}
+
+.flexContainer .column.column-30:first-child{
+    width: -webkit-calc(30% - 1em);
+    width: -moz-calc(30% - 1em);
+    width: -o-calc(30% - 1em);
+    width: calc(30% - 1em);
+}
+
 .greyHeader {
     margin: 0;
     padding: 1em;
     box-sizing: border-box;
     background: #dedede;
     text-transform: capitalize;
+}
+
+.pagination {
+    border-top: 1px solid #dedede;
+    margin-top: 1em;
 }
 
 /* HEADER */
@@ -244,10 +312,6 @@ a:hover {
     width: -o-calc(100% - 204px - 1em);
     width: calc(100% - 204px - 1em);
     box-sizing: border-box;
-    padding-right: -webkit-calc(50px + 1em);
-    padding-right: -moz-calc(50px + 1em);
-    padding-right: -o-calc(50px + 1em);
-    padding-right: calc(50px + 1em);
 }
 
 #adminHeader .detailsWrap h1 {
@@ -437,26 +501,6 @@ a:hover {
 
 /* SETTINGS */
 
-#userManagement, #companyDetails, #generalSettings {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#userManagement > div > div, #companyDetails > div > div,
-#generalSettings > div > div {
-    padding: 1em;
-    box-sizing: border-box;
-}
-
-#userManagement .currentUsers, #companyDetails .detailsEditor,
-#generalSettings .settings {
-    margin-right: 1em;
-    width: -webkit-calc(60% - 1em);
-    width: -moz-calc(60% - 1em);
-    width: -o-calc(60% - 1em);
-    width: calc(60% - 1em);
-}
-
 #userManagement .formattedTable tr td:last-child {
     text-align: left;
 }
@@ -476,6 +520,13 @@ a:hover {
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1170px) {
+    #adminHeader .detailsWrap {
+        padding-right: -webkit-calc(50px + 1em);
+        padding-right: -moz-calc(50px + 1em);
+        padding-right: -o-calc(50px + 1em);
+        padding-right: calc(50px + 1em);
+    }
+    
     .navToggle {
         display: block;
     }

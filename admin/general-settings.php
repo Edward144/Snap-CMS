@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php'); ?>
 
-<div id="generalSettings">
-    <div class="column-60 formBlock settings">
+<div class="flexContainer" id="generalSettings">
+    <div class="column column-60 formBlock settings">
         <h2 class="greyHeader">Settings</h2>
         
         <div>            
@@ -49,7 +49,7 @@
         </div>
     </div>
     
-    <div class="column-40 formBlock customPosts">
+    <div class="column column-40 formBlock customPosts">
         <h2 class="greyHeader">Custom Post Types</h2>
         
         <div>

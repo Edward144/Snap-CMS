@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php'); ?>
 
-<div id="userManagement">
-    <div class="column-60 currentUsers">
+<div class="flexContainer" id="userManagement">
+    <div class="column column-60 currentUsers">
         <h2 class="greyHeader">Current Users</h2>
         
         <div>
@@ -163,7 +163,7 @@
         </div>
     </div>
 
-    <div class="column-40 createUser formBlock">
+    <div class="column column-40 createUser formBlock">
         <h2 class="greyHeader">Add User</h2>
         
         <div>
