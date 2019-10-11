@@ -104,7 +104,7 @@
                     </script>
                 </div>
             <?php else : ?>
-                <h3 style="color: red;">You don't have any custom post types</h3>
+                <h3 class="noContent">You don't have any custom post types</h3>
                 <?php unset($_SESSION['pdmessage']); ?>
             <?php endif; ?>
         </div>

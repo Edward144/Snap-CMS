@@ -116,6 +116,61 @@ function formatPostcode(postcode) {
     return pCode;
 }
 
+//Update Visibility
+function changeVisibility(btn, tableName) {
+    var id = btn.attr("data-id");
+    var name = btn.attr("name");
+    var value = btn.val();
+    
+    if(btn.attr("name") == "hide") {
+        var visibility = 0;
+        name = "show";
+        value = "Hidden";
+    }
+    else if(btn.attr("name") == "show") {
+        var visibility = 1;
+        name = "hide";
+        value = "Visible";
+    }
+    
+    $.ajax({
+        url: "scripts/changeVisibility.php",
+        method: "POST",
+        dataType: "json",
+        data: ({id, visibility, tableName}),
+        success: function(data) {
+            if(data == 1) {            
+                btn.attr("name", name);
+                btn.val(value);
+            }
+        }
+    });
+}
+
+//Delete Content
+function deleteContent(btn, tableName) {
+    var id = btn.attr("data-id");
+    
+    if(confirm("Are you sure you want to delete this item?")) {
+        $.ajax({
+            url: "scripts/deleteContent.php",
+            method: "POST",
+            dataType: "json",
+            data: ({id, tableName}),
+            success: function(data) {
+                if(data == 1) {
+                    btn.closest("tr").find("td").css("background", "#f99999");
+                    btn.closest("tr").find("td > *").css("filter", "blur(2px)");
+                    btn.closest("tr").find("input").attr("disabled", true);
+                }
+                else {
+                    alert("Error: Item could not be deleted");
+                }
+            }
+        });
+    }
+}
+
 $(document).ready(function() {
     pageHeight(); 
     formWidth();

@@ -67,6 +67,8 @@
                                             <input type="button" value="Update" name="update">
                                             <?php if($_SESSION['adminusername'] != $row['username']) : ?>
                                                 <input type="button" value="Delete" name="delete" class="redButton">
+                                            <?php else : ?>
+                                                <input type="button" style="visibility: hidden; width: 51.86px;">
                                             <?php endif; ?>
                                         </td>
                                     </tr>

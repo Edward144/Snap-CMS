@@ -24,6 +24,10 @@ hr {
     height: 1px;
 }
 
+.noContent {
+    color: #ff0000;
+}
+
 .adminWrap::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -501,10 +505,6 @@ hr {
 
 /* SETTINGS */
 
-#userManagement .formattedTable tr td:last-child {
-    text-align: left;
-}
-
 #editSocial .socialIcon {
     width: 35px;
     margin-right: 0.5em;
@@ -515,6 +515,29 @@ hr {
 #editSocial p > label > span {
     display: inline-block;
     vertical-align: middle;
+}
+
+/* SLIDERS */
+
+#sliderList tr > td:first-child {
+    width: 80px;
+    min-width: 80px;
+}
+
+#sliderList tr > th:nth-child(2),
+#sliderList tr > td:nth-child(2) {
+    text-align: left;
+    min-width: 400px;
+}
+
+#sliderList tr > td:nth-child(3) {
+    text-align: left;
+}
+
+#sliderList tr > td:nth-child(3),
+#sliderList tr > td:nth-child(4) {
+    width: 200px;
+    min-width: 200px;
 }
 
 /* RESPONSIVE */
@@ -597,9 +620,13 @@ hr {
         padding: 0;
     }
     
-    .column-60, .column-50, .column-40 {
+    .column {
         margin: 0 auto 1em auto !important;
         width: 100% !important;
+    }
+    
+    .column:last-child {
+        margin-bottom: 0 !important;
     }
 }
 
