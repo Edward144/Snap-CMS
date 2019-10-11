@@ -239,7 +239,7 @@
 
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `sliders` (
-            id INT AUTO_INCERMENT PRIMARY KEY,
+            id INT AUTO_INCREMENT PRIMARY KEY,
             post_type_id INT DEFAULT 0,
             name VARCHAR(255),
             animation_in VARCHAR(50) DEFAULT 'flipInX',
