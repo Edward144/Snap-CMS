@@ -134,7 +134,7 @@ function changeVisibility(btn, tableName) {
     }
     
     $.ajax({
-        url: "scripts/changeVisibility.php",
+        url: root_dir + "admin/scripts/changeVisibility.php",
         method: "POST",
         dataType: "json",
         data: ({id, visibility, tableName}),
@@ -153,7 +153,7 @@ function deleteContent(btn, tableName) {
     
     if(confirm("Are you sure you want to delete this item?")) {
         $.ajax({
-            url: "scripts/deleteContent.php",
+            url: root_dir + "admin/scripts/deleteContent.php",
             method: "POST",
             dataType: "json",
             data: ({id, tableName}),
