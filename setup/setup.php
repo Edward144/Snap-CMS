@@ -33,9 +33,6 @@
     elseif($username == null || $username == '') {
         $_SESSION['setupmessage'] = 'Database username is missing.';
     }
-    elseif($password == null || $password == '') {
-        $_SESSION['setupmessage'] = 'Database password is missing.';
-    }
 
     if(isset($_SESSION['setupmessage'])) {
         header('Location: index');
