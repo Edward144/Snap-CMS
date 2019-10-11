@@ -159,9 +159,7 @@ function deleteContent(btn, tableName) {
             data: ({id, tableName}),
             success: function(data) {
                 if(data == 1) {
-                    btn.closest("tr").find("td").css("background", "#f99999");
-                    btn.closest("tr").find("td > *").css("filter", "blur(2px)");
-                    btn.closest("tr").find("input").attr("disabled", true);
+                    window.location.reload();
                 }
                 else {
                     alert("Error: Item could not be deleted");

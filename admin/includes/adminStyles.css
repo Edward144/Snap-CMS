@@ -135,6 +135,11 @@ hr {
     min-width: 56px;
 }
 
+.hasButton {
+    width: Calc(100% - 84px) !important;
+    display: inline-block !important;
+}
+
 .hasTable {
     overflow-y: auto;
 }
