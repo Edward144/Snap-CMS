@@ -23,6 +23,13 @@
     function adminTitle() {
         $levels = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $levelsCount = count($levels) - 1;
+        
+        if(strpos($levels[$levelsCount], 'page-') !== false ||
+           strpos($levels[$levelsCount], 'category-') !== false ||
+           strpos($levels[$levelsCount], 'id-') !== false) {
+            $levelsCount = $levelsCount - 1;
+        }
+        
         $level = $levels[$levelsCount];
         
         if($level != trim(ROOT_DIR, '/') && $level != 'admin') {

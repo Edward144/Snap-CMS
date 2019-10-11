@@ -25,19 +25,16 @@
             <h2 class="greyHeader">Controls</h2>
             
             <div>
-                <form id="createSlider" method="POST" action="scripts/createSlider.php">
+                <form id="createSlider" method="POST" action="<?php echo ROOT_DIR; ?>admin/scripts/createSlider.php">
+                    <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                     <input type="submit" value="Create Slider">
-                </form>
-                
-                <hr>
-                
-                <form id="searchSliders">
-                    <p>
-                        <label>Search Term</label>
-                        <input type="text" name="search">
-                    </p>
                     
-                    <input type="submit" value="search">
+                    <p id="message"><?php 
+                        if(isset($_SESSION['createmessage'])) {
+                            echo $_SESSION['createmessage'];
+                            unset($_SESSION['createmessage']);
+                        }
+                    ?></p>
                 </form>
             </div>
         </div>
@@ -45,6 +42,11 @@
         <div class="column column-70 formBlock sliderList">
             <h2 class="greyHeader">Sliders</h2>
             <?php 
+                $itemCount = $mysqli->query("SELECT * FROM `sliders`")->num_rows;
+                $pagination = new pagination($itemCount);
+                $pagination->prefix = explode('/page-', $_SERVER['REQUEST_URI'])[0] . '/';
+                $pagination->load();
+            
                 $sliders = $mysqli->query(
                     "SELECT 
                         sliders.id, 
@@ -57,7 +59,7 @@
                         sliders.visible FROM `sliders` AS sliders 
                             LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = sliders.post_type_id 
                             LEFT OUTER JOIN `posts` AS posts ON posts.id = sliders.post_id
-                        ORDER BY id ASC LIMIT 10 OFFSET 0"
+                        ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}"
                 ); 
             ?>
             
@@ -108,11 +110,7 @@
                     </div>
                 </div>
             
-                <!--do pagination class-->
-            
-                <div class="pagination">
-
-                </div>
+                <?php echo $pagination->display(); ?>
             <?php else : ?>
                 <div>
                     <h3 class="noContent">You don't have any sliders</h3>
@@ -122,6 +120,6 @@
     </div>
 <?php endif; ?>
 
-<script src="scripts/sliders.js"></script>
+<script src="<?php echo ROOT_DIR; ?>admin/scripts/sliders.js"></script>
 
 <?php require_once('includes/footer.php'); ?>

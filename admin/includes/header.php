@@ -2,6 +2,14 @@
     require_once(dirname(__DIR__, 2) . '/includes/database.php');
     require_once(dirname(__DIR__, 2) . '/includes/functions.php');
     
+    $classes = scandir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'admin/includes/classes');
+
+    foreach($classes as $class) {
+        if(strpos($class, '.class') !== false) {
+            include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'admin/includes/classes/' . $class);
+        }
+    }
+
     //Redirect to login if user is not logged in
     if(!isset($_SESSION['adminusername'])) {
         header('Location: ' . ROOT_DIR . 'login');
