@@ -66,7 +66,7 @@
                     
                     <input type="submit" value="Save Slider">
                     
-                    <p id="message">test</p>
+                    <p id="message"></p>
                 </div>
             </div>
         </div>
