@@ -7,10 +7,9 @@ ErrorDocument 404 /404.php
     RewriteBase /snapcmsv2/
     
     #Admin
-    #RewriteRule ^admin/(.*)/category-(.*)$ admin/$1.php?category=$2 [L]
-    #RewriteRule ^admin/(.*)/page-(.*)$ admin/$1.php?page=$2 [L]
-    #RewriteRule ^admin/(.*)/id-(.*)$ admin/$1.php?id=$2 [L]
-    RewriteRule ^admin/(.*)/(.*)-(.*)$ admin/$1.php?$2=$3 [L]
+    RewriteRule ^admin/(.*)/category-(.*)$ admin/$1.php?category=$2 [L]
+    RewriteRule ^admin/(.*)/page-(.*)$ admin/$1.php?page=$2 [L]
+    RewriteRule ^admin/(.*)/id-(.*)$ admin/$1.php?id=$2 [L]
     
     #Force HTTPS
     RewriteCond %{HTTPS} !on
