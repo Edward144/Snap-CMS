@@ -1,3 +1,9 @@
+<?php 
+    $uri = explode('/category-', $_SERVER['REQUEST_URI'])[0];
+    $uri = explode('/page-', $uri)[0];
+    $uri = explode('/id-', $uri)[0];
+?>
+
 <div class="navToggle" id="hidden"></div>
 
 <nav id="adminNav">
@@ -23,15 +29,15 @@
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/categories" <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR . 'admin/categories' ? 'id="active"' : ''); ?>>Categories</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/categories" <?php echo ($uri == ROOT_DIR . 'admin/categories' ? 'id="active"' : ''); ?>>Categories</a>
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/navigation" <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR . 'admin/navigation' ? 'id="active"' : ''); ?>>Navigation</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/navigation" <?php echo ($uri == ROOT_DIR . 'admin/navigation' ? 'id="active"' : ''); ?>>Navigation</a>
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/sliders" <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR . 'admin/sliders' ? 'id="active"' : ''); ?>>Sliders</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/sliders" <?php echo ($uri == ROOT_DIR . 'admin/sliders' ? 'id="active"' : ''); ?>>Sliders</a>
         </li>
         
         <li>
@@ -42,9 +48,9 @@
             <a>Settings</a>
             
             <ul class="subMenu">
-                <li><a href="<?php echo ROOT_DIR; ?>admin/user-management" <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR . 'admin/user-management' ? 'id="active"' : ''); ?>>User Management</a></li>
-                <li><a href="<?php echo ROOT_DIR; ?>admin/company-details" <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR . 'admin/company-details' ? 'id="active"' : ''); ?>>Company Details</a></li>
-                <li><a href="<?php echo ROOT_DIR; ?>admin/general-settings" <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR . 'admin/general-settings' ? 'id="active"' : ''); ?>>General Settings</a></li>
+                <li><a href="<?php echo ROOT_DIR; ?>admin/user-management" <?php echo ($uri == ROOT_DIR . 'admin/user-management' ? 'id="active"' : ''); ?>>User Management</a></li>
+                <li><a href="<?php echo ROOT_DIR; ?>admin/company-details" <?php echo ($uri == ROOT_DIR . 'admin/company-details' ? 'id="active"' : ''); ?>>Company Details</a></li>
+                <li><a href="<?php echo ROOT_DIR; ?>admin/general-settings" <?php echo ($uri == ROOT_DIR . 'admin/general-settings' ? 'id="active"' : ''); ?>>General Settings</a></li>
             </ul>
         </li>
     </ul>
