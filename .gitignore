@@ -2,3 +2,4 @@ useruploads/*
 !useruploads/.gitkeep
 images/gallery/*
 !images/gallery/.gitkeep
+.DS_Store
