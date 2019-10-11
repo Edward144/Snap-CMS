@@ -130,6 +130,11 @@ hr {
     min-width: 0;
 }
 
+.formattedTable input[name="show"], 
+.formattedTable input[name="hide"] {
+    min-width: 56px;
+}
+
 .hasTable {
     overflow-y: auto;
 }

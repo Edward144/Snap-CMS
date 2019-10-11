@@ -1,24 +1,76 @@
 <?php require_once('includes/header.php'); ?>
 
-
 <?php if(isset($_GET['id']) && $_GET['id'] > 0) : ?>
-    <div class="flexContainer" id="sliderManager">
-        <div class="column column-70 formBlock sliderContent">
-            <h2 class="greyHeader">Slides</h2>
+    <?php 
+        //Check if slider exists
+        $exists = $mysqli->query("SELECT id FROM `sliders` WHERE id = {$_GET['id']}");
 
-            <div>
+        if($exists->num_rows <= 0) {
+            header('Location: ./');
+            exit();
+        }
+    ?>
 
+    <form id="sliderManage" method="POST" action="../scripts/sliderManage.php">
+        <div class="flexContainer" id="sliderManager">
+            <div class="column column-70 formBlock sliderContent">
+                <h2 class="greyHeader">Slides</h2>
+
+                <div>
+
+                </div>
+            </div>
+
+            <div class="column column-30 formBlock sliderDetails">
+                <h2 class="greyHeader">Slider Details</h2>
+
+                <div>
+                    <p>
+                        <label>Name</label>    
+                        <input type="text">
+                    </p>
+                    
+                    <p>
+                        <label>Post Type</label>
+                        <select>
+                        
+                        </select>
+                    </p>
+                    
+                    <p>
+                        <label>Assigned Post</label>
+                        <select>
+                        
+                        </select>
+                    </p>
+                    
+                    <p>
+                        <label>Animation In</label>
+                        <input type="text">
+                    </p>
+                    
+                    <p>
+                        <label>Animation Out</label>
+                        <input type="text">
+                    </p>
+                    
+                    <p>
+                        <label>Speed (Seconds)</label>
+                        <input type="number" step="1">
+                    </p>
+                    
+                    <p>
+                        <input type="button" value="Visible">
+                        <input type="button" value="Delete" class="redButton">
+                    </p>
+                    
+                    <input type="submit" value="Save Slider">
+                    
+                    <p id="message">test</p>
+                </div>
             </div>
         </div>
-
-        <div class="column column-30 formBlock sliderDetails">
-            <h2 class="greyHeader">Slider Details</h2>
-
-            <div>
-
-            </div>
-        </div>
-    </div>
+    </form>
 <?php else : ?>
     <div class="flexContainer">
         <div class="column column-30 formBlock sliderControls">
