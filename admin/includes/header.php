@@ -48,7 +48,7 @@
                 </div>
                 
                 <div class="detailsWrap">
-                    <h1><?php echo adminBreadcrumbs(); ?></h1>
+                    <h1><?php echo adminTitle(); ?></h1>
                 </div>
             </div>
             
