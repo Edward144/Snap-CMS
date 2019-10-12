@@ -22,7 +22,7 @@
 
 <html>
     <head>
-        <title>Admin | Snap CMS</title>
+        <title><?php echo adminTitle() . ' | ' . cmsName($mysqli); ?></title>
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
@@ -53,7 +53,7 @@
         <header id="adminHeader">
             <div class="headerInner">
                 <div class="logoWrap">
-                    <h2>Snap CMS</h2>
+                    <h2><?php echo cmsName($mysqli); ?></h2>
                 </div>
                 
                 <div class="detailsWrap">

@@ -1,6 +1,6 @@
 <?php
 
-    //Breadrumbs admin
+    //Breadrumbs Admin
     function adminBreadcrumbs() {
         $breadcrumbs = '';
         $levels = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
@@ -40,6 +40,19 @@
         }
         
         return $title;
+    }
+
+    function cmsName($mysqli) {
+        $companyName = $mysqli->query("SELECT name FROM `company_info` LIMIT 1");
+        
+        if($companyName->num_rows > 0) {
+            $cmsName = ucwords($companyName->fetch_array()[0]) . ' CMS';
+        }
+        else {
+            $cmsName = 'Snap CMS';
+        }
+        
+        return $cmsName;
     }
 
     //Remove Spaces
