@@ -50,6 +50,7 @@ hr {
     font-weight: bold;
     text-align: right;
     margin-top: -2em;
+    margin-left: 136px;
 }
 
 #message:empty {
@@ -558,6 +559,25 @@ hr {
 #sliderList tr > td:nth-child(4) {
     width: 200px;
     min-width: 200px;
+}
+
+.mce-fullscreen {
+    z-index: 9999 !important;
+}
+
+#slidesTable .mce-tinymce iframe,
+#slidesTable .mce-statusbar,
+#slidesTable .mce-flow-layout-item:not(.mce-last) {
+    display: none !important;
+}
+
+#slidesTable .mce-tinymce.mce-fullscreen iframe,
+#slidesTable .mce-fullscreen .mce-statusbar {
+    display: block !important;
+}
+
+#slidesTable .mce-fullscreen .mce-flow-layout-item:not(.mce-last) {
+    display: inline-block !important;
 }
 
 /* RESPONSIVE */

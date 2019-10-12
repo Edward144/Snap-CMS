@@ -37,7 +37,7 @@
         
         <script>
             tinymce.init({
-                selector:'textarea:not(.noTiny):not(.tinyBanner)',
+                selector:'textarea:not(.noTiny):not(.tinySlider)',
                 plugins: 'paste image imagetools table code save link moxiemanager media',
                 menubar: 'file edit format insert table ',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code',
