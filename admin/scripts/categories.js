@@ -1,6 +1,6 @@
 //Change Post Type
 $("#changeCategory select[name='postType']").on("change", function() {
-    window.location.href = root_dir + "admin/categories/post-type/" + $(this).val();
+    window.location.href = root_dir + "admin/categories/" + $(this).val();
 });
 
 //Validate Create Form

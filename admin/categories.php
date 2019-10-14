@@ -22,7 +22,7 @@
         <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', $_GET['post-type'])); ?> Category Tree</h2>
         
         <div>
-            <?php new categoryEditor(); ?>
+            <?php new categoryEditor($postTypeId); ?>
         </div>
     </div>
     
