@@ -71,7 +71,7 @@
                     <select name="catParent">
                         <option value="0" selected>No Parent</option>
                         
-                        <?php $categories = $mysqli->query("SELECT id, name FROM `categories` WHERE level < 3 ORDER BY id ASC"); ?>
+                        <?php $categories = $mysqli->query("SELECT id, name FROM `categories` WHERE level < 3 AND post_type_id = {$postTypeId} ORDER BY id ASC"); ?>
                         <?php if($categories->num_rows > 0) : ?>
                             <?php while($row = $categories->fetch_assoc()) : ?>
                                 <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>

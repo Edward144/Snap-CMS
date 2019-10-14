@@ -46,7 +46,14 @@
         $companyName = $mysqli->query("SELECT name FROM `company_info` LIMIT 1");
         
         if($companyName->num_rows > 0) {
-            $cmsName = ucwords($companyName->fetch_array()[0]) . ' CMS';
+            $companyName = $companyName->fetch_array()[0];
+            
+            if($companyName != null) {
+                $cmsName = ucwords($companyName) . ' CMS';
+            }
+            else {
+                $cmsName = 'Snap CMS';
+            }
         }
         else {
             $cmsName = 'Snap CMS';
