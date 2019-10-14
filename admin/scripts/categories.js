@@ -29,8 +29,8 @@ $(".categoryTreeWrap").on("click", "input[name='edit']", function() {
     $("input[name='saveTree']").attr("disabled", true);
     
     $("body").prepend(
-        "<div class='editor formBlock column' data-id='" + id + "' style='width: 50%; max-height: 50%; position: absolute; top: 50%; transform: translateY(-50%); background: #fff; z-index: 9999; margin: auto; left: 0; right: 0; box-shadow: 1px 1px 10px -5px #000; padding: 1em; box-sizing: border-box; max-width: 90%;'>" +
-            "<h2 class='greyHeader'>Edit Category <span id='editorClose' style='height: 29px; width: 29px; text-align: center; cursor: pointer; float: right; background: #fff;  border-radius: 100%;'>X</span></h2>" +
+        "<div class='editor formBlock column' data-id='" + id + "' style='width: 50%; max-height: 50%; position: absolute; top: 50%; transform: translateY(-50%); background: #fff; z-index: 9999; margin: auto; left: 0; right: 0; box-shadow: 1px 1px 10px -5px #000; max-width: 90%;'>" +
+            "<h2 class='greyHeader'>Edit Category <span id='editorClose' style='height: 29px; width: 29px; text-align: center; cursor: pointer; float: right; background: #f44236; color: #fff; border-radius: 100%;'>X</span></h2>" +
             "<div style='height: 100%;'>" +
                 "<form id='editCategory'>" +
                     "<p>" +
