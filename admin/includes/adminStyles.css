@@ -25,7 +25,7 @@ hr {
 }
 
 .noContent {
-    color: #ff0000;
+    color: #f44336;
 }
 
 .adminWrap::-webkit-scrollbar {
@@ -46,7 +46,7 @@ hr {
 /* GENERAL */
 
 #message {
-    color: #ff0000;
+    color: #f44336;
     font-weight: bold;
     text-align: right;
     margin-top: -2em;
@@ -104,14 +104,14 @@ hr {
 .formBlock input.redButton[type="submit"],
 .formattedTable input.redButton[type="button"],
 .formattedTable input.redButton[type="submit"] {
-    background: #ff0000;
+    background: #f44336;
 }
 
 .formBlock input.redButton[type="button"]:hover,
 .formBlock input.redButton[type="submit"]:hover,
 .formattedTable input.redButton[type="button"]:hover,
 .formattedTable input.redButton[type="submit"]:hover {
-    background: #cc0910;
+    background: #C3352B;
 }
 
 .formBlock input[type="checkbox"] {
