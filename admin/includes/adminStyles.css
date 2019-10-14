@@ -136,9 +136,22 @@ hr {
     min-width: 56px;
 }
 
-.hasButton {
-    width: Calc(100% - 95px) !important;
+.formattedTable .hasButton, .formBlock .hasButton {
+    width: -webkit-calc(100% - 95px) !important;
+    width: -moz-calc(100% - 95px) !important;
+    width: -o-calc(100% - 95px) !important;
+    width: calc(100% - 95px) !important;
     display: inline-block !important;
+}
+
+@media only screen and (min-width: 1533px) {
+    .formBlock .hasButton {
+        width: -webkit-calc(100% - 295px) !important;
+        width: -moz-calc(100% - 295px) !important;
+        width: -o-calc(100% - 295px) !important;
+        width: calc(100% - 295px) !important;
+        display: inline-block !important;
+    }
 }
 
 .hasTable {
@@ -578,6 +591,43 @@ hr {
 
 #slidesTable .mce-fullscreen .mce-flow-layout-item:not(.mce-last) {
     display: inline-block !important;
+}
+
+/* CATEGORIES */
+
+.categoryTree:first-child {
+    padding: 0;
+}
+
+.categoryTree {
+    list-style: none;
+}
+
+.categoryTree .categoryDetails {
+    background: #efefef;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    box-sizing: border-box;
+    min-height: 44px;
+}
+
+.categoryTree > li {
+    margin: 0.5em auto;
+    margin-left: 0;
+}
+
+.categoryTree .categoryDetails .actions, .categoryTree .categoryDetails .actions > p {
+    margin: 0 auto;
+}
+
+.categoryTree .categoryDetails .actions {
+    display: inline-block;
+    margin-left: 1em;
+    float: right;
+}
+
+.categoryTree .actions input[type="button"] {
+    padding: 0.5em;
 }
 
 /* RESPONSIVE */
