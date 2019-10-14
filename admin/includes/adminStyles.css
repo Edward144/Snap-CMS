@@ -656,7 +656,11 @@ hr {
     
     #adminNav ul {
         display: block;
-        overflow: hidden;
+        overflow: auto;
+        max-height: -webkit-calc(100vh - 80px);
+        max-height: -moz-calc(100vh - 80px);
+        max-height: -o-calc(100vh - 80px);
+        max-height: calc(100vh - 80px);
     }
     
     #adminNav ul li {
