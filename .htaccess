@@ -8,6 +8,7 @@ ErrorDocument 404 /404.php
     
     #Admin
     RewriteRule ^admin/categories/(.*)$ admin/categories.php?post-type=$1 [L]
+    RewriteRule ^admin/content-manager/(.*)$ admin/content-manager.php?post-type=$1 [L]
     RewriteRule ^admin/(.*)/category-(.*)$ admin/$1.php?category=$2 [L]
     RewriteRule ^admin/(.*)/page-(.*)$ admin/$1.php?page=$2 [L]
     RewriteRule ^admin/(.*)/id-(.*)$ admin/$1.php?id=$2 [L]

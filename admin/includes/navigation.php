@@ -22,7 +22,7 @@
             ?>
             <ul class="subMenu">
                 <?php while($row = $postEditors->fetch_assoc()) : ?>
-                    <li><a href="#"><?php echo ucwords(str_replace('-', ' ', $row['name'])); ?></a></li>
+                    <li><a href="<?php echo ROOT_DIR; ?>admin/content-manager/<?php echo $row['name'];?>" <?php echo ($uri == ROOT_DIR . 'admin/content-manager/' . $row['name'] ? 'id="active"' : ''); ?>><?php echo ucwords(str_replace('-', ' ', $row['name'])); ?></a></li>
                 <?php endwhile; ?>
             </ul>
             <?php endif; ?>
