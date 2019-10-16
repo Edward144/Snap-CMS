@@ -224,13 +224,13 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `navigation_structure` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            item_id INT UNIQUE,
             menu_id INT,
             parent_id INT,
             position INT,
             name VARCHAR(255),
-            url VARCHAR(280) UNIQUE,
-            image_url VARCHAR(255)
+            url VARCHAR(191) UNIQUE,
+            image_url VARCHAR(255),
+            level INT DEFAULT 0
         )"
     );
 
