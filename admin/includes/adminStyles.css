@@ -628,17 +628,20 @@ hr {
     display: inline-block !important;
 }
 
-/* CATEGORIES */
+/* CATEGORIES | NAVIGATION */
 
-.categoryTree:first-child {
+.categoryTree:first-child, 
+.navigationTree:first-child {
     padding: 0;
 }
 
-.categoryTree {
+.categoryTree,
+.navigationTree {
     list-style: none;
 }
 
-.categoryTree .categoryDetails {
+.categoryTree .categoryDetails,
+.navigationTree .navigationDetails {
     background: #dedede;
     background: var(--grey);
     border-radius: 0.5em;
@@ -647,22 +650,28 @@ hr {
     min-height: 44px;
 }
 
-.categoryTree > li {
+.categoryTree > li,
+.navigationTree > li {
     margin: 0.5em auto;
     margin-left: 0;
 }
 
-.categoryTree .categoryDetails .actions, .categoryTree .categoryDetails .actions > p {
+.categoryTree .categoryDetails .actions, 
+.categoryTree .categoryDetails .actions > p,
+.navigationTree .navigationDetails .actions, 
+.navigationTree .navigationDetails .actions > p{
     margin: 0 auto;
 }
 
-.categoryTree .categoryDetails .actions {
+.categoryTree .categoryDetails .actions,
+.navigationTree .navigationDetails .actions {
     display: inline-block;
     margin-left: 1em;
     float: right;
 }
 
-.categoryTree .actions input[type="button"] {
+.categoryTree .actions input[type="button"], 
+.navigationTree .actions input[type="button"] {
     padding: 0.5em;
 }
 
@@ -787,7 +796,8 @@ hr {
         margin-top: 0.5em;
     }
     
-    .categoryTree .categoryDetails .actions {
+    .categoryTree .categoryDetails .actions, 
+    .navigationTree .navigationDetails .actions {
         display: block;
         float: none;
         margin-left: 0;

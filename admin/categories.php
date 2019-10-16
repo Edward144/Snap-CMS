@@ -19,7 +19,7 @@
 
 <div class="flexContainer" id="categoriesManager">
     <div class="column column-70 formBlock categoryTreeWrap">
-        <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', $_GET['post-type'])); ?> Category Tree</h2>
+        <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', $_GET['post-type'])); ?>: Category Tree</h2>
         
         <div>
             <?php new categoryEditor($postTypeId); ?>
@@ -62,8 +62,8 @@
                 
                 <p>
                     <label>Image </label>
-                    <input type="text" name="catImage" class="hasButton">
-                    <input type="button" name="imageSelector" value="Choose File" style="padding: 0.5em; min-width: 0;">
+                    <input type="hidden" name="catImage">
+                    <input type="button" name="imageSelector" value="Choose File" style="padding: 0.5em;">
                 </p>
                 
                 <p>

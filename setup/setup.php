@@ -217,7 +217,7 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `navigation_menus` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) UNIQUE
+            name VARCHAR(191) UNIQUE
         )"
     );
 

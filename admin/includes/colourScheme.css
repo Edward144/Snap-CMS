@@ -1,6 +1,6 @@
 /* COLOUR SCHEME */
 
-* {
+:root {
     --body: #fff;
     --main: #00a1ff;
     --main-hover: #0081cc;

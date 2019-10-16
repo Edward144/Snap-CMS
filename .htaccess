@@ -8,14 +8,15 @@ ErrorDocument 404 /404.php
     
     #Admin
     RewriteRule ^admin/categories/(.*)$ admin/categories.php?post-type=$1 [L]
+    RewriteRule ^admin/navigation/(.*)$ admin/navigation.php?menu=$1 [L]
     RewriteRule ^admin/content-manager/(.*)$ admin/content-manager.php?post-type=$1 [L]
     RewriteRule ^admin/(.*)/category-(.*)$ admin/$1.php?category=$2 [L]
     RewriteRule ^admin/(.*)/page-(.*)$ admin/$1.php?page=$2 [L]
     RewriteRule ^admin/(.*)/id-(.*)$ admin/$1.php?id=$2 [L]
     
     #Force HTTPS
-    RewriteCond %{HTTPS} !on
-    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     
     <IfModule mod_headers.c>
         Header always set Strict-Transport-Security "max-age=31536000;includeSubDomains"

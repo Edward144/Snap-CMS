@@ -26,7 +26,9 @@
         
         if(strpos($levels[$levelsCount], 'page-') !== false ||
            strpos($levels[$levelsCount], 'category-') !== false ||
-           strpos($levels[$levelsCount], 'id-') !== false) {
+           strpos($levels[$levelsCount], 'id-') !== false ||
+           strpos($levels[$levelsCount - 1], 'categories') !== false ||
+           strpos($levels[$levelsCount - 1], 'navigation') !== false) {
             $levelsCount = $levelsCount - 1;
         }
         
