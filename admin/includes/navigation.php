@@ -29,11 +29,11 @@
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/categories" <?php echo ($uri == ROOT_DIR . 'admin/categories' ? 'id="active"' : ''); ?>>Categories</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/categories" <?php echo (strpos($uri, ROOT_DIR . 'admin/categories') !== false ? 'id="active"' : ''); ?>>Categories</a>
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/navigation" <?php echo ($uri == ROOT_DIR . 'admin/navigation' ? 'id="active"' : ''); ?>>Navigation</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/navigation" <?php echo (strpos($uri, ROOT_DIR . 'admin/navigation') !== false ? 'id="active"' : ''); ?>>Navigation</a>
         </li>
         
         <li>
