@@ -1,31 +1,39 @@
 /* ADMIN STYLES */
 
+@import "colourScheme.css";
+
 body {
     margin: 0;
     padding: 0;
     font-family: "roboto", sans-serif;
     overflow: hidden;
+    background: #fff;
+    background: var(--body);
 }
 
 a {
     color: #00a1ff;
+    color: var(--main);
     transition: all 0.5s ease-out;
 }
 
 a:hover {
     color: #0081cc;
+    color: var(--main-hover);
     transition: all 0.35s ease-in;
 }
 
 hr {
     margin: 1em auto;
     background: #dedede;
+    background: var(--grey);
     border: 0;
     height: 1px;
 }
 
 .noContent {
     color: #f44336;
+    color: var(--bad);
 }
 
 .adminWrap::-webkit-scrollbar {
@@ -35,11 +43,13 @@ hr {
 
 .adminWrap::-webkit-scrollbar-track {
     background: #dedede;
+    background: var(--grey);
     border-radius: 10px;
 }
 
 .adminWrap::-webkit-scrollbar-thumb {
     background: #ff5722;
+    background: var(--accent);
     border-radius: 10px;
 }
 
@@ -47,6 +57,7 @@ hr {
 
 #message {
     color: #f44336;
+    color: var(--bad);
     font-weight: bold;
     text-align: right;
     margin-top: -2em;
@@ -85,6 +96,7 @@ hr {
 .formattedTable input[type="button"],
 .formattedTable input[type="submit"] {
     background: #00a1ff;
+    background: var(--main);
     border: 0;
     min-width: 120px;
     color: #fff;
@@ -97,6 +109,7 @@ hr {
 .formattedTable input[type="button"]:hover,
 .formattedTable input[type="submit"]:hover {
     background: #0081cc;
+    background: var(--main-hover);
     transition: background 0.35s ease-in;
 }
 
@@ -105,13 +118,15 @@ hr {
 .formattedTable input.redButton[type="button"],
 .formattedTable input.redButton[type="submit"] {
     background: #f44336;
+    background: var(--bad);
 }
 
 .formBlock input.redButton[type="button"]:hover,
 .formBlock input.redButton[type="submit"]:hover,
 .formattedTable input.redButton[type="button"]:hover,
 .formattedTable input.redButton[type="submit"]:hover {
-    background: #C3352B;
+    background: #c3352b;
+    background: var(--bad-hover);
 }
 
 .formBlock input[type="checkbox"] {
@@ -165,16 +180,19 @@ hr {
 
 .hasTable::-webkit-scrollbar-track {
     background: #dedede;
+    background: var(--grey);
     border-radius: 10px;
 }
 
 .hasTable::-webkit-scrollbar-thumb {
     background: #ff5722;
+    background: var(--accent);
     border-radius: 10px;
 }
 
 .hasTable::-webkit-scrollbar-thumb:hover {
     background: #cc461b;
+    background: var(--accent-hover);
 }
 
 .formattedTable {
@@ -184,6 +202,7 @@ hr {
 
 .formattedTable th {
     background: #00a1ff;
+    background: var(--main);
     color: #fff;
     padding: 0.5em;
     box-sizing: border-box;
@@ -203,6 +222,7 @@ hr {
 
 .formattedTable tr:nth-child(even) td {
     background: #dedede;
+    background: var(--grey);
 }
 
 .flexContainer {
@@ -214,8 +234,11 @@ hr {
     padding: 1em;
     box-sizing: border-box;
     border-bottom: 5px solid #00a1ff;
+    border-bottom: 5px solid var(--main);
     border-left: 1px solid #dedede;
+    border-left: 1px solid var(--grey);
     border-right: 1px solid #dedede;
+    border-right: 1px solid var(--grey);
 }
 
 .column-70 {
@@ -287,11 +310,13 @@ hr {
     padding: 1em;
     box-sizing: border-box;
     background: #dedede;
+    background: var(--grey);
     text-transform: capitalize;
 }
 
 .pagination {
     border-top: 1px solid #dedede;
+    border-top: 1px solid var(--grey);
     margin-top: 1em;
 }
 
@@ -309,6 +334,7 @@ hr {
 
 #adminHeader {
     background: #00a1ff;
+    background: var(--main);
     color: #fff;
     position: relative;
 }
@@ -375,6 +401,7 @@ hr {
     width: 100%;
     position: relative;
     background: #ff5722;
+    background: var(--accent);
     transition: background 0.5s ease-out, color 0.5s ease-out;
 }
 
@@ -388,16 +415,19 @@ hr {
 
 #adminNav ul li > a#active {
     background: #ff9800;
+    background: var(--active-item);
 }
 
 #adminNav ul li > a:hover, #adminNav ul li:hover {
     background: #cc461b;
+    background: var(--accent-hover);
     font-weight: normal;
     transition: background 0.35s ease-in, color 0.35s ease-in;
 }
 
 #adminNav ul li a#active {
     background: #ff9800;
+    background: var(--active-item);
 }
 
 #adminNav ul li.hasChildren > a:after {
@@ -456,6 +486,7 @@ hr {
 #adminFooter {
     width: 100%;
     background: #00a1ff;
+    background: var(--main);
     padding: 1em;
     box-sizing: border-box;
     color: #fff;
@@ -498,8 +529,11 @@ hr {
     width: 100%;
     max-width: 400px;
     border-bottom: 5px solid #00a1ff;
+    border-bottom: 5px solid var(--main);
     border-left: 1px solid #dedede;
+    border-left: 1px solid var(--grey);
     border-right: 1px solid #dedede;
+    border-right: 1px solid var(--grey);
     box-sizing: border-box;
     
 }
@@ -509,6 +543,7 @@ hr {
     padding: 1em;
     box-sizing: border-box;
     background: #dedede;
+    background: var(--grey);
 }
 
 .dashboardBlocks .counter h2 {
@@ -605,6 +640,7 @@ hr {
 
 .categoryTree .categoryDetails {
     background: #dedede;
+    background: var(--grey);
     border-radius: 0.5em;
     padding: 0.5em;
     box-sizing: border-box;
@@ -682,6 +718,7 @@ hr {
     
     #adminNav li.hasChildren > .subMenu > li {
         background: #ff6a23;
+        background: var(--dd-menu);
     }
     
     #adminNav li > .subMenu.active {
@@ -698,6 +735,7 @@ hr {
     
     #adminNav ul li.hasChildren > a.active {
         background: #ff6a23;
+        background: var(--active-item);
     }
     
     #adminNav ul li.hasChildren > a.active:after {

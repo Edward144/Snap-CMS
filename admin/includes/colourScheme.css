@@ -1,0 +1,14 @@
+/* COLOUR SCHEME */
+
+* {
+    --body: #fff;
+    --main: #00a1ff;
+    --main-hover: #0081cc;
+    --accent: #ff5722;
+    --accent-hover: #cc461b;
+    --active-item: #ff9800;
+    --dd-menu: #ff6a23;
+    --bad: #f44336;
+    --bad-hover: #c3352b;
+    --grey: #dedede;
+}
