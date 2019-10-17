@@ -46,14 +46,15 @@
                 <form id="searchContent" method="POST" action="<?php echo ROOT_DIR; ?>admin/scripts/searchPost.php">
                     <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                     
-                    <p>You can search content by name, url, category and author.</p>
+                    <p>You can search content by name, url and author.</p>
                     
                     <p>
                         <label>Search Term</label>
-                        <input type="text" name="searchTerm">
+                        <input type="text" name="searchTerm" value="<?php echo(isset($_GET['search']) ? $_GET['search'] : ''); ?>">
                     </p>
                     
                     <input type="submit" value="Search">
+                    <input type="button" name="clearSearch" value="Clear Search" class="redButton" style="margin-top: 0.5em;">
                 </form>
             </div>
         </div>
@@ -62,12 +63,12 @@
             <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', $postTypeName)); ?></h2>
 
             <?php 
-                $itemCount = $mysqli->query("SELECT * FROM `posts` WHERE post_type_id = {$postTypeId}")->num_rows;
+                $searchTerm = (isset($_GET['search']) ? $_GET['search'] : '');
+            
+                $itemCount = $mysqli->query("SELECT * FROM `posts` WHERE post_type_id = {$postTypeId} AND (name LIKE '%{$searchTerm}%' OR url LIKE '%{$searchTerm}%' OR author LIKE '%{$searchTerm}%')")->num_rows;
                 $pagination = new pagination($itemCount);
                 $pagination->prefix = explode('/page-', $_SERVER['REQUEST_URI'])[0] . '/';
                 $pagination->load();
-                
-                $searchTerm = (isset($_GET['search']) ? $_GET['search'] : '');
                    
                 $posts = $mysqli->query(
                     "SELECT 
@@ -80,7 +81,7 @@
                         posts.last_edited,
                         posts.visible FROM `posts` AS posts 
                             LEFT OUTER JOIN `categories` AS categories ON posts.category_id = categories.id AND posts.post_type_id = categories.post_type_id
-                        WHERE posts.post_type_id = {$postTypeId} AND (posts.name LIKE '%{$searchTerm}%' OR posts.url LIKE '%{$searchTerm}%' OR categories.name LIKE '%{$searchTerm}%' OR posts.author LIKE '%{$searchTerm}%') 
+                        WHERE posts.post_type_id = {$postTypeId} AND (posts.name LIKE '%{$searchTerm}%' OR posts.url LIKE '%{$searchTerm}%' OR posts.author LIKE '%{$searchTerm}%') 
                         ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}"
                 ); 
             ?>

@@ -24,3 +24,8 @@ $("input[name='edit']").click(function() {
     
     editContent(btn, tableName);
 });
+
+//Clear Search
+$("input[name='clearSearch']").click(function() {
+    window.location.href = window.location.href.split("&")[0];
+});
