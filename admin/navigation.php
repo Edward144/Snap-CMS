@@ -23,15 +23,7 @@
     }
 ?>
 
-<div class="flexContainer" id="navigationManager">
-    <div class="column column-70 formBlock navigationTreeWrap">
-        <h2 class="greyHeader"><?php echo $menuName; ?>: Navigation Tree</h2>
-        
-        <div>
-            <?php new navigationEditor($menuId); ?>
-        </div>
-    </div>
-    
+<div class="flexContainer" id="navigationManager">    
     <div class="column column-30 formBlock navigationDetails">
         <h2 class="greyHeader">Navigation Details</h2>
         
@@ -121,6 +113,14 @@
                     unset($_SESSION['addmessage']); 
                 }?></p>
             </form>
+        </div>
+    </div>
+    
+    <div class="column column-70 formBlock navigationTreeWrap">
+        <h2 class="greyHeader"><?php echo $menuName; ?>: Navigation Tree</h2>
+        
+        <div>
+            <?php new navigationEditor($menuId); ?>
         </div>
     </div>
 </div>

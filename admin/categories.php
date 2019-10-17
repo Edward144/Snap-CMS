@@ -17,15 +17,7 @@
     }
 ?>
 
-<div class="flexContainer" id="categoriesManager">
-    <div class="column column-70 formBlock categoryTreeWrap">
-        <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', $_GET['post-type'])); ?>: Category Tree</h2>
-        
-        <div>
-            <?php new categoryEditor($postTypeId); ?>
-        </div>
-    </div>
-    
+<div class="flexContainer" id="categoriesManager">    
     <div class="column column-30 formBlock categoryDetails">
         <h2 class="greyHeader">Category Details</h2>
         
@@ -87,6 +79,14 @@
                     unset($_SESSION['createmessage']); 
                 }?></p>
             </form>
+        </div>
+    </div>
+    
+    <div class="column column-70 formBlock categoryTreeWrap">
+        <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', $_GET['post-type'])); ?>: Category Tree</h2>
+        
+        <div>
+            <?php new categoryEditor($postTypeId); ?>
         </div>
     </div>
 </div>
