@@ -13,7 +13,7 @@
         </li>
         
         <li class="hasChildren">
-            <a>Content Manager</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/content-manager/posts">Content Manager</a>
             
             <?php 
                 $postEditors = $mysqli->query("SELECT name FROM `post_types` ORDER BY id ASC"); 
@@ -45,7 +45,7 @@
         </li>
         
         <li class="hasChildren">
-            <a>Settings</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/general-settings">Settings</a>
             
             <ul class="subMenu">
                 <li><a href="<?php echo ROOT_DIR; ?>admin/user-management" <?php echo ($uri == ROOT_DIR . 'admin/user-management' ? 'id="active"' : ''); ?>>User Management</a></li>
