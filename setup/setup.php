@@ -175,7 +175,8 @@
             date_posted DATETIME DEFAULT CURRENT_TIMESTAMP(),
             last_edited DATETIME DEFAULT CURRENT_TIMESTAMP(),
             last_edited_by INT,
-            visible TINYINT(4)
+            visible TINYINT(4),
+            custom_content VARCHAR(255)
         )"
     );
 
