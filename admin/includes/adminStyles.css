@@ -435,6 +435,10 @@ hr {
     background: var(--active-item);
 }
 
+#adminNav ul li.hasChildren {
+    z-index: 9999;
+}
+
 #adminNav ul li.hasChildren > a:after {
     content: " ▼";
     font-size: 0.75em;
@@ -686,6 +690,7 @@ hr {
     background: #dedede;
     background: var(--grey);
     display: table;
+    transition: all 0.5s ease-out;
 }
 
 .imageUploader .addImage span {
@@ -700,6 +705,8 @@ hr {
 .imageUploader .addImage:hover {
     background: #0081cc;
     background: var(--main-hover);
+    color: #fff;
+    transition: all 0.35s ease-in;
 }
 
 /* CATEGORIES | NAVIGATION */

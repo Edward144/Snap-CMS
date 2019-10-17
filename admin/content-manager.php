@@ -6,7 +6,7 @@
         exit();
     }
 
-    $postTypeId = $mysqli->query("SELECT id, name FROM `post_types` WHERE name = '{$_GET['post-type']}'");
+    $postTypeId = $mysqli->query("SELECT id, name, has_options FROM `post_types` WHERE name = '{$_GET['post-type']}'");
     
     if($postTypeId->num_rows <= 0) {
         header('Location: ' . ROOT_DIR . 'admin/content-manager/posts');
@@ -16,6 +16,7 @@
         $postType = $postTypeId->fetch_assoc();
         $postTypeId = $postType['id'];
         $postTypeName = $postType['name'];
+        $postTypeOptions = $postType['has_options'];
     }
 ?>
 
@@ -98,6 +99,14 @@
                         </select>
                     </p>
                 </div>
+                
+                <?php if($postTypeOptions == 1) : ?>
+                    <h2 class="greyHeader" style="margin-top: 1em;">Additional Options</h2>
+
+                    <div>
+
+                    </div>
+                <?php endif; ?>
             </div>
             
             <div class="column column-70 formBlock contentControls">
