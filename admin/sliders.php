@@ -45,60 +45,6 @@
 
     <form id="sliderManage" method="POST" action="../scripts/sliderManage.php">
         <div class="flexContainer" id="sliderManager">
-            <div class="column column-70 formBlock sliderContent">
-                <h2 class="greyHeader">Slides</h2>
-
-                <div>
-                    <?php                     
-                        $slides = $mysqli->query("SELECT * FROM `slider_items` WHERE slider_id = {$_GET['id']} ORDER BY position ASC"); 
-                    ?>
-
-                    <div class="hasTable">
-                        <table class="formattedTable" id="slidesTable">
-                            <thead>
-                                <th>Position</th>
-                                <th>Background Image</th>
-                                <th>Content</th>
-                                <th>Actions</th>
-                            </thead>
-
-                            <tbody>
-                                <?php if($slides->num_rows > 0) : ?>
-                                    <?php while($slide = $slides->fetch_assoc()) : ?>
-                                        <tr class="slideRow">
-                                            <td style="width: 80px; min-width: 80px;">
-                                                <input type="number" step="1" name="position" value="<?php echo $slide['position']; ?>" style="text-align: center;">
-                                            </td>
-
-                                            <td style="width: 300px; min-width: 300px;">
-                                                <input type="text" name="backgroundImage" value="<?php echo $slide['image_url']; ?>" class="hasButton">
-                                                <input type="button" name="imageSelector" value="Choose File">
-                                            </td>
-
-                                            <td>
-                                                <textarea class="tinySlider"><?php echo $slide['content']; ?></textarea>
-                                            </td>
-
-                                            <td style="width: 80px; min-width: 80px;">
-                                                <input type="button" name="deleteSlide" value="Delete" class="redButton">
-                                            </td>
-                                        </tr>
-                                    <?php endwhile; ?>
-                                <?php else : ?>
-                                    <tr id="noSlides">
-                                        <td colspan="4"><h3 class="noContent">This slider has no slides</h3></td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                
-                    <input type="button" name="addSlide" value="Add Slide" data-slider="<?php echo $slider['id']; ?>" style="margin-top: 1em;">
-                    
-                    <p id="message" class="slidesMessage"></p>
-                </div>
-            </div>
-
             <div class="column column-30 formBlock sliderDetails">
                 <h2 class="greyHeader">Slider Details</h2>
 
@@ -167,6 +113,60 @@
                     <input type="submit" value="Save Slider">
                     
                     <p id="message" class="sliderMessage"></p>
+                </div>
+            </div>
+            
+            <div class="column column-70 formBlock sliderContent">
+                <h2 class="greyHeader">Slides</h2>
+
+                <div>
+                    <?php                     
+                        $slides = $mysqli->query("SELECT * FROM `slider_items` WHERE slider_id = {$_GET['id']} ORDER BY position ASC"); 
+                    ?>
+
+                    <div class="hasTable">
+                        <table class="formattedTable" id="slidesTable">
+                            <thead>
+                                <th>Position</th>
+                                <th>Background Image</th>
+                                <th>Content</th>
+                                <th>Actions</th>
+                            </thead>
+
+                            <tbody>
+                                <?php if($slides->num_rows > 0) : ?>
+                                    <?php while($slide = $slides->fetch_assoc()) : ?>
+                                        <tr class="slideRow">
+                                            <td style="width: 80px; min-width: 80px;">
+                                                <input type="number" step="1" name="position" value="<?php echo $slide['position']; ?>" style="text-align: center;">
+                                            </td>
+
+                                            <td style="width: 300px; min-width: 300px;">
+                                                <input type="text" name="backgroundImage" value="<?php echo $slide['image_url']; ?>" class="hasButton">
+                                                <input type="button" name="imageSelector" value="Choose File">
+                                            </td>
+
+                                            <td>
+                                                <textarea class="tinySlider"><?php echo $slide['content']; ?></textarea>
+                                            </td>
+
+                                            <td style="width: 80px; min-width: 80px;">
+                                                <input type="button" name="deleteSlide" value="Delete" class="redButton">
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else : ?>
+                                    <tr id="noSlides">
+                                        <td colspan="4"><h3 class="noContent">This slider has no slides</h3></td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                
+                    <input type="button" name="addSlide" value="Add Slide" data-slider="<?php echo $slider['id']; ?>" style="margin-top: 1em;">
+                    
+                    <p id="message" class="slidesMessage"></p>
                 </div>
             </div>
         </div>
