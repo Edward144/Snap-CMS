@@ -37,7 +37,7 @@
         </li>
         
         <li>
-            <a href="<?php echo ROOT_DIR; ?>admin/sliders" <?php echo ($strpos($uri, ROOT_DIR . 'admin/sliders') !== false ? 'id="active"' : ''); ?>>Sliders</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/sliders" <?php echo (strpos($uri, ROOT_DIR . 'admin/sliders') !== false ? 'id="active"' : ''); ?>>Sliders</a>
         </li>
         
         <li>
