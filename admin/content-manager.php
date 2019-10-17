@@ -20,9 +20,128 @@
 ?>
 
 <?php if(isset($_GET['id'])) : ?>
-    <h2><?php echo $_GET['post-type'] . ': ' . $_GET['id']; ?></h2>
+    <?php 
+        //Check if post exists
+        $post = $mysqli->query(
+            "SELECT * FROM `posts` WHERE id = {$_GET['id']} LIMIT 1"
+        );
+
+        if($post->num_rows <= 0) {
+            header('Location: ./');
+            exit();
+        }
+
+        $post = $post->fetch_assoc();
+    ?>
+
+    <form id="contentManage" method="POST" action="../scripts/contentManage.php">
+        <div class="flexContainer" id="contentManager">
+            <div class="column column-30 formBlock contentControls">
+                <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', rtrim($postTypeName, 's'))) . ' ' . $_GET['id']; ?>: General Details</h2>
+                
+                <div>
+                    <p>
+                        <label>Post Title</label>
+                        <input type="text" name="postName" value="<?php echo $post['name']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>URL Slug</label>
+                        <input type="text" name="postUrl" value="<?php echo $post['url']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Category</label>
+                        <select name="postCategory">
+                        
+                        </select>
+                    </p>
+                    
+                    <p>
+                        <label>Date Posted</label>
+                        <input type="datetime-local" name="postDate" value="<?php echo date('Y-m-d\TH:i', strtotime($post['date_posted'])); ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Author</label>
+                        <input type="text" name="postAuthor" value="<?php echo $post['author']; ?>">
+                    </p>
+                    
+                    <br>
+                    
+                    <p>
+                        <label>Link Custom File</label>
+                        <input type="text" name="postCustom" value="<?php echo $post['custom_content']; ?>">
+                    </p>
+                    
+                    <p>
+                        <?php if($post['visible'] == 1) : ?>
+                            <input type="button" name="hide" value="Visible" data-id="<?php echo $post['id']; ?>">
+                        <?php else : ?>
+                            <input type="button" name="show" value="Hidden" data-id="<?php echo $post['id']; ?>">
+                        <?php endif; ?>
+                        
+                        <input type="button" name="delete" value="Delete" class="redButton" data-id="<?php echo $post['id']; ?>">
+                    </p>
+                    
+                    <input type="submit" value="Save Post">
+                    
+                    <p id="message" class="contentMessage"></p>
+                    
+                    <hr>
+                    
+                    <h3>Past Revisions</h3>
+                    
+                    <p>
+                        <select>
+                        
+                        </select>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="column column-70 formBlock contentControls">
+                <h2 class="greyHeader">Content</h2>
+                
+                <div>
+                    <p>
+                        <label>Short Description</label>
+                        <textarea class="noTiny" name="postDesc" maxlength="500"><?php echo $post['short_description']; ?></textarea>
+                    </p>
+                    
+                    <textarea name="postContent"><?php echo $post['content']; ?></textarea>
+                </div>
+                
+                <h2 class="greyHeader" style="margin-top: 1em;">Gallery</h2>
+                
+                <div class="imageUploader">
+                    <div class="images">
+                        <?php
+                            $images = explode(';', rtrim($post['gallery_images'], ';'));
+                            
+                            foreach($images as $image) : 
+                                $image = ltrim($image, '"');
+                                $image = rtrim($image, '"');
+                        ?>                            
+                            <div class="image existingImage" id="<?php echo ($post['main_image'] == $image ? 'main' : ''); ?>">
+                                <div class="imageWrap">
+                                    <img src="<?php echo $image; ?>">
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                        
+                        <div class="newImages">
+                            <div class="image addImage">
+                                <span>+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 <?php else : ?>
-    <div class="flexContainer" id="contentManager">
+    <div class="flexContainer">
         <div class="column column-30 formBlock contentDetails">
             <h2 class="greyHeader">Content Controls</h2>
 
@@ -53,8 +172,11 @@
                         <input type="text" name="searchTerm" value="<?php echo(isset($_GET['search']) ? $_GET['search'] : ''); ?>">
                     </p>
                     
-                    <input type="submit" value="Search">
-                    <input type="button" name="clearSearch" value="Clear Search" class="redButton" style="margin-top: 0.5em;">
+                    <input type="submit" value="Search" style="margin-top: 0.5em;">
+                    
+                    <?php if(isset($_GET['search'])) : ?>
+                        <input type="button" name="clearSearch" value="Clear Search" class="redButton" style="margin-top: 0.5em;">
+                    <?php endif; ?>
                 </form>
             </div>
         </div>

@@ -91,6 +91,11 @@ hr {
     border: 1px solid #dedede;
 }
 
+.formBlock textarea {
+    vertical-align: top;
+    min-width: 200px;
+}
+
 .formBlock input[type="button"],
 .formBlock input[type="submit"],
 .formattedTable input[type="button"],
@@ -634,6 +639,69 @@ hr {
     display: inline-block !important;
 }
 
+.imageUploader .images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imageUploader .image {
+    margin: 0.5em;
+    position: relative;
+    background: red;
+}
+
+.imageUploader .image#main:after {
+    content: "Main Image";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-top: 60px;
+    box-sizing: border-box;
+    margin: auto;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    color: #fff;
+}
+
+.imageUploader .imageWrap {
+    overflow: hidden;
+    height: 150px;
+    width: 150px;
+}
+
+.imageUploader .imageWrap > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.imageUploader .addImage {
+    height: 150px;
+    width: 150px;
+    background: #dedede;
+    background: var(--grey);
+    display: table;
+}
+
+.imageUploader .addImage span {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 4em;
+    cursor: pointer;
+}
+
+.imageUploader .addImage:hover {
+    background: #0081cc;
+    background: var(--main-hover);
+}
+
 /* CATEGORIES | NAVIGATION */
 
 .categoryTree:first-child, 
@@ -750,7 +818,7 @@ hr {
     
     #adminNav ul li.hasChildren > a.active {
         background: #ff6a23;
-        background: var(--active-item);
+        background: var(--dd-menu);
     }
     
     #adminNav ul li.hasChildren > a.active:after {
@@ -779,8 +847,19 @@ hr {
     #sliderList tr th:nth-child(1), 
     #sliderList tr td:nth-child(1), 
     #sliderList tr th:nth-child(3), 
-    #sliderList tr td:nth-child(3) {
+    #sliderList tr td:nth-child(3),
+    #contentList tr th:nth-child(1), 
+    #contentList tr td:nth-child(1), 
+    #contentList tr th:nth-child(3), 
+    #contentList tr td:nth-child(3) {
         display: none !important;
+    }
+    
+    #sliderList tr th:nth-child(2), 
+    #sliderList tr td:nth-child(2),
+    #contentList tr th:nth-child(2), 
+    #contentList tr td:nth-child(2) {
+        min-width: 0;
     }
 }
 
