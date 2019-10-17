@@ -174,7 +174,7 @@
 <?php else : ?>
     <div class="flexContainer">
         <div class="column column-30 formBlock sliderControls">
-            <h2 class="greyHeader">Controls</h2>
+            <h2 class="greyHeader">Slider Controls</h2>
             
             <div>
                 <form id="createSlider" method="POST" action="<?php echo ROOT_DIR; ?>admin/scripts/createSlider.php">

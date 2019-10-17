@@ -19,7 +19,7 @@
 
 <div class="flexContainer" id="categoriesManager">    
     <div class="column column-30 formBlock categoryDetails">
-        <h2 class="greyHeader">Category Details</h2>
+        <h2 class="greyHeader">Category Controls</h2>
         
         <div>
             <form id="changeCategory">

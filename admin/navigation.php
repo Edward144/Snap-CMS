@@ -25,7 +25,7 @@
 
 <div class="flexContainer" id="navigationManager">    
     <div class="column column-30 formBlock navigationDetails">
-        <h2 class="greyHeader">Navigation Details</h2>
+        <h2 class="greyHeader">Navigation Controls</h2>
         
         <div>
             <form id="changeMenu" method="POST" action="../scripts/deleteNavigation.php">
