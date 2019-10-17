@@ -175,6 +175,7 @@ function editContent(btn, tableName) {
     var cleanUrl = window.location.href.split("/page-")[0];
         cleanUrl = cleanUrl.split("/category-")[0];
         cleanUrl = cleanUrl.split("/id-")[0];
+        cleanUrl = cleanUrl.split("&")[0];
     
     window.location.href = cleanUrl + "/id-" + id;
 }

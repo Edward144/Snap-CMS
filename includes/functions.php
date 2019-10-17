@@ -35,7 +35,7 @@
         $level = $levels[$levelsCount];
         
         if($level != trim(ROOT_DIR, '/') && $level != 'admin') {
-            $title = ucwords(explode('?', explode('.php', str_replace('-', ' ', $level))[0])[0]);
+            $title = ucwords(explode('&', explode('?', explode('.php', str_replace('-', ' ', $level))[0])[0])[0]);
         }
         elseif($level == 'admin') {
             $title = 'Dashboard';

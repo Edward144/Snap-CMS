@@ -586,25 +586,31 @@ hr {
     vertical-align: middle;
 }
 
-/* SLIDERS */
+/* SLIDERS | CONTENT MANAGER */
 
-#sliderList tr > td:first-child {
+#sliderList tr > td:first-child,
+#contentList tr > td:first-child {
     width: 80px;
     min-width: 80px;
 }
 
-#sliderList tr > th:nth-child(2),
-#sliderList tr > td:nth-child(2) {
+#contentList tr > th:nth-child(2),
+#contentList tr > td:nth-child(2),
+#contentList tr > th:nth-child(2),
+#contentList tr > td:nth-child(2) {
     text-align: left;
     min-width: 400px;
 }
 
-#sliderList tr > td:nth-child(3) {
+#sliderList tr > td:nth-child(3),
+#contentList tr > td:nth-child(3) {
     text-align: left;
 }
 
 #sliderList tr > td:nth-child(3),
-#sliderList tr > td:nth-child(4) {
+#sliderList tr > td:nth-child(4),
+#contentList tr > td:nth-child(3),
+#contentList tr > td:nth-child(4) {
     width: 200px;
     min-width: 200px;
 }
