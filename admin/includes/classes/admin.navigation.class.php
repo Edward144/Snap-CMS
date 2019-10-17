@@ -55,7 +55,7 @@
                     '</ul>';
             }
             elseif($parent == 0 && $menu->num_rows == 0) {
-                $output = '<h3 class="noContent">There are no items</h3>';
+                $output = '<h3 class="noContent">There are no menu items</h3>';
             }
 
             return $output;
