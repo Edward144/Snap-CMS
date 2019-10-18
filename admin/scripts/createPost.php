@@ -28,8 +28,8 @@
     }
     else {
         $mysqli->query(
-            "INSERT INTO `post_history` (post_id, post_type_id, NAME, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible) 
-            SELECT id, post_type_id, NAME, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible
+            "INSERT INTO `post_history` (post_id, post_type_id, NAME, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content) 
+            SELECT id, post_type_id, NAME, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content
             FROM `posts` WHERE id = {$newId}"
         );
         

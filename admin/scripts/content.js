@@ -26,7 +26,7 @@ $("input[name='edit']").click(function() {
 });
 
 //Save Content
-$("input[type='submit']").click(function() {
+$("#contentManage input[type='submit']").click(function() {
     event.preventDefault();
     tinyMCE.triggerSave();
 

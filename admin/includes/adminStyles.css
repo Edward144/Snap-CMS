@@ -357,7 +357,7 @@ hr {
 
 #adminHeader .logoWrap {
     margin-right: 1em;
-    width: 200px;
+    width: 500px;
 }
 
 #adminHeader .logoWrap h2 {
@@ -377,10 +377,10 @@ hr {
 
 #adminHeader .detailsWrap {
     text-align: right;
-    width: -webkit-calc(100% - 204px - 1em);
-    width: -moz-calc(100% - 204px - 1em);
-    width: -o-calc(100% - 204px - 1em);
-    width: calc(100% - 204px - 1em);
+    width: -webkit-calc(100% - 504px - 1em);
+    width: -moz-calc(100% - 504px - 1em);
+    width: -o-calc(100% - 504px - 1em);
+    width: calc(100% - 504px - 1em);
     box-sizing: border-box;
 }
 
