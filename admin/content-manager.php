@@ -35,12 +35,13 @@
         $post = $post->fetch_assoc();
     ?>
 
-    <form id="contentManage" method="POST" action="../scripts/contentManage.php">
+    <form id="contentManage" method="POST" action="../../scripts/contentManage.php">
         <div class="flexContainer" id="contentManager">
             <div class="column column-30 formBlock contentControls">
                 <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', rtrim($postTypeName, 's'))) . ' ' . $_GET['id']; ?>: General Details</h2>
                 
                 <div>
+                    <input type="hidden" name="postId" value="<?php echo $post['id']; ?>">
                     <p>
                         <label>Post Title</label>
                         <input type="text" name="postName" value="<?php echo $post['name']; ?>">
@@ -54,9 +55,24 @@
                     <p>
                         <label>Category</label>
                         <select name="postCategory">
-                        
+                            <option value="0">No Category</option>
+                            
+                            <?php $categories = $mysqli->query("SELECT id, name FROM `categories` WHERE post_type_id = {$postTypeId}"); ?>
+                            
+                            <?php if($categories->num_rows > 0) : ?>
+                                <?php while($cat = $categories->fetch_assoc()) : ?>
+                                    <option value="<?php echo $cat['id']; ?>"<?php echo ($cat['id'] == $post['category_id'] ? 'selected' : ''); ?>><?php echo $cat['name']; ?></option>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
                         </select>
                     </p>
+                    
+                    <p>
+                        <label>Short Description</label>
+                        <textarea class="noTiny" name="postDesc" maxlength="500"><?php echo $post['short_description']; ?></textarea>
+                    </p>
+                    
+                    <hr>
                     
                     <p>
                         <label>Date Posted</label>
@@ -67,8 +83,6 @@
                         <label>Author</label>
                         <input type="text" name="postAuthor" value="<?php echo $post['author']; ?>">
                     </p>
-                    
-                    <br>
                     
                     <p>
                         <label>Link Custom File</label>
@@ -91,33 +105,23 @@
                     
                     <hr>
                     
-                    <h3>Past Revisions</h3>
+                    <h3>Revert To Previous Edit</h3>
+                    <p>You will be shown differences compared to the current version before approving the change.</p>
                     
                     <p>
                         <select>
                         
                         </select>
+                        
+                        <input type="button" value="Revert">
                     </p>
                 </div>
-                
-                <?php if($postTypeOptions == 1) : ?>
-                    <h2 class="greyHeader" style="margin-top: 1em;">Additional Options</h2>
-
-                    <div>
-
-                    </div>
-                <?php endif; ?>
             </div>
             
             <div class="column column-70 formBlock contentControls">
                 <h2 class="greyHeader">Content</h2>
                 
-                <div>
-                    <p>
-                        <label>Short Description</label>
-                        <textarea class="noTiny" name="postDesc" maxlength="500"><?php echo $post['short_description']; ?></textarea>
-                    </p>
-                    
+                <div>                    
                     <textarea name="postContent"><?php echo $post['content']; ?></textarea>
                 </div>
                 
@@ -126,26 +130,73 @@
                 <div class="imageUploader">
                     <div class="images">
                         <?php
-                            $images = explode(';', rtrim($post['gallery_images'], ';'));
-                            
-                            foreach($images as $image) : 
-                                $image = ltrim($image, '"');
-                                $image = rtrim($image, '"');
+                            if($post['gallery_images'] != null) :
+                                $images = explode(';', rtrim($post['gallery_images'], ';'));
+
+                                foreach($images as $image) : 
+                                    $image = ltrim($image, '"');
+                                    $image = rtrim($image, '"');
                         ?>                            
-                            <div class="image existingImage" id="<?php echo ($post['main_image'] == $image ? 'main' : ''); ?>">
-                                <div class="imageWrap">
-                                    <img src="<?php echo $image; ?>">
+                                <div class="image existingImage" id="<?php echo ($post['main_image'] == $image ? 'main' : ''); ?>">
+                                    <span id="deleteImage">X</span>
+                                    <div class="imageWrap">
+                                        <img src="<?php echo $image; ?>">
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                         
-                        <div class="newImages">
-                            <div class="image addImage">
-                                <span>+</span>
-                            </div>
+                        <div class="image addImage">
+                            <span>+</span>
                         </div>
                     </div>
                 </div>
+                
+                <?php if($postTypeOptions == 1) : ?>
+                    <h2 class="greyHeader" style="margin-top: 1em;" id="additionalOptions">Additional Options</h2>
+
+                    <div>
+                        <h3>Specifications</h3>
+                        
+                        <table class="formattedTable specifications" style="max-width: 400px;">
+                            <thead>
+                                <tr id="headers">
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <?php 
+                                    if($post['specifications'] != null) :
+                                        $specs = explode(';', rtrim($post['specifications'], ';'));
+                                    
+                                        foreach($specs as $specRow) : 
+                                            $specRow = ltrim($specRow, '"');
+                                            $specRow = rtrim($specRow, '"');
+                                            $specRow = explode('":"', $specRow);
+
+                                            $specName = $specRow[0];
+                                            $specValue = $specRow[1];
+                                ?>
+                                        <tr>
+                                            <td><input type="text" name="specName" value="<?php echo $specName; ?>"></td>
+                                            <td><input type="text" name="specValue" value="<?php echo $specValue; ?>"></td>
+                                            <td><input type="button" name="deleteSpec" value="Delete" class="redButton"></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                
+                                <tr id="add">
+                                    <td colspan="3">
+                                        <input type="button" name="addSpec" value="Add Spec" style="float: left;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </form>

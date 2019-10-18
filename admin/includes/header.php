@@ -44,7 +44,7 @@
                 relative_urls: false,
                 remove_script_host: false,
                 image_title: true,
-                height: 400
+                height: 260
             });
         </script>
     </head>
