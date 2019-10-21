@@ -90,6 +90,17 @@
         return $url;
     }
 
+    function slugifyslash($url) {
+        $url = preg_replace('~[^\pL\d\/]+~u', '-', $url);
+        $url = iconv('utf-8', 'us-ascii//TRANSLIT', $url);
+        $url = preg_replace('~[^-\w\/]+~', '', $url);
+        $url = trim($url, '-');
+        $url = preg_replace('~-+~', '-', $url);
+        $url = strtolower($url);
+        
+        return $url;
+    }
+
     //Convert Bytes to Readable Format
     function formatSizeUnits($bytes) {
         if ($bytes >= 1073741824) {

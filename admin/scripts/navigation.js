@@ -40,6 +40,7 @@ $("#addItem input[type='submit']").click(function() {
 //Edit navigation
 $(".navigationTreeWrap").on("click", "input[name='edit']", function() {
     var id = $(this).closest("li").find("input[name='hId']").first().val();
+    var postsHtml = $("#addItem select[name='posts']").html();
     
     $("input[name='edit']").attr("disabled", true);
     $("input[name='saveTree']").attr("disabled", true);
@@ -48,7 +49,13 @@ $(".navigationTreeWrap").on("click", "input[name='edit']", function() {
         "<div class='editor formBlock column' data-id='" + id + "' style='width: 50%; max-height: 50%; position: absolute; top: 50%; transform: translateY(-50%); background: #fff; z-index: 9999; margin: auto; left: 0; right: 0; box-shadow: 1px 1px 10px -5px #000; max-width: 90%;'>" +
             "<h2 class='greyHeader'>Edit navigation <span id='editorClose' style='height: 29px; width: 29px; text-align: center; cursor: pointer; float: right; background: #f44236; color: #fff; border-radius: 100%;'>X</span></h2>" +
             "<div style='height: 100%;'>" +
-                "<form id='editnavigation'>" +
+                "<form id='editNavigation'>" +
+                    "<p>" + 
+                        "<label>Choose Existing Post</label>" +
+                        "<select name='posts'>" +
+                            postsHtml +
+                        "</select>" +
+                    "</p>" +
                     "<p>" +
                         "<label>Name</label>" +
                         "<input type='text' name='sName' value='" + $(this).closest("li").find("input[name='hName']").first().val() + "'>" +
@@ -121,6 +128,27 @@ $("body").on("click", "#addItem input[name='imageSelector']", function() {
             $("#addItem input[name='itemImage']").val(image);
         }
     });
+});
+
+//Select Existing Page
+$("#addItem select[name='posts']").on("change", function() {
+    var url = $(this).children("option:selected").attr("data-url");
+    var type = $(this).children("option:selected").attr("data-type");
+    var name = $(this).children("option:selected").attr("data-name");
+    var fullurl = root_dir + "post-type/" + type + "/" + url;
+    
+    $("#addItem input[name='itemName']").val(name);
+    $("#addItem input[name='itemSlug']").val(fullurl);
+});
+
+$("body").on("change", "select[name='posts']", function() {
+    var url = $(this).children("option:selected").attr("data-url");
+    var type = $(this).children("option:selected").attr("data-type");
+    var name = $(this).children("option:selected").attr("data-name");
+    var fullurl = root_dir + "post-type/" + type + "/" + url;
+    
+    $("#editNavigation input[name='sName']").val(name);
+    $("#editNavigation input[name='sSlug']").val(fullurl);
 });
 
 //Save Tree

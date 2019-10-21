@@ -77,6 +77,25 @@
                 <input type="hidden" name="menuId" value="<?php echo $menuId; ?>">
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 <p>
+                    <label>Choose Existing Post</label>
+                    <select name="posts">
+                        <option>--Select Post--</option>
+                        <?php 
+                            $posts = $mysqli->query("
+                                SELECT posts.name, posts.url, post_types.name AS post_type, posts.post_type_id FROM `posts` AS posts 
+                                LEFT OUTER JOIN `post_types` AS post_types ON posts.post_type_id = post_types.id
+                                ORDER BY posts.post_type_id, posts.name ASC
+                            "); ?>
+                        
+                        <?php if($posts->num_rows > 0) : ?>
+                            <?php while($post = $posts->fetch_assoc()) : ?>
+                                <option data-name="<?php echo $post['name']; ?>" data-url="<?php echo $post['url']; ?>" data-type="<?php echo $post['post_type']; ?>"><?php echo ucwords(str_replace('-', ' ', $post['post_type'])) . ': ' . $post['name']; ?></option>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </select>
+                </p>
+                
+                <p>
                     <label>Name</label>
                     <input type="text" name="itemName">
                 </p>

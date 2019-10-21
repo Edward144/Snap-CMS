@@ -6,7 +6,7 @@
     $update = $mysqli->prepare("UPDATE `navigation_structure` SET name = ?, image_url = ?, url = ?, position = ? WHERE id = ?");
 
     foreach($_POST['navTree'] as $index => $value) {
-        $url = slugify($value['slug']);
+        $url = slugifyslash($value['slug']);
         $update->bind_param('sssii', $value['name'], $value['image'], $url, $value['position'], $value['id']);
         $ex = $update->execute();
         
