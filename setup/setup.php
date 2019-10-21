@@ -166,7 +166,7 @@
             name VARCHAR(255),
             short_description VARCHAR(500),
             content TEXT,
-            url VARCHAR(280) UNIQUE,
+            url VARCHAR(191) UNIQUE,
             main_image VARCHAR(255),
             gallery_images TEXT,
             specifications TEXT,
@@ -182,6 +182,7 @@
 
     $mysqli->query("CREATE TABLE `post_history` LIKE `posts`");
     $mysqli->query("ALTER TABLE `post_history` ADD COLUMN post_id INT AFTER id");
+    $mysqli->query("ALTER TABLE `post_history` DROP INDEX url");
 
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `post_types` (

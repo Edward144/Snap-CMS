@@ -103,18 +103,28 @@
                     
                     <p id="message" class="contentMessage"></p>
                     
-                    <hr>
-                    
-                    <h3>Revert To Previous Edit</h3>
-                    <p>You will be shown differences compared to the current version before approving the change.</p>
-                    
-                    <p>
-                        <select>
-                        
-                        </select>
-                        
-                        <input type="button" value="Revert">
-                    </p>
+                    <?php 
+                        $history = $mysqli->query("
+                            SELECT history.id, history.last_edited, users.username FROM `post_history` AS history 
+                                LEFT OUTER JOIN `users` AS users ON users.id = history.last_edited_by
+                            WHERE history.post_id = {$_GET['id']} ORDER BY history.last_edited DESC LIMIT 5
+                        "); ?>
+                            
+                    <?php if($history->num_rows > 0) : ?>
+                        <hr>
+
+                        <h3>Revert To Previous Edit</h3>
+
+                        <p>
+                            <select name="revisions">
+                                <?php while($hist = $history->fetch_assoc()) : ?>
+                                    <option value="<?php echo $hist['id']; ?>"><?php echo $hist['last_edited'] . ' edited by ' . $hist['username']; ?></option>
+                                <?php endwhile; ?>
+                            </select>
+
+                            <input type="button" value="Revert" name="revert">
+                        </p>
+                    <?php endif; ?>
                 </div>
             </div>
             

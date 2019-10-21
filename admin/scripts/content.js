@@ -181,3 +181,26 @@ $(".specifications").on("click", "input[name='addSpec']", function() {
 $(".specifications").on("click", "input[name='deleteSpec']", function() {
     $(this).closest("tr").remove();
 });
+
+//Revert To Previous
+$("input[name='revert']").click(function() {
+    var revisionId = $("select[name='revisions']").val();
+    var postId = $("input[name='postId']").val();
+    
+    if(confirm("Are you sure you want to revert to this version?")) {
+        $.ajax({
+            url: "../../scripts/revertContent.php",
+            method: "POST",
+            dataType: "json",
+            data: ({revisionId, postId}),
+            success: function(data) {
+                if(data[0] == 1) {
+                window.location.reload();
+                }
+                else {
+                    alert(data[1]);
+                }
+            }
+        });
+    }
+});
