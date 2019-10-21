@@ -248,6 +248,33 @@
                         <input type="button" name="clearSearch" value="Clear Search" class="redButton" style="margin-top: 0.5em;">
                     <?php endif; ?>
                 </form>
+                
+                <hr>
+                
+                <form id="postTypeDetails" method="POST" action="<?php echo ROOT_DIR; ?>admin/scripts/editPostType.php">
+                    <?php $postType = $mysqli->query("SELECT id, title, image_url, content FROM `post_types` WHERE name = '{$_GET['post-type']}'")->fetch_assoc(); ?>
+                    
+                    <input type="hidden" name="typeId" value="<?php echo $postType['id']; ?>">
+                    <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI'] ?>">
+                    <p>
+                        <label>Title</label>
+                        <input type="text" name="title" value="<?php echo $postType['title']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Content</label><br><br>
+                        <textarea name="content"><?php echo $postType['content']; ?></textarea>
+                    </p>
+                    
+                    <input type="submit" value="Update Details">
+                    
+                    <p id="message" class="detailsmessage"><?php 
+                        if(isset($_SESSION['detailsmessage'])) {
+                            echo $_SESSION['detailsmessage'];
+                            unset($_SESSION['detailsmessage']);
+                        }
+                    ?></p>
+                </form>
             </div>
         </div>
 

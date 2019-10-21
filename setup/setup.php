@@ -188,6 +188,7 @@
         "CREATE TABLE IF NOT EXISTS `post_types` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) UNIQUE,
+            title VARCHAR(255),
             content TEXT,
             image_url VARCHAR(500),
             has_options TINYINT(4) DEFAULT 0
