@@ -1,6 +1,7 @@
-<?php 
-    require_once('includes/database.php'); 
-    require_once('includes/functions.php'); 
-?>
+<?php require_once('includes/header.php'); ?>
 
-Main Site
+<div class="content">
+    Main Site
+</div>
+
+<?php require_once('includes/footer.php'); ?>
