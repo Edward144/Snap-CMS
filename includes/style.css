@@ -74,12 +74,9 @@ a:hover {
     background: #f44336;
 }
 
-.navigation#menu0 > ul {
+.navigation#menu0 ul {
     max-width: 1024px;
     margin: auto;
-}
-
-.navigation#menu0 ul {
     display: flex;
     flex-wrap: nowrap;
     padding: 0;
@@ -121,8 +118,8 @@ a:hover {
     z-index: 9999;
 }
 
-.navigation#menu0 ul li.hasChildren > a:after {
-    content: " ▼";
+.navigation#menu0 ul li.hasChildren > a > #arrow {
+    /*content: " ▼";*/
     font-size: 0.75em;
 }
 
@@ -147,6 +144,69 @@ a:hover {
     visibility: visible;
     opacity: 1;
     transition: visibility 0s, opacity 0.35s ease-in;
+}
+
+.navigation#menu0 > ul > li ul .itemInner {
+    top: 0;
+    right: -100%;
+}
+
+.navigation#menu0 > ul > li ul a > #arrow {
+    transform: rotate(-90deg);
+    display: inline-block;
+}
+
+.navigation#menu0 ul li.hasImages {
+    position: static !important;
+}
+
+.navigation#menu0 ul li.hasImages > .itemInner {
+    position: absolute;
+    width: 100vw;
+    background: #c3352b;
+    left: 0;
+    right: 0;
+}
+
+.navigation#menu0 li.hasImages > .itemInner > div {
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 1024px;
+    margin: auto;
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+.navigation#menu0 li.hasImages .navImage {
+    height: 400px;
+    width: 400px;
+    background: #fff;
+    margin-right: 1em;
+}
+
+.navigation#menu0 li.hasImages > .itemInner > div > ul {
+    display: block;
+    margin: 0;
+    width: -webkit-calc(100% - 400px - 1em);
+    width: -moz-calc(100% - 400px - 1em);
+    width: -o-calc(100% - 400px - 1em);
+    width: calc(100% - 400px - 1em);
+}
+
+.navigation#menu0 li.hasImages ul li {
+    text-align: left;
+}
+
+.navigation#menu0 > ul > li.hasImages ul li {
+    width: 50%;
+}
+
+.navigation#menu0 > ul > li.hasImages ul {
+    width: 100%;
+}
+
+.navigation#menu0 > ul > li.hasImages ul .navImage {
+    display: none;
 }
 
 .navToggle {
@@ -243,6 +303,10 @@ a:hover {
     transform: scale(1.05);
 }
 
+#footer *:blank {
+    display: none;
+}
+
 /* MAIN */
 
 .main {
@@ -265,6 +329,7 @@ a:hover {
         padding-right: -moz-calc(2em + 38px);
         padding-right: -o-calc(2em + 38px);
         padding-right: calc(2em + 38px);
+        min-height: 70px;
     }
     
     .navToggle {
@@ -277,6 +342,7 @@ a:hover {
         overflow: hidden;
         display: none;
         right: 0;
+        max-width: 300px;
     }
     
     .navigation#menu0 ul {
@@ -314,7 +380,7 @@ a:hover {
         transition: max-height 0.5s ease-in;
     }
     
-    .navigation#menu0 ul li.hasChildren > a:after {
+    .navigation#menu0 ul li.hasChildren > a > #arrow {
         display: inline-block;
         transform: rotate(90deg);
         margin-left: 4px;
@@ -325,8 +391,18 @@ a:hover {
         background: #de4d43;
     }
     
-    .navigation#menu0 ul li.hasChildren > a.active:after {
+    .navigation#menu0 ul li.hasChildren > a.active > #arrow {
         transform: rotate(0deg);
         transition: transform 0.5s ease;
+    }
+    
+    .navigation li.hasImages .navImage {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .navigation#menu0 {
+        max-width: 100%;
     }
 }

@@ -1,6 +1,6 @@
 Options All -Indexes
 
-ErrorDocument 404 /404.php
+ErrorDocument 404 /snapcmsv2/404.php
 
 <IfModule mod_rewrite.c>    
     RewriteEngine On

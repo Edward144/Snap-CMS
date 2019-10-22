@@ -31,7 +31,7 @@ function hamburgerMenu() {
         $(".navigation#menu0").animate({
             "min-height" : oHeight,
             "height" : ""
-        }, 500);
+        }, 350);
     }
     else {
         $(this).attr("id", "hidden");
@@ -81,14 +81,14 @@ $(document).ready(function() {
     $(".navToggle").click(hamburgerMenu);
     
     //Expand Hamburger Sub Menus
-    $(".navigation#menu0 .hasChildren > a").click(function() {    
-        if($(window).width() <= 1170) {
+    $(".navigation#menu0 .hasChildren > a > span").click(function() {    
+        if($(window).width() <= 1024) {
             event.preventDefault();
 
             var submenu = $(this).closest(".hasChildren").find("div").first();
 
             submenu.toggleClass("active");
-            $(this).toggleClass("active");
+            $(this).closest("a").toggleClass("active");
 
             $("div.active").css({
                 "visiblility" : "visible",
