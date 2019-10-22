@@ -116,7 +116,7 @@
                     <select name="itemParent">
                         <option value="0">No Parent</option>
                         
-                        <?php $menus = $mysqli->query("SELECT id, name FROM `navigation_structure` WHERE level < 3 AND menu_id = {$menuId} ORDER BY id ASC"); ?>
+                        <?php $menus = $mysqli->query("SELECT id, name FROM `navigation_structure` WHERE level < 2 AND menu_id = {$menuId} ORDER BY id ASC"); ?>
                         <?php if($menus->num_rows > 0) : ?>
                             <?php while($row = $menus->fetch_assoc()) : ?>
                                 <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>

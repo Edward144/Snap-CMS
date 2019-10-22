@@ -1,6 +1,6 @@
 /* STYLES */
 
-@import "colourScheme.css";
+@import "defaults.css";
 
 /* GENERAL */
 
@@ -32,13 +32,14 @@ a:hover {
     flex-wrap: nowrap;
     color: #fff;
     max-width: 1024px;
+    max-width: var(--page-width);
     margin: auto;
     padding: 1em;
     box-sizing: border-box;
 }
 
 .headerInner > div:first-child {
-    min-width: 250px;
+    min-width: 300px;
 }
 
 .headerInner > div:last-child {
@@ -76,6 +77,7 @@ a:hover {
 
 .navigation#menu0 ul {
     max-width: 1024px;
+    max-width: var(--page-width);
     margin: auto;
     display: flex;
     flex-wrap: nowrap;
@@ -172,6 +174,7 @@ a:hover {
     display: flex;
     flex-wrap: nowrap;
     max-width: 1024px;
+    max-width: var(--page-width);
     margin: auto;
     padding: 1em;
     box-sizing: border-box;
@@ -236,6 +239,7 @@ a:hover {
 
 .mainFooter, .afterFooter > div {
     max-width: 1024px;
+    max-width: var(--page-width);
     margin: auto;
     padding: 1em;
     box-sizing: border-box;
@@ -261,6 +265,10 @@ a:hover {
     background: #000;
     color: #fff;
     text-align: center;
+}
+
+.mainFooter .contactDetails {
+    margin: 0;
 }
 
 .mainFooter .contactDetails > strong {
@@ -315,6 +323,7 @@ a:hover {
 
 .main .content {
     max-width: 1024px;
+    max-width: var(--page-width);
     margin: auto;
     padding:1em;
     box-sizing: border-box;
