@@ -6,7 +6,7 @@
     require_once('../../includes/functions.php');
 
     $protocol = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://');
-    $url = slugify($_POST['url']);
+    $url = str_replace('page-', 'pages-', slugify($_POST['url']));
     $posted = date('Y-m-d H:i:s', strtotime($_POST['posted']));
 
     //Update General

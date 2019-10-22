@@ -9,7 +9,7 @@
     $newId = $mysqli->insert_id;
 
     $name = ucwords(str_replace('-', ' ', rtrim($_POST['postType'], 's'))) . ' ' . $newId;
-    $url = slugify($name);
+    $url = str_replace('page-', 'pages-', slugify($name));
     $visible = 0;
     $author = $mysqli->query("SELECT first_name, last_name FROM `users` WHERE id = {$_SESSION['adminid']}")->fetch_assoc();
     $author = ucwords($author['first_name'] . ' ' . $author['last_name']);

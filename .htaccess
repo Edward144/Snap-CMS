@@ -21,8 +21,8 @@ ErrorDocument 404 /snapcmsv2/404.php
     RewriteRule ^post-type/([A-Za-z0-9]+)/category-([0-9]+)/page-([0-9]+)$ content.php?post-type=$1&category=$2&page=$3 [L]
     RewriteRule ^post-type/([A-Za-z0-9]+)/category-([0-9]+)$ content.php?post-type=$1&category=$2 [L]
     RewriteRule ^post-type/([A-Za-z0-9]+)/page-([0-9]+)$ content.php?post-type=$1&page=$2 [L]
-    RewriteRule ^post-type/([A-Za-z0-9]+)/([A-Za-z0-9]+)$ content.php?post-type=$1&url=$2 [L]
-    RewriteRule ^post-type/([A-Za-z0-9]+)$ content.php?post-type=$1 [L]
+    RewriteRule ^post-type/([A-Za-z0-9]+)/([A-Za-z0-9-]+)$ content.php?post-type=$1&url=$2 [L]
+    RewriteRule ^post-type/([A-Za-z0-9-]+)$ content.php?post-type=$1 [L]
     RewriteRule ^page-([0-9]+)$ index.php?page=$1 [L]
     
     #Force HTTPS

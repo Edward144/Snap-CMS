@@ -64,6 +64,54 @@
         return $cmsName;
     }
 
+    //Meta Data
+    function metaData($mysqli) {
+        $companyName = $mysqli->query("SELECT name FROM `company_info` LIMIT 1");
+        $meta = [];
+        
+        if($companyName->num_rows > 0) {
+            $companyName = $companyName->fetch_array()[0];
+            
+            if($companyName != null) {
+                $metaCompany = ucwords($companyName);
+            }
+            else {
+                $metaCompany = 'Snap CMS';
+            }
+        }
+        else {
+            $metaCompany = 'Snap CMS';
+        }
+        
+        if(isset($_GET['url'])) {
+            $post = $mysqli->query("SELECT name, short_description, author FROM `posts` WHERE url = '{$_GET['url']}'");
+            
+            if($post->num_rows > 0) {
+                $post = $post->fetch_assoc();
+                
+                $metaTitle = $post['name'];
+                $metaDesc = $post['short_description'];
+                $metaAuthor = $post['author'];
+            }
+        }
+        elseif(isset($_GET['post-type'])) {
+            $metaTitle = ucwords(str_replace('-', ' ', $_GET['post-type']));
+            $metaDesc = ucwords(str_replace('-', ' ', $_GET['post-type']));
+            $metaAuthor = $metaCompany;
+        }
+        elseif($_SERVER['REQUEST_URI'] == ROOT_DIR) {
+            $metaTitle = 'Home';
+            $metaDesc = 'Welcome to ' . $metaCompany;
+            $metaAuthor = $metaCompany;
+        }
+        
+        $meta['title'] = $metaTitle . ' ' . $metaCompany;
+        $meta['description'] = $metaDesc;
+        $meta['author'] = $metaAuthor;
+        
+        return $meta;
+    }
+
     //Remove Spaces
     function despace($string) {
         $string = preg_replace('/\s+/', '', $string);
