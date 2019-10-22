@@ -19,10 +19,13 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link href="includes/style.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo ROOT_DIR ?>includes/style.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
+        <link href="<?php echo ROOT_DIR; ?>scripts/owlcarousel/owl.carousel.min.css" rel="stylesheet">
+        <link href="<?php echo ROOT_DIR; ?>scripts/owlcarousel/owl.theme.default.min.css" rel="stylesheet">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="<?php echo ROOT_DIR; ?>scripts/owlcarousel/owl.carousel.min.js"></script>
     </head>
     
     <body>
@@ -65,4 +68,4 @@
             <?php include_once('includes/navigation.php'); ?>
         </header>
         
-        <div class="main">
+        <div class="main <?php echo ($_SERVER['REQUEST_URI'] == ROOT_DIR ? 'homepage' : ''); ?>">

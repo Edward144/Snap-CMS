@@ -75,8 +75,43 @@ $(window).resize(function() {
     }
 });
 
+//Home Blocks Size
+function squareBlock(element) {
+    setTimeout(function() {
+        height = 0;
+
+        $(element).each(function() {
+            if($(this).outerWidth() > height) {
+                height = $(this).outerWidth();
+            }
+        });
+
+        $(element).css("height", height);
+        
+    }, 100);
+}
+
+//Set Elements To Same Height
+function matchHeight(element) {
+    setTimeout(function() {    
+        $(element).css("height", "");
+
+        height = 0;
+        
+        $(element).each(function() {
+            if($(this).outerHeight() > height) {
+                height = $(this).outerHeight();
+            }
+        });
+
+        $(element).css("height", height);
+        
+    }, 100);
+}
+
 $(document).ready(function() {
     pageHeight();
+    matchHeight(".listItem");
     
     $(".navToggle").click(hamburgerMenu);
     
@@ -100,4 +135,5 @@ $(document).ready(function() {
 
 $(window).resize(function() {
     pageHeight();
+    matchHeight(".listItem");
 });

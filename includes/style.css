@@ -320,6 +320,78 @@ a:hover {
     box-sizing: border-box;
 }
 
+.hero {
+    width: 100%;
+    height: 50vh;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero .heroImage {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.hero .gallery {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
+.hero .gallery .owl-stage {
+    display: flex;
+}
+
+.hero .gallery .owl-item img, 
+.hero .gallery .owl-item div {
+    height: 100%;
+}
+
+.listItem {
+    display: flex;
+    flex-wrap: nowrap;
+    background: #f3f3f3;
+    padding: 1em;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.listItem:last-child {
+    margin-bottom: 0;
+}
+
+.listItem .imageWrap {
+    width: 100%;
+    max-width: 250px;
+    margin-right: 1em;
+}
+
+.listItem .imageWrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.listItem h3, .listItem h4, .listItem h5 {
+    margin: 0 auto 0.5em auto;
+}
+
+.pagination {
+    text-align: center;
+}
+
+.pagination a {
+    margin-right: 0.5em;
+}
+
+.pagination a:last-child {
+    margin-right: 0;
+}
+
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {    
@@ -404,5 +476,11 @@ a:hover {
 @media only screen and (max-width: 500px) {
     .navigation#menu0 {
         max-width: 100%;
+    }
+    
+    .hero .gallery {
+        right: 0;
+        left: 0;
+        margin: auto;
     }
 }
