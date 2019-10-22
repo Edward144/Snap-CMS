@@ -1,8 +1,10 @@
 <?php
 
     $hostname = 'localhost';
-    $database = '';
+    $database = 'nonexistant';
     $username = '';
     $password = '';
+
+    define('ROOT_DIR', '');
 
 ?>
