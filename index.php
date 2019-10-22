@@ -55,7 +55,7 @@
         <?php goto p404; ?>
     <?php endif; ?>
 <?php elseif($homepage > 0) : ?>
-    <?php $page = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage}"); ?>
+    <?php $page = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage} AND visible = 1"); ?>
 
     <?php if($page->num_rows > 0) : ?>
         <?php $page = $page->fetch_assoc(); ?>
@@ -89,7 +89,7 @@
                                     items: 5
                                 },
                                 1000: {
-                                    items: 8
+                                    items: 10
                                 }
                             },
                             rtl: true,
