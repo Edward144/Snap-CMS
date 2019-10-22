@@ -30,6 +30,8 @@
                 <h1 class="title"><?php echo ucwords(str_replace('-', ' ', $postDetails['name'])); ?></h1>
             <?php endif; ?>
             
+            <?php echo ($postDetails['content'] != null && $postDetails['content'] != '' ? '<div class="listContent">' . $postDetails['content'] . '</div>' : ''); ?>
+            
             <?php while($post = $posts->fetch_assoc()) : ?>
                 <div class="listItem">
                     <div class="imageWrap">
@@ -107,7 +109,7 @@
                                 if($("#heroBlur").length > 0) {
                                     $("#heroBlur").animate({
                                         "opacity" : 0
-                                    }, 1000, function() {
+                                    }, 350, function() {
                                         $("#heroBlur").remove();
 
                                         changeImage(src);
