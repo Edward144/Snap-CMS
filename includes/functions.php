@@ -105,6 +105,10 @@
             $metaAuthor = $metaCompany;
         }
         
+        if(strlen($metaTitle) > 0) {
+            $metaTitle = $metaTitle . ' | ';
+        }
+        
         $meta['title'] = $metaTitle . ' ' . $metaCompany;
         $meta['description'] = $metaDesc;
         $meta['author'] = $metaAuthor;
