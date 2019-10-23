@@ -109,7 +109,7 @@ $("select[name='postType']").on("change", function() {
     var postType = $(this).val();
 
     $.ajax({
-        url: "../scripts/findPosts.php",
+        url: root_dir + "admin/scripts/findPosts.php",
         method: "POST",
         dataType: "json",
         data: ({postType}),
