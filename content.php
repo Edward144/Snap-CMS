@@ -1,23 +1,12 @@
 <?php require_once('includes/header.php'); ?>
 
-<?php
-    //check for post type if none goto posts
-    
-    //check for url if yes do single
-
-    //else do list
-        //check for category if yes only list from that category
-        
-        //check for page
-?>
-
 <?php 
     $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0]; 
     $hidePosts = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'hide posts'")->fetch_array()[0]; 
     
     //Go to posts if no type set
     if(!isset($_GET['post-type'])) {
-        header('Location: ' . ROOT_DIR . 'post-type/posts');
+        include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
         
         exit();
     }
@@ -33,7 +22,8 @@
     
     //Go to posts if type does not exist
     if($postDetails->num_rows <= 0) {
-        header('Location: ' . ROOT_DIR . 'post-type/posts');
+        http_response_code(404);
+        include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
         
         exit();
     }
@@ -54,8 +44,9 @@
 
     <?php 
         if($post->num_rows <= 0) {
-            header('Location: ' . ROOT_DIR . 'post-type/' . $_GET['post-type']);
-        
+            http_response_code(404);
+            include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
+            
             exit();
         }
         else {
