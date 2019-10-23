@@ -12,7 +12,7 @@
                 $this->menuId = 0;
             }
             else {
-                $this->parentId = $parentId;
+                $this->menuId = $menuId;
             }
             
             if($parentId <= 0) {
@@ -32,7 +32,7 @@
                 '<nav class="navigation" id="menu' . $this->menuId . '">';
             
             $this->output .=
-                $this->createLevel();
+                $this->createLevel($this->menuId, $this->parentId);
             
             $this->output .=
                 '</nav>';
