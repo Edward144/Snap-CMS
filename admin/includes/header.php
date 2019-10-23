@@ -38,13 +38,14 @@
         <script>
             tinymce.init({
                 selector:'textarea:not(.noTiny):not(.tinySlider)',
-                plugins: 'paste image imagetools table code save link moxiemanager media',
+                plugins: 'paste image imagetools table code save link moxiemanager media fullscreen',
                 menubar: 'file edit format insert table ',
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code fullscreen',
                 relative_urls: false,
                 remove_script_host: false,
                 image_title: true,
-                height: 260
+                height: 260,
+                content_css: root_dir + "includes/custom.css"
             });
         </script>
     </head>

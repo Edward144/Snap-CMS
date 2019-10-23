@@ -58,7 +58,10 @@
         <?php goto p404; ?>
     <?php endif; ?>
 <?php elseif($homepage > 0) : ?>
-    <?php $page = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage} AND visible = 1"); ?>
+    <?php 
+        $postDetails = $mysqli->query("SELECT * FROM `post_types` WHERE id = 1")->fetch_assoc(); 
+        $page = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage} AND visible = 1"); 
+    ?>
 
     <?php if($page->num_rows > 0) : ?>
         <?php 
@@ -176,7 +179,7 @@
                     dots: true,
                     nav: true,
                     <?php 
-                        echo ($sliderSettings['speed'] != null && $sliderSettings['speed'] > 0 ? 'autoplay: true, autoplaySpeed: ' . $sliderSettings['speed'] . ',' : 'autoplay: false,');
+                        echo ($sliderSettings['speed'] != null && $sliderSettings['speed'] > 0 ? 'autoplay: true, autoplayTimeout: ' . $sliderSettings['speed'] . ',' : 'autoplay: false,');
                         echo ($sliderSettings['animation_in'] != null && $sliderSettings['animation_in'] != '' ? 'animateIn: "' . $sliderSettings['animation_in'] . '", ' : '');
                         echo ($sliderSettings['animation_out'] != null && $sliderSettings['animation_out'] != '' ? 'animateOut: "' . $sliderSettings['animation_out'] . '", ' : '');
                     ?>
@@ -189,6 +192,12 @@
             
             <?php if($page['content'] != null && $page['content'] != '') : ?>
                 <div class="userContent">
+                    <?php if($postDetails['has_options'] == 1) : ?>
+                        <div class="additionalOptions">
+                            
+                        </div>
+                    <?php endif; ?>
+                    
                     <?php echo $page['content']; ?>
                 </div>
             <?php endif; ?>

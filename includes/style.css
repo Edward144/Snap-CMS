@@ -494,6 +494,13 @@ a:hover {
     margin-right: 0;
 }
 
+.additionalOptions {
+    float: right;
+    width: 100%;
+    max-width: 300px;
+    background: #dedede;
+}
+
 /* RESPONSIVE */
 
 @media only screen and (max-width: 1024px) {    

@@ -54,7 +54,7 @@
             
                     $output .=
                         '<li class="item' . $item['id'] . ' ' . ($checkChildren > 0 ? 'hasChildren' : '') . ' ' . ($this->hasImages == true ? 'hasImages' : '') . '">
-                            <a href="' . $item['url'] . '" id="' . ($_SERVER['REQUEST_URI'] == $item['url'] ? 'active' : '') . '">' . $item['name'] . ($checkChildren > 0 ? '<span id="arrow"> ▼</span>' : '') . '</a>';
+                            <a href="' . ROOT_DIR . $item['url'] . '" id="' . ($_SERVER['REQUEST_URI'] == ROOT_DIR . $item['url'] ? 'active' : '') . '">' . $item['name'] . ($checkChildren > 0 ? '<span id="arrow"> ▼</span>' : '') . '</a>';
                 
                         if($checkChildren > 0) : 
                             $output .=
