@@ -31,11 +31,11 @@
                 $message .= 'Updated ' . ucwords(str_replace('-', ' ', $index)) . '<br>';
             }
         }
-        
-        $_SESSION['socialmessage'] = $message;
-        header('Location: ../company-details');
-        
-        exit();
     }
+
+    $_SESSION['socialmessage'] = $message;
+    header('Location: ../company-details');
+        
+    exit();
 
 ?>
