@@ -3,11 +3,11 @@
         <footer id="footer">
             <div class="mainFooter">
                 <?php 
-                    $company = $mysqli->query("SELECT * FROM `company_info` LIMIT 1"); 
+                    $companyInfo = $mysqli->query("SELECT * FROM `company_info` LIMIT 1"); 
                     $social = $mysqli->query("SELECT * FROM `social_links`"); 
                     
-                    if($company->num_rows > 0) : 
-                        $company = $company->fetch_assoc();
+                    if($companyInfo->num_rows > 0) : 
+                        $company = $companyInfo->fetch_assoc();
                 ?>
                     <div>
                         <address class="companyAddress">
@@ -57,7 +57,7 @@
             
             <div class="afterFooter">
                 <div>
-                    <address>&copy; <?php echo date('Y') . ' ' . ($company['name'] != null ? $company['name'] : 'Snap CMS'); ?></address>
+                    <address>&copy; <?php echo date('Y') . ' ' . ($companyInfo->num_rows > 0 && $company['name'] != null ? $company['name'] : 'Snap CMS'); ?></address>
                 </div>
             </div>
         </footer>
