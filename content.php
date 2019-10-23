@@ -35,7 +35,7 @@
 <?php if(isset($_GET['url'])) : ?>
     <?php 
         $post = $mysqli->query("
-            SELECT posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.specifications,
+            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.specifications,
             posts.author, posts.date_posted, categories.name AS category FROM `posts` AS posts 
             LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
             WHERE url = '{$_GET['url']}' AND visible = 1
@@ -56,6 +56,13 @@
                 LEFT OUTER JOIN sliders ON sliders.id = slider_items.slider_id
                 WHERE sliders.post_id = {$post['id']} AND visible = 1
             ");
+        }
+
+        if($post['id'] == $homepage) {
+            header("HTTP/1.1 301 Moved Permanently");
+            header('Location: ' . ROOT_DIR);
+            
+            exit();
         }
     ?>
 
