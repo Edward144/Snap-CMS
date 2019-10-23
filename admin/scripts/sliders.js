@@ -42,7 +42,7 @@ $("input[name='addSlide']").click(function() {
     position++;
 
     $.ajax({
-        url: "../scripts/addSlide.php",
+        url: root_dir + "admin/scripts/addSlide.php",
         method: "POST",
         dataType: "json",
         data: ({sliderId: $(this).attr("data-slider"), position}),
@@ -169,7 +169,7 @@ $("#sliderManage input[type='submit']").click(function() {
     }
 
     $.ajax({
-        url: "../scripts/sliderManage.php",
+        url: root_dir + "admin/scripts/sliderManage.php",
         method: "POST",
         dataType: "json",
         data: ({id, name, postType, postName, animationIn, animationOut, speed, slides}),
