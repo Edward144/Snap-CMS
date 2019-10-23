@@ -1,4 +1,5 @@
 <?php require_once(dirname(__FILE__) . '/includes/header.php'); ?>
+
 <?php 
     $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0]; 
     $hidePosts = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'hide posts'")->fetch_array()[0]; 
@@ -60,9 +61,16 @@
     <?php $page = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage} AND visible = 1"); ?>
 
     <?php if($page->num_rows > 0) : ?>
-        <?php $page = $page->fetch_assoc(); ?>
+        <?php 
+            $page = $page->fetch_assoc(); 
+            $slider = $mysqli->query("
+                SELECT slider_items.id, slider_items.slider_id, sliders.post_id, slider_items.position, slider_items.image_url, slider_items.content, sliders.animation_in, sliders.animation_out, sliders.speed, sliders.visible FROM slider_items
+                LEFT OUTER JOIN sliders ON sliders.id = slider_items.slider_id
+                WHERE sliders.post_id = {$page['id']} AND visible = 1
+            ");
+        ?>
         
-        <?php if($page['main_image'] != null) : ?>
+        <?php if($page['main_image'] != null && $slider->num_rows <= 0) : ?>
             <div class="hero">
                 <img class="heroImage" src="<?php echo $page['main_image']; ?>">
                 
@@ -147,6 +155,33 @@
                     </script>
                 <?php endif; ?>
             </div>
+        <?php elseif($slider->num_rows > 0) : ?>
+            <div class="hero slider owl-carousel">
+                <?php while($slide = $slider->fetch_assoc()) : ?>
+                    <div class="slide" style="background-image: url('<?php echo $slide['image_url']; ?>');">
+                        <div class="slideInner">
+                            <?php echo $slide['content']; ?>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+
+            <?php $sliderSettings = $mysqli->query("SELECT * FROM `sliders` WHERE post_id = {$page['id']}")->fetch_assoc(); ?>
+
+            <script>
+                $(".slider.owl-carousel").owlCarousel({
+                    items: 1,
+                    center: true,
+                    loop: true,
+                    dots: true,
+                    nav: true,
+                    <?php 
+                        echo ($sliderSettings['speed'] != null && $sliderSettings['speed'] > 0 ? 'autoplay: true, autoplaySpeed: ' . $sliderSettings['speed'] . ',' : 'autoplay: false,');
+                        echo ($sliderSettings['animation_in'] != null && $sliderSettings['animation_in'] != '' ? 'animateIn: "' . $sliderSettings['animation_in'] . '", ' : '');
+                        echo ($sliderSettings['animation_out'] != null && $sliderSettings['animation_out'] != '' ? 'animateOut: "' . $sliderSettings['animation_out'] . '", ' : '');
+                    ?>
+                });
+            </script>
         <?php endif; ?>
 
         <div class="content home single">
