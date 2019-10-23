@@ -363,6 +363,18 @@ a:hover {
     height: 100%;
 }
 
+.hero.slider .owl-stage-outer,
+.hero.slider .owl-stage,
+.hero.slider .owl-item,
+.hero.slider .slide {
+    height: 100%
+}
+
+.hero.slider .slide {
+    background-size: cover;
+    background-position: center;
+}
+
 .listItem {
     display: flex;
     flex-wrap: nowrap;
