@@ -44,17 +44,19 @@
             $mysqli = $GLOBALS['mysqli'];
             
             $items = $mysqli->query("SELECT * FROM `navigation_structure` WHERE menu_id = {$menuId} AND parent_id = {$parentId}");
+            $itemUrl = explode('/page-', $_SERVER['REQUEST_URI'])[0];
+            $itemUrl = explode('/category-', $itemUrl)[0];
             
             if($items->num_rows > 0) :
                 $output .= 
                     '<ul>';
                 
-                while($item = $items->fetch_assoc()) : 
+                while($item = $items->fetch_assoc()) :             
                     $checkChildren = $mysqli->query("SELECT id FROM `navigation_structure` WHERE menu_id = {$menuId} AND parent_id = {$item['id']}")->num_rows;
             
                     $output .=
                         '<li class="item' . $item['id'] . ' ' . ($checkChildren > 0 ? 'hasChildren' : '') . ' ' . ($this->hasImages == true ? 'hasImages' : '') . '">
-                            <a href="' . ROOT_DIR . $item['url'] . '" id="' . ($_SERVER['REQUEST_URI'] == ROOT_DIR . $item['url'] ? 'active' : '') . '">' . $item['name'] . ($checkChildren > 0 ? '<span id="arrow"> ▼</span>' : '') . '</a>';
+                            <a href="' . ROOT_DIR . $item['url'] . '" id="' . ($itemUrl == ROOT_DIR . $item['url'] ? 'active' : '') . '">' . $item['name'] . ($checkChildren > 0 ? '<span id="arrow"> ▼</span>' : '') . '</a>';
                 
                         if($checkChildren > 0) : 
                             $output .=
