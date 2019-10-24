@@ -494,11 +494,72 @@ a:hover {
     margin-right: 0;
 }
 
+.userContent {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
 .additionalOptions {
     float: right;
     width: 100%;
+    height: 100%;
     max-width: 300px;
-    background: #dedede;
+    background: #f3f3f3;
+    margin-left: 1em;
+}
+
+.additionalOptions .optionTab {
+    overflow: hidden;
+    border-style: solid; 
+    border-color: #333;
+    border-width: 1px;
+}
+
+.additionalOptions .optionTab > div {
+    max-height: 0;
+    background: #fff;
+    transition: max-height 1s ease;
+}
+
+.additionalOptions .optionTab#active > div {
+    max-height: 1000px;
+    transition: max-height 3s ease;
+}
+
+.additionalOptions .optionTab > div > div {
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.additionalOptions h3 {
+    margin: 0;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+}
+
+.additionalOptions .optionTab h3:not(.noClick):after {
+    content: "+";
+    margin-left: 1em;
+    font-weight: bold;
+}
+
+.additionalOptions .optionTab#active h3:not(.noClick):after {
+    content: "-";
+}
+
+.additionalOptions table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.additionalOptions table td {
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 0.5em;
+    box-sizing: border-box;
 }
 
 /* RESPONSIVE */
@@ -579,6 +640,12 @@ a:hover {
     
     .navigation li.hasImages .navImage {
         display: none;
+    }
+    
+    .additionalOptions {
+        float: none;
+        margin-left: 0;
+        max-width: 100%;
     }
 }
 

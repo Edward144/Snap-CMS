@@ -191,7 +191,42 @@
             <div class="userContent">
                 <?php if($postDetails['has_options'] == 1) : ?>
                     <div class="additionalOptions">
-                        options
+                        <?php if($post['specifications'] != null) : ?>
+                            <div class="optionTab specifications">
+                                <h3>Specifications</h3>
+
+                                <div>
+                                    <div>
+                                        <table>
+                                            <?php
+                                                $specifications = explode(';', rtrim($post['specifications'], ';'));
+
+                                                foreach($specifications as $specRow) :
+                                                    $specName = explode('":"', ltrim($specRow, '"'))[0];
+                                                    $specValue = explode('":"', rtrim($specRow, '"'))[1];
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $specName; ?></td>
+                                                    <td><?php echo $specValue; ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <script>
+                            $(".additionalOptions .optionTab > h3:not(.noClick)").click(function() {
+                                if($(this).closest(".optionTab").attr("id") == "active") {
+                                    $(this).closest(".optionTab").attr("id", "");
+                                }
+                                else {
+                                    $(".additionalOptions .optionTab").attr("id", "");
+                                    $(this).closest(".optionTab").attr("id", "active");
+                                }
+                            });
+                        </script>
                     </div>
                 <?php endif; ?>
                 

@@ -60,27 +60,27 @@
 <?php elseif($homepage > 0) : ?>
     <?php 
         $postDetails = $mysqli->query("SELECT * FROM `post_types` WHERE id = 1")->fetch_assoc(); 
-        $page = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage} AND visible = 1"); 
+        $post = $mysqli->query("SELECT * FROM `posts` WHERE id = {$homepage} AND visible = 1"); 
     ?>
 
-    <?php if($page->num_rows > 0) : ?>
+    <?php if($post->num_rows > 0) : ?>
         <?php 
-            $page = $page->fetch_assoc(); 
+            $post = $post->fetch_assoc(); 
             $slider = $mysqli->query("
                 SELECT slider_items.id, slider_items.slider_id, sliders.post_id, slider_items.position, slider_items.image_url, slider_items.content, sliders.animation_in, sliders.animation_out, sliders.speed, sliders.visible FROM slider_items
                 LEFT OUTER JOIN sliders ON sliders.id = slider_items.slider_id
-                WHERE sliders.post_id = {$page['id']} AND visible = 1
+                WHERE sliders.post_id = {$post['id']} AND visible = 1
             ");
         ?>
         
-        <?php if($page['main_image'] != null && $slider->num_rows <= 0) : ?>
+        <?php if($post['main_image'] != null && $slider->num_rows <= 0) : ?>
             <div class="hero">
-                <img class="heroImage" src="<?php echo $page['main_image']; ?>">
+                <img class="heroImage" src="<?php echo $post['main_image']; ?>">
                 
-                <?php if($page['gallery_images'] != null) : ?>
+                <?php if($post['gallery_images'] != null) : ?>
                     <div class="gallery owl-carousel">
                         <?php 
-                            $images = explode(';', rtrim($page['gallery_images'], ';'));
+                            $images = explode(';', rtrim($post['gallery_images'], ';'));
                             
                             foreach($images as $image) :
                             $image = ltrim($image, '"');
@@ -169,7 +169,7 @@
                 <?php endwhile; ?>
             </div>
 
-            <?php $sliderSettings = $mysqli->query("SELECT * FROM `sliders` WHERE post_id = {$page['id']}")->fetch_assoc(); ?>
+            <?php $sliderSettings = $mysqli->query("SELECT * FROM `sliders` WHERE post_id = {$post['id']}")->fetch_assoc(); ?>
 
             <script>
                 $(".slider.owl-carousel").owlCarousel({
@@ -188,23 +188,58 @@
         <?php endif; ?>
 
         <div class="content home single">
-            <?php echo ($page['name'] != null && $page['name'] != '' ? '<h1 class="title">' . $page['name'] . '</h1>' : ''); ?>
+            <?php echo ($post['name'] != null && $post['name'] != '' ? '<h1 class="title">' . $post['name'] . '</h1>' : ''); ?>
             
-            <?php if($page['content'] != null && $page['content'] != '') : ?>
+            <?php if($post['content'] != null && $post['content'] != '') : ?>
                 <div class="userContent">
                     <?php if($postDetails['has_options'] == 1) : ?>
                         <div class="additionalOptions">
+                            <?php if($post['specifications'] != null) : ?>
+                                <div class="optionTab specifications">
+                                    <h3>Specifications</h3>
+                                
+                                    <div>
+                                        <div>
+                                            <table>
+                                                <?php
+                                                    $specifications = explode(';', rtrim($post['specifications'], ';'));
+
+                                                    foreach($specifications as $specRow) :
+                                                        $specName = explode('":"', ltrim($specRow, '"'))[0];
+                                                        $specValue = explode('":"', rtrim($specRow, '"'))[1];
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $specName; ?></td>
+                                                        <td><?php echo $specValue; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             
+                            <script>
+                                $(".additionalOptions .optionTab > h3:not(.noClick)").click(function() {
+                                    if($(this).closest(".optionTab").attr("id") == "active") {
+                                        $(this).closest(".optionTab").attr("id", "");
+                                    }
+                                    else {
+                                        $(".additionalOptions .optionTab").attr("id", "");
+                                        $(this).closest(".optionTab").attr("id", "active");
+                                    }
+                                });
+                            </script>
                         </div>
                     <?php endif; ?>
                     
-                    <?php echo $page['content']; ?>
+                    <?php echo $post['content']; ?>
                 </div>
             <?php endif; ?>
             
-            <?php if($page['custom_content'] != null && $page['custom_content'] != '') : ?>
+            <?php if($post['custom_content'] != null && $post['custom_content'] != '') : ?>
                 <div class="customContent">
-                    <?php include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . $page['custom_content']); ?>
+                    <?php include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . $post['custom_content']); ?>
                 </div>
             <?php endif; ?>
         </div>
