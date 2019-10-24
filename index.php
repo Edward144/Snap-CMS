@@ -33,24 +33,26 @@
             
             <?php echo ($postDetails['content'] != null && $postDetails['content'] != '' ? '<div class="listContent">' . $postDetails['content'] . '</div>' : ''); ?>
             
-            <?php while($post = $posts->fetch_assoc()) : ?>
-                <div class="listItem">
-                    <div class="imageWrap">
-                        <?php echo ($post['main_image'] != null ? '<img src="' . $post['main_image'] . '">' : ''); ?>
+            <div class="postList">
+                <?php while($post = $posts->fetch_assoc()) : ?>
+                    <div class="listItem">
+                        <div class="imageWrap">
+                            <?php echo ($post['main_image'] != null ? '<img src="' . $post['main_image'] . '">' : ''); ?>
+                        </div>
+
+                        <div class="itemDetails">
+                            <?php
+                                echo ($post['name'] != null && $post['name'] != '' ? '<h3>' . $post['name'] . '</h3>' : ''); 
+                                echo ($post['category'] != null && $post['category'] != '' ? '<h4>' . $post['category'] . '</h4>' : '');
+                                echo ($post['author'] != null && $post['author'] != '' ? '<h5>' . $post['author'] . ' <span id="dateTime">' . date('d/m/Y H:i', strtotime($post['date_posted'])) . '</span></h5>' : '');
+
+                                echo ($post['short_description'] != null && $post['short_description'] != '' ? '<p>' . $post['short_description'] . '</p>' : '');
+                            ?>
+                            <a href="<?php echo ROOT_DIR . 'post-type/' . $postDetails['name'] . '/' . $post['url']; ?>">Read More</a>
+                        </div>
                     </div>
-                    
-                    <div class="itemDetails">
-                        <?php
-                            echo ($post['name'] != null && $post['name'] != '' ? '<h3>' . $post['name'] . '</h3>' : ''); 
-                            echo ($post['category'] != null && $post['category'] != '' ? '<h4>' . $post['category'] . '</h4>' : '');
-                            echo ($post['author'] != null && $post['author'] != '' ? '<h5>' . $post['author'] . ' <span id="dateTime">' . date('d/m/Y H:i', strtotime($post['date_posted'])) . '</span></h5>' : '');
-                        
-                            echo ($post['short_description'] != null && $post['short_description'] != '' ? '<p>' . $post['short_description'] . '</p>' : '');
-                        ?>
-                        <a href="<?php echo ROOT_DIR . 'post-type/' . $postDetails['name'] . '/' . $post['url']; ?>">Read More</a>
-                    </div>
-                </div>
-            <?php endwhile; ?>
+                <?php endwhile; ?>
+            </div>
             
             <?php echo $pagination->display(); ?>
         </div>
@@ -92,70 +94,7 @@
                         <?php endforeach; ?>
                     </div>
                     
-                    <script>
-                        $(".gallery.owl-carousel").owlCarousel({
-                            responsive: {
-                                0 : {
-                                    items: 3
-                                },
-                                600: {
-                                    items: 5
-                                },
-                                1000: {
-                                    items: 10
-                                }
-                            },
-                            rtl: true,
-                            margin: 10
-                        });
-
-                        var active = false;
-
-                        $(".gallery img").click(function() {                                
-                            var src = $(this).attr("src");
-
-                            if(active == false && src != $(".heroImage").attr("src")) {
-                                active = true;
-
-                                if($("#heroBlur").length > 0) {
-                                    $("#heroBlur").animate({
-                                        "opacity" : 0
-                                    }, 350, function() {
-                                        $("#heroBlur").remove();
-
-                                        changeImage(src);
-                                    });
-                                }
-                                else {
-                                    changeImage(src);
-                                }
-
-                            }
-                            else {
-                                return;
-                            }
-                        });
-
-                        function changeImage(src) {
-                            $(".heroImage").after("<img class='heroImage' src='" + src + "' style='z-index: -1; position: absolute; top: 0; left: 0; right: 0; bottom: 0;'>");
-
-                            $(".hero").append("<div id='heroBlur' style='opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: blur(10px);'><img src='" + src + "' style='position: absolute; top: 0; bottom: 0; left: 0; right: 0; object-fit: contain; width: 100%; height: 100%;'></div>");
-
-                            $(".heroImage:first-child").animate({
-                                "opacity" : "0" 
-                            }, 1000, function() {
-                                $(".heroImage:first-child").remove();
-                                $(".heroImage").css("z-index", "");
-
-                                active = false;
-                                console.log(active);
-                            });
-
-                            $("#heroBlur").animate({
-                                "opacity" : 1
-                            }, 1000);
-                        }
-                    </script>
+                    <script src="<?php echo ROOT_DIR; ?>scripts/gallery.js"></script>
                 <?php endif; ?>
             </div>
         <?php elseif($slider->num_rows > 0) : ?>
@@ -219,17 +158,7 @@
                                 </div>
                             <?php endif; ?>
                             
-                            <script>
-                                $(".additionalOptions .optionTab > h3:not(.noClick)").click(function() {
-                                    if($(this).closest(".optionTab").attr("id") == "active") {
-                                        $(this).closest(".optionTab").attr("id", "");
-                                    }
-                                    else {
-                                        $(".additionalOptions .optionTab").attr("id", "");
-                                        $(this).closest(".optionTab").attr("id", "active");
-                                    }
-                                });
-                            </script>
+                            <script src="<?php echo ROOT_DIR; ?>scripts/additionalOptions.js"></script>
                         </div>
                     <?php endif; ?>
                     
