@@ -184,7 +184,7 @@
             SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type FROM `posts` AS posts 
                 LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
                 LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = posts.post_type_id
-            WHERE visible = 1 AND post_types.name = '{$_GET['post-type']}' {$getCat}
+            WHERE visible = 1 AND post_types.name = '{$_GET['post-type']}' {$getCat} ORDER BY date_posted DESC
             LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}
         "); 
     ?>
