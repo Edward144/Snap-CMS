@@ -23,7 +23,7 @@
         $level = 0;
     }
 
-    $url = slugifyslash($_POST['itemSlug']);
+    $url = slugify($_POST['itemSlug']);
 
     $items = $mysqli->prepare("SELECT position FROM `navigation_structure` WHERE parent_id = ? ORDER BY position DESC LIMIT 1");
     $items->bind_param('i', $_POST['itemParent']);
