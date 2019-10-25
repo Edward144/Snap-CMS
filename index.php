@@ -83,13 +83,15 @@
                     <div class="gallery owl-carousel">
                         <?php 
                             $images = explode(';', rtrim($post['gallery_images'], ';'));
-                            
+                            $imageAlt = explode(';', rtrim($post['gallery_alt'], ';'));
+                            $imageCount = 0;
+                        
                             foreach($images as $image) :
-                            $image = ltrim($image, '"');
-                            $image = rtrim($image, '"');
+                                $image = trim($image, '"');
                         ?>
                             <div>
                                 <img src="<?php echo $image; ?>">
+                                <p id="alt"><?php echo trim($imageAlt[$imageCount], '"'); $imageCount++; ?></p>
                             </div>
                         <?php endforeach; ?>
                     </div>

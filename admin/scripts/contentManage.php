@@ -34,9 +34,10 @@
     }
 
     //Update Images
-    $images = $mysqli->prepare("UPDATE `posts` SET gallery_images = ?, main_image = ? WHERE id = ?");
+    $images = $mysqli->prepare("UPDATE `posts` SET gallery_images = ?, main_image = ?, gallery_alt = ? WHERE id = ?");
     $main = null;
     $imageGallery = null;
+    $alt = null;
     $imageNum = 0;
 
     foreach($_POST['images'] as $index => $image) {
@@ -59,15 +60,16 @@
         }
         
         if($image['main'] == 1 || $imageNum == 0) {
-            $main = $protocol . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName;
+            $main = '//' . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName;
         }
         
         $imageGallery .= '"' . $protocol . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName . '";';
+        $alt .= '"' . '' . $image['alt'] . '";';
         
         $imageNum++;
     }
 
-    $images->bind_param('ssi', $imageGallery, $main, $_POST['id']);
+    $images->bind_param('sssi', $imageGallery, $main, $alt, $_POST['id']);
     $ex = $images->execute();
 
     if($ex === false) {

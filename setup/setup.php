@@ -169,6 +169,7 @@
             url VARCHAR(191) UNIQUE,
             main_image VARCHAR(255),
             gallery_images TEXT,
+            gallery_alt TEXT,
             specifications TEXT,
             category_id INT,
             author VARCHAR(100),

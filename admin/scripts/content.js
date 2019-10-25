@@ -62,6 +62,7 @@ $("#contentManage input[type='submit']").click(function() {
     
     $(".imageUploader .image:not(.addImage)").each(function() {
         var image = $(this).find("img").attr("src");
+        var alt = $(this).find("input[name='imageAlt']").val();
         var main = 0;
         var deleted = 0;
         
@@ -70,6 +71,7 @@ $("#contentManage input[type='submit']").click(function() {
         }
         
         images[i] = {
+            alt: alt,
             url: image,
             main: main,
             delete: deleted
@@ -142,6 +144,7 @@ $(".addImage").click(function() {
                             "<div class='imageWrap'>" +
                                 "<img src='" + image + "'>" +
                             "</div>" +
+                            "<p id='imageAlt'><input type='text' name='imageAlt' placeholder='Enter Title...'></p>" +
                         "</div>"
                     );
                 }

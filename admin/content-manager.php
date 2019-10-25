@@ -142,16 +142,18 @@
                         <?php
                             if($post['gallery_images'] != null) :
                                 $images = explode(';', rtrim($post['gallery_images'], ';'));
-
+                                $imageAlt = explode(';', rtrim($post['gallery_alt'], ';'));
+                                $imageCount = 0;
+                        
                                 foreach($images as $image) : 
-                                    $image = ltrim($image, '"');
-                                    $image = rtrim($image, '"');
+                                    $image = trim($image, '"');
                         ?>                            
                                 <div class="image existingImage" id="<?php echo ($post['main_image'] == $image ? 'main' : ''); ?>">
                                     <span id="deleteImage">X</span>
                                     <div class="imageWrap">
                                         <img src="<?php echo $image; ?>">
                                     </div>
+                                    <p id="imageAlt"><input type="text" name="imageAlt" placeholder="Enter Title..." value="<?php echo trim($imageAlt[$imageCount], '"'); $imageCount++; ?>"></p>
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>

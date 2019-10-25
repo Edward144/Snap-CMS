@@ -35,8 +35,7 @@
 <?php if(isset($_GET['url'])) : ?>
     <?php 
         $post = $mysqli->query("
-            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.specifications,
-            posts.author, posts.date_posted, categories.name AS category FROM `posts` AS posts 
+            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.gallery_alt, posts.specifications, posts.author, posts.date_posted, categories.name AS category FROM `posts` AS posts 
             LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
             WHERE url = '{$_GET['url']}' AND visible = 1
         "); 
@@ -74,13 +73,15 @@
                 <div class="gallery owl-carousel">
                     <?php 
                         $images = explode(';', rtrim($post['gallery_images'], ';'));
-
+                        $imageAlt = explode(';', rtrim($post['gallery_alt'], ';'));
+                        $imageCount = 0;
+                    
                         foreach($images as $image) :
-                        $image = ltrim($image, '"');
-                        $image = rtrim($image, '"');
+                            $image = trim($image, '"');
                     ?>
                         <div>
                             <img src="<?php echo $image; ?>">
+                            <p id="alt"><?php echo trim($imageAlt[$imageCount], '"'); $imageCount++; ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>

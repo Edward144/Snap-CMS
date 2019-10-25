@@ -358,9 +358,38 @@ a:hover {
     display: flex;
 }
 
+.hero .gallery .owl-item div {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero .gallery .owl-item div #alt {
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: left;
+    padding: 0.25em;
+    box-sizing: border-box;
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-out;
+    pointer-events: none;
+}
+
+.hero .gallery .owl-item:hover div #alt {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.35s ease-in;
+}
+
 .hero .gallery .owl-item img, 
 .hero .gallery .owl-item div {
     height: 100%;
+    border-radius: 5px;
 }
 
 .hero.slider .owl-stage-outer,
