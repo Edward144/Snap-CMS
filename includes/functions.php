@@ -132,9 +132,9 @@
 
     //Convert String to URL Slug
     function slugify($url) {
-        $url = preg_replace('~[^\pL\d]+~u', '-', $url);
+        $url = preg_replace('~[^\pL\d\/\.]+~u', '-', $url);
         $url = iconv('utf-8', 'us-ascii//TRANSLIT', $url);
-        $url = preg_replace('~[^-\w]+~', '', $url);
+        $url = preg_replace('~[^-\w\/\.]+~', '', $url);
         $url = trim($url, '-');
         $url = preg_replace('~-+~', '-', $url);
         $url = strtolower($url);
