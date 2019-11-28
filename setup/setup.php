@@ -321,10 +321,6 @@
     );
 
     fclose($settings);
-
-    $docRootJS = fopen('../admin/scripts/docRoot.js', 'w');
-    fwrite($docRootJS, 'var root_dir = "' . $docRoot . '";');
-    fclose($docRootJS);
     
     $_SESSION['setupmessage'] = 'Setup has completed successfully, you can now access the <a href="../login">admin dashboard</a> with the username <span style="color: #ff0000;">admin</span> and your chosen password.';
     $_SESSION['messagecolour'] = 'green';

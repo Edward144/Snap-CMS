@@ -4,5 +4,4 @@ images/gallery/*
 !images/gallery/.gitkeep
 .DS_Store
 includes/settings.php
-admin/scripts/docRoot.js
 admin/scripts/tinymce/plugins/moxiemanager/data/storage/user.anonymous.json
