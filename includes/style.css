@@ -142,17 +142,6 @@ a:hover {
     }
 }
 
-.navigation#menu0 .itemInner {
-    max-height: 0;
-    transition: all 0.35s;
-    overflow: hidden;
-}
-
-.navigation#menu0 .itemInner.active {
-    max-height: 1000px;
-    transition: all 1s;
-}
-
 .navigation#menu0 > ul > li ul .itemInner {
     top: 0;
     right: -100%;
@@ -674,6 +663,17 @@ a:hover {
     
     .navigation li.hasImages .navImage {
         display: none;
+    }
+    
+    .navigation#menu0 .itemInner {
+        max-height: 0;
+        transition: all 0.35s;
+        overflow: hidden;
+    }
+
+    .navigation#menu0 .itemInner.active {
+        max-height: 1000px;
+        transition: all 1s;
     }
     
     .additionalOptions {
