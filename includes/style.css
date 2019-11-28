@@ -142,10 +142,15 @@ a:hover {
     }
 }
 
-.navigation#menu0 div.active {
-    visibility: visible;
-    opacity: 1;
-    transition: visibility 0s, opacity 0.35s ease-in;
+.navigation#menu0 .itemInner {
+    max-height: 0;
+    transition: all 0.35s;
+    overflow: hidden;
+}
+
+.navigation#menu0 .itemInner.active {
+    max-height: 1000px;
+    transition: all 1s;
 }
 
 .navigation#menu0 > ul > li ul .itemInner {

@@ -124,11 +124,6 @@ $(document).ready(function() {
 
             submenu.toggleClass("active");
             $(this).closest("a").toggleClass("active");
-
-            $("div.active").css({
-                "visiblility" : "visible",
-                "opacity" : "1"
-            });
         }
     });
 });
