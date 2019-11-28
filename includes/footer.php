@@ -17,8 +17,8 @@
                                  ($company['address_2'] != null ? '<span>' . $company['address_2'] . '</span><br>' : '') .
                                  ($company['address_3'] != null ? '<span>' . $company['address_3'] . '</span><br>' : '') .
                                  ($company['address_4'] != null ? '<span>' . $company['address_4'] . '</span><br>' : '') . 
-                                 ($company['postcode'] != null ? '<span>' . $company['postcode'] . '</span><br>' : '') . 
                                  ($company['county'] != null ? '<span>' . $company['county'] . '</span><br>' : '') . 
+                                 ($company['postcode'] != null ? '<span>' . $company['postcode'] . '</span><br>' : '') . 
                                  ($company['country'] != null ? '<span>' . $company['country'] . '</span>' : '');
                         ?>
                         </address>
