@@ -307,6 +307,14 @@
     mail($to, $subject, $message, $headers, '-fnoreply@' . $_SERVER['SERVER_NAME']);
 
     //Create the connection file to be used by the rest of the site
+    if(!is_writable('../includes/settings.php')) {
+        $_SESSION['setupmessage'] = 'Error cannot write settings file in includes/settings.php';
+        $_SESSION['messagecolour'] = 'red';
+        
+        header('Location: index');
+        exit();    
+    }
+
     $settings = fopen('../includes/settings.php', 'w');
 
     fwrite($settings, 
