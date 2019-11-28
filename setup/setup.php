@@ -213,8 +213,8 @@
             name VARCHAR(100),
             description VARCHAR(500),
             image_url VARCHAR(255),
-            parent_id INT,
-            level INT
+            parent_id INT DEFAULT 0,
+            level INT DEFAULT 0
         )"
     );
 
@@ -228,9 +228,9 @@
     $mysqli->query(
         "CREATE TABLE IF NOT EXISTS `navigation_structure` (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            menu_id INT,
-            parent_id INT,
-            position INT,
+            menu_id INT DEFAULT 0,
+            parent_id INT DEFAULT 0,
+            position INT DEFAULT 0,
             name VARCHAR(255),
             url VARCHAR(191) UNIQUE,
             image_url VARCHAR(255),
