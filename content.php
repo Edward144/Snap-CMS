@@ -35,7 +35,7 @@
 <?php if(isset($_GET['url'])) : ?>
     <?php 
         $post = $mysqli->query("
-            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.gallery_alt, posts.specifications, posts.author, posts.date_posted, categories.name AS category FROM `posts` AS posts 
+            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.gallery_alt, posts.specifications, posts.author, posts.date_posted, categories.name AS category, posts.custom_content FROM `posts` AS posts 
             LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
             WHERE url = '{$_GET['url']}' AND visible = 1
         "); 
@@ -183,7 +183,7 @@
         $getCat = (isset($_GET['category']) ? 'AND category_id = ' . $_GET['category'] : ''); 
         
         $posts = $mysqli->query("
-            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type FROM `posts` AS posts 
+            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type, posts.custom_content FROM `posts` AS posts 
                 LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
                 LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = posts.post_type_id
             WHERE visible = 1 AND post_types.name = '{$_GET['post-type']}' {$getCat} ORDER BY date_posted DESC
