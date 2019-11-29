@@ -177,7 +177,7 @@
             WHERE post_types.name = '{$_GET['post-type']}' AND visible = 1
         ")->num_rows;
         $pagination = new pagination($postCount); 
-        $pagination->prefix = explode('page-', $_SERVER['REQUEST_URI'])[0] . '/';
+        $pagination->prefix = explode('/page-', $_SERVER['REQUEST_URI'])[0] . '/';
         $pagination->load();
 
         $getCat = (isset($_GET['category']) ? 'AND category_id = ' . $_GET['category'] : ''); 
