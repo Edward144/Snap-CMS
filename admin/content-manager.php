@@ -147,6 +147,7 @@
                         
                                 foreach($images as $image) : 
                                     $image = trim($image, '"');
+                                    $image = '//' . explode('://', $image)[1];
                         ?>                            
                                 <div class="image existingImage" id="<?php echo ($post['main_image'] == $image ? 'main' : ''); ?>">
                                     <span id="deleteImage">X</span>
