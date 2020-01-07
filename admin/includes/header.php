@@ -1,4 +1,6 @@
 <?php 
+    ob_start();
+
     require_once(dirname(__DIR__, 2) . '/includes/database.php');
     require_once(dirname(__DIR__, 2) . '/includes/functions.php');
     
@@ -38,17 +40,18 @@
         <script src="<?php echo ROOT_DIR; ?>admin/scripts/tinymce/tinymce.min.js"></script>
         <script src="<?php echo ROOT_DIR; ?>admin/scripts/tinymce/plugins/moxiemanager/js/moxman.loader.min.js"></script>
         
-        <script>
+        <script>            
             tinymce.init({
                 selector:'textarea:not(.noTiny):not(.tinySlider)',
-                plugins: 'paste image imagetools table code save link moxiemanager media fullscreen',
-                menubar: 'file edit format insert table ',
+                plugins: 'paste image imagetools table code save link moxiemanager media fullscreen lists',
+                menubar: 'file edit format insert table',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code fullscreen',
                 relative_urls: false,
                 remove_script_host: false,
                 image_title: true,
                 height: 260,
-                content_css: root_dir + "includes/custom.css"
+                content_css: root_dir + "includes/custom.css",
+                extended_valid_elements: 'span',
             });
         </script>
     </head>

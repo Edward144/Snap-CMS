@@ -3,6 +3,7 @@
     session_start();
 
     require_once('../../includes/database.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'admin/includes/classes/admin.resizeimage.class.php');
     require_once('../../includes/functions.php');
 
     $protocol = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://');
@@ -42,28 +43,39 @@
 
     foreach($_POST['images'] as $index => $image) {
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'])) {
-            mkdir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'], 755, true);
+            mkdir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'], 775, true);
         }
 
         if(strpos($image['url'], '/useruploads/') !== false) {
-            $imageX = explode('/useruploads/', $image['url'])[1];
+            $imageX = rawurldecode(explode('/useruploads/', $image['url'])[1]);
             $imageName = explode('/', $imageX);
             $imageCount = count($imageName) - 1;
             $imageName = $imageName[$imageCount];
             
-            copy($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'useruploads/' . $imageX, $_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName);
+            $defaultImage = rtrim(pathinfo($imageName)['filename'], '@2x') . '.' . pathinfo($imageName)['extension'];
+            $retinaImage = rtrim(pathinfo($imageName)['filename'], '@2x') . '@2x.' . pathinfo($imageName)['extension'];
+            
+            copy($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'useruploads/' . $imageX, $_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $retinaImage);
+            
+            $resize = new \Gumlet\ImageResize($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $retinaImage);
+            $resize->scale(50);
+            $resize->save($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/'  . $defaultImage);
+            
+            chmod($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $retinaImage);
+            chmod($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $defaultImage);
         }
         else {
             $imageX = explode('/', $image['url']);
             $imageCount = count($imageX) - 1;
             $imageName = $imageX[$imageCount];
+            $defaultImage = $imageName;
         }
         
         if($image['main'] == 1 || $imageNum == 0) {
-            $main = '//' . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName;
+            $main = '//' . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $defaultImage;
         }
         
-        $imageGallery .= '"' . $protocol . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName . '";';
+        $imageGallery .= '"' . $protocol . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $defaultImage . '";';
         $alt .= '"' . '' . $image['alt'] . '";';
         
         $imageNum++;

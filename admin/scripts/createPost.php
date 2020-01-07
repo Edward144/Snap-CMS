@@ -33,7 +33,7 @@
             FROM `posts` WHERE id = {$newId}"
         );
         
-        $returnUrl = '../content-manager/' . $_POST['postType'] . '/id-' . $newId;
+        $returnUrl = '../content-manager/' . $_POST['postType'] . '?id=' . $newId;
         
         header('Location: ' . $returnUrl);
         exit();

@@ -172,12 +172,12 @@ function deleteContent(btn, tableName) {
 //Edit Content
 function editContent(btn, tableName) {
     var id = btn.attr("data-id");
-    var cleanUrl = window.location.href.split("/page-")[0];
-        cleanUrl = cleanUrl.split("/category-")[0];
-        cleanUrl = cleanUrl.split("/id-")[0];
+    var cleanUrl = window.location.href.split("?page=")[0];
+        cleanUrl = cleanUrl.split("?category=")[0];
+        cleanUrl = cleanUrl.split("?id=")[0];
         cleanUrl = cleanUrl.split("&")[0];
     
-    window.location.href = cleanUrl + "/id-" + id;
+    window.location.href = cleanUrl + "?id=" + id;
 }
 
 $(document).ready(function() {

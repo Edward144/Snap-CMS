@@ -135,7 +135,7 @@ $("#addItem select[name='posts']").on("change", function() {
     var url = $(this).children("option:selected").attr("data-url");
     var type = $(this).children("option:selected").attr("data-type");
     var name = $(this).children("option:selected").attr("data-name");
-    var fullurl = "post-type/" + type + "/" + url;
+    var fullurl = type + "/" + url;
     
     $("#addItem input[name='itemName']").val(name);
     $("#addItem input[name='itemSlug']").val(fullurl);

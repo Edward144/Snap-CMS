@@ -35,7 +35,7 @@
         $post = $post->fetch_assoc();
     ?>
 
-    <form id="contentManage" method="POST" action="../../scripts/contentManage.php">
+    <form id="contentManage" method="POST" action="../scripts/contentManage.php">
         <div class="flexContainer" id="contentManager">
             <div class="column column-30 formBlock contentControls">
                 <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', rtrim($postTypeName, 's'))) . ' ' . $_GET['id']; ?>: General Details</h2>
@@ -289,7 +289,7 @@
             
                 $itemCount = $mysqli->query("SELECT * FROM `posts` WHERE post_type_id = {$postTypeId} AND (name LIKE '%{$searchTerm}%' OR url LIKE '%{$searchTerm}%' OR author LIKE '%{$searchTerm}%')")->num_rows;
                 $pagination = new pagination($itemCount);
-                $pagination->prefix = explode('/page-', $_SERVER['REQUEST_URI'])[0] . '/';
+                $pagination->prefix = explode('?page=', $_SERVER['REQUEST_URI'])[0];
                 $pagination->load();
                    
                 $posts = $mysqli->query(

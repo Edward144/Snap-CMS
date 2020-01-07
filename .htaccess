@@ -1,54 +1,68 @@
 Options All -Indexes
 
-ErrorDocument 404 /snapcmsv2/404.php
+ErrorDocument 404 /404.php
 
 <IfModule mod_rewrite.c>    
     RewriteEngine On
     RewriteBase /snapcmsv2/
-    
-    #Admin
-    RewriteRule ^admin/categories/(.*)$ admin/categories.php?post-type=$1 [L]
-    RewriteRule ^admin/navigation/(.*)$ admin/navigation.php?menu=$1 [L]
-    RewriteRule ^admin/content-manager/(.*)/page-(.*)$ admin/content-manager.php?post-type=$1&page=$2 [L]
-    RewriteRule ^admin/content-manager/(.*)/id-(.*)$ admin/content-manager.php?post-type=$1&id=$2 [L]
-    RewriteRule ^admin/content-manager/(.*)$ admin/content-manager.php?post-type=$1 [L]
-    
-    RewriteRule ^admin/(.*)/category-(.*)$ admin/$1.php?category=$2 [L]
-    RewriteRule ^admin/(.*)/page-(.*)$ admin/$1.php?page=$2 [L]
-    RewriteRule ^admin/(.*)/id-(.*)$ admin/$1.php?id=$2 [L,R]
-    
-    #Frontend
-    RewriteRule ^post-type/([A-Za-z0-9]+)/category-([0-9]+)/page-([0-9]+)$ content.php?post-type=$1&category=$2&page=$3 [L]
-    RewriteRule ^post-type/([A-Za-z0-9]+)/category-([0-9]+)$ content.php?post-type=$1&category=$2 [L]
-    RewriteRule ^post-type/([A-Za-z0-9]+)/page-([0-9]+)$ content.php?post-type=$1&page=$2 [L]
-    RewriteRule ^post-type/([A-Za-z0-9]+)/([A-Za-z0-9-]+)$ content.php?post-type=$1&url=$2 [L]
-    RewriteRule ^post-type/([A-Za-z0-9-]+)$ content.php?post-type=$1 [L]
-    RewriteRule ^post-type post-type/posts [L,R=301]
-    RewriteRule ^page-([0-9]+)$ index.php?page=$1 [L]
-    
-    #Force HTTPS
+	
+	#Remove Trailing Slash
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)/$ $1 [L,R=301]
+	
+	##Admin
+    RewriteRule ^admin/categories/(.*)$ admin/categories.php?post-type=$1 [L,QSA]
+    RewriteRule ^admin/navigation/(.*)$ admin/navigation.php?menu=$1 [L,QSA]
+    RewriteRule ^admin/content-manager/(.*)$ admin/content-manager.php?post-type=$1 [L,QSA]
+	
+	##Frontend
+	RewriteRule ^testimonials(.*)$ testimonials.php?url=testimonials$1 [L,QSA]
+	RewriteRule ^portfolio(.*)$ portfolio.php?url=portfolio$1 [L,QSA]
+	
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME}.php !-f
+	RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+	
+	#Force HTTPS
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     
     <IfModule mod_headers.c>
         Header always set Strict-Transport-Security "max-age=31536000;includeSubDomains"
     </IfModule>
-    
-    #Remove index.php From URL
-    RewriteCond %{REQUEST_URI} ^(.*)/index\.php$
-    RewriteRule index\.php %1/ [R=301,L]
-    
-    #Remove Trailing Slash
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [R=301,L] 
-    
-    #Remove PHP Extension
-    RewriteCond %{SCRIPT_FILENAME} !-d
+	
+	#Remove PHP Extension
+	RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^([^.]+)$ $1.php [NC,L]
-    
-    #Deny Access To Hidden Files and Folders
+	
+	#Deny Access To Hidden Files and Folders
     RewriteCond %{SCRIPT_FILENAME} -d [OR]
     RewriteCond %{SCRIPT_FILENAME} -f
     RewriteRule "(^|/)\." - [F]
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    #Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    #Video
+    ExpiresByType video/mp4 "access plus 1 year"
+    ExpiresByType video/mpeg "access plus 1 year"
+
+    #CSS, JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+
+    #Others
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
 </IfModule>

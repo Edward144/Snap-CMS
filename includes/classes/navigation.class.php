@@ -43,9 +43,9 @@
         private function createLevel($menuId = 0, $parentId = 0) {
             $mysqli = $GLOBALS['mysqli'];
             
-            $items = $mysqli->query("SELECT * FROM `navigation_structure` WHERE menu_id = {$menuId} AND parent_id = {$parentId}");
-            $itemUrl = explode('/page-', $_SERVER['REQUEST_URI'])[0];
-            $itemUrl = explode('/category-', $itemUrl)[0];
+            $items = $mysqli->query("SELECT * FROM `navigation_structure` WHERE menu_id = {$menuId} AND parent_id = {$parentId} ORDER BY position");
+            $itemUrl = explode('?page=', $_SERVER['REQUEST_URI'])[0];
+            $itemUrl = explode('?category=', $itemUrl)[0];
             
             if($items->num_rows > 0) :
                 $output .= 

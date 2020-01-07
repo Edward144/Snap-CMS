@@ -99,12 +99,15 @@ $("#contentManage input[type='submit']").click(function() {
     }
     
     $.ajax({
-        url: "../../scripts/contentManage.php",
+        url: "../scripts/contentManage.php",
         method: "POST",
         dataType: "json",
         data: ({id, name, url, category, short, posted, author, customFile, content, images, hasOptions, specs}),
         success: function(data) {
             $("#contentManage #message").text(data);
+        },
+        error: function(a, b, c) {
+            console.log(a);
         }
     });
 });
@@ -192,7 +195,7 @@ $("input[name='revert']").click(function() {
     
     if(confirm("Are you sure you want to revert to this version?")) {
         $.ajax({
-            url: "../../scripts/revertContent.php",
+            url: "../scripts/revertContent.php",
             method: "POST",
             dataType: "json",
             data: ({revisionId, postId}),
