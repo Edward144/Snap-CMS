@@ -12,16 +12,3 @@
     --bad-hover: #c3352b;
     --grey: #dedede;
 }
-
-:root {
-    --body: #fff;
-    --main: #c72037;
-    --main-hover: #a80d22;
-    --accent: #333;
-    --accent-hover: #111;
-    --active-item: #555;
-    --dd-menu: #777;
-    --bad: #333;
-    --bad-hover: #111;
-    --grey: #dedede;
-}
