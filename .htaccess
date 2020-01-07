@@ -16,9 +16,6 @@ ErrorDocument 404 /404.php
     RewriteRule ^admin/content-manager/(.*)$ admin/content-manager.php?post-type=$1 [L,QSA]
 	
 	##Frontend
-	RewriteRule ^testimonials(.*)$ testimonials.php?url=testimonials$1 [L,QSA]
-	RewriteRule ^portfolio(.*)$ portfolio.php?url=portfolio$1 [L,QSA]
-	
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME}.php !-f
