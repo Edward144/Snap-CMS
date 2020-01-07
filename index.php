@@ -16,7 +16,7 @@
     }
 
     //404 If Trying To Access Hidden Posts
-    if(($hidePosts == 1 && $_postType == 'posts')) {
+    if(($hidePosts == 1 && $_postType == 'posts') || ($_postType == 'pages' && !isset($_postUrl))) {
         http_response_code(404);
         include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
         
@@ -227,7 +227,7 @@
 
                                 echo ($post['short_description'] != null && $post['short_description'] != '' ? '<p>' . $post['short_description'] . '</p>' : '');
                             ?>
-                            <a href="<?php echo ROOT_DIR . 'post-type/' . $postDetails['name'] . '/' . $post['url']; ?>">Read More</a>
+                            <a href="<?php echo ROOT_DIR . $postDetails['name'] . '/' . $post['url']; ?>">Read More</a>
                         </div>
                     </div>
                 <?php endwhile; ?>
