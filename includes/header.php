@@ -27,9 +27,10 @@
         <link href="<?php echo ROOT_DIR ?>includes/style.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
         <link href="<?php echo ROOT_DIR; ?>scripts/owlcarousel/owl.carousel.min.css" rel="stylesheet">
-        <link href="<?php echo ROOT_DIR; ?>scripts/owlcarousel/owl.theme.default.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="<?php echo ROOT_DIR; ?>scripts/owlcarousel/owl.carousel.min.js"></script>
     </head>
     

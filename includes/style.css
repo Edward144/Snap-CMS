@@ -533,43 +533,32 @@ a:hover {
     margin-left: 1em;
 }
 
-.additionalOptions .optionTab {
-    overflow: hidden;
-    border-style: solid; 
-    border-color: #333;
-    border-width: 1px;
-}
-
-.additionalOptions .optionTab > div {
-    max-height: 0;
-    background: #fff;
-    transition: max-height 1s ease;
-}
-
-.additionalOptions .optionTab#active > div {
-    max-height: 1000px;
-    transition: max-height 3s ease;
-}
-
-.additionalOptions .optionTab > div > div {
-    padding: 0.5em;
+.additionalOptions.ui-accordion .ui-accordion-content {
+    padding: 1em;
     box-sizing: border-box;
 }
 
-.additionalOptions h3 {
+.additionalOptions.ui-accordion .ui-accordion-header,
+.additionalOptions > h3 {
     margin: 0;
     padding: 0.5em 1em;
     box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 0;
+    border-style: solid;
+    border-color: #000;
+    border-width: 1px 1px 0 1px;
+    transition: background 0.5s ease-out;
 }
 
-.additionalOptions .optionTab h3:not(.noClick):after {
-    content: "+";
-    margin-left: 1em;
-    font-weight: bold;
-}
+.additionalOptions > h3:last-of-type {
+    border-width: 1px;
+} 
 
-.additionalOptions .optionTab#active h3:not(.noClick):after {
-    content: "-";
+.additionalOptions.ui-accordion .ui-accordion-header:hover,
+.additionalOptions > h3:hover {
+    background: #f3f3f3;
+    transition: background 0.35s ease-in;
 }
 
 .additionalOptions table {
@@ -583,6 +572,12 @@ a:hover {
     width: 100%;
     padding: 0.5em;
     box-sizing: border-box;
+}
+
+.additionalOptions .ui-accordion-content {
+    border-color: #000;
+    border-radius: 0;
+    border-bottom: 0;
 }
 
 /* RESPONSIVE */
