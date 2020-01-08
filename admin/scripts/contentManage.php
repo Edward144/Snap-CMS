@@ -43,7 +43,7 @@
 
     foreach($_POST['images'] as $index => $image) {
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'])) {
-            mkdir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'], 775, true);
+            mkdir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'], 0775, true);
         }
 
         if(strpos($image['url'], '/useruploads/') !== false) {
@@ -61,8 +61,8 @@
             $resize->scale(50);
             $resize->save($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/'  . $defaultImage);
             
-            chmod($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $retinaImage);
-            chmod($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $defaultImage);
+            chmod($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $retinaImage, 0664);
+            chmod($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $defaultImage, 0664);
         }
         else {
             $imageX = explode('/', $image['url']);
