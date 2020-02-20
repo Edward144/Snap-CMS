@@ -218,4 +218,24 @@
         }
     }
 
+    //Insert Google Analytics Tracking Code
+    function googleAnalytics() {
+        global $mysqli;
+        
+        $googleAnalytics = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'google analytics' AND settings_value <> '' AND settings_value IS NOT NULL LIMIT 1");
+        
+        if($googleAnalytics->num_rows == 1) {
+            $trackingCode = $googleAnalytics->fetch_array()[0];
+            
+            echo '<!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=' . $trackingCode . '"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag("js", new Date());
+                gtag("config", ' . $trackingCode . ');
+            </script>';
+        }
+    }
+
 ?>
