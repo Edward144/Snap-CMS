@@ -138,27 +138,23 @@
                 <h2 class="greyHeader" style="margin-top: 1em;">Gallery</h2>
                 
                 <div class="imageUploader">
-                    <div class="images">
-                        <?php
-                            if($post['gallery_images'] != null) :
-                                $images = explode(';', rtrim($post['gallery_images'], ';'));
-                                $imageAlt = explode(';', rtrim($post['gallery_alt'], ';'));
-                                $imageCount = 0;
-                        
-                                foreach($images as $image) : 
-                                    $image = trim($image, '"');
-                                    $image = '//' . explode('://', $image)[1];
-                        ?>                            
-                                <div class="image existingImage" id="<?php echo ($post['main_image'] == $image ? 'main' : ''); ?>">
+                    <div class="images">                        
+                        <?php 
+                            if($post['gallery_json'] != null && $post['gallery_json'] != '') :
+                                $gallery = json_decode($post['gallery_json'], true);
+                                
+                                foreach($gallery as $galleryItem) :
+                        ?>
+                                <div class="image existingImage" id="<?php echo ($galleryItem['main'] == 1 ? 'main' : ''); ?>">
                                     <span id="deleteImage">X</span>
                                     <div class="imageWrap">
-                                        <img src="<?php echo $image; ?>">
+                                        <img src="<?php echo $galleryItem['url']; ?>">
                                     </div>
-                                    <p id="imageAlt"><input type="text" name="imageAlt" placeholder="Enter Title..." value="<?php echo trim($imageAlt[$imageCount], '"'); $imageCount++; ?>"></p>
+                                    <p id="imageAlt"><input type="text" name="imageAlt" placeholder="Enter Title..." value="<?php echo $galleryItem['alt']; ?>"></p>
                                 </div>
+                        
                             <?php endforeach; ?>
                         <?php endif; ?>
-                        
                         <div class="image addImage">
                             <span>+</span>
                         </div>
@@ -182,20 +178,14 @@
                             
                             <tbody>
                                 <?php 
-                                    if($post['specifications'] != null) :
-                                        $specs = explode(';', rtrim($post['specifications'], ';'));
-                                    
+                                    if($post['specifications'] != null && $post['specifications'] != '') :
+                                        $specs = json_decode($post['specifications'], true);
+                                        
                                         foreach($specs as $specRow) : 
-                                            $specRow = ltrim($specRow, '"');
-                                            $specRow = rtrim($specRow, '"');
-                                            $specRow = explode('":"', $specRow);
-
-                                            $specName = $specRow[0];
-                                            $specValue = $specRow[1];
                                 ?>
                                         <tr>
-                                            <td><input type="text" name="specName" value="<?php echo $specName; ?>"></td>
-                                            <td><input type="text" name="specValue" value="<?php echo $specValue; ?>"></td>
+                                            <td><input type="text" name="specName" value="<?php echo $specRow['name']; ?>"></td>
+                                            <td><input type="text" name="specValue" value="<?php echo $specRow['value']; ?>"></td>
                                             <td><input type="button" name="deleteSpec" value="Delete" class="redButton"></td>
                                         </tr>
                                     <?php endforeach; ?>

@@ -35,13 +35,14 @@
     }
 
     //Update Images
-    $images = $mysqli->prepare("UPDATE `posts` SET gallery_images = ?, main_image = ?, gallery_alt = ? WHERE id = ?");
+    $images = $mysqli->prepare("UPDATE `posts` SET gallery_images = ?, main_image = ?, gallery_alt = ?, gallery_json = ? WHERE id = ?");
     $main = null;
     $imageGallery = null;
     $alt = null;
     $imageNum = 0;
 
     foreach($_POST['images'] as $index => $image) {
+        //Check if gallery directory exists for this post id
         if(!file_exists($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'])) {
             mkdir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'], 0775, true);
         }
@@ -81,7 +82,7 @@
         $imageNum++;
     }
 
-    $images->bind_param('sssi', $imageGallery, $main, $alt, $_POST['id']);
+    $images->bind_param('ssssi', $imageGallery, $main, $alt, json_encode($_POST['images']), $_POST['id']);
     $ex = $images->execute();
 
     if($ex === false) {
@@ -95,16 +96,7 @@
         //Update Specs
         $specString = null;
         $additional = $mysqli->prepare("UPDATE `posts` SET specifications = ? WHERE id = ?");
-
-        if(!empty($_POST['specs'])) {
-            foreach($_POST['specs'] as $index => $spec) {
-                if($spec['name'] != '' && $spec['value'] != '') {
-                    $specString .= '"' . $spec['name'] . '":"' . $spec['value'] . '";';
-                }
-            }
-        }
-        
-        $additional->bind_param('si', $specString, $_POST['id']);
+        $additional->bind_param('si', json_encode($_POST['specs']), $_POST['id']);
         $ex = $additional->execute();
         
         if($ex === false) {
