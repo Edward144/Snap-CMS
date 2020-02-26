@@ -1,10 +1,10 @@
 Options All -Indexes
 
-ErrorDocument 404 /snapcmsv2/404.php
+ErrorDocument 404 /404.php
 
 <IfModule mod_rewrite.c>    
     RewriteEngine On
-    RewriteBase /snapcmsv2/
+    RewriteBase /
     
     #Admin
     RewriteRule ^admin/categories/(.*)$ admin/categories.php?post-type=$1 [L]
