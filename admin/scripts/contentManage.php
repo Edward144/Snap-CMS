@@ -3,6 +3,7 @@
     session_start();
 
     require_once('../../includes/database.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'admin/includes/classes/admin.resizeimage.class.php');
     require_once('../../includes/functions.php');
 
     $protocol = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://');
@@ -34,42 +35,58 @@
     }
 
     //Update Images
-    $images = $mysqli->prepare("UPDATE `posts` SET gallery_images = ?, main_image = ?, gallery_alt = ? WHERE id = ?");
+    $images = $mysqli->prepare("UPDATE `posts` SET gallery = NULLIF(?, 'null') WHERE id = ?");
     $main = null;
     $imageGallery = null;
     $alt = null;
     $imageNum = 0;
+    
+    $json = [];
 
     foreach($_POST['images'] as $index => $image) {
-        if(!file_exists($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'])) {
-            mkdir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'], 755, true);
+        //Check if gallery directory exists for this post id
+        $galleryUrl = $_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/';
+        
+        if(!file_exists($galleryUrl)) {
+            umask(0);
+            mkdir($galleryUrl, 0775, true);
         }
-
+        
         if(strpos($image['url'], '/useruploads/') !== false) {
-            $imageX = explode('/useruploads/', $image['url'])[1];
-            $imageName = explode('/', $imageX);
-            $imageCount = count($imageName) - 1;
-            $imageName = $imageName[$imageCount];
+            $imageOri = rawurldecode(explode('/useruploads/', $image['url'])[1]);            
+            $newFilename = preg_replace('/\@2x/', '', pathinfo($imageOri)['filename']);
+            $extension = '.' . pathinfo($imageOri)['extension'];
             
-            copy($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'useruploads/' . $imageX, $_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName);
+            $retinaUrl = $galleryUrl . $newFilename . '@2x' . $extension;
+            $standardUrl = $galleryUrl . $newFilename . $extension;
+            
+            //If uploaded image is retina create downscaled copy
+            if(strpos($imageOri, '@2x') !== false) {
+                copy($image['url'], $retinaUrl);
+                
+                $resize = new \Gumlet\ImageResize($retinaUrl);
+                $resize->scale(50);
+                $resize->save($standardUrl);
+            }
+            //If uploaded image isn't retina create upscaled copy
+            else {
+                copy($image['url'], $standardUrl);
+                
+                $resize = new \Gumlet\ImageResize($standardUrl);
+                $resize->scale(200);
+                $resize->save($retinaUrl);
+            }
+            chmod($standardUrl, 0664);
+            chmod($retinaUrl, 0664);
+            
+            //Update image url to new gallery url
+            $_POST['images'][$index]['url'] = ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $newFilename . $extension;
         }
-        else {
-            $imageX = explode('/', $image['url']);
-            $imageCount = count($imageX) - 1;
-            $imageName = $imageX[$imageCount];
-        }
-        
-        if($image['main'] == 1 || $imageNum == 0) {
-            $main = '//' . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName;
-        }
-        
-        $imageGallery .= '"' . $protocol . $_SERVER['SERVER_NAME'] . ROOT_DIR . 'images/gallery/' . $_POST['id'] . '/' . $imageName . '";';
-        $alt .= '"' . '' . $image['alt'] . '";';
         
         $imageNum++;
-    }
+    }    
 
-    $images->bind_param('sssi', $imageGallery, $main, $alt, $_POST['id']);
+    $images->bind_param('si', json_encode($_POST['images']), $_POST['id']);
     $ex = $images->execute();
 
     if($ex === false) {
@@ -82,17 +99,8 @@
     if($_POST['hasOptions'] == '1') {
         //Update Specs
         $specString = null;
-        $additional = $mysqli->prepare("UPDATE `posts` SET specifications = ? WHERE id = ?");
-
-        if(!empty($_POST['specs'])) {
-            foreach($_POST['specs'] as $index => $spec) {
-                if($spec['name'] != '' && $spec['value'] != '') {
-                    $specString .= '"' . $spec['name'] . '":"' . $spec['value'] . '";';
-                }
-            }
-        }
-        
-        $additional->bind_param('si', $specString, $_POST['id']);
+        $additional = $mysqli->prepare("UPDATE `posts` SET specifications = NULLIF(?, 'null') WHERE id = ?");
+        $additional->bind_param('si', json_encode($_POST['specs']), $_POST['id']);
         $ex = $additional->execute();
         
         if($ex === false) {
@@ -103,8 +111,8 @@
     }
 
     $mysqli->query(
-        "INSERT INTO `post_history` (post_id, post_type_id, name, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content) 
-        SELECT id, post_type_id, NAME, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content
+        "INSERT INTO `post_history` (post_id, post_type_id, name, short_description, content, url, gallery, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content) 
+        SELECT id, post_type_id, NAME, short_description, content, url, gallery, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content
         FROM `posts` WHERE id = {$_POST['id']}"
     );
 

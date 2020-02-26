@@ -196,7 +196,7 @@
             <?php 
                 $itemCount = $mysqli->query("SELECT * FROM `sliders`")->num_rows;
                 $pagination = new pagination($itemCount);
-                $pagination->prefix = explode('/page-', $_SERVER['REQUEST_URI'])[0] . '/';
+                $pagination->prefix = explode('?page=', $_SERVER['REQUEST_URI'])[0] . '/';
                 $pagination->load();
             
                 $sliders = $mysqli->query(

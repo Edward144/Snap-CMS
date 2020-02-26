@@ -63,17 +63,12 @@ $("#contentManage input[type='submit']").click(function() {
     $(".imageUploader .image:not(.addImage)").each(function() {
         var image = $(this).find("img").attr("src");
         var alt = $(this).find("input[name='imageAlt']").val();
-        var main = 0;
         var deleted = 0;
-        
-        if($(this).attr("id") == "main") {
-            main = 1;
-        }
         
         images[i] = {
             alt: alt,
             url: image,
-            main: main,
+            main: ($(this).attr("id") == "main" ? 1 : 0),
             delete: deleted
         };
         
@@ -99,12 +94,15 @@ $("#contentManage input[type='submit']").click(function() {
     }
     
     $.ajax({
-        url: "../../scripts/contentManage.php",
+        url: "../scripts/contentManage.php",
         method: "POST",
         dataType: "json",
         data: ({id, name, url, category, short, posted, author, customFile, content, images, hasOptions, specs}),
         success: function(data) {
             $("#contentManage #message").text(data);
+        },
+        error: function(a, b, c) {
+            console.log(a);
         }
     });
 });
@@ -119,6 +117,8 @@ $(".addImage").click(function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
         oninsert: function(args) {
             var images = args.files;
             
@@ -192,7 +192,7 @@ $("input[name='revert']").click(function() {
     
     if(confirm("Are you sure you want to revert to this version?")) {
         $.ajax({
-            url: "../../scripts/revertContent.php",
+            url: "../scripts/revertContent.php",
             method: "POST",
             dataType: "json",
             data: ({revisionId, postId}),
