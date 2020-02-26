@@ -53,7 +53,8 @@
                 image_title: true,
                 height: 260,
                 content_css: root_dir + "includes/custom.css",
-                extended_valid_elements: 'span',
+                extended_valid_elements: 'span, script[src|async|defer|type|charset]',
+                allow_script_urls: true
             });
         </script>
     </head>
