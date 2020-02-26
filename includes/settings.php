@@ -2,7 +2,7 @@
 
     $hostname = 'localhost';
     $database = 'database';
-    $username = 'user';
+    $username = 'username';
     $password = 'password';
 
     define('ROOT_DIR', '');
