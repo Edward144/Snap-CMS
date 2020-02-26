@@ -74,7 +74,9 @@ $("input[name='addSlide']").click(function() {
                     relative_urls: false,
                     remove_script_host: false,
                     image_title: true,
-                    height: 100
+                    height: 100,
+                    allow_script_urls: true,
+                    extended_valid_elements: 'script[src|async|defer|type|charset]'
                 });
             }
             else {
