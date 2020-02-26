@@ -9,7 +9,11 @@
                 
                 $postCount = ($postCount == false ? 0 : $postCount->fetch_array()[0]);
         
-                $posts = $mysqli->query("SELECT name, author, last_edited FROM `posts` WHERE post_type_id = '{$row['id']}' ORDER by last_edited DESC LIMIT 5");
+                $posts = $mysqli->query("
+                    SELECT posts.name, posts.last_edited, CONCAT(users.first_name, ' ', users.last_name) AS author FROM `posts` 
+                    LEFT OUTER JOIN `users` ON posts.last_edited_by = users.id
+                    WHERE post_type_id = '{$row['id']}' ORDER by last_edited DESC LIMIT 5
+                ");
             ?>
         
             <div class="dashboardBlock" id="post-type">
