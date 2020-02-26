@@ -110,6 +110,8 @@ $("body").on("click", ".editor input[name='imageSelector']", function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
 
@@ -122,6 +124,8 @@ $("body").on("click", "#addItem input[name='imageSelector']", function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
 
@@ -186,4 +190,30 @@ $("input[name='saveTree']").click(function() {
             }
         }
     })
+});
+
+//Sortable
+$(function() {
+    $(".navigationTree").sortable({
+        connectWith: ".navigationTree",
+        stop: function() {
+            //Recalculate levels and positions
+            //Loop through each ul and get level
+            var level = 0;
+
+            $(".navigationTree").each(function() {
+                level = $(this).parents("ul")['length'];
+                $(this).children("li").find("input[name='hLevel']").first().val(level);
+
+                //Loop through each child li and set position
+                var position = 0;
+
+                $(this).children("li").each(function() {
+                    $(this).find("input[name='hPosition']").first().val(position);
+
+                    position++;
+                });
+            });
+        }
+    });
 });

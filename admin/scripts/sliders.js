@@ -91,6 +91,8 @@ $("#slidesTable").on("click", "input[name='imageSelector']", function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
 

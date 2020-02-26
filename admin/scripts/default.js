@@ -206,7 +206,9 @@ $(document).ready(function() {
     //Navigation Open Media Browser
     $("#adminNav #mediaBrowser").click(function() {
         moxman.browse({
-            skin: "snapcms"
+            skin: "snapcms",
+            relative_urls: false,
+            remove_script_host: true,
         });
     })
 });
