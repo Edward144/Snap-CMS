@@ -80,7 +80,7 @@
             $ex = $createUser->execute();
 
             if($ex === false) {
-                echo json_encode([0, 'Error: User could not be created']);
+                echo json_encode([0, 'Error: ' . $mysqli->error]);
                 exit();
             }
 

@@ -230,7 +230,7 @@
             parent_id INT,
             position INT,
             name VARCHAR(255),
-            url VARCHAR(191) UNIQUE,
+            url VARCHAR(255),
             image_url VARCHAR(255),
             level INT DEFAULT 0
         )"
