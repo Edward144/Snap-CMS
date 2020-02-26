@@ -5,9 +5,7 @@
         moxman.browse({
             path: "<?php echo ROOT_DIR; ?>useruploads/",
             fullscreen: true,
-            leftpanel: false,
-            relative_urls: false,
-            remove_script_host: true,
+            leftpanel: false
         });
     </script>
     <!--<iframe src="<?php echo ROOT_DIR; ?>admin/scripts/tinymce/plugins/moxiemanager/index" style="width: 100%; height: 98%;"></iframe>-->

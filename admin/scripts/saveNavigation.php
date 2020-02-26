@@ -3,11 +3,11 @@
     require_once('../../includes/database.php');
     require_once('../../includes/functions.php');
 
-    $update = $mysqli->prepare("UPDATE `navigation_structure` SET name = ?, image_url = ?, url = ?, position = ?, parent_id = ? WHERE id = ?");
+    $update = $mysqli->prepare("UPDATE `navigation_structure` SET name = ?, image_url = ?, url = ?, position = ? WHERE id = ?");
 
     foreach($_POST['navTree'] as $index => $value) {
-        $url = $value['slug'];
-        $update->bind_param('sssiii', $value['name'], $value['image'], $url, $value['position'], $value['parent'], $value['id']);
+        $url = slugify($value['slug']);
+        $update->bind_param('sssii', $value['name'], $value['image'], $url, $value['position'], $value['id']);
         $ex = $update->execute();
         
         if($ex === false) {

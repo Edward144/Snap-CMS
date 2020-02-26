@@ -14,7 +14,8 @@
             posts.short_description = history.short_description,
             posts.content = history.content,
             posts.url = history.url,
-            posts.gallery = history.gallery,
+            posts.main_image = history.main_image,
+            posts.gallery_images = history.gallery_images,
             posts.specifications = history.specifications,
             posts.category_id = history.category_id,
             posts.author = history.author,
@@ -41,6 +42,12 @@
         
         exit();
     }
+
+    $mysqli->query(
+        "INSERT INTO `post_history` (post_id, post_type_id, name, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content) 
+        SELECT id, post_type_id, NAME, short_description, content, url, main_image, gallery_images, specifications, category_id, author, date_posted, last_edited, last_edited_by, visible, custom_content
+        FROM `posts` WHERE id = {$postId}"
+    );
 
     echo json_encode([1, 1]);
 
