@@ -140,12 +140,12 @@
                 <div class="imageUploader">
                     <div class="images">                        
                         <?php 
-                            if($post['gallery_json'] != null && $post['gallery_json'] != '') :
-                                $gallery = json_decode($post['gallery_json'], true);
+                            if($post['gallery'] != null && $post['gallery'] != '') :
+                                $gallery = json_decode($post['gallery'], true);
                                 
                                 foreach($gallery as $galleryItem) :
                         ?>
-                                <div class="image existingImage" id="<?php echo ($galleryItem['main'] == 1 ? 'main' : ''); ?>">
+                                <div class="image existingImage" id="<?php echo ($galleryItem['main'] == '1' ? 'main' : ''); ?>">
                                     <span id="deleteImage">X</span>
                                     <div class="imageWrap">
                                         <img src="<?php echo $galleryItem['url']; ?>">

@@ -40,7 +40,7 @@
 <?php if(isset($_postUrl)) : ?>
     <?php 
         $post = $mysqli->query("
-            SELECT posts.id, posts.post_type_id, posts.name, posts.content, posts.url, posts.main_image, posts.gallery_images, posts.gallery_alt, posts.specifications, posts.author, posts.date_posted, categories.name AS category, posts.custom_content FROM `posts` AS posts 
+            SELECT posts.id, posts.post_type_id, posts.name, posts.content, posts.url, posts.gallery, posts.specifications, posts.author, posts.date_posted, categories.name AS category, posts.custom_content FROM `posts` AS posts 
             LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
             WHERE url = '{$_postUrl}' AND visible = 1 AND posts.post_type_id = {$postDetails['id']}
         "); 
@@ -70,29 +70,32 @@
         }
     ?>
     
-    <?php if($post['main_image'] != null && $slider->num_rows <= 0) : ?>
+    <?php if($post['gallery'] != null && $post['gallery'] != '' && $slider->num_rows <= 0) : ?>
         <div class="hero <?php echo $postDetails['name']; ?>">
-            <img class="heroImage" src="<?php echo $post['main_image']; ?>">
+            <?php 
+                foreach(json_decode($post['gallery'], true) as $index => $image) { 
+                    if($image['main'] == 1) {
+                        $mainImage = $image['url'];
+                        break;
+                    }
+                }
+            ?>
+            <?php if(isset($mainImage) && $mainImage != null) : ?><img class="heroImage" src="<?php echo $mainImage; ?>"><?php endif; ?>
             <h1><?php echo $post['name']; ?></h1>
-            <?php if($post['gallery_images'] != null) : ?>
                 <div class="gallery owl-carousel">
-                    <?php 
-                        $images = explode(';', rtrim($post['gallery_images'], ';'));
-                        $imageAlt = explode(';', rtrim($post['gallery_alt'], ';'));
-                        $imageCount = 0;
-                    
-                        foreach($images as $image) :
-                            $image = trim($image, '"');
-                    ?>
-                        <div>
-                            <img src="<?php echo $image; ?>">
-                            <p id="alt"><?php echo trim($imageAlt[$imageCount], '"'); $imageCount++; ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+                <?php 
+                    $images = json_decode($post['gallery'], true);
 
-                <script src="<?php echo ROOT_DIR; ?>scripts/gallery.js"></script>
-            <?php endif; ?>
+                    foreach($images as $index => $image) :
+                ?>
+                    <div>
+                        <img src="<?php echo $image['url']; ?>">
+                        <p id="alt"><?php echo $image['alt']; $imageCount++; ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <script src="<?php echo ROOT_DIR; ?>scripts/gallery.js"></script>
         </div>
     <?php elseif($slider->num_rows > 0) : ?>
         <div class="hero slider owl-carousel <?php echo $postDetails['name']; ?>">
@@ -188,7 +191,7 @@
         $getCat = (isset($_GET['category']) ? 'AND category_id = ' . $_GET['category'] : ''); 
         
         $posts = $mysqli->query("
-            SELECT posts.id, posts.name, posts.content, posts.url, posts.main_image, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type, posts.custom_content FROM `posts` AS posts 
+            SELECT posts.id, posts.name, posts.content, posts.url, posts.gallery, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type, posts.custom_content FROM `posts` AS posts 
                 LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
                 LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = posts.post_type_id
             WHERE visible = 1 AND post_types.name = '{$_postType}' {$getCat} ORDER BY date_posted DESC
@@ -216,7 +219,15 @@
                 <?php while($post = $posts->fetch_assoc()) : ?>
                     <div class="listItem">
                         <div class="imageWrap">
-                            <?php echo ($post['main_image'] != null ? '<img src="' . $post['main_image'] . '">' : ''); ?>
+                            <?php 
+                                foreach(json_decode($post['gallery'], true) as $index => $image) { 
+                                    if($image['main'] == 1) {
+                                        echo '<img src="' . $image['url'] . '">';
+                                        break;
+                                    }
+                                }
+                            ?>
+                            <?php echo ($post['galley'] != null ? '<img src="' . $mainImage . '">' : ''); ?>
                         </div>
 
                         <div class="itemDetails">
