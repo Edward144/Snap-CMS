@@ -1,9 +1,9 @@
 <?php
 
     $hostname = 'localhost';
-    $database = 'nonexistant';
-    $username = '';
-    $password = '';
+    $database = 'database';
+    $username = 'username';
+    $password = 'password';
 
     define('ROOT_DIR', '');
 
