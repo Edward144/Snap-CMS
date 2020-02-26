@@ -21,7 +21,8 @@
     }
 
     function adminTitle() {
-        $levels = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $levels = explode('?', $_SERVER['REQUEST_URI'])[0];
+        $levels = explode('/', trim($levels, '/'));
         $levelsCount = count($levels) - 1;
         
         if(strpos($levels[$levelsCount], 'page-') !== false ||
@@ -175,6 +176,66 @@
         }
 
         return $bytes;
+    }
+
+    //Check That URL Exists
+    function checkContent($url) {   
+        global $mysqli;
+        global $_postType;
+        global $_postUrl;
+        
+        //Get Homepage and Check If Posts Are Hidden
+        $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0]; 
+        $hidePosts = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'hide posts'")->fetch_array()[0]; 
+        
+        //Get Available Post Types
+        $postTypes = $mysqli->query("SELECT name FROM `post_types`");
+        $postList = [];
+        
+        while($type = $postTypes->fetch_array()) {
+            array_push($postList, $type[0]);
+        }
+
+        if(isset($url) && strlen($url) > 0) {
+            $customUrl = explode('/', $url);
+            
+            if(in_array($customUrl[0], $postList)) {
+                $_postType = $customUrl[0];
+
+                if(isset($customUrl[1])) {
+                    unset($customUrl[0]);
+                    $_postUrl = implode('/', $customUrl);
+                }
+            }
+            else {
+                $_postType = 'pages';
+                $_postUrl = implode('/', $customUrl);
+            }
+        }
+        else {
+            $_postType = 'pages';
+            $_postUrl = $mysqli->query("SELECT url FROM `posts` WHERE id = {$homepage}")->fetch_array()[0];
+        }
+    }
+
+    //Insert Google Analytics Tracking Code
+    function googleAnalytics() {
+        global $mysqli;
+        
+        $googleAnalytics = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'google analytics' AND settings_value <> '' AND settings_value IS NOT NULL LIMIT 1");
+        
+        if($googleAnalytics->num_rows == 1) {
+            $trackingCode = $googleAnalytics->fetch_array()[0];
+            
+            echo '<!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=' . $trackingCode . '"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag("js", new Date());
+                gtag("config", ' . $trackingCode . ');
+            </script>';
+        }
     }
 
 ?>

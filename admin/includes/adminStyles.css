@@ -537,7 +537,7 @@ hr {
 .dashboardBlocks > .dashboardBlock {
     margin: 1em;
     width: 100%;
-    max-width: 400px;
+    max-width: 394px;
     border-bottom: 5px solid #00a1ff;
     border-bottom: 5px solid var(--main);
     border-left: 1px solid #dedede;
@@ -759,9 +759,16 @@ hr {
 
 /* CATEGORIES | NAVIGATION */
 
-.categoryTree:first-child, 
-.navigationTree:first-child {
+.categoryTree:first-child {
     padding: 0;
+}
+
+.navigationTree {
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-right: 0.5em;
+    border: 1px dashed var(--grey);
+    background: #fff;
 }
 
 .categoryTree,
@@ -783,6 +790,14 @@ hr {
 .navigationTree > li {
     margin: 0.5em auto;
     margin-left: 0;
+}
+
+.navigationTree > li {
+    cursor: grab;
+}
+
+.navigationTree > li:active {
+    cursor: grabbing;
 }
 
 .categoryTree .categoryDetails .actions, 
