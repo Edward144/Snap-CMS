@@ -121,6 +121,7 @@ $(".addImage").click(function() {
         remove_script_host: true,
         oninsert: function(args) {
             var images = args.files;
+            var i = 0;
             
             $(images).each(function() {
                 var image = $(this)[0].url;
@@ -139,7 +140,7 @@ $(".addImage").click(function() {
                 
                 if(noUpload == false) {
                     $(".imageUploader .addImage").before(
-                        "<div class='image newImage'>" + 
+                        "<div class='image newImage'" + (i == 0 && $(".imageUploader #main").length <= 0 ? " id='main'" : "") + ">" + 
                             "<span id='deleteImage'>X</span>" +
                             "<div class='imageWrap'>" +
                                 "<img src='" + image + "'>" +
@@ -153,6 +154,8 @@ $(".addImage").click(function() {
 
                     return;
                 }
+                
+                i++;
             });
         }
     });
