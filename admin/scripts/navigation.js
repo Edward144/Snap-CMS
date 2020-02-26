@@ -90,7 +90,6 @@ $("body").on("click", "#editorClose", function() {
     $("div#edit" + id + " input[name='hName']").val($(".editor input[name='sName']").val());
     $("div#edit" + id + " input[name='hSlug']").val($(".editor input[name='sSlug']").val());
     $("div#edit" + id + " input[name='hImage']").val($(".editor input[name='sImage']").val());
-    $("div#edit" + id + " input[name='hPosition']").val($(".editor input[name='sPosition']").val());
     
     $("input[name='edit']").attr("disabled", false);
     $("input[name='saveTree']").attr("disabled", false);
@@ -110,6 +109,8 @@ $("body").on("click", ".editor input[name='imageSelector']", function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
 
@@ -122,6 +123,8 @@ $("body").on("click", "#addItem input[name='imageSelector']", function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
 
@@ -135,7 +138,7 @@ $("#addItem select[name='posts']").on("change", function() {
     var url = $(this).children("option:selected").attr("data-url");
     var type = $(this).children("option:selected").attr("data-type");
     var name = $(this).children("option:selected").attr("data-name");
-    var fullurl = "post-type/" + type + "/" + url;
+    var fullurl = (type == "pages" ? "" : type + "/") + url;
     
     $("#addItem input[name='itemName']").val(name);
     $("#addItem input[name='itemSlug']").val(fullurl);
@@ -145,7 +148,7 @@ $("body").on("change", "select[name='posts']", function() {
     var url = $(this).children("option:selected").attr("data-url");
     var type = $(this).children("option:selected").attr("data-type");
     var name = $(this).children("option:selected").attr("data-name");
-    var fullurl = "post-type/" + type + "/" + url;
+    var fullurl = (type == "pages" ? "" : type + "/") + url;
     
     $("#editNavigation input[name='sName']").val(name);
     $("#editNavigation input[name='sSlug']").val(fullurl);
@@ -172,6 +175,8 @@ $("input[name='saveTree']").click(function() {
         index++;
     });
     
+    //console.log(navTree); return;
+    
     $.ajax({
         url: root_dir + "admin/scripts/saveNavigation.php",
         method: "POST",
@@ -186,4 +191,32 @@ $("input[name='saveTree']").click(function() {
             }
         }
     })
+});
+
+//Sortable
+$(function() {
+    $(".navigationTree").sortable({
+        connectWith: ".navigationTree",
+        stop: function() {
+            //Recalculate levels and positions
+            //Loop through each ul and get level
+            var level = 0;
+
+            $(".navigationTree").each(function() {
+                level = $(this).parents("ul")['length'];
+                $(this).children("li").find("input[name='hLevel']").first().val(level);
+
+                //Loop through each child li and set position and parent
+                var position = 0;
+                var parent = $(this).attr("id").split("parent")[1];
+
+                $(this).children("li").each(function() {
+                    $(this).find("input[name='hPosition']").first().val(position);
+                    $(this).find("input[name='hParent']").first().val(parent);
+
+                    position++;
+                });
+            });
+        }
+    });
 });
