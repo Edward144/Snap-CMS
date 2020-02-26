@@ -124,11 +124,11 @@
                 $output = '<div class="pagination">';
                 
                     if($this->showFirst == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $this->firstPage . '"><< First</a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $this->firstPage . '"><< First</a>';
                     }
                 
                     if($this->showPrev == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $prevPage . '">< Prev</a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $prevPage . '">< Prev</a>';
                     }
                 
                     if($this->showPageNumbers == true) {
@@ -143,16 +143,16 @@
                         }
                         
                         for($this->i; $this->i <= $end; $this->i++) {
-                            $output .= '<a href="' . $this->prefix . '?page=' . $this->i . '">' . $this->i . '</a>';
+                            $output .= '<a href="' . $this->prefix . 'page-' . $this->i . '">' . $this->i . '</a>';
                         }
                     }
                 
                     if($this->showNext == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $nextPage . '">Next ></a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $nextPage . '">Next ></a>';
                     }
                 
                     if($this->showLast == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $this->lastPage . '">Last >></a>';
+                        $output .= '<a href="' . $this->prefix . 'page-' . $this->lastPage . '">Last >></a>';
                     }
                 
                 $output .= '</div>';

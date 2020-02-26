@@ -15,7 +15,7 @@
         exit();
     }
     else {
-        header('Location: ../sliders?id=' . $newId);
+        header('Location: ../sliders/id-' . $newId);
         exit();
     }
 

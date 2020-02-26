@@ -50,7 +50,7 @@
                 <p>--</p>
                 <p>Snap CMS</p>';
             $headers  = 'From: noreply@' . $_SERVER['SERVER_NAME'] . "\r\n";
-            $headers .= 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'MIME-Version: 1.0' .  "\r\n";
             $headers .= 'Content-Type: text/html; charset=UTF-8';
             
             mail($to, $subject, $message, $headers, '-fnoreply@' . $_SERVER['SERVER_NAME']);

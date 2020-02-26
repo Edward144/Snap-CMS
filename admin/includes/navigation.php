@@ -1,7 +1,7 @@
 <?php 
-    $uri = explode('?category=', $_SERVER['REQUEST_URI'])[0];
-    $uri = explode('?page=', $uri)[0];
-    $uri = explode('?id=', $uri)[0];
+    $uri = explode('/category-', $_SERVER['REQUEST_URI'])[0];
+    $uri = explode('/page-', $uri)[0];
+    $uri = explode('/id-', $uri)[0];
 ?>
 
 <div class="navToggle" id="hidden"></div>

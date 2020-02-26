@@ -1,57 +1,13 @@
-//Check For Retina Display
-function isRetina() {
-    if(window.devicePixelRatio >= 1.5) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-//Replace Images with Retina Versions If They Exist
-/*$(document).ready(function() {
-    console.log("Attempting to replace images with retina versions, please ignore 404s");
-    
-    var retina = isRetina();
-    
-    if(retina == 0) {
-        $("img").each(function() {
-            var standardImg = $(this).attr("src");
-            var thisImg = $(this);
-            var retinaImg = "";
-
-            $(this).attr("src", function(x, src) {
-                var lastPeriod = src.lastIndexOf(".");
-                var extension = src.substr(lastPeriod);
-                var path = src.substr(0, lastPeriod);
-
-                retinaImg = path + "@2x" + extension;
-            });
-
-            $.ajax({
-                url: retinaImg,
-                data: ({standardImg, retinaImg}),
-                success: function(data) {
-                    thisImg.attr("src", retinaImg.split("?")[0]);
-                }
-            });
-        });
-    }
-});*/
-
 //Force Page Height
 function pageHeight() {
     setTimeout(function() {
         var headerH = $("#header").outerHeight();
         var footerH = $("#footer").outerHeight();
-        var totalH = $(window).height() - footerH;
+        var totalH = $(window).height() - (headerH + footerH);
 
         $(".main").css({
             "min-height" : totalH
         });
-        
-        $(".main").css("padding-top", headerH);
-        //$(".main .hero").css("margin-top", -headerH);
     }, 50);
 }
 
@@ -153,19 +109,9 @@ function matchHeight(element) {
     }, 100);
 }
 
-$(".expander").click(function() {
-    if($(this).attr("id") == "open") {
-        $(this).attr("id", "closed");
-        $(this).closest("li").find(".bottom").attr("id", "");
-    }
-    else {
-        $(this).attr("id", "open");
-        $(this).closest("li").find(".bottom").attr("id", "expanded");
-    }
-});
-
 $(document).ready(function() {
     pageHeight();
+    matchHeight(".listItem");
     
     $(".navToggle").click(hamburgerMenu);
     
@@ -184,4 +130,5 @@ $(document).ready(function() {
 
 $(window).resize(function() {
     pageHeight();
+    matchHeight(".listItem");
 });
