@@ -69,10 +69,6 @@ $(".navigationTreeWrap").on("click", "input[name='edit']", function() {
                         "<label>URL Slug</label>" +
                         "<input type='text' name='sSlug' value='" + $(this).closest("li").find("input[name='hSlug']").first().val() + "'>" +
                     "</p>" + 
-                    "<p>" +
-                        "<label>Position</label>" +
-                        "<input type='text' name='sPosition' value='" + $(this).closest("li").find("input[name='hPosition']").first().val() + "'>" +
-                    "</p>" + 
                 "</form>" +
             "</div>" +
         "</div>"
