@@ -99,6 +99,32 @@
                         <input type="button" name="delete" value="Delete" class="redButton" data-id="<?php echo $post['id']; ?>">
                     </p>
                     
+                    <hr>
+                    
+                    <h3>Meta Data</h3>
+                    
+                    <p>Meta details will appear in Google and other search engine results</p>
+                    
+                    <p>
+                        <label>Meta Title</label>
+                        <input type="text" name="metaTitle" value="<?php echo $post['meta_title']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Meta Description</label>
+                        <input type="text" name="metaDescription" value="<?php echo $post['meta_description']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Meta Keywords</label>
+                        <input type="text" name="metaKeywords" value="<?php echo $post['meta_keywords']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Meta Author</label>
+                        <input type="text" name="metaAuthor" value="<?php echo $post['meta_author']; ?>">
+                    </p>
+                    
                     <input type="submit" value="Save Post">
                     
                     <p id="message" class="contentMessage"></p>
@@ -245,7 +271,7 @@
                 <hr>
                 
                 <form id="postTypeDetails" method="POST" action="<?php echo ROOT_DIR; ?>admin/scripts/editPostType.php">
-                    <?php $postType = $mysqli->query("SELECT id, title, image_url, content FROM `post_types` WHERE name = '{$_GET['post-type']}'")->fetch_assoc(); ?>
+                    <?php $postType = $mysqli->query("SELECT id, image_url, title, image_url, content, meta_title, meta_description, meta_keywords, meta_author FROM `post_types` WHERE name = '{$_GET['post-type']}'")->fetch_assoc(); ?>
                     
                     <input type="hidden" name="typeId" value="<?php echo $postType['id']; ?>">
                     <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI'] ?>">
@@ -255,8 +281,41 @@
                     </p>
                     
                     <p>
+                        <label>Image</label>
+                        <input type="text" name="imageUrl" value="<?php echo $postType['image_url']; ?>">
+                        <br>
+                        <input type="button" value="Choose File" name="imageSelector">
+                    </p>
+                    
+                    <p>
                         <label>Content</label><br><br>
                         <textarea name="content"><?php echo $postType['content']; ?></textarea>
+                    </p>
+                    
+                    <hr>
+                    
+                    <h3>Meta Data</h3>
+                    
+                    <p>Meta details will appear in Google and other search engine results</p>
+                    
+                    <p>
+                        <label>Meta Title</label>
+                        <input type="text" name="metaTitle" value="<?php echo $postType['meta_title']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Meta Description</label>
+                        <input type="text" name="metaDescription" value="<?php echo $postType['meta_description']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Meta Keywords</label>
+                        <input type="text" name="metaKeywords" value="<?php echo $postType['meta_keywords']; ?>">
+                    </p>
+                    
+                    <p>
+                        <label>Meta Author</label>
+                        <input type="text" name="metaAuthor" value="<?php echo $postType['meta_author']; ?>">
                     </p>
                     
                     <input type="submit" value="Update Details">

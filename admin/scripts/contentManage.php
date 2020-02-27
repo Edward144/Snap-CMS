@@ -22,10 +22,14 @@
             date_posted = ?,
             last_edited = NOW(),
             last_edited_by = ?,
-            custom_content = ?
+            custom_content = ?,
+            meta_title = ?,
+            meta_description = ?,
+            meta_keywords = ?,
+            meta_author = ?
         WHERE id = ?
     ");
-    $general->bind_param('ssssissisi', $_POST['name'], $url, $_POST['short'], $_POST['content'], $_POST['category'], $_POST['author'], $posted, $_SESSION['adminid'], $_POST['customFile'], $_POST['id']);
+    $general->bind_param('ssssississsssi', $_POST['name'], $url, $_POST['short'], $_POST['content'], $_POST['category'], $_POST['author'], $posted, $_SESSION['adminid'], $_POST['customFile'], $_POST['metaTitle'], $_POST['metaDesc'], $_POST['metaKeywords'], $_POST['metaAuthor'], $_POST['id']);
     $ex = $general->execute();
 
     if($ex === false) {

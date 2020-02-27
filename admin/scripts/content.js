@@ -40,6 +40,10 @@ $("#contentManage input[type='submit']").click(function() {
     var author = $("#contentManage input[name='postAuthor']").val();
     var customFile = $("#contentManage input[name='postCustom']").val();
     var content = $("#contentManage textarea[name='postContent']").val();
+    var metaTitle = $("#contentManage input[name='metaTitle']").val();
+    var metaDesc = $("#contentManage input[name='metaDescription']").val();
+    var metaKeywords = $("#contentManage input[name='metaKeywords']").val();
+    var metaAuthor = $("#contentManage input[name='metaAuthor']").val();
     
     if(name == "") {
         $("#contentManage #message").text("Title is missing");
@@ -97,7 +101,7 @@ $("#contentManage input[type='submit']").click(function() {
         url: "../scripts/contentManage.php",
         method: "POST",
         dataType: "json",
-        data: ({id, name, url, category, short, posted, author, customFile, content, images, hasOptions, specs}),
+        data: ({id, name, url, category, short, posted, author, customFile, content, images, hasOptions, metaTitle, metaDesc, metaKeywords, metaAuthor, specs}),
         success: function(data) {
             $("#contentManage #message").text(data);
         },
@@ -157,6 +161,21 @@ $(".addImage").click(function() {
                 
                 i++;
             });
+        }
+    });
+});
+
+//Upload Image Post Type
+$("#postTypeDetails input[name='imageSelector']").click(function() {
+    moxman.browse({
+        extensions: 'png, jpg, jpeg, gif, webp, svg',
+        skin: "snapcms",
+        relative_urls: false,
+        remove_script_host: true,
+        oninsert: function(args) {
+            var image = args.files[0].url;
+            
+            $("#postTypeDetails input[name='imageUrl']").val(image);
         }
     });
 });
