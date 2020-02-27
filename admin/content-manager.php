@@ -89,16 +89,6 @@
                         <input type="text" name="postCustom" value="<?php echo $post['custom_content']; ?>">
                     </p>
                     
-                    <p>
-                        <?php if($post['visible'] == 1) : ?>
-                            <input type="button" name="hide" value="Visible" data-id="<?php echo $post['id']; ?>">
-                        <?php else : ?>
-                            <input type="button" name="show" value="Hidden" data-id="<?php echo $post['id']; ?>">
-                        <?php endif; ?>
-                        
-                        <input type="button" name="delete" value="Delete" class="redButton" data-id="<?php echo $post['id']; ?>">
-                    </p>
-                    
                     <hr>
                     
                     <h3>Meta Data</h3>
@@ -123,6 +113,18 @@
                     <p>
                         <label>Meta Author</label>
                         <input type="text" name="metaAuthor" value="<?php echo $post['meta_author']; ?>">
+                    </p>
+                    
+                    <hr>
+                    
+                    <p>
+                        <?php if($post['visible'] == 1) : ?>
+                            <input type="button" name="hide" value="Visible" data-id="<?php echo $post['id']; ?>">
+                        <?php else : ?>
+                            <input type="button" name="show" value="Hidden" data-id="<?php echo $post['id']; ?>">
+                        <?php endif; ?>
+                        
+                        <input type="button" name="delete" value="Delete" class="redButton" data-id="<?php echo $post['id']; ?>">
                     </p>
                     
                     <input type="submit" value="Save Post">
