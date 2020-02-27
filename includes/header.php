@@ -17,12 +17,7 @@
 
 <html>
     <head>
-        <?php $meta = metaData($mysqli); ?>
-        <title><?php echo $meta['title']; ?></title>        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="<?php echo $meta['author']; ?>">
-        <meta name="description" content="<?php echo $meta['description']; ?>">
+        <?php echo metaData(); ?>
         
         <link href="<?php echo ROOT_DIR ?>includes/style.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">

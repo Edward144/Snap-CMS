@@ -175,7 +175,11 @@
             last_edited DATETIME DEFAULT CURRENT_TIMESTAMP(),
             last_edited_by INT,
             visible TINYINT(4),
-            custom_content VARCHAR(255)
+            custom_content VARCHAR(255),
+            meta_title VARCHAR(255),
+            meta_description VARCHAR(255),
+            meta_keywords VARCHAR(255),
+            meta_author VARCHAR(255)
         )"
     );
 
@@ -190,7 +194,11 @@
             title VARCHAR(255),
             content TEXT,
             image_url VARCHAR(500),
-            has_options TINYINT(4) DEFAULT 0
+            has_options TINYINT(4) DEFAULT 0,
+            meta_title VARCHAR(255),
+            meta_description VARCHAR(255),
+            meta_keywords VARCHAR(255),
+            meta_author VARCHAR(255)
         )"
     );
 

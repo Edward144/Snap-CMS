@@ -66,55 +66,79 @@
     }
 
     //Meta Data
-    function metaData($mysqli) {
-        $companyName = $mysqli->query("SELECT name FROM `company_info` LIMIT 1");
-        $meta = [];
-        
-        if($companyName->num_rows > 0) {
-            $companyName = $companyName->fetch_array()[0];
-            
-            if($companyName != null) {
-                $metaCompany = ucwords($companyName);
+    function metaData() {
+        global $mysqli;
+
+        $companyName = $mysqli->query("SELECT name FROM `company_info` WHERE name IS NOT NULL AND name <> ''");
+        $companyName = ucwords(($companyName->num_rows == 1 ? ' | ' . $companyName->fetch_array()[0] : ''));
+
+        if($_GET['url']) {
+            //UGC Page
+            $url = explode('/', $_GET['url']);
+
+            if(count($url) == 2) {
+                //Single Page
+                $postType = $url[0];
+                $postName = $url[1];
+
+                $data = $mysqli->prepare("
+                    SELECT post_types.name AS post_type, posts.meta_title, posts.meta_description, posts.meta_keywords, posts.meta_author, posts.name, posts.short_description, posts.author FROM `posts` 
+                        LEFT OUTER JOIN post_types ON posts.post_type_id = post_types.id
+                    WHERE posts.url = ? AND post_types.name = ?
+                ");
+                $data->bind_param('ss', $postName, $postType);
+                $data->execute();
+                $meta = $data->get_result()->fetch_assoc();
             }
-            else {
-                $metaCompany = 'Snap CMS';
-            }
-        }
-        else {
-            $metaCompany = 'Snap CMS';
-        }
-        
-        if(isset($_GET['url'])) {
-            $post = $mysqli->query("SELECT name, short_description, author FROM `posts` WHERE url = '{$_GET['url']}'");
-            
-            if($post->num_rows > 0) {
-                $post = $post->fetch_assoc();
-                
-                $metaTitle = $post['name'];
-                $metaDesc = $post['short_description'];
-                $metaAuthor = $post['author'];
-            }
-        }
-        elseif(isset($_GET['post-type'])) {
-            $metaTitle = ucwords(str_replace('-', ' ', $_GET['post-type']));
-            $metaDesc = ucwords(str_replace('-', ' ', $_GET['post-type']));
-            $metaAuthor = $metaCompany;
+            else {                        
+                //Check if Single or List
+                $singleCheck = $mysqli->prepare("SELECT meta_title, meta_description, meta_keywords, meta_author, name, short_description, author FROM `posts` WHERE url = ?");
+                $singleCheck->bind_param('s', $url[0]);
+                $singleCheck->execute();
+                $singleResults = $singleCheck->get_result();
+
+                $listCheck = $mysqli->prepare("SELECT meta_title, meta_description, meta_keywords, meta_author, name FROM `post_types` WHERE name = ?");
+                $listCheck->bind_param('s', $url[0]);
+                $listCheck->execute();
+                $listResults = $listCheck->get_result();
+
+                if($singleResults->num_rows > 0 && $listResults->num_rows <= 0) {
+                    //Single
+                    $meta = $singleResults->fetch_assoc();
+                }
+                elseif($listResults->num_rows > 0 && $singleResults->num_rows <= 0) {
+                    //List
+                    $meta = $listResults->fetch_assoc();
+                }
+            }                    
         }
         elseif($_SERVER['REQUEST_URI'] == ROOT_DIR) {
-            $metaTitle = 'Home';
-            $metaDesc = 'Welcome to ' . $metaCompany;
-            $metaAuthor = $metaCompany;
+            //Index Page
+            $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0];
+            $data = $mysqli->prepare("SELECT meta_title, meta_description, meta_keywords, meta_author, name, short_description, author FROM `posts` WHERE id = ?");
+            $data->bind_param('i', $homepage);
+            $data->execute();
+            $meta = $data->get_result()->fetch_assoc();
         }
-        
-        if(strlen($metaTitle) > 0) {
-            $metaTitle = $metaTitle . ' | ';
+        else {
+            $meta = [
+                'meta_title' => ltrim($companyName, ' | '),
+                'meta_author' => ltrim($companyName, ' | '),
+                'meta_description' => '',
+                'meta_keywords' => ''
+            ];
         }
-        
-        $meta['title'] = $metaTitle . ' ' . $metaCompany;
-        $meta['description'] = $metaDesc;
-        $meta['author'] = $metaAuthor;
-        
-        return $meta;
+
+        $title = ucwords(($meta['meta_title'] != null && $meta['meta_title'] != '' ? $meta['meta_title'] : $meta['name']) . $companyName);
+        $description = ($meta['meta_description'] != null && $meta['meta_description'] != '' ? $meta['meta_description'] : (isset($meta['short_description']) ? $meta['short_description'] : ''));
+        $keywords = ($meta['meta_keywords'] != null && $meta['meta_keywords'] != '' ? $meta['meta_keywords'] : '');
+        $author = ucwords(($meta['meta_author'] != null && $meta['meta_author'] != '' ? $meta['meta_author'] : (isset($meta['author']) ? $meta['author'] : '')));
+
+        return 
+            (strlen($title) > 0 ? '<title>' . $title . '</title>' : '') .
+            (strlen($description) > 0 ? '<meta name="description" content="' . $description . '">' : '') .
+            (strlen($keywords) > 0 ? '<meta name="keywords" content="' . $keywords . '">' : '') .
+            (strlen($author) > 0 ? '<meta name="author" content="' . $author . '">' : '');
     }
 
     //Remove Spaces
