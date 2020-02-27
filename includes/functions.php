@@ -76,17 +76,17 @@
             //UGC Page
             $url = explode('/', $_GET['url']);
 
-            if(count($url) == 2) {
+            if(count($url) >= 2) {
                 //Single Page
                 $postType = $url[0];
-                $postName = $url[1];
+                $postName = '%' . $url[count($url) - 1];
 
                 $data = $mysqli->prepare("
                     SELECT post_types.name AS post_type, posts.meta_title, posts.meta_description, posts.meta_keywords, posts.meta_author, posts.name, posts.short_description, posts.author FROM `posts` 
                         LEFT OUTER JOIN post_types ON posts.post_type_id = post_types.id
-                    WHERE posts.url = ? AND post_types.name = ?
+                    WHERE posts.url LIKE ?
                 ");
-                $data->bind_param('ss', $postName, $postType);
+                $data->bind_param('s', $postName);
                 $data->execute();
                 $meta = $data->get_result()->fetch_assoc();
             }
