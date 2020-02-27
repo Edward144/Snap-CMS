@@ -146,15 +146,13 @@
                                     <div>
                                         <table>
                                             <?php
-                                                $specifications = explode(';', rtrim($post['specifications'], ';'));
+                                                $specifications = json_decode($post['specifications'], true);
 
-                                                foreach($specifications as $specRow) :
-                                                    $specName = explode('":"', ltrim($specRow, '"'))[0];
-                                                    $specValue = explode('":"', rtrim($specRow, '"'))[1];
+                                                foreach($specifications as $index => $spec) :
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $specName; ?></td>
-                                                    <td><?php echo $specValue; ?></td>
+                                                    <td><?php echo $spec['name']; ?></td>
+                                                    <td><?php echo $spec['value']; ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </table>
