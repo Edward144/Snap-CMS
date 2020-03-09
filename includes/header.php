@@ -18,6 +18,7 @@
 <html>
     <head>
         <?php echo metaData(); ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link href="<?php echo ROOT_DIR ?>includes/style.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
