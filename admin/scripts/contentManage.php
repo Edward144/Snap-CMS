@@ -66,7 +66,7 @@
             
             //If uploaded image is retina create downscaled copy
             if(strpos($imageOri, '@2x') !== false) {
-                copy($_SERVER['DOCUMENT_ROOT'] . $image['url'], $retinaUrl);
+                copy($_SERVER['DOCUMENT_ROOT'] . urldecode($image['url']), $retinaUrl);
                 
                 $resize = new \Gumlet\ImageResize($retinaUrl);
                 $resize->scale(50);
@@ -74,7 +74,7 @@
             }
             //If uploaded image isn't retina create upscaled copy
             else {
-                copy($_SERVER['DOCUMENT_ROOT'] . $image['url'], $standardUrl);
+                copy($_SERVER['DOCUMENT_ROOT'] . urldecode($image['url']), $standardUrl);
                 
                 $resize = new \Gumlet\ImageResize($standardUrl);
                 $resize->scale(200);
