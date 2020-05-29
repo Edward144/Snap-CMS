@@ -165,7 +165,7 @@
                     </div>
                 <?php endif; ?>
                 
-                <?php echo $post['content']; ?>
+                <?php echo eval('?>' . $post['content']); ?>
             </div>
         <?php endif; ?>
 

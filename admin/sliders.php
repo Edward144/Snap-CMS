@@ -39,7 +39,10 @@
             relative_urls: false,
             remove_script_host: false,
             image_title: true,
-            height: 100
+            height: 100,
+            protect: [
+                /<\?php.*?\?>/g
+            ]
         });
     </script>
 

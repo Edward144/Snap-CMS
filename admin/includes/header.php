@@ -54,7 +54,10 @@
                 height: 260,
                 content_css: root_dir + "includes/custom.css",
                 extended_valid_elements: 'span, script[src|async|defer|type|charset]',
-                allow_script_urls: true
+                allow_script_urls: true,
+                protect: [
+                    /<\?php.*?\?>/g
+                ]
             });
         </script>
     </head>
