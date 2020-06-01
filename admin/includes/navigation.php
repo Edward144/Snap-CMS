@@ -13,7 +13,7 @@
         </li>
         
         <li class="hasChildren">
-            <a href="<?php echo ROOT_DIR; ?>admin/content-manager/posts">Content Manager</a>
+            <a href="<?php echo ROOT_DIR; ?>admin/content-manager/pages">Content Manager</a>
             
             <?php 
                 $postEditors = $mysqli->query("SELECT name FROM `post_types` ORDER BY id ASC"); 
