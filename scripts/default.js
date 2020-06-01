@@ -9,7 +9,7 @@ function pageHeight() {
             "min-height" : totalH
         });
         
-        $(".main").css("padding-top", headerH);
+        //$(".main").css("padding-top", headerH);
         //$(".main .hero").css("margin-top", -headerH);
     }, 50);
 }
