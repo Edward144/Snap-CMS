@@ -10,7 +10,6 @@
     $_SESSION['hostname'] = $hostname;
     $_SESSION['database'] = $database;
     $_SESSION['username'] = $username;
-    $_SESSION['password'] = $password;
     
     $docRoot = $_POST['docRoot'];
 
@@ -21,8 +20,6 @@
     $adminPasswordConf = $_POST['adminPasswordConf'];
 
     $_SESSION['adminEmail'] = $adminEmail;
-    $_SESSION['adminPassword'] = $adminPassword;
-    $_SESSION['adminPasswordConf'] = $adminPasswordConf;
 
     if($hostname == null || $hostname == '') {
         $_SESSION['setupmessage'] = 'Hostname is missing.';
@@ -78,7 +75,8 @@
             last_name VARCHAR(50),
             username VARCHAR(100) UNIQUE,
             password VARCHAR(60),
-            email VARCHAR(191) UNIQUE
+            email VARCHAR(191) UNIQUE,
+            access_level int DEFAULT 0
         )"
     );
 
@@ -90,13 +88,15 @@
             last_name,
             username,
             password,
-            email
+            email,
+            access_level
         ) VALUES (
             'Admin',
             'User',
             'admin',
             ?,
-            ?
+            ?,
+            0
         )"
     );
     $adminUser->bind_param('ss', $adminPassword, $adminEmail);

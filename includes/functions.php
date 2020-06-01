@@ -1,6 +1,7 @@
 <?php
 
-    //Breadrumbs Admin
+    //Admin Functions
+
     function adminBreadcrumbs() {
         $breadcrumbs = '';
         $levels = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
@@ -64,6 +65,25 @@
         
         return $cmsName;
     }
+
+    function checkAccess($userlevel, $requiredLevel = 0) {
+        global $mysqli;
+        
+        if($userlevel != $requiredLevel) {
+            $admin = $mysqli->query("SELECT * FROM `users` WHERE access_level = 0 ORDER BY id ASC LIMIT 1")->fetch_assoc();
+            
+            echo 
+                '<h1 style="color: red">Your current access level does not permit you to view this page.</h1>
+                <h2>If you feel that this is incorrect please contact your administrator. <a href="mailto: ' . $admin['email'] . '">' . $admin['email'] .'</a></h2>
+                <h3><a href="' . ROOT_DIR . 'admin">Return to the dashboard</a></h3>';
+            
+            include_once('../admin/includes/footer.php');
+            
+            exit();
+        }
+    }
+
+    //Frontend Functions
 
     //Meta Data
     function metaData() {

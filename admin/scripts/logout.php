@@ -4,6 +4,7 @@
     
     unset($_SESSION['adminusername']);
     unset($_SESSION['adminid']);
+    unset($_SESSION['adminlevel']);
     
     header('Location: ../../login');
     

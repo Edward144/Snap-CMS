@@ -35,6 +35,7 @@
         if(password_verify($password, $result['password'])) {
             $_SESSION['adminusername'] = $user;
             $_SESSION['adminid'] = $result['id'];
+            $_SESSION['adminlevel'] = $result['access_level'];
             
             unset($_SESSION['username']);
             unset($_SESSION['password']);
