@@ -36,12 +36,12 @@
                 <div>
                     <p>
                         <label>Username</label>
-                        <input type="text" name="username" value="<?php echo (isset($_SESSION['username']) ? $_SESSION['username'] : ''); ?>">
+                        <input type="text" name="username" value="<?php echo (isset($_SESSION['username']) ? $_SESSION['username'] : ''); ?>" autofocus>
                     </p>
 
                     <p>
                         <label>Password</label>
-                        <input type="password" name="password" value="<?php echo (isset($_SESSION['password']) ? $_SESSION['password'] : ''); ?>">
+                        <input type="password" name="password">
                     </p>
 
                     <p>

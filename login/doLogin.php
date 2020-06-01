@@ -8,7 +8,6 @@
     $password = $_POST['password'];
 
     $_SESSION['username'] = $user;
-    $_SESSION['password'] = $password;
     
     if($user == null || $user == '') {
         $_SESSION['message'] = 'Username is missing.';

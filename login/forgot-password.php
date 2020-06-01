@@ -3,7 +3,7 @@
     require_once('../includes/functions.php');
 
     //Redirect to admin if user is logged in
-    if(isset($_SESSION['username'])) {
+    if(isset($_SESSION['adminusername'])) {
         header('Location: ../admin/');
         
         exit();

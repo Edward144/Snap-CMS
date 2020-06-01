@@ -19,14 +19,13 @@ a:hover {
     padding: 1em;
     height: 100%;
     height: 100vh;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .blueForm {
     position: absolute;
     width: 90%;
-    width: -webkit-calc(100% - 2em);
-    width: -moz-calc(100% - 2em);
     width: -o-calc(100% - 2em);
     width: calc(100% - 2em);
     max-width: 600px;
@@ -35,16 +34,20 @@ a:hover {
     left: 0;
     right: 0;
     overflow: hidden;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 #loginForm, #forgotForm, #resetForm {
     top: 50%;
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
     transform: translateY(-100%);
 }
 
 .blueForm > div {
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -54,6 +57,7 @@ a:hover {
     background: #00a1ff;
     margin: 0;
     padding: 0.5em 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -82,8 +86,6 @@ a:hover {
 }
 
 .blueForm p > input:not([type="submit"]) {
-    width: -webkit-calc(100% - 210px);
-    width: -moz-calc(100% - 210px);
     width: -o-calc(100% - 210px);
     width: calc(100% - 210px);
 }
@@ -91,6 +93,7 @@ a:hover {
 .blueForm p > input[type="text"],
 .blueForm p > input[type="password"] {
     padding: 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid #ccc;
 }
@@ -113,6 +116,7 @@ a:hover {
     background: #00a1ff;
     color: #fff;
     padding: 0 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     z-index: 100;
 }
@@ -135,6 +139,15 @@ a:hover {
 /* RESPONSIVE */
 
 @media only screen and (max-width: 500px) {
+    #siteReturn {
+        position: static;
+        padding: 1em;
+    }
+    
+    #siteReturn p {
+        margin: 0;
+    }
+    
     .formWrap {
         height: auto;
         width: 100vw;
@@ -142,7 +155,9 @@ a:hover {
     
     .blueForm {
         margin-bottom: 1em;
-        transform: translateY(0%);
+        -webkit-transform: translateY(0%) !important;
+        -ms-transform: translateY(0%) !important;
+        transform: translateY(0%) !important;
         top: 1em;
     }
     
