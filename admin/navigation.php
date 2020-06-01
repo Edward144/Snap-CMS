@@ -55,6 +55,8 @@
             <form id="createMenu" method="POST" action="../scripts/createNavigation.php">
                 <h3>Create New Menu</h3>
                 
+                <p>Currently newly created menus won't appear, they must be manually added within the template code.</p>
+                
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 <p>
                     <label>Name</label>
