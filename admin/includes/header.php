@@ -51,7 +51,7 @@
                 relative_urls: false,
                 remove_script_host: false,
                 image_title: true,
-                height: 260,
+                height: 1000,
                 content_css: root_dir + "includes/custom.css",
                 extended_valid_elements: 'span, script[src|async|defer|type|charset]',
                 allow_script_urls: true,

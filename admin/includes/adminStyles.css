@@ -14,12 +14,16 @@ body {
 a {
     color: #00a1ff;
     color: var(--main);
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
 }
 
 a:hover {
     color: #0081cc;
     color: var(--main-hover);
+    -webkit-transition: all 0.35s ease-in;
+    -o-transition: all 0.35s ease-in;
     transition: all 0.35s ease-in;
 }
 
@@ -81,12 +85,11 @@ hr {
 .formattedTable input:not([type="button"]):not([type="submit"]){
     display: inline-block;
     vertical-align: middle;
-    width: -webkit-calc(100% - 210px);
-    width: -moz-calc(100% - 210px);
     width: -o-calc(100% - 210px);
     width: calc(100% - 210px);
     max-width: 500px;
     padding: 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid #dedede;
 }
@@ -106,6 +109,8 @@ hr {
     min-width: 120px;
     color: #fff;
     padding: 1em;
+    -webkit-transition: background 0.5s ease-out;
+    -o-transition: background 0.5s ease-out;
     transition: background 0.5s ease-out;
     vertical-align: middle;
 }
@@ -116,6 +121,8 @@ hr {
 .formattedTable input[type="submit"]:hover {
     background: #0081cc;
     background: var(--main-hover);
+    -webkit-transition: background 0.35s ease-in;
+    -o-transition: background 0.35s ease-in;
     transition: background 0.35s ease-in;
 }
 
@@ -136,6 +143,8 @@ hr {
 }
 
 .formBlock input[type="checkbox"] {
+    -webkit-transform: scale(1.5);
+    -ms-transform: scale(1.5);
     transform: scale(1.5);
     width: 20px !important;
     margin: auto;
@@ -158,8 +167,6 @@ hr {
 }
 
 .formattedTable .hasButton, .formBlock .hasButton {
-    width: -webkit-calc(100% - 95px) !important;
-    width: -moz-calc(100% - 95px) !important;
     width: -o-calc(100% - 95px) !important;
     width: calc(100% - 95px) !important;
     display: inline-block !important;
@@ -167,8 +174,6 @@ hr {
 
 @media only screen and (min-width: 1533px) {
     .formBlock .hasButton {
-        width: -webkit-calc(100% - 295px) !important;
-        width: -moz-calc(100% - 295px) !important;
         width: -o-calc(100% - 295px) !important;
         width: calc(100% - 295px) !important;
         display: inline-block !important;
@@ -211,6 +216,7 @@ hr {
     background: var(--main);
     color: #fff;
     padding: 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-right: 1px solid #fff;
 }
@@ -221,6 +227,7 @@ hr {
 
 .formattedTable tr td {
     padding: 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     text-align: center;
     min-width: 200px;
@@ -232,12 +239,18 @@ hr {
 }
 
 .flexContainer {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
 }
 
 .column > div {
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-bottom: 5px solid #00a1ff;
     border-bottom: 5px solid var(--main);
@@ -247,36 +260,57 @@ hr {
     border-right: 1px solid var(--grey);
 }
 
+.column-80 {
+    width: 80%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .column-70 {
     width: 70%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .column-60 {
     width: 60%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .column-50 {
     width: 50%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .column-40 {
     width: 40%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .column-30 {
     width: 30%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.flexContainer .column:first-child {
+.column-20 {
+    width: 20%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.flexContainer .column {
     margin-right: 1em;
 }
 
-.flexContainer .column.column-70:first-child{
+.flexContainer .column:last-child {
+    margin-right: 0;
+}
+
+/*.flexContainer .column.column-70:first-child{
     width: -webkit-calc(70% - 1em);
     width: -moz-calc(70% - 1em);
     width: -o-calc(70% - 1em);
@@ -309,11 +343,12 @@ hr {
     width: -moz-calc(30% - 1em);
     width: -o-calc(30% - 1em);
     width: calc(30% - 1em);
-}
+}*/
 
 .greyHeader {
     margin: 0;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background: #dedede;
     background: var(--grey);
@@ -367,6 +402,7 @@ hr {
 
 #adminHeader .headerInner {
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -377,10 +413,9 @@ hr {
 
 #adminHeader .detailsWrap {
     text-align: right;
-    width: -webkit-calc(100% - 504px - 1em);
-    width: -moz-calc(100% - 504px - 1em);
     width: -o-calc(100% - 504px - 1em);
     width: calc(100% - 504px - 1em);
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -395,7 +430,12 @@ hr {
 }
 
 #adminNav ul {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     margin: 0;
     padding: 0;
@@ -408,12 +448,15 @@ hr {
     position: relative;
     background: #ff5722;
     background: var(--accent);
+    -webkit-transition: background 0.5s ease-out, color 0.5s ease-out;
+    -o-transition: background 0.5s ease-out, color 0.5s ease-out;
     transition: background 0.5s ease-out, color 0.5s ease-out;
 }
 
 #adminNav ul li > a {
     display: block;
     padding: 1em 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     text-decoration: none;
     cursor: pointer;
@@ -428,6 +471,8 @@ hr {
     background: #cc461b;
     background: var(--accent-hover);
     font-weight: normal;
+    -webkit-transition: background 0.35s ease-in, color 0.35s ease-in;
+    -o-transition: background 0.35s ease-in, color 0.35s ease-in;
     transition: background 0.35s ease-in, color 0.35s ease-in;
 }
 
@@ -451,6 +496,8 @@ hr {
     width: 100%;
     visibility: hidden;
     display: block;
+    -webkit-transition: visibility 0.51s, opacity 0.5s ease-out;
+    -o-transition: visibility 0.51s, opacity 0.5s ease-out;
     transition: visibility 0.51s, opacity 0.5s ease-out;
 }
 
@@ -458,6 +505,8 @@ hr {
     #adminNav li:hover > .subMenu {
         visibility: visible;
         opacity: 1;
+        -webkit-transition: visibility 0s, opacity 0.35s ease-in;
+        -o-transition: visibility 0s, opacity 0.35s ease-in;
         transition: visibility 0s, opacity 0.35s ease-in;
     }
 }
@@ -465,6 +514,8 @@ hr {
 #adminNav .subMenu.active {
     visibility: visible;
     opacity: 1;
+    -webkit-transition: visibility 0s, opacity 0.35s ease-in;
+    -o-transition: visibility 0s, opacity 0.35s ease-in;
     transition: visibility 0s, opacity 0.35s ease-in;
 }
 
@@ -472,6 +523,7 @@ hr {
     position: absolute;
     top: 1em;
     right: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #fff;
     width: 50px;
@@ -482,12 +534,16 @@ hr {
     background-repeat: no-repeat;
     background-position: center;
     display: none;
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
 }
 
 .navToggle:hover {
     background-image: url('../images/icons/hamburger-icon.png');
     background-color: #111;
+    -webkit-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
     transition: all 0.5s ease-in;
 }
 
@@ -498,6 +554,7 @@ hr {
     background: #00a1ff;
     background: var(--main);
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: #fff;
 }
@@ -524,13 +581,19 @@ hr {
     overflow-x: hidden;
     height: 100vh;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 /* DASHBOARD */
 
 .dashboardBlocks {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
@@ -544,6 +607,7 @@ hr {
     border-left: 1px solid var(--grey);
     border-right: 1px solid #dedede;
     border-right: 1px solid var(--grey);
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     
 }
@@ -551,6 +615,7 @@ hr {
 .dashboardBlock .counter {
     text-align: center;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background: #dedede;
     background: var(--grey);
@@ -570,6 +635,7 @@ hr {
 
 .dashboardBlock .postList h3{
     padding: 0 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -645,7 +711,12 @@ hr {
 }
 
 .imageUploader .images {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
@@ -664,6 +735,7 @@ hr {
     left: 0;
     right: 0;
     padding-top: 60px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: auto;
     text-align: center;
@@ -682,7 +754,9 @@ hr {
 .imageUploader .imageWrap > img {
     width: 100%;
     height: 100%;
+    -o-object-fit: cover;
     object-fit: cover;
+    -o-object-position: center;
     object-position: center;
 }
 
@@ -709,6 +783,8 @@ hr {
     background: #dedede;
     background: var(--grey);
     display: table;
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
 }
 
@@ -725,6 +801,8 @@ hr {
     background: #0081cc;
     background: var(--main-hover);
     color: #fff;
+    -webkit-transition: all 0.35s ease-in;
+    -o-transition: all 0.35s ease-in;
     transition: all 0.35s ease-in;
 }
 
@@ -735,6 +813,8 @@ hr {
     background: #f44336;
     background: var(--bad);
     color: #fff;
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
     visibility: hidden;
     opacity: 0;
@@ -754,6 +834,8 @@ hr {
 .imageUploader #deleteImage:hover {
     background: #c3352b;
     background: var(--bad-hover);
+    -webkit-transition: all 0.35s ease-in;
+    -o-transition: all 0.35s ease-in;
     transition: all 0.35s ease-in;
 }
 
@@ -782,6 +864,7 @@ hr {
     background: var(--grey);
     border-radius: 0.5em;
     padding: 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 44px;
 }
@@ -793,10 +876,12 @@ hr {
 }
 
 .navigationTree > li {
+    cursor: -webkit-grab;
     cursor: grab;
 }
 
 .navigationTree > li:active {
+    cursor: -webkit-grabbing;
     cursor: grabbing;
 }
 
@@ -823,8 +908,6 @@ hr {
 
 @media only screen and (max-width: 1170px) {
     #adminHeader .detailsWrap {
-        padding-right: -webkit-calc(50px + 1em);
-        padding-right: -moz-calc(50px + 1em);
         padding-right: -o-calc(50px + 1em);
         padding-right: calc(50px + 1em);
     }
@@ -846,8 +929,6 @@ hr {
     #adminNav ul {
         display: block;
         overflow: auto;
-        max-height: -webkit-calc(100vh - 80px);
-        max-height: -moz-calc(100vh - 80px);
         max-height: -o-calc(100vh - 80px);
         max-height: calc(100vh - 80px);
     }
@@ -866,6 +947,8 @@ hr {
         max-height: 0;
         opacity: 1;
         visibility: visible;
+        -webkit-transition: all 0.5s ease-out;
+        -o-transition: all 0.5s ease-out;
         transition: all 0.5s ease-out;
     }
     
@@ -876,14 +959,22 @@ hr {
     
     #adminNav li > .subMenu.active {
         max-height: 100vh;
+        -webkit-transition: max-height 0.5s ease-in;
+        -o-transition: max-height 0.5s ease-in;
         transition: max-height 0.5s ease-in;
     }
     
     #adminNav ul li.hasChildren > a:after {
         display: inline-block;
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
         transform: rotate(90deg);
         margin-left: 4px;
+        -webkit-transition: -webkit-transform 0.9s ease;
+        transition: -webkit-transform 0.9s ease;
+        -o-transition: transform 0.9s ease;
         transition: transform 0.9s ease;
+        transition: transform 0.9s ease, -webkit-transform 0.9s ease;
     }
     
     #adminNav ul li.hasChildren > a.active {
@@ -892,8 +983,14 @@ hr {
     }
     
     #adminNav ul li.hasChildren > a.active:after {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
         transform: rotate(0deg);
+        -webkit-transition: -webkit-transform 0.5s ease;
+        transition: -webkit-transform 0.5s ease;
+        -o-transition: transform 0.5s ease;
         transition: transform 0.5s ease;
+        transition: transform 0.5s ease, -webkit-transform 0.5s ease;
     }
 }
 

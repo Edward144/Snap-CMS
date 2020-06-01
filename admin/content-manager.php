@@ -37,7 +37,7 @@
 
     <form id="contentManage" method="POST" action="../scripts/contentManage.php">
         <div class="flexContainer" id="contentManager">
-            <div class="column column-30 formBlock contentControls">
+            <div class="column column-20 formBlock contentControls">
                 <h2 class="greyHeader"><?php echo ucwords(str_replace('-', ' ', rtrim($postTypeName, 's'))) . ' ' . $_GET['id']; ?>: General Details</h2>
                 
                 <div>
@@ -156,14 +156,16 @@
                 </div>
             </div>
             
-            <div class="column column-70 formBlock contentControls">
+            <div class="column column-60 formBlock contentControls">
                 <h2 class="greyHeader">Content</h2>
                 
                 <div>                    
                     <textarea name="postContent"><?php echo $post['content']; ?></textarea>
                 </div>
-                
-                <h2 class="greyHeader" style="margin-top: 1em;">Gallery</h2>
+            </div>
+            
+            <div class="column column-20 formBlock contentControls">
+                <h2 class="greyHeader">Gallery</h2>
                 
                 <div class="imageUploader">
                     <div class="images">                        
