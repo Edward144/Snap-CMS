@@ -993,9 +993,20 @@ hr {
         transition: transform 0.5s ease, -webkit-transform 0.5s ease;
     }
     
+    .flexContainer {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+    
     .flexContainer .column {
-        margin-right: 0 !important;
+        margin-right: 0;
         width: 100%;
+        margin-bottom: 1em;
+    }
+    
+    .flexContainer .column:last-child {
+        margin-bottom: 0;
     }
 }
 
