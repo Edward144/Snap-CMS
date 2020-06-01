@@ -48,7 +48,7 @@
 
                     <p>
                         <label>Password</label>
-                        <input type="password" name="password" value="<?php echo (isset($_SESSION['password']) ? $_SESSION['password'] : ''); ?>">
+                        <input type="password" name="password">
                     </p>
                     
                     <h3>Website Details</h3>
@@ -69,12 +69,12 @@
 
                     <p>
                         <label>Password</label>
-                        <input type="password" name="adminPassword" value="<?php echo (isset($_SESSION['adminPassword']) ? $_SESSION['adminPassword'] : ''); ?>">
+                        <input type="password" name="adminPassword">
                     </p>
 
                     <p>
                         <label>Confirm Password</label>
-                        <input type="password" name="adminPasswordConf" value="<?php echo (isset($_SESSION['adminPasswordConf']) ? $_SESSION['adminPasswordConf'] : ''); ?>">
+                        <input type="password" name="adminPasswordConf">
                     </p>
 
                     <p>

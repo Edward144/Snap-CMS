@@ -183,6 +183,17 @@
         )"
     );
 
+    $placeholderContent = 
+        '<h2>Welcome to Snap CMS</h2>
+        <p>Your installation is complete, you can now visit the admin dashboard to edit or remove this page, and start creating your own.</p>';
+    $cDate = date('Y-m-d H:i:s');
+
+
+    $mysqli->query(
+        "INSERT INTO `posts` (post_type_id, name, content, url, author, date_posted, last_edited, last_edited_by, visible) VALUES
+        (2, 'Home', '{$placeholderContent}', '/', 'Admin User', '{$cDate}', '{$cDate}', 1, 1)"
+    );
+
     $mysqli->query("CREATE TABLE `post_history` LIKE `posts`");
     $mysqli->query("ALTER TABLE `post_history` ADD COLUMN post_id INT AFTER id");
     $mysqli->query("ALTER TABLE `post_history` DROP INDEX url");
@@ -286,7 +297,7 @@
             '1'
         ), (
             'homepage',
-            '0'
+            '1'
         ), (
             'hide posts',
             '0'
