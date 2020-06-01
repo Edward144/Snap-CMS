@@ -70,7 +70,7 @@
         global $mysqli;
 
         $companyName = $mysqli->query("SELECT name FROM `company_info` WHERE name IS NOT NULL AND name <> ''");
-        $companyName = ucwords(($companyName->num_rows == 1 ? ' | ' . $companyName->fetch_array()[0] : ''));
+        $companyName = ucwords(($companyName->num_rows == 1 ? $companyName->fetch_array()[0] : ''));
 
         if($_GET['url']) {
             //UGC Page
@@ -122,14 +122,18 @@
         }
         else {
             $meta = [
-                'meta_title' => ltrim($companyName, ' | '),
-                'meta_author' => ltrim($companyName, ' | '),
+                'meta_title' => $companyName,
+                'meta_author' => $companyName,
                 'meta_description' => '',
                 'meta_keywords' => ''
             ];
         }
-
-        $title = ucwords(($meta['meta_title'] != null && $meta['meta_title'] != '' ? $meta['meta_title'] : $meta['name']) . $companyName);
+        
+        $metaTitle = ($meta['meta_title'] != null && $meta['meta_title'] != '' ? $meta['meta_title'] : $meta['name']);
+        
+        $title = ucwords(($metaTitle != null && $metaTitle != '' ? $metaTitle : '') . 
+                 ($metaTitle != null && $metaTitle != '' && $companyName != null && $companyName != '' ? ' | ' : '') .
+                 ($companyName != null && $companyName != '' ? $companyName : ''));
         $description = ($meta['meta_description'] != null && $meta['meta_description'] != '' ? $meta['meta_description'] : (isset($meta['short_description']) ? $meta['short_description'] : ''));
         $keywords = ($meta['meta_keywords'] != null && $meta['meta_keywords'] != '' ? $meta['meta_keywords'] : '');
         $author = ucwords(($meta['meta_author'] != null && $meta['meta_author'] != '' ? $meta['meta_author'] : (isset($meta['author']) ? $meta['author'] : '')));
