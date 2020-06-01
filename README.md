@@ -1,3 +1,5 @@
+# No longer maintained, use SnapCMS v2 instead - https://github.com/edward144/Snap-CMS-v2 
+
 Snap CMS is a basic CMS based on the look and functionality of Wordpress. 
 
 Installation is as simple as copying the files to the required directory, and setting up a MySQL database. 
