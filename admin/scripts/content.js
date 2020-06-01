@@ -113,7 +113,7 @@ $("#contentManage input[type='submit']").click(function() {
 
 //Clear Search
 $("input[name='clearSearch']").click(function() {
-    window.location.href = window.location.href.split("&")[0];
+    window.location.href = window.location.href.split("?")[0];
 });
 
 //Upload Image
