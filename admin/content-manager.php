@@ -342,7 +342,7 @@
             
                 $itemCount = $mysqli->query("SELECT * FROM `posts` WHERE post_type_id = {$postTypeId} AND (name LIKE '%{$searchTerm}%' OR url LIKE '%{$searchTerm}%' OR author LIKE '%{$searchTerm}%')")->num_rows;
                 $pagination = new pagination($itemCount);
-                $pagination->prefix = explode('?page=', $_SERVER['REQUEST_URI'])[0];
+                //$pagination->prefix = explode('?page=', $_SERVER['REQUEST_URI'])[0];
                 $pagination->load();
                    
                 $posts = $mysqli->query(
