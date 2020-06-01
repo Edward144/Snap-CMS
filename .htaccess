@@ -4,7 +4,7 @@ ErrorDocument 404 /404.php
 
 <IfModule mod_rewrite.c>    
     RewriteEngine On
-    RewriteBase /
+    #RewriteBase /
 	
 	#Remove Trailing Slash
 	RewriteCond %{REQUEST_FILENAME} !-d
