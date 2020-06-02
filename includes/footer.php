@@ -64,6 +64,6 @@
 
         <script src="<?php echo ROOT_DIR; ?>admin/scripts/docRoot.js"></script>
         <script src="<?php echo ROOT_DIR; ?>scripts/default.min.js"></script>
-        <script src="<?php echo ROOT_DIR; ?>scripts/retina.min.js.js"></script>
+        <script src="<?php echo ROOT_DIR; ?>scripts/retina.min.js"></script>
     </body>
 </html>
