@@ -1,40 +1,6 @@
-<?php require_once('includes/header.php'); ?>
-
-<?php
-    checkContent($_GET['url']);
-?>
-
 <?php 
-    $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0]; 
-    $hidePosts = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'hide posts'")->fetch_array()[0]; 
-    
-    //Go to posts if no type set
-    if(!isset($_postType)) {
-        include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
-        
-        exit();
-    }
-
-    //404 If Trying To Access Hidden Posts
-    if(($hidePosts == 1 && $_postType == 'posts') || ($_postType == 'pages' && !isset($_postUrl))) {
-        http_response_code(404);
-        include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
-        
-        exit();
-    }
-
-    $postDetails = $mysqli->query("SELECT * FROM `post_types` WHERE name = '{$_postType}'");
-    
-    //Go to posts if type does not exist
-    if($postDetails->num_rows <= 0) {
-        http_response_code(404);
-        include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . '404.php');
-        
-        exit();
-    }
-    else {
-        $postDetails = $postDetails->fetch_assoc();
-    }
+    require_once('includes/header.php');
+    checkContent($_GET['url']);
 ?>
 
 <?php if(isset($_postUrl)) : ?>
