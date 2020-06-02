@@ -3,14 +3,14 @@ function pageHeight() {
     setTimeout(function() {
         var headerH = $("#header").outerHeight();
         var footerH = $("#footer").outerHeight();
-        var totalH = $(window).height() - footerH;
+        var totalH = $(window).height() - (headerH + footerH);
 
         $(".main").css({
             "min-height" : totalH
         });
         
         $(".main").css("padding-top", headerH);
-        //$(".main .hero").css("margin-top", -headerH);
+        $(".main .hero").css("margin-top", -headerH);
     }, 50);
 }
 
