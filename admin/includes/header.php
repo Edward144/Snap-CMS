@@ -28,7 +28,8 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link href="<?php echo ROOT_DIR; ?>admin/includes/adminStyles.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo ROOT_DIR; ?>admin/includes/colourScheme.css" rel="stylesheet" type="text/css">
+        <link href="<?php echo ROOT_DIR; ?>admin/includes/adminStyles.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         

@@ -25,6 +25,8 @@ a:hover {
     transition: color 0.35s ease-in;
 }
 
+/* TINYMCE TEMPLATES */
+
 #tinymce {
     padding: 0 1em !important;
     -webkit-box-sizing: border-box;
@@ -851,13 +853,13 @@ a:hover {
 }
 
 @media only screen and (max-width: 768px) {
-    .columnWrap {
+    .main .columnWrap {
         -webkit-flex-wrap: wrap;
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     }
     
-    .columnWrap > .column {
+    .main .columnWrap > .column {
         margin-right: 0;
         width: 100%;
     }
