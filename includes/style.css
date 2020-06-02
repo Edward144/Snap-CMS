@@ -13,12 +13,77 @@ body {
 
 a {
     color: #00a1ff;
+    -webkit-transition: color 0.5s ease-out;
+    -o-transition: color 0.5s ease-out;
     transition: color 0.5s ease-out;
 }
 
 a:hover {
     color: #0081cc;
+    -webkit-transition: color 0.35s ease-in;
+    -o-transition: color 0.35s ease-in;
     transition: color 0.35s ease-in;
+}
+
+#tinymce {
+    padding: 0 1em !important;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: auto;
+    max-width: 1440px;
+    max-width: var(--page-width);
+}
+
+.columnWrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.columnWrap img {
+    max-width: 100%;
+}
+
+.columnWrap > .column {
+    margin-right: 1em;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.columnWrap > .column:last-child {
+    margin-right: 0;
+}
+
+.column-70 {
+    width: 70%;
+}
+
+.column-60 {
+    width: 60%;
+}
+
+.column-50 {
+    width: 50%;
+}
+
+.column-40 {
+    width: 40%;
+}
+
+.column-33 {
+    width: 33.33333%;
 }
 
 /* HEADER */
@@ -28,13 +93,19 @@ a:hover {
 }
 
 #header .headerInner {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     color: #fff;
     max-width: 1024px;
     max-width: var(--page-width);
     margin: auto;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -79,7 +150,12 @@ a:hover {
     max-width: 1024px;
     max-width: var(--page-width);
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     padding: 0;
 }
@@ -90,6 +166,8 @@ a:hover {
     position: relative;
     background: #f44336;
     min-width: 200px;
+    -webkit-transition: background 0.5s ease-out, color 0.5s ease-out;
+    -o-transition: background 0.5s ease-out, color 0.5s ease-out;
     transition: background 0.5s ease-out, color 0.5s ease-out;
 }
 
@@ -100,6 +178,7 @@ a:hover {
 .navigation#menu0 ul li > a {
     display: block;
     padding: 1em 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     text-decoration: none;
     color: #fff;
@@ -113,6 +192,8 @@ a:hover {
 .navigation#menu0 ul li > a:hover, .navigation#menu0 ul li:hover {
     background: #c3352b;
     font-weight: normal;
+    -webkit-transition: background 0.35s ease-in, color 0.35s ease-in;
+    -o-transition: background 0.35s ease-in, color 0.35s ease-in;
     transition: background 0.35s ease-in, color 0.35s ease-in;
 }
 
@@ -131,6 +212,8 @@ a:hover {
     width: 100%;
     visibility: hidden;
     display: block;
+    -webkit-transition: visibility 0.51s, opacity 0.5s ease-out;
+    -o-transition: visibility 0.51s, opacity 0.5s ease-out;
     transition: visibility 0.51s, opacity 0.5s ease-out;
 }
 
@@ -138,6 +221,8 @@ a:hover {
     .navigation#menu0 li:hover > div {
         visibility: visible;
         opacity: 1;
+        -webkit-transition: visibility 0s, opacity 0.35s ease-in;
+        -o-transition: visibility 0s, opacity 0.35s ease-in;
         transition: visibility 0s, opacity 0.35s ease-in;
     }
 }
@@ -148,6 +233,8 @@ a:hover {
 }
 
 .navigation#menu0 > ul > li ul a > #arrow {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
     transform: rotate(-90deg);
     display: inline-block;
 }
@@ -165,12 +252,18 @@ a:hover {
 }
 
 .navigation#menu0 li.hasImages > .itemInner > div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     max-width: 1024px;
     max-width: var(--page-width);
     margin: auto;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -184,8 +277,6 @@ a:hover {
 .navigation#menu0 li.hasImages > .itemInner > div > ul {
     display: block;
     margin: 0;
-    width: -webkit-calc(100% - 400px - 1em);
-    width: -moz-calc(100% - 400px - 1em);
     width: -o-calc(100% - 400px - 1em);
     width: calc(100% - 400px - 1em);
 }
@@ -210,6 +301,7 @@ a:hover {
     position: absolute;
     top: 1em;
     right: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #fff;
     width: 38px;
@@ -220,12 +312,16 @@ a:hover {
     background-repeat: no-repeat;
     background-position: center;
     display: none;
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
 }
 
 .navToggle:hover {
     background-image: url('../admin/images/icons/hamburger-icon.png');
     background-color: #111;
+    -webkit-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
     transition: all 0.5s ease-in;
 }
 
@@ -236,6 +332,7 @@ a:hover {
     max-width: var(--page-width);
     margin: auto;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -244,12 +341,18 @@ a:hover {
 }
 
 #footer .mainFooter {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
 }
 
 .mainFooter > div {
     width: 100%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: #fff;
     margin-right: 1em;
@@ -283,7 +386,12 @@ a:hover {
 .mainFooter .socialLinks {
     margin: 0;
     padding: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
@@ -294,18 +402,30 @@ a:hover {
     border-radius: 100%;
     height: 35px;
     width: 35px;
+    -webkit-filter: grayscale(0.6);
     filter: grayscale(0.6);
+    -webkit-transition: -webkit-filter 0.5s ease-out;
+    transition: -webkit-filter 0.5s ease-out;
+    -o-transition: filter 0.5s ease-out;
     transition: filter 0.5s ease-out;
+    transition: filter 0.5s ease-out, -webkit-filter 0.5s ease-out;
 }
 
 .mainFooter .socialLinks li:hover {
+    -webkit-filter: grayscale(0);
     filter: grayscale(0);
+    -webkit-transition: -webkit-filter 0.35s ease-in;
+    transition: -webkit-filter 0.35s ease-in;
+    -o-transition: filter 0.35s ease-in;
     transition: filter 0.35s ease-in;
+    transition: filter 0.35s ease-in, -webkit-filter 0.35s ease-in;
 }
 
 .mainFooter .socialLinks li img {
     max-width: 35px;
     height: 35px;
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
     transform: scale(1.05);
 }
 
@@ -324,6 +444,7 @@ a:hover {
     max-width: var(--page-width);
     margin: auto;
     padding:1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -336,7 +457,9 @@ a:hover {
 }
 
 .hero .heroImage {
+    -o-object-fit: cover;
     object-fit: cover;
+    -o-object-position: center;
     object-position: center;
     width: 100%;
     height: 100%;
@@ -349,6 +472,9 @@ a:hover {
 }
 
 .hero .gallery .owl-stage {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -366,10 +492,13 @@ a:hover {
     width: 100%;
     text-align: left;
     padding: 0.25em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background: #fff;
     visibility: hidden;
     opacity: 0;
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
     pointer-events: none;
 }
@@ -377,6 +506,8 @@ a:hover {
 .hero .gallery .owl-item:hover div #alt {
     visibility: visible;
     opacity: 1;
+    -webkit-transition: all 0.35s ease-in;
+    -o-transition: all 0.35s ease-in;
     transition: all 0.35s ease-in;
 }
 
@@ -401,6 +532,7 @@ a:hover {
 
 .hero.slider .slideInner {
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     max-width: 1024px;
     max-width: var(--page-width);
@@ -428,6 +560,8 @@ a:hover {
     color: #fff;
     font-size: 4em;
     top: 50%;
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
     transform: translateY(-100%);
     position: absolute;
     pointer-events: all;
@@ -448,6 +582,9 @@ a:hover {
     right: 0;
     margin: auto;
     text-align: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
@@ -458,11 +595,15 @@ a:hover {
     height: 15px;
     width: 15px;
     margin-right: 0.5em;
+    -webkit-transition: background 0.5s ease-out;
+    -o-transition: background 0.5s ease-out;
     transition: background 0.5s ease-out;
 }
 
 .hero.slider .owl-dot:hover {
     background: rgba(191, 191, 191, 1);
+    -webkit-transition: background 0.35s ease-in;
+    -o-transition: background 0.35s ease-in;
     transition: background 0.35s ease-in;
 }
 
@@ -476,10 +617,16 @@ a:hover {
 }
 
 .listItem {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     background: #f3f3f3;
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin-bottom: 1em;
 }
@@ -497,7 +644,9 @@ a:hover {
 .listItem .imageWrap img {
     width: 100%;
     height: 100%;
+    -o-object-fit: contain;
     object-fit: contain;
+    -o-object-position: center;
     object-position: center;
 }
 
@@ -535,6 +684,7 @@ a:hover {
 
 .additionalOptions.ui-accordion .ui-accordion-content {
     padding: 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -542,12 +692,15 @@ a:hover {
 .additionalOptions > h3 {
     margin: 0;
     padding: 0.5em 1em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 0;
     border-style: solid;
     border-color: #000;
     border-width: 1px 1px 0 1px;
+    -webkit-transition: background 0.5s ease-out;
+    -o-transition: background 0.5s ease-out;
     transition: background 0.5s ease-out;
 }
 
@@ -558,6 +711,8 @@ a:hover {
 .additionalOptions.ui-accordion .ui-accordion-header:hover,
 .additionalOptions > h3:hover {
     background: #f3f3f3;
+    -webkit-transition: background 0.35s ease-in;
+    -o-transition: background 0.35s ease-in;
     transition: background 0.35s ease-in;
 }
 
@@ -571,6 +726,7 @@ a:hover {
     border: 1px solid #ccc;
     width: 100%;
     padding: 0.5em;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -585,8 +741,6 @@ a:hover {
 @media only screen and (max-width: 1024px) {    
     #header .headerInner {
         padding-right: 4em;
-        padding-right: -webkit-calc(2em + 38px);
-        padding-right: -moz-calc(2em + 38px);
         padding-right: -o-calc(2em + 38px);
         padding-right: calc(2em + 38px);
         min-height: 70px;
@@ -608,8 +762,6 @@ a:hover {
     .navigation#menu0 ul {
         display: block;
         overflow: hidden;
-        max-height: -webkit-calc(100vh - 80px);
-        max-height: -moz-calc(100vh - 80px);
         max-height: -o-calc(100vh - 80px);
         max-height: calc(100vh - 80px);
     }
@@ -628,6 +780,8 @@ a:hover {
         max-height: 0;
         opacity: 1;
         visibility: visible;
+        -webkit-transition: all 0.5s ease-out;
+        -o-transition: all 0.5s ease-out;
         transition: all 0.5s ease-out;
     }
     
@@ -637,14 +791,22 @@ a:hover {
     
     .navigation#menu0 li > div.active, .navigation#menu0 li > div.active > ul {
         max-height: 100vh;
+        -webkit-transition: max-height 0.5s ease-in;
+        -o-transition: max-height 0.5s ease-in;
         transition: max-height 0.5s ease-in;
     }
     
     .navigation#menu0 ul li.hasChildren > a > #arrow {
         display: inline-block;
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
         transform: rotate(90deg);
         margin-left: 4px;
+        -webkit-transition: -webkit-transform 0.9s ease;
+        transition: -webkit-transform 0.9s ease;
+        -o-transition: transform 0.9s ease;
         transition: transform 0.9s ease;
+        transition: transform 0.9s ease, -webkit-transform 0.9s ease;
     }
     
     .navigation#menu0 ul li.hasChildren > a.active {
@@ -652,8 +814,14 @@ a:hover {
     }
     
     .navigation#menu0 ul li.hasChildren > a.active > #arrow {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
         transform: rotate(0deg);
+        -webkit-transition: -webkit-transform 0.5s ease;
+        transition: -webkit-transform 0.5s ease;
+        -o-transition: transform 0.5s ease;
         transition: transform 0.5s ease;
+        transition: transform 0.5s ease, -webkit-transform 0.5s ease;
     }
     
     .navigation li.hasImages .navImage {
@@ -662,12 +830,16 @@ a:hover {
     
     .navigation#menu0 .itemInner {
         max-height: 0;
+        -webkit-transition: all 0.35s;
+        -o-transition: all 0.35s;
         transition: all 0.35s;
         overflow: hidden;
     }
 
     .navigation#menu0 .itemInner.active {
         max-height: 1000px;
+        -webkit-transition: all 1s;
+        -o-transition: all 1s;
         transition: all 1s;
     }
     
@@ -675,6 +847,19 @@ a:hover {
         float: none;
         margin-left: 0;
         max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .columnWrap {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+    
+    .columnWrap > .column {
+        margin-right: 0;
+        width: 100%;
     }
 }
 
