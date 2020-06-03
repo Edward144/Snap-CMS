@@ -94,7 +94,11 @@
     <?php endif; ?>
 
     <div class="content single <?php echo $postDetails['name']; ?> <?php echo($homepage == $post['id'] ? 'home' : ''); ?>">
-        <?php echo ($post['name'] != null && $post['name'] != '' ? '<h1 class="title">' . $post['name'] . '</h1>' : ''); ?>
+        <?php 
+            echo ($post['name'] != null && $post['name'] != '' ? '<h1 class="title">' . $post['name'] . '</h1>' : ''); 
+            echo ($post['category'] != null && $post['category'] != '' ? '<h3 class="category"><span class="label">Category: </span>' . $post['category'] . '</h3>' : ''); 
+            echo ($post['author'] != null && $post['author'] != '' ? '<h4 class="posted"><span class="author">' . $post['author'] . '</span>' . ($post['date_posted'] != null && $post['date_posted'] != '' ? ' <span class="datetime"><span class="date">' . date('d/m/Y', strtotime($post['date_posted'])) . '</span> <span class="time">' . date('h:i', strtotime($post['date_posted'])) . '</span></span>': '') . '</h4>': ''); 
+        ?>
 
         <?php if($post['content'] != null && $post['content'] != '') : ?>
             <div class="userContent">

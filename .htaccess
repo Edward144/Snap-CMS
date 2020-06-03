@@ -16,6 +16,8 @@ ErrorDocument 404 /404.php
     RewriteRule ^admin/content-manager/(.*)$ admin/content-manager.php?post-type=$1 [L,QSA]
 	
 	##Frontend
+    RewriteRule ^posts(.*)$ posts.php?url=posts$1 [L,QSA]
+    
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME}.php !-f
