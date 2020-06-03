@@ -12,12 +12,9 @@ tinymce.init({
     relative_urls: false,
     remove_script_host: false,
     image_title: true,
-    min_height: 500,
+    min_height: 350,
     max_height: 1500,
     content_css: root_dir + 'includes/custom.css,' + root_dir + 'includes/style.css',
     extended_valid_elements: 'span, script[src|async|defer|type|charset]',
-    allow_script_urls: true,
-    protect: [
-        /<\?php.*?\?>/g
-    ]
+    allow_script_urls: true
 });

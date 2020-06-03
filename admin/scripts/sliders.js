@@ -76,10 +76,7 @@ $("input[name='addSlide']").click(function() {
                     image_title: true,
                     height: 100,
                     allow_script_urls: true,
-                    extended_valid_elements: 'script[src|async|defer|type|charset]',
-                    protect: [
-                        /<\?php.*?\?>/g
-                    ]
+                    extended_valid_elements: 'script[src|async|defer|type|charset]'
                 });
             }
             else {
