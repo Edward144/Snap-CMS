@@ -37,8 +37,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         
         <!-- Ensure docRoot.js is the first script after jQuery -->
-        <script src="<?php echo ROOT_DIR; ?>admin/scripts/docRoot.min.js"></script>
-        
+        <script src="<?php echo ROOT_DIR; ?>admin/scripts/docRoot.js"></script>
         <script src="<?php echo ROOT_DIR; ?>admin/scripts/default.js"></script>
         <script src="<?php echo ROOT_DIR; ?>admin/scripts/tinymce/tinymce.min.js"></script>
         <script src="<?php echo ROOT_DIR; ?>admin/scripts/tinymce/plugins/moxiemanager/js/moxman.loader.min.js"></script>
