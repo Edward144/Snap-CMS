@@ -148,7 +148,12 @@
         $pagination->prefix = explode('?page=', $_SERVER['REQUEST_URI'])[0] . '/';
         $pagination->load();
 
-        $getCat = (isset($_GET['category']) ? 'AND category_id = ' . $_GET['category'] : ''); 
+        if(isset($_GET['category']) && is_numeric($_GET['category'])) {
+            $getCat = (isset($_GET['category']) ? 'AND category_id = ' . $_GET['category'] : ''); 
+        }
+        else {
+            $getCat = (isset($_GET['category']) ? 'AND categories.name = "' . urldecode($_GET['category']) . '"' : ''); 
+        }
         
         $posts = $mysqli->query("
             SELECT posts.id, posts.name, posts.content, posts.url, posts.gallery, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type, posts.custom_content FROM `posts` AS posts 
