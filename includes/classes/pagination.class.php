@@ -14,7 +14,7 @@
         public $i;
         public $offset;
         public $items = 0;
-        public $prefix = '';
+        public $prefix = '?';
         
         function __construct($last) {
             if($last != null) {
@@ -25,6 +25,15 @@
             if(isset($_GET['category']) && !isset($_GET['page'])) {
                 $this->prefix = $_SERVER['REQUEST_URI'] . '/';
             }
+            
+            //Remove existing page query
+            $this->prefix = preg_replace('/(\?|\&)page=[0-9]/', '', $_SERVER['REQUEST_URI']);
+            
+            //Change first & to ?
+            $this->prefix = (strpos($this->prefix, '?') === false ? preg_replace('/\&/', '?', $this->prefix, 1) : $this->prefix);
+            
+            //Append ? or & 
+            $this->prefix = $this->prefix . (strpos($this->prefix, '?') !== false ? '&' : '?');
         }
         
         function setFirstPage($page = 1) {
@@ -124,11 +133,11 @@
                 $output = '<div class="pagination">';
                 
                     if($this->showFirst == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $this->firstPage . '"><< First</a>';
+                        $output .= '<a href="' . $this->prefix . 'page=' . $this->firstPage . '"><< First</a>';
                     }
                 
                     if($this->showPrev == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $prevPage . '">< Prev</a>';
+                        $output .= '<a href="' . $this->prefix . 'page=' . $prevPage . '">< Prev</a>';
                     }
                 
                     if($this->showPageNumbers == true) {
@@ -143,16 +152,16 @@
                         }
                         
                         for($this->i; $this->i <= $end; $this->i++) {
-                            $output .= '<a href="' . $this->prefix . '?page=' . $this->i . '">' . $this->i . '</a>';
+                            $output .= '<a href="' . $this->prefix . 'page=' . $this->i . '">' . $this->i . '</a>';
                         }
                     }
                 
                     if($this->showNext == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $nextPage . '">Next ></a>';
+                        $output .= '<a href="' . $this->prefix . 'page=' . $nextPage . '">Next ></a>';
                     }
                 
                     if($this->showLast == true) {
-                        $output .= '<a href="' . $this->prefix . '?page=' . $this->lastPage . '">Last >></a>';
+                        $output .= '<a href="' . $this->prefix . 'page=' . $this->lastPage . '">Last >></a>';
                     }
                 
                 $output .= '</div>';

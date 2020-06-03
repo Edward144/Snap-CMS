@@ -145,7 +145,6 @@
             WHERE post_types.name = '{$_postType}' AND visible = 1
         ")->num_rows;
         $pagination = new pagination($postCount); 
-        $pagination->prefix = explode('?page=', $_SERVER['REQUEST_URI'])[0] . '/';
         $pagination->load();
 
         if(isset($_GET['category']) && is_numeric($_GET['category'])) {
