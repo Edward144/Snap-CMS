@@ -66,10 +66,10 @@
         return $cmsName;
     }
 
-    function checkAccess($userlevel, $requiredLevel = 0) {
+    function checkAccess($userlevel, $requiredLevel = 99999) {
         global $mysqli;
         
-        if($userlevel != $requiredLevel) {
+        if($userlevel > $requiredLevel) {
             $admin = $mysqli->query("SELECT * FROM `users` WHERE access_level = 0 ORDER BY id ASC LIMIT 1")->fetch_assoc();
             
             echo 
