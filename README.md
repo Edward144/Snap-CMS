@@ -28,6 +28,7 @@ I would also recommend having SPF and DKIM set up for mail so that the various e
 
 # Navigation Menus
 You can create as many navigation menus as you want within the CMS but need to manually add them within the code to display that menu. You just need to add the following code:
+
 ...
 $somemenu = new navigation(menu_id);
 $somemenu->display();
