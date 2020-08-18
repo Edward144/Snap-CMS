@@ -1,0 +1,6 @@
+includes/settings.php
+useruploads/*
+!useruploads/.gitkeep
+images/*
+!images/.gitkeep
+admin/index_template.php

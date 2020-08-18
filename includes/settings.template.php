@@ -4,5 +4,5 @@
     $username = '';
     $password = '';
 
-    define(ROOT_DIR, '/');
+    define('ROOT_DIR', '/');
 ?>

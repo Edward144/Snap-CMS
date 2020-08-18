@@ -296,6 +296,10 @@
     mail($to, $subject, $message, $headers, '-fnoreply@' . $_SERVER['SERVER_NAME']);
 
     //Create the connection file to be used by the rest of the site
+	if(!is_file('../includes/settings.php')) {
+		copy('../includes/settings.template.php', '../includes/settings.php');
+	}
+
     if(!is_writable('../includes/settings.php')) {
         $_SESSION['setupmessage'] = 'Error: Cannot write settings file in includes/settings.php';
         
