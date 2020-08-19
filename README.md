@@ -41,3 +41,4 @@ I am using the following third party plugins as well as what comes included with
 * MoxieManager - Used for simple file management and adding images within TinyMCE
 * Retina.min.js - Automatically checks every image on a page for an @2x version and attempts to replace them, if a retina display is detecteed.
 * Apex Charts - Used within the admin to create various data charts.
+* [Gumlet/PHP-Image-Resize](https://github.com/gumlet/php-image-resize)
