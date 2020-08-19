@@ -37,9 +37,9 @@ I am using pre compiled Bootstrap 4.5 for this build, there are no SASS files be
 
 # Other plugins
 I am using the following third party plugins as well as what comes included with Bootstrap
-* TinyMCE 4.9.4 (This should really be updated, especially since receiving a warning from Github that versions before 4.9.11 have a security vulnerabillity. However this version works with the version of MoxieManager that I am using. TinyMCE 5 doesn't seem to. You have been warned!)
-* MoxieManager - Used for simple file management and adding images within TinyMCE
-* Retina.min.js - Automatically checks every image on a page for an @2x version and attempts to replace them, if a retina display is detecteed.
-* Apex Charts - Used within the admin to create various data charts.
+* TinyMCE 4.9.11
+* MoxieManager
+* Retina.min.js
+* Apex Charts
 * [Gumlet/PHP-Image-Resize](https://github.com/gumlet/php-image-resize)
-* Font-Awesome - Used for various icons throughout the CMS
+* Font-Awesome
