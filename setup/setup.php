@@ -224,6 +224,7 @@
             name VARCHAR(255),
             url VARCHAR(255),
             image_url VARCHAR(255),
+            icon VARCHAR(50),
             level INT DEFAULT 0
         )"
     );

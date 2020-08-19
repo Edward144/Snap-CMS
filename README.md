@@ -42,3 +42,4 @@ I am using the following third party plugins as well as what comes included with
 * Retina.min.js - Automatically checks every image on a page for an @2x version and attempts to replace them, if a retina display is detecteed.
 * Apex Charts - Used within the admin to create various data charts.
 * [Gumlet/PHP-Image-Resize](https://github.com/gumlet/php-image-resize)
+* Font-Awesome - Used for various icons throughout the CMS

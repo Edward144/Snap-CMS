@@ -54,6 +54,41 @@
         header('Location: ' . $_POST['returnurl']);
         exit();
     }
+    elseif($_POST['method'] == 'saveTree') {
+        $tree = json_decode($_POST['tree'], true);
+        $success = 1;
+        $message = '';
+        
+        $updateTree = $mysqli->prepare("UPDATE `navigation_structure` SET parent_id = ?, position = ?, name = ?, url = ?, image_url = ?, icon = ?, level = ? WHERE menu_id = ? AND id = ?");
+        
+        foreach($tree as $item) {
+            if($item['delete'] == 1) {
+                $delete = $mysqli->prepare("DELETE FROM `navigation_structure` WHERE menu_id = ? AND id = ?");
+                $delete->bind_param('ii', $_POST['menuId'], $item['id']);
+                $ex = $delete->execute();
+                
+                if($ex === false) {
+                    $success = 0;
+                    $message .= 'Failed to delete item ' . $item['id'] . ' (' . $item['name'] . ')<br>';
+                }
+            }
+            else {
+                $updateTree->bind_param('iissssiii', $item['parentId'], $item['position'], $item['name'], $item['url'], $item['image'], $item['icon'], $item['level'], $_POST['menuId'], $item['id']);
+                $ex = $updateTree->execute();
+                
+                if($ex === false) {
+                    $success = 0;
+                    $message .= 'Failed to update item ' . $item['id'] . ' (' . $item['name'] . ')<br>';
+                }
+            }
+            
+            if($success == 1) {
+                $message = 'Menu has been updated successfully.';
+            }
+        }
+        
+        echo json_encode([$success, $message]);
+    }
     elseif($_POST['method'] == 'pullPage') {
         $pull = $mysqli->prepare("SELECT id, name, url FROM `posts` WHERE id = ?");
         $pull->bind_param('i', $_POST['id']);

@@ -240,6 +240,26 @@ a:hover {
 	height: 100%;
 }
 
+/* NAVIGATION */
+
+ul.navigationTree {
+    list-style: none;
+}
+
+ul.navigationTree:empty {
+    min-height: 5px;
+}
+
+ul.navigationTree li {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+ul.navigationTree li:active {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+
 /* CHECKLIST */
 
 .mainSection .header .expander {
