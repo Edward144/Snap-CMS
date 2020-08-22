@@ -37,39 +37,45 @@
 	<?php if(!empty($post['gallery'])) : ?>
 		<?php $carousel = json_decode($post['gallery'], true); ?>
 		
-		<div id="hero" class="carousel slide d-flex align-items-center mx-n3" data-ride="carousel">
-			<div class="carousel-inner">
-				<?php foreach($carousel as $index => $item) : ?>
-					<div class="carousel-item h-100 <?php echo ($index == 0 ? 'active' : ''); ?>" data-interval="10000" data-item="<?php echo $index; ?>">
-						<img src="<?php echo $item['imageUrl']; ?>" class="h-100 w-100" style="object-fit: cover;" alt="slide <?php echo $index; ?>">
+		<?php if(!empty($carousel)) : ?>
+			<div id="hero" class="carousel slide d-flex align-items-center mx-n3" data-ride="carousel">
+				<div class="carousel-inner">
+					<?php foreach($carousel as $index => $item) : ?>
+						<div class="carousel-item h-100 <?php echo ($index == 0 ? 'active' : ''); ?>" data-interval="10000" data-item="<?php echo $index; ?>">
+							<img src="<?php echo $item['imageUrl']; ?>" class="h-100 w-100" style="object-fit: cover;" alt="slide <?php echo $index; ?>">
 
-						<div class="carousel-caption d-none d-md-block" style="<?php echo ($item['captionPosition'] == 'top' ? 'top: 0;' : ($item['captionPosition'] == 'bottom' ? 'bottom: 0;' : 'top: 50%; transform: translateY(-25%);')); ?>">
-							<h5><?php echo $item['title']; ?></h5>
-							<p class="mb-0"><?php echo $item['small']; ?></p>
+							<div class="carousel-caption d-none d-md-block" style="<?php echo ($item['captionPosition'] == 'top' ? 'top: 0;' : ($item['captionPosition'] == 'bottom' ? 'bottom: 0;' : 'top: 50%; transform: translateY(-25%);')); ?>">
+								<h5><?php echo $item['title']; ?></h5>
+								<p class="mb-0"><?php echo $item['small']; ?></p>
+							</div>
 						</div>
-					</div>
-				<?php endforeach; ?>
-			</div>
-			
-			<?php if(count($carousel) > 1) : ?>
-				<a class="carousel-control-prev" href="#hero" role="button" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
+					<?php endforeach; ?>
+				</div>
 
-				<a class="carousel-control-next" href="#hero" role="button" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-			<?php endif; ?>
-		</div>
+				<?php if(count($carousel) > 1) : ?>
+					<a class="carousel-control-prev" href="#hero" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+
+					<a class="carousel-control-next" href="#hero" role="button" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<div class="container-xl">
-		<div class="content single row my-3">
+		<div class="content single row my-3">			
 			<?php if(!empty($post['content'])) : ?>
-				<div class="col userContent">
-					<?php echo new parseContent($post['content']); ?>
+				<div class="col">
+					<?php echo (!empty($post['name']) ? '<h1>' . $post['name'] . '</h1>' : ''); ?>
+					
+					<div class="userContent">
+						<?php echo new parseContent($post['content']); ?>
+					</div>
 				</div>
 			<?php endif; ?>
 		</div>
@@ -103,7 +109,24 @@
 	<div class="container-xl">
 		<div class="content list row my-3">
 			<div class="col">
-				list page
+				<?php echo (!empty($postDetails['title']) ? '<h1>' . $postDetails['title'] . '</h1>' : (!empty($postDetails['name']) ? '<h1>' . ucwords(str_replace('-', ' ', $postDetails['name'])) . '</h1>' : '')); ?>
+				
+				<?php if(!empty($postDetails['content'])) : ?>
+					<div class="userContent">
+						<?php echo new parseContent($postDetails['content']); ?>
+					</div>
+				<?php endif; ?>
+				
+				<?php if($posts->num_rows > 0) : ?>
+					<div class="<?php echo $postDetails['name'] . 'List'; ?>">
+						<?php while($post = $posts->fetch_assoc()) : ?>
+							<div class="jumbotron">
+								<h2><a href="<?php echo ROOT_DIR . $postDetails['name'] . '/' . $post['url']; ?>"><?php echo $post['name']; ?></a></h2>
+								<?php echo (!empty($post['short_description']) ? '<p>' . $post['short_description'] . '</p><p><a href="' . ROOT_DIR . $postDetails['name'] . '/' . $post['url'] . '">Read More</a></p>' : ''); ?>
+							</div>
+						<?php endwhile; ?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
