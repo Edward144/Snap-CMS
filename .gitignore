@@ -4,3 +4,4 @@ useruploads/*
 images/*
 !images/.gitkeep
 admin/index_template.php
+css/unused/*
