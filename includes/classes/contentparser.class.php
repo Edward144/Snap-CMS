@@ -21,7 +21,7 @@
 							'<form id="contactForm' . $id . '" action="' . ROOT_DIR . 'includes/actions/sendForm.php" method="post">
 								<input type="hidden" name="formId" value="' . $id . '">
 								<input type="hidden" name="returnurl" value="' . $_SERVER['REQUEST_URI'] . '">';
-
+						
 						foreach($json['inputs'] as $index => $input) {
 							$this->shortoutput .= 
 								'<div class="form-group">';
@@ -104,6 +104,21 @@
 							
 							unset($_SESSION['contactmessage']);
 							unset($_SESSION['contactstatus']);
+						}
+						
+						if(!empty($form['sitekey']) && isset($form['secretkey'])) {
+							$this->shortoutput .=
+								'<input type="hidden" id="g-recaptcha-response-' . $id . '" name="g-recaptcha-response">
+								<input type="hidden" name="action" value="validate_captcha">
+								<script src="https://www.google.com/recaptcha/api.js?render=' . $form['sitekey'] . '"></script>
+								<script>
+									grecaptcha.ready(function() {
+										grecaptcha.execute(\'' . $form['sitekey'] . '\', {action:\'validate_captcha\'})
+												  .then(function(token) {
+											document.getElementById(\'g-recaptcha-response-' . $id . '\').value = token;
+										});
+									});
+								</script>';
 						}
 						
 						$this->shortoutput .=

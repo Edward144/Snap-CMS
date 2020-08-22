@@ -257,6 +257,8 @@
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
 			subject VARCHAR(255),
+			sitekey VARCHAR(500),
+			secretkey VARCHAR(500),
             structure LONGTEXT
         )"
     );
