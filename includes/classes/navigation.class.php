@@ -32,7 +32,7 @@
 			}
 			else {
 				$this->output =
-					'<nav class="navbar navbar-expand-lg navbar-dark" id="menu' . $this->menuId . '">';
+					'<nav class="navbar navbar-expand-lg navbar-dark w-100" id="menu' . $this->menuId . '">';
 
 				if($this->hasToggle == true) {
 					$this->output .= 

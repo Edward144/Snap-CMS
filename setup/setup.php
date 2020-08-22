@@ -256,6 +256,7 @@
         "CREATE TABLE IF NOT EXISTS `contact_forms` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
+			subject VARCHAR(255),
             structure LONGTEXT
         )"
     );

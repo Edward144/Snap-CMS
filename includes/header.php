@@ -54,14 +54,14 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="row bg-dark">
-					<div class="container-xl">
-						<div class="row">
-							<?php $navbar = new navbar(); $navbar->display(); ?>
-						</div>
+			</header>
+			
+			<div class="container-fluid bg-dark">
+				<div class="container-xl">
+					<div class="row">
+						<?php $navbar = new navbar(); $navbar->display(); ?>
 					</div>
 				</div>
-			</header>
+			</div>
 			
 			<div class="main flex-grow-1 container-fluid">
