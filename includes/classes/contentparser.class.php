@@ -106,7 +106,7 @@
 							unset($_SESSION['contactstatus']);
 						}
 						
-						if(!empty($form['sitekey']) && isset($form['secretkey'])) {
+						if(!empty($form['sitekey']) && !empty($form['secretkey'])) {
 							$this->shortoutput .=
 								'<input type="hidden" id="g-recaptcha-response-' . $id . '" name="g-recaptcha-response">
 								<input type="hidden" name="action" value="validate_captcha">
