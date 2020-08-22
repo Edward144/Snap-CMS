@@ -9910,7 +9910,19 @@ html, body, .wrapper {
   overflow-y: auto;
 }
 
-#header {
+.bg404 {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  opacity: 0.25;
+  z-index: -1;
+  font-size: 25vw;
+}
+
+.navbar {
   z-index: 9999;
 }
 

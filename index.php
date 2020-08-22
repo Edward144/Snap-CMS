@@ -75,7 +75,38 @@
 		</div>
 	</div>
 <?php else : ?>
-	no url
+	<?php 
+        $postCount = $mysqli->query("
+            SELECT posts.id, post_types.name AS post_type FROM `posts` AS posts 
+                LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = posts.post_type_id
+            WHERE post_types.name = '{$_postType}' AND visible = 1
+        ")->num_rows;
+        $pagination = new pagination($postCount); 
+        $pagination->load();
+
+        if(isset($_GET['category']) && is_numeric($_GET['category'])) {
+            $getCat = (isset($_GET['category']) ? 'AND category_id = ' . $_GET['category'] : ''); 
+        }
+        else {
+            $getCat = (isset($_GET['category']) ? 'AND categories.name = "' . urldecode($_GET['category']) . '"' : ''); 
+        }
+        
+        $posts = $mysqli->query("
+            SELECT posts.id, posts.name, posts.content, posts.url, posts.gallery, posts.author, posts.date_posted, posts.short_description, posts.category_id, categories.name AS category, post_types.name AS post_type, posts.custom_content FROM `posts` AS posts 
+                LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
+                LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = posts.post_type_id
+            WHERE visible = 1 AND post_types.name = '{$_postType}' {$getCat} ORDER BY date_posted DESC
+            LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}
+        "); 
+    ?>
+
+	<div class="container-xl">
+		<div class="content list row my-3">
+			<div class="col">
+				list page
+			</div>
+		</div>
+	</div>
 <?php endif; ?>
 
 <?php require_once('includes/footer.php'); ?>
