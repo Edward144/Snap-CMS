@@ -2,6 +2,11 @@
 
     session_start();
 
+	if(!is_file(__DIR__ . '/settings.php')) {
+		unset($_SESSION['setupcomplete']);
+		header('Location: /' . basename(dirname(__DIR__)) . '/setup');
+		exit();
+	}
     require_once(__DIR__ . '/settings.php');
 
     $mysqli = new mysqli($hostname, $username, $password, $database);
