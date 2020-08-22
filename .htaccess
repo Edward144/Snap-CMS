@@ -2,8 +2,19 @@ Options All -Indexes
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    RewriteBase /snapcmsv3/
     
+	#Remove Trailing Slash
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)/$ $1 [L,R=301]
+	
+	RewriteRule ^posts(.*)$ posts.php?url=posts$1 [L,QSA]
+    
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME}.php !-f
+	RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+	
     #Remove PHP Extension
 	RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^([^.]+)$ $1.php [NC,L]
@@ -12,7 +23,7 @@ Options All -Indexes
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     
-    #<IfModule mod_headers.c>
-    #    Header always set Strict-Transport-Security "max-age=31536000;includeSubDomains"
-    #</IfModule>
+    <IfModule mod_headers.c>
+        Header always set Strict-Transport-Security "max-age=31536000;includeSubDomains"
+    </IfModule>
 </IfModule>
