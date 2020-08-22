@@ -9906,6 +9906,12 @@ html, body, .wrapper {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#header {
+  z-index: 9999;
 }
 
 #header .contact > span {
@@ -9950,10 +9956,6 @@ html, body, .wrapper {
 }
 #footer .row > div:last-child {
   text-align: right;
-}
-
-#hero {
-  z-index: -1;
 }
 
 .carousel-inner {
