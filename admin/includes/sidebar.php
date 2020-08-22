@@ -6,16 +6,6 @@
             'icon' => 'fa-tachometer-alt'
         ],
         [
-            'name' => 'Compliance Checklist',
-            'link' => 'compliance-checklist-builder',
-            'icon' => 'fa-tasks'
-        ],
-        [
-            'name' => 'Support Requests',
-            'link' => 'support-requests',
-            'icon' => 'fa-headset'
-        ],
-        [
             'name' => 'Navigation',
             'link' => 'navigation',
             'icon' => 'fa-directions'
