@@ -36,9 +36,9 @@
 					<div class="row py-3">
 						<div class="col-sm-4">
 							<?php if(!empty($companyDetails['logo'])) : ?>
-								<img src="<?php echo $companyDetails['logo']; ?>" class="img-fluid siteLogo siteTitle" alt="<?php echo $companyDetails['name'] . ' logo';?>">
+								<a href="<?php echo ROOT_DIR; ?>"><img src="<?php echo $companyDetails['logo']; ?>" class="img-fluid siteLogo siteTitle" alt="<?php echo $companyDetails['name'] . ' logo';?>"></a>
 							<?php elseif(!empty($companyDetails['name'])) : ?>
-								<h2 class="siteLogo siteTitle"><?php echo $companyDetails['name']; ?></h2>
+								<h2 class="siteLogo siteTitle"><a href="'<?php echo ROOT_DIR; ?>'"><?php echo $companyDetails['name']; ?></a></h2>
 							<?php endif; ?>
 						</div>
 
@@ -47,21 +47,22 @@
 								<div class="contact text-right">
 									<?php 
 										echo (!empty($companyDetails['phone']) ? '<span class="phone text-light"><span class="fa fa-phone mr-1"></span><a class="text-light" href="tel: ' . $companyDetails['phone'] . '">' . $companyDetails['phone'] . '</a></span>' : '');
-										echo (!empty($companyDetails['email']) ? '<span class="email text-light"><span class="fa fa-envelope mr-1"></span><a class="text-light" href="mailto: ' . $companyDetails['email'] . '">' . $companyDetails['phone'] . '</a></span>' : ''); 
+										echo (!empty($companyDetails['email']) ? '<span class="email text-light"><span class="fa fa-envelope mr-1"></span><a class="text-light" href="mailto: ' . $companyDetails['email'] . '">' . $companyDetails['email'] . '</a></span>' : ''); 
 									?>
 								</div>
 							<?php endif; ?>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row bg-dark">
 					<div class="container-xl">
 						<div class="row">
-							<div class="col">
-								<?php $navbar = new navbar(); $navbar->display(); ?>
-							</div>
+							<?php $navbar = new navbar(); $navbar->display(); ?>
 						</div>
 					</div>
 				</div>
 			</header>
+			
+			<div class="main flex-grow-1 container-fluid">
+				<div class="container-xl">

@@ -16,7 +16,7 @@
 	function companyDetails() {
 		global $mysqli; 
         
-        $companyDetails = $mysqli->query("SELECT * FROM `company_info` WHERE name IS NOT NULL AND name <> '' LIMIT 1");
+        $companyDetails = $mysqli->query("SELECT * FROM `company_info` LIMIT 1");
 		
 		if($companyDetails->num_rows == 1) {
             return $companyDetails->fetch_assoc();
