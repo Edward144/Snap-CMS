@@ -54,8 +54,8 @@
 									foreach($input['options'] as $ind => $option) {
 										$this->shortoutput .=
 											'<div class="form-check">
-												<input type="radio" class="form-check-input' . ($input['label'] == '' || $input['label'] == null ? ' position-static' : '') .'" name="' . $index . '__' . $input['label'] . '"' . ($input['required'] == true ? ' required' : '') . ($i == 0 ? ' checked' : '') . '>' .
-												($option['label'] != '' && $option['label'] != null ? '<label class="form-check-label" for="' . $ind . '__' . $option['label'] . '">' . $option['label'] . ($input['required'] == true ? '<sup class="text-danger">*</sup>': '') . '</label>' : '') .
+												<input type="radio" class="form-check-input' . ($input['label'] == '' || $input['label'] == null ? ' position-static' : '') .'" name="' . $index . '__' . $input['label'] . '" value="' . $option . '"' . ($input['required'] == true ? ' required' : '') . ($i == 0 ? ' checked' : '') . '>' .
+												($option != '' && $option != null ? '<label class="form-check-label" for="' . $ind . '__' . $option . '">' . $option . ($input['required'] == true ? '<sup class="text-danger">*</sup>': '') . '</label>' : '') .
 											'</div>';
 										$i++;
 									}
@@ -132,6 +132,9 @@
 												$("<input id=\'hiddenCheck\' type=\'hidden\' name=\'" + $(this).attr("name") + "\' value=\'off\'>").insertAfter($(this));
 											}
 										});
+										
+										$(this).find(":submit").prop("disabled", true);
+										$("<div class=\'spinner-border ml-1\'><span class=\'sr-only\'>Processing...</span></div>").insertAfter($(this).find(\':submit\'));
 									});
 								</script>
 							</form>';
