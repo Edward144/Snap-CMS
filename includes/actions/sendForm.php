@@ -35,10 +35,12 @@
 							'<span><strong>' . str_replace('_', ' ', explode('__', $index)[1]) . ': </strong>' . $postItem . '</span><br>';
 					} 
 				}
+				
+				$output .= (!empty($response) ? '<span><strong>Captcha Score: </strong>' . $response->score . ' of 1.0</span>' : '');
 
 				$to = implode(',', $json['emails']);
 				$subject = (!empty($contactForm['subject']) ? $contactForm['subject'] : 'Contact Form ' . $contactForm['id'] . ': New message from ' . $_SERVER['SERVER_NAME']);
-				echo $message = 
+				$message = 
 					'<p>Hi, </p>
 					<p>You have received a new message from ' . (!empty($contactForm['name']) ? $contactForm['name'] : 'contact form ' . $contactForm['id']) . '.</p>
 					<hr>
