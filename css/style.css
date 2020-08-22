@@ -9948,5 +9948,8 @@ html, body, .wrapper {
     transform: rotate(-90deg);
   }
 }
+#footer .row > div:last-child {
+  text-align: right;
+}
 
 /*# sourceMappingURL=style.css.map */
