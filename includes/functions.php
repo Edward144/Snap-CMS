@@ -55,6 +55,7 @@
         global $_postType;
         global $_postUrl;
         global $postDetails;
+		global $homepage;
         
         //Get Homepage and Check If Posts Are Hidden
         $homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage'")->fetch_array()[0]; 

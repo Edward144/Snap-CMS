@@ -1,4 +1,3 @@
-				</div>
 			</div>
 
 			<footer id="footer" class="container-fluid bg-secondary text-light">

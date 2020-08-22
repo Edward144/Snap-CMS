@@ -65,4 +65,3 @@
 			</header>
 			
 			<div class="main flex-grow-1 container-fluid">
-				<div class="container-xl">

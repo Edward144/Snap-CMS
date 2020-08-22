@@ -59,3 +59,11 @@ html, body, .wrapper {
 #footer .row > div:last-child {
 	text-align: right;
 }
+
+#hero {
+	z-index: -1;
+}
+
+.carousel-inner {
+	height: 400px;
+}
