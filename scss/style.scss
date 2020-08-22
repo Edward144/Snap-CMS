@@ -34,7 +34,7 @@ html, body, .wrapper {
 		transition: opacity 0.5s linear;
 	}
 
-	.navbar-nav > .hasChildren > ul {
+	.navbar > .navbar-collapse > .navbar-nav > .hasChildren > ul {
 		width: 200%;
 	}
 
