@@ -1,1 +1,57 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+html, body, .wrapper {
+    height: 100%;
+}
+
+.wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+	flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#header .contact > span {
+	margin-right: ($spacer * .5);
+}
+
+.hasChildren {
+	position: relative;
+}
+
+@media only screen and (min-width: 992px) {	
+	.hasChildren > ul {
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		transition: opacity 0.5s linear;
+	}
+
+	.navbar-nav > .hasChildren > ul {
+		width: 200%;
+	}
+
+	.hasChildren:hover > ul {
+		opacity: 1;
+		visibility: visible;
+	}
+	
+	.hasChildren > ul > li {
+		width: 100%;
+	}
+	
+	.hasChildren > a > .fa-caret-left {
+		transition: transform 0.35s linear;
+	}
+	
+	.hasChildren:hover > a > .fa-caret-left {
+		transform: rotate(-90deg);
+	}
+}
