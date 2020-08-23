@@ -72,15 +72,15 @@
 
 	<div class="container-xl">
 		<div class="content single row my-3">			
-			<?php if(!empty($post['content'])) : ?>
-				<div class="col">
-					<?php echo (!empty($post['name']) ? '<h1>' . $post['name'] . '</h1>' : ''); ?>
-					
+			<div class="col">
+				<?php echo (!empty($post['name']) ? '<h1>' . $post['name'] . '</h1>' : ''); ?>
+
+				<?php if(!empty($post['content'])) : ?>
 					<div class="userContent">
 						<?php echo new parseContent($post['content']); ?>
 					</div>
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
 <?php else : ?>
@@ -91,7 +91,6 @@
             WHERE post_types.name = '{$_postType}' AND visible = 1
         ")->num_rows;
         $pagination = new pagination($postCount); 
-		$pagination->itemLimit = 1;
         $pagination->load();
 
         if(isset($_GET['category']) && is_numeric($_GET['category'])) {
