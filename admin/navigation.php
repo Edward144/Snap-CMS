@@ -115,6 +115,7 @@
 					<input type="text" class="form-control" name="url" required>
 				</div>
 				
+				<?php /*
 				<div class="form-group imageUrl">
 					<label>Image</label>
 					<input type="hidden" name="imageUrl">
@@ -123,6 +124,7 @@
 					<input type="button" class="btn btn-info mr-2" name="selectImage" value="Choose Image">
 					<input type="button" class="btn btn-secondary mt-2 mt-sm-0" name="clearImage" value="Remove Image" style="display: none;">
 				</div>
+				*/ ?>
 				
 				<div class="form-group">
                     <?php 
