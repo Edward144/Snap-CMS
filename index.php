@@ -7,7 +7,7 @@
 <?php if(isset($_postUrl)) : ?>
 	<?php 
         $post = $mysqli->query("
-            SELECT posts.id, posts.post_type_id, posts.name, posts.content, posts.url, posts.gallery, posts.specifications, posts.author, posts.date_posted, categories.name AS category, posts.custom_content FROM `posts` AS posts 
+            SELECT posts.id, posts.post_type_id, posts.name, posts.content, posts.url, posts.gallery, posts.specifications, posts.author, posts.date_posted, categories.name AS category, posts.custom_content, posts.meta_title, posts.meta_description, posts.meta_keywords, posts.meta_author FROM `posts` AS posts 
             LEFT OUTER JOIN `categories` AS categories ON categories.id = posts.category_id
             WHERE url = '{$_postUrl}' AND visible = 1 AND posts.post_type_id = {$postDetails['id']}
         "); 
@@ -35,7 +35,14 @@
         }
     ?>
 
-	<?php require_once('includes/header.php'); ?>
+	<?php 
+		$metaTitle = (!empty($post['meta_title']) ? $post['meta_title'] : $post['name']);
+		$metaDesc = (!empty($post['meta_description']) ? $post['meta_description'] : '');
+		$metaKeywords = (!empty($post['meta_keywords']) ? $post['meta_keywords'] : '');
+		$metaAuthor = (!empty($post['meta_author']) ? $post['meta_author'] : $post['author']);
+
+		require_once('includes/header.php'); 
+	?>
 
 	<?php if(!empty($post['gallery'])) : ?>
 		<?php $carousel = json_decode($post['gallery'], true); ?>
@@ -70,10 +77,10 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<div class="container-xl">
+	<div class="container-xl<?php echo ($post['id'] == $homepage ? ' homepage' : ''); ?>">
 		<div class="content single row my-3">			
 			<div class="col">
-				<?php echo (!empty($post['name']) ? '<h1>' . $post['name'] . '</h1>' : ''); ?>
+				<?php echo (!empty($post['name']) ? '<h1 class="pageTitle">' . $post['name'] . '</h1>' : ''); ?>
 
 				<?php if(!empty($post['content'])) : ?>
 					<div class="userContent">
@@ -86,7 +93,7 @@
 <?php else : ?>
 	<?php 
         $postCount = $mysqli->query("
-            SELECT posts.id, post_types.name AS post_type FROM `posts` AS posts 
+            SELECT posts.id, post_types.name AS post_type, post_types.meta_title, post_types.meta_description, post_types.meta_keywords, post_types.meta_keywords FROM `posts` AS posts 
                 LEFT OUTER JOIN `post_types` AS post_types ON post_types.id = posts.post_type_id
             WHERE post_types.name = '{$_postType}' AND visible = 1
         ")->num_rows;
@@ -109,7 +116,14 @@
         "); 
     ?>
 
-	<?php require_once('includes/header.php'); ?>
+	<?php 
+		$metaTitle = (!empty($postDetails['meta_title']) ? $postDetails['meta_title'] : ucwords(str_replace(['-', '_'], ' ', $postDetails['name'])));
+		$metaDesc = (!empty($postDetails['meta_description']) ? $postDetails['meta_description'] : '');
+		$metaKeywords = (!empty($postDetails['meta_keywords']) ? $postDetails['meta_keywords'] : '');
+		$metaAuthor = (!empty($postDetails['meta_author']) ? $postDetails['meta_author'] : '');
+
+		require_once('includes/header.php'); 
+	?>
 
 	<div class="container-xl">
 		<div class="content list row my-3">
