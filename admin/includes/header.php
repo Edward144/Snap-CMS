@@ -30,6 +30,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php echo $pageName . ' | '  . companyName(); ?></title>
         
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo ROOT_DIR; ?>css/bootstrap.min.css">
         <link rel="stylesheet" href="<?php echo ROOT_DIR; ?>css/adminStyle.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
@@ -52,7 +53,7 @@
                 <div class="container-fluid">
                     <div class="row bg-primary">
                         <div class="col-xl d-flex flex-wrap align-items-center py-1 text-light">
-                            <h1>Snap CMS <small>v3</small>&nbsp;</h1>
+                            <h1 class="mb-0">Snap CMS <small>v3</small>&nbsp;</h1>
                             
                             <h2 class="font-weight-normal ml-sm-auto mb-0"><?php echo $pageName; ?></h2>
                         </div>

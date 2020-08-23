@@ -10,6 +10,11 @@
             'link' => 'navigation',
             'icon' => 'fa-directions'
         ],
+		[
+			'name' => 'Contact Forms',
+			'link' => 'contact-forms',
+			'icon' => 'fa-envelope-open'
+		],
         [
             'name' => 'Users',
             'link' => 'manage-users',
@@ -18,7 +23,7 @@
         [
             'name' => 'Website Details',
             'link' => 'manage-website',
-            'icon' => 'fa-address-book'
+            'icon' => 'fa-address-card'
         ],
         [
             'name' => 'Settings',

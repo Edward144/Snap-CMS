@@ -8,7 +8,7 @@
     }
 ?>
 
-<div class="container-fluid d-block d-xl-flex h-100">       
+<div class="container-fluid d-block d-xl-flex h-100">
     <?php if(isset($_GET['id'])) : ?>
         <?php 
             //Check if post exists

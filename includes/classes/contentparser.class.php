@@ -18,7 +18,7 @@
 					$form = $result->fetch_assoc();
 					$json = json_decode($form['structure'], true);
 					
-					if(!empty($json)) {
+					if(!empty($json['inputs'])) {
 						$this->shortoutput = 
 							'<form id="contactForm' . $id . '" action="' . ROOT_DIR . 'includes/actions/sendForm.php" method="post">
 								<input type="hidden" name="formId" value="' . $id . '">
