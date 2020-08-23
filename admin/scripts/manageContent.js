@@ -153,6 +153,7 @@ $("input[name='selectImage']").click(function() {
                 $("<img src='" + image + "' class='img-fluid'>").insertAfter($(".coverImage label"));
             }
             
+			$(".coverImage input[name='coverImage']").val(image);
             $("input[name='clearImage']").show();
         }
     });
