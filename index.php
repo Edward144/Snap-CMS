@@ -1,5 +1,6 @@
 <?php 
-	require_once('includes/header.php'); 
+	require_once('includes/database.php'); 
+	require_once('includes/functions.php'); 
 	checkContent($_GET['url']);
 ?>
 
@@ -19,11 +20,11 @@
         }
         else {
             $post = $post->fetch_assoc();
-            $slider = $mysqli->query("
+            /*$slider = $mysqli->query("
                 SELECT slider_items.id, slider_items.slider_id, sliders.post_id, slider_items.position, slider_items.image_url, slider_items.content, sliders.animation_in, sliders.animation_out, sliders.speed, sliders.visible FROM slider_items
                 LEFT OUTER JOIN sliders ON sliders.id = slider_items.slider_id
                 WHERE sliders.post_id = {$post['id']} AND visible = 1
-            ");
+            ");*/
         }
 
         if($post['id'] == $homepage && $_SERVER['REQUEST_URI'] != ROOT_DIR) {
@@ -33,6 +34,8 @@
             exit();
         }
     ?>
+
+	<?php require_once('includes/header.php'); ?>
 
 	<?php if(!empty($post['gallery'])) : ?>
 		<?php $carousel = json_decode($post['gallery'], true); ?>
@@ -88,6 +91,7 @@
             WHERE post_types.name = '{$_postType}' AND visible = 1
         ")->num_rows;
         $pagination = new pagination($postCount); 
+		$pagination->itemLimit = 1;
         $pagination->load();
 
         if(isset($_GET['category']) && is_numeric($_GET['category'])) {
@@ -105,6 +109,8 @@
             LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}
         "); 
     ?>
+
+	<?php require_once('includes/header.php'); ?>
 
 	<div class="container-xl">
 		<div class="content list row my-3">
@@ -127,6 +133,8 @@
 						<?php endwhile; ?>
 					</div>
 				<?php endif; ?>
+				
+				<?php echo $pagination->display(); ?>
 			</div>
 		</div>
 	</div>

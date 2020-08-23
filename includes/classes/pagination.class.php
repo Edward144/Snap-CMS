@@ -4,7 +4,7 @@
         public $firstPage = 1;
         public $lastPage;
         public $currentPage;
-        public $itemLimit = 8;
+        public $itemLimit = 10;
         public $pageLimit = 9;
         public $showFirst = true;
         public $showLast = true;
@@ -130,14 +130,16 @@
                     $nextPage = $this->currentPage + 1;
                 }
                 
-                $output = '<div class="pagination">';
+                $output = 
+                    '<nav aria-label="page-navigation">
+                        <ul class="pagination">';
                 
                     if($this->showFirst == true) {
-                        $output .= '<a href="' . $this->prefix . 'page=' . $this->firstPage . '"><< First</a>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $this->firstPage . '"><< First</a></li>';
                     }
                 
                     if($this->showPrev == true) {
-                        $output .= '<a href="' . $this->prefix . 'page=' . $prevPage . '">< Prev</a>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $prevPage . '">< Prev</a></li>';
                     }
                 
                     if($this->showPageNumbers == true) {
@@ -152,19 +154,21 @@
                         }
                         
                         for($this->i; $this->i <= $end; $this->i++) {
-                            $output .= '<a href="' . $this->prefix . 'page=' . $this->i . '">' . $this->i . '</a>';
+                            $output .= '<li class="page-item ' . (isset($_GET['page']) && $_GET['page'] == $this->i ? 'active' : '') . '"><a class="page-link" href="' . $this->prefix . 'page=' . $this->i . '">' . $this->i . '</a></li>';
                         }
                     }
                 
                     if($this->showNext == true) {
-                        $output .= '<a href="' . $this->prefix . 'page=' . $nextPage . '">Next ></a>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $nextPage . '">Next ></a></li>';
                     }
                 
                     if($this->showLast == true) {
-                        $output .= '<a href="' . $this->prefix . 'page=' . $this->lastPage . '">Last >></a>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $this->lastPage . '">Last >></a></li>';
                     }
                 
-                $output .= '</div>';
+                $output .= 
+                        '</ul>
+                    </nav>';
                 
                 return $output;
             }
