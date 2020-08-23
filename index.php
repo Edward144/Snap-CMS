@@ -125,9 +125,17 @@
 		require_once('includes/header.php'); 
 	?>
 
+	<?php if(!empty($postDetails['image_url'])) : ?>
+		<div id="hero" class="carousel mx-n3">
+			<div class="carousel-inner">
+				<img src="<?php echo $postDetails['image_url']; ?>" class="h-100 w-100" style="object-fit: cover;" alt="<?php echo (!empty($postDetails['title']) ? $postDetails['title'] : $postDetails['name']); ?> Hero">
+			</div>
+		</div>
+	<?php endif; ?>
+
 	<div class="container-xl">
 		<div class="content list row my-3">
-			<div class="col">
+			<div class="col">				
 				<?php echo (!empty($postDetails['title']) ? '<h1>' . $postDetails['title'] . '</h1>' : (!empty($postDetails['name']) ? '<h1>' . ucwords(str_replace('-', ' ', $postDetails['name'])) . '</h1>' : '')); ?>
 				
 				<?php if(!empty($postDetails['content'])) : ?>
@@ -139,9 +147,15 @@
 				<?php if($posts->num_rows > 0) : ?>
 					<div class="<?php echo $postDetails['name'] . 'List'; ?>">
 						<?php while($post = $posts->fetch_assoc()) : ?>
-							<div class="jumbotron">
-								<h2><a href="<?php echo ROOT_DIR . $postDetails['name'] . '/' . $post['url']; ?>"><?php echo $post['name']; ?></a></h2>
-								<?php echo (!empty($post['short_description']) ? '<p>' . $post['short_description'] . '</p><p><a href="' . ROOT_DIR . $postDetails['name'] . '/' . $post['url'] . '">Read More</a></p>' : ''); ?>
+							<div class="jumbotron py-3 <?php echo $postDetails['name'] . 'Item'; ?>">
+								<h2 class="title"><a href="<?php echo ROOT_DIR . $postDetails['name'] . '/' . $post['url']; ?>"><?php echo $post['name']; ?></a></h2>
+								
+								<?php 
+									echo (!empty($post['author']) ? '<h6 class="author d-inline-block mr-1"><strong>Author: </strong>' . $post['author'] . '</h6>' : ''); 
+									echo (!empty($post['date_posted']) ? '<h6 class="posted d-inline-block mr-1"><strong>Posted: </strong>' . date('d/m/Y H:i', strtotime($post['date_posted'])) . '</h6>' : ''); 
+								
+									echo (!empty($post['short_description']) ? '<p>' . $post['short_description'] . ' <a href="' . ROOT_DIR . $postDetails['name'] . '/' . $post['url'] . '">Read More</a></p>' : ''); 
+								?>
 							</div>
 						<?php endwhile; ?>
 					</div>
