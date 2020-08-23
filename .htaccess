@@ -7,9 +7,8 @@ Options All -Indexes
 	#Remove Trailing Slash
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)/$ $1 [L,R=301]
-	
-	RewriteRule ^posts(.*)$ posts.php?url=posts$1 [L,QSA]
     
+	#Rewrite To Template
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME}.php !-f

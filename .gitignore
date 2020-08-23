@@ -5,3 +5,5 @@ images/*
 !images/.gitkeep
 admin/index_template.php
 css/unused/*
+test-contactform.json
+custom.php
