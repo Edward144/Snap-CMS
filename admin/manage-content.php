@@ -60,11 +60,6 @@
                     <input type="text" class="form-control" name="author" value="<?php echo $post['author']; ?>">
                 </div>
                 
-                <div class="form-group">
-                    <label>Custom PHP File</label>
-                    <input type="text" class="form-control" name="customContent" value="<?php echo $post['custom_content']; ?>">
-                </div>
-                
                 <hr>
                 
                 <h3 class="py2">Meta Data</h3>

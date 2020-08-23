@@ -71,8 +71,8 @@
         $formData = [];
 		parse_str($_POST['formData'], $formData);
 		
-		$update = $mysqli->prepare("UPDATE `posts` SET name = ?, short_description = ?, content = ?, url = ?, gallery = ?, author = ?, date_posted = ?, last_edited = NOW(), last_edited_by = ?, custom_content = ?, meta_title = ?, meta_description = ?, meta_keywords = ?, meta_author = ? WHERE id = ? AND post_type_id = ?");
-		$update->bind_param('sssssssisssssii', $formData['title'], $formData['shortDesc'], $formData['content'], slugify($formData['url']), json_encode($_POST['carouselData']), $formData['author'], $formData['datePosted'], $_SESSION['adminid'], $formData['customContent'], $formData['metaTitle'], $formData['metaDescription'], $formData['metaKeywords'], $formData['metaAuthor'], $formData['id'], $formData['postTypeId']);
+		$update = $mysqli->prepare("UPDATE `posts` SET name = ?, short_description = ?, content = ?, url = ?, gallery = ?, author = ?, date_posted = ?, last_edited = NOW(), last_edited_by = ?, meta_title = ?, meta_description = ?, meta_keywords = ?, meta_author = ? WHERE id = ? AND post_type_id = ?");
+		$update->bind_param('sssssssisssssii', $formData['title'], $formData['shortDesc'], $formData['content'], slugify($formData['url']), json_encode($_POST['carouselData']), $formData['author'], $formData['datePosted'], $_SESSION['adminid'], $formData['metaTitle'], $formData['metaDescription'], $formData['metaKeywords'], $formData['metaAuthor'], $formData['id'], $formData['postTypeId']);
 		$ex = $update->execute();
 		
 		if($ex === false) {
