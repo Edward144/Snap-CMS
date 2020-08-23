@@ -5,7 +5,6 @@ A further redesign of Snap CMS using bootstrap, because I find it impossible to 
 I have been entirely rewriting every file since v2. Currently not everything is back in place, I will update this read me as I finish everything off. 
 
 In Progress:
-* Admin: Navigation Management - You cannot add new items but can edit and re-order existing ones. 
 * Admin: Categories Management - I had removed categories as I personally never used them, I will look at recreating them in time.
 * Frontend: Index Template - index.php is not yet set up to display content that has been created. 
 * Frontend: Posts Template - Alongside index.php should be a posts.php file which is essentially identical to index, with minor changes for a more relevant layout for blog/news posts.

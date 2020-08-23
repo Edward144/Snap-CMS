@@ -149,6 +149,12 @@
 				<div class="form-group d-flex align-items-center">
 					<input type="submit" class="btn btn-primary" value="Insert Item">
 				</div>
+				
+				<?php if(isset($_SESSION['insertmessage'])) : ?>
+                    <div class="alert alert-<?php echo ($_SESSION['status'] == 0 ? 'danger' : 'success'); ?>">
+                        <?php echo $_SESSION['insertmessage']; ?>
+                    </div>
+                <?php endif; ?>
 			</form>
         </div>
 
@@ -170,4 +176,5 @@
     unset($_SESSION['status']); 
     unset($_SESSION['createmessage']); 
     unset($_SESSION['deletemessage']); 
+    unset($_SESSION['insertmessage']); 
 ?>

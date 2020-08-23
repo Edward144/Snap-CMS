@@ -89,6 +89,23 @@
         
         echo json_encode([$success, $message]);
     }
+	elseif($_POST['method'] == 'updateMenu') {
+		$update = $mysqli->prepare("INSERT INTO `navigation_structure` (menu_id, parent_id, name, url, image_url) VALUES(?, ?, ?, ?, ?)");
+		$update->bind_param('iisss', $_POST['menuId'], $_POST['parentId'], $_POST['name'], $_POST['url'], $_POST['imageUrl']);
+		$ex = $update->execute();
+		
+		if($ex === false) {
+			$_SESSION['status'] = 0;
+			$_SESSION['insertmessage'] = 'Could not add item to menu';
+			header('Location: ' . $_POST['returnurl']);
+			exit();
+		}
+		
+		$_SESSION['status'] = 1;
+		$_SESSION['insertmessage'] = 'Item has been added to menu';
+		header('Location: ' . $_POST['returnurl']);
+		exit();
+	}
     elseif($_POST['method'] == 'pullPage') {
         $pull = $mysqli->prepare("SELECT id, name, url FROM `posts` WHERE id = ?");
         $pull->bind_param('i', $_POST['id']);

@@ -106,6 +106,9 @@ $("#updateMenu").submit(function() {
         $(this).find(":submit").prop("disabled", true);
         $("<div class='spinner-border ml-1'><span class='sr-only'>Processing...</span></div>").insertAfter($(this).find(":submit"));
     }
+	else {
+		event.preventDefault();
+	}
 });
 
 //Open Item Edit
