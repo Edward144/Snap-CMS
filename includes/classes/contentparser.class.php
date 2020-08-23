@@ -3,10 +3,12 @@
 	class shortcode {
 		protected $shortoutput;
 		
-		protected function contactform($id) {
-			$mysqli = $GLOBALS['mysqli'];			
+		protected function contactform($params) {
+			$mysqli = $GLOBALS['mysqli'];
 			
-            if(isset($id)) {			
+            if(isset($params['id'])) {			
+				$id = $params['id'];
+				
 				$form = $mysqli->prepare("SELECT * FROM `contact_forms` WHERE id = ?");
 				$form->bind_param('i', $id);
 				$form->execute();
@@ -144,6 +146,15 @@
 				}
         	}
         }
+		
+		protected function customfile($params) {
+			if(isset($params['path'])) {
+				$path = $params['path'];
+				$transit = (isset($_SERVER['HTTPS']) ? 'https' : 'http');
+				
+				return file_get_contents($transit . '://' . $_SERVER['SERVER_NAME'] . ROOT_DIR . $path);
+			}
+		}
 	}
 
 	class parseContent extends shortcode {
@@ -152,25 +163,32 @@
 		private $components;
 		private $method = [];
 		
-		public function __construct($content) {
+		public function __construct($content) {			
 			$this->content = (isset($content) ? $this->content = $content : '');
 			
-			$this->components = preg_split('/[\[.*\]]/', $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
+			$this->components = preg_split('/[\[*\]]/', $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			foreach($this->components as $index => $component) {
 				if(strpos($component, 'insert=') === 0) {
 					$shortcode = explode(',', $component);
-                    
+					$params = [];
+					$this->method = [];
+					
                     foreach($shortcode as $parameter) {
-                        $values = preg_split('/[(.*)\=\"(.*)\"]/', $parameter, -1, PREG_SPLIT_NO_EMPTY);
+                        $values = preg_split('/[(*)\=\"(*)\"]/', $parameter, -1, PREG_SPLIT_NO_EMPTY);
                         $this->method[$values[0]] = $values[1];
 						
 						$function = $this->method['insert'];
-                    
-						if(method_exists($this, $function) === true) {
-							$this->output .= $this->$function($this->method['id']);
-						}
                     }
+					
+					for($i = 1; $i < count($this->method); $i++) {
+						$param = array_slice($this->method, $i);
+						$params[key($param)] = $param[key($param)];
+					}
+					
+					if(method_exists($this, $function) === true) {
+						$this->output .= $this->$function($params);
+					}
 				}
 				else {
 					$this->output .= $component;
