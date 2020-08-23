@@ -120,4 +120,22 @@
         }
     }
 
+	function metaData($metaTitle, $metaDesc, $metaKeywords, $metaAuthor) {
+		$metaData = '';
+		$metaData .= (!empty($metaTitle) ? '<title>' . $metaTitle . '</title>' : '');
+		$metaData .= (!empty($metaTitle) ? '<meta name="description" content="' . $metaDesc . '">' : '');
+		$metaData .= (!empty($metaTitle) ? '<meta name="keywords" content="' . $metaKeywords . '">' : '');
+		$metaData .= (!empty($metaTitle) ? '<meta name="author" content="' . $metaAuthor . '">' : '');
+		
+		return $metaData;
+	}
+
+	$classes = scandir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'includes/classes');
+
+    foreach($classes as $class) {
+        if(strpos($class, '.class') !== false) {
+            include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'includes/classes/' . $class);
+        }
+    }
+
 ?>

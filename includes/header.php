@@ -2,14 +2,6 @@
     require_once('includes/database.php');
     require_once('includes/functions.php'); 
 
-	$classes = scandir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'includes/classes');
-
-    foreach($classes as $class) {
-        if(strpos($class, '.class') !== false) {
-            include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'includes/classes/' . $class);
-        }
-    }
-
 	$companyDetails = companyDetails();
 ?>
 
@@ -18,7 +10,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+        
+		<?php echo metaData($metaTitle, $metaDesc, $metaKeywords, $metaAuthor); ?>
         
         <link rel="stylesheet" href="<?php echo ROOT_DIR; ?>css/style.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
