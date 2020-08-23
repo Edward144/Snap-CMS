@@ -236,7 +236,7 @@
                         <div class="form-group coverImage">
                             <label class="d-block">Cover Image</label>
                             <input type="hidden" name="coverImage" value="<?php echo $postType['image_url']; ?>">
-                            <?php echo ($postType['image_url'] != null && $postType['image_url'] != '' ? '<img src="' . $postType['image_url'] . '">' : ''); ?>
+                            <?php echo ($postType['image_url'] != null && $postType['image_url'] != '' ? '<img src="' . $postType['image_url'] . '" class="img-fluid">' : ''); ?>
 
                             <div class="clearfix mt-2"></div>
                             <input type="button" class="btn btn-info mr-2" name="selectImage" value="Choose Image">
