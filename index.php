@@ -159,6 +159,10 @@
 							</div>
 						<?php endwhile; ?>
 					</div>
+				<?php else : ?>
+					<div class="jumbotron py-3 <?php echo $postDetails['name'] . 'Item'; ?>">
+						<h2 class="title mb-0">There are currently no posts.</h2>
+					</div>
 				<?php endif; ?>
 				
 				<?php echo $pagination->display(); ?>
