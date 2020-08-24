@@ -6,8 +6,6 @@ I have been entirely rewriting every file since v2. Currently not everything is 
 
 In Progress:
 * Admin: Categories Management - I had removed categories as I personally never used them, I will look at recreating them in time.
-* Frontend: Index Template - index.php is not yet set up to display content that has been created. 
-* Frontend: Posts Template - Alongside index.php should be a posts.php file which is essentially identical to index, with minor changes for a more relevant layout for blog/news posts.
 
 # Installation
 Simply extract everything into the required directory on your webserver. You might need to edit the .htaccess file in the root folder depending on whether you are installing to a sub-directory or not. Ensure that the rewrite base is correctly set to your sub-directory.
