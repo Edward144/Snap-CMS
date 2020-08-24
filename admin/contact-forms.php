@@ -72,7 +72,33 @@
 			</div>
 
 			<div class="col bg-white">
-
+				<h2 class="py-2">Form Structure</h2>
+				
+				<ul class="list-group formInputs">
+					<li class="list-group-item">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<input type="button" class="btn btn-primary" name="addInput" value="Add Input">
+							</div>
+							
+							<select name="inputTypes" class="form-control">
+								<option value="general">General Text</option>
+								<option value="text">Textbox</option>
+								<option value="textarea">Textarea</option>
+								<option value="email">Email</option>
+								<option value="number">Number</option>
+								<option value="date">Date</option>
+								<option value="time">Time</option>
+								<option value="datetime-local">Date &amp; time</option>
+								<option value="checkbox">Checkbox</option>
+								<option value="radio">Radio Buttons</option>
+								<option value="select">Multi Select</option>
+								<option value="file">File Upload</option>
+								<option value="hidden">Hidden</option>
+							</select>
+						</div>
+					</li>
+				</ul>
 			</div>
 		<?php else : ?>
 			<div class="col-xl-4 bg-light">

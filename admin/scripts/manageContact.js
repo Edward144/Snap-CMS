@@ -89,3 +89,120 @@ $("#updateContact").submit(function() {
 	
 	console.log(structure);
 });
+
+//Add Input To Structure
+$(".formInputs input[name='addInput']").click(function() {
+	var type = $(".formInputs select[name='inputTypes']").val();
+	var output;
+	var general = 
+		`<div class="input-group form-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Input Type</span>
+			</div>
+			<input type="text" class="form-control" name="type" value="` + type + `" disabled>
+			<div class="input-group-append">
+				<div class="input-group-text">
+					<input type="checkbox" name="required">
+				</div>
+				<span class="input-group-text">Required?</span>
+			</div>
+		</div>
+		<div class="input-group form-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Label</span>
+			</div>
+			<input type="text" class="form-control" name="label">
+			<div class="input-group-append">
+				<div class="input-group-text">
+					<input type="checkbox" name="hidelabel">
+				</div>
+				<span class="input-group-text">Hide Label?</span>
+			</div>
+		</div>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">Placeholder</span>
+			</div>
+			<input type="text" class="form-control" name="placeholder">
+		</div>`;
+		
+	$(".formInputs").parent().find(".alert").remove();
+	
+	switch(type) {
+		case 'general': 
+			output = 
+				`<div class="input-group form-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Input Type</span>
+					</div>
+					<input type="text" class="form-control" name="type" value="general" disabled>
+				</div>
+				<div class="form-group mb-0">
+					<textarea class="form-control" name="value" placeholder="Enter some to be displayed to the user..."></textarea>
+				</div>`;
+			break;
+		case 'number':
+			output = general +
+				`<div class="input-group form-group mt-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Min Value</span>
+					</div>
+					<input type="text" class="form-control" name="min">
+				</div>
+				<div class="input-group form-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Max Value</span>
+					</div>
+					<input type="text" class="form-control" name="max">
+				</div>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Step (Decimal Places)</span>
+					</div>
+					<input type="text" class="form-control" name="step">
+				</div>`;
+			break;
+		case 'select':
+			output = general +
+				`<div class="input-group mt-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Options</span>
+					</div>
+					<textarea class="form-control" name="options" placeholder="Option 1, Option 2, Option 3, etc..."></textarea>
+				</div>`;
+			break;
+		case 'radio': 
+			output = general +
+				`<div class="input-group mt-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Options</span>
+					</div>
+					<textarea class="form-control" name="options" placeholder="Option 1, Option 2, Option 3, etc..."></textarea>
+				</div>`;
+			break;
+		case 'file': 
+			output = general +
+				`<div class="input-group mt-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Allow Multiple Files</span>
+					</div>
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<input type="checkbox" name="multiple">
+						</div>
+					</div>
+				</div>`;
+			break;
+		default: 
+			output = general;
+			break;
+	}
+	
+	if(output != null) {
+		output = "<li class='list-group-item'><div class='form-group d-flex justify-content-end'><input type='button' class='btn btn-danger' name='delete' value='Delete Input'></div>" + output + "</li>";
+		$(output).insertBefore($(this).parents(".list-group-item").first());
+	}
+	else {
+		$("<div class='alert alert-danger mt-3'>Could not add input</div>").insertAfter(".formInputs");
+	}
+});
