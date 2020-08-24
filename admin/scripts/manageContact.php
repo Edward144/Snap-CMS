@@ -33,7 +33,7 @@
         
         header('Location: ' . explode('?', $_POST['returnUrl'])[0] . '?id=' . $lastId);
 	}
-	elseif($_POST['method'] == 'updateContact') {
+	elseif($_POST['method'] == 'updateContact') {		
 		$update = $mysqli->prepare("UPDATE `contact_forms` SET name = ?, subject = ?, sitekey = ?, secretkey = ?, structure = ? WHERE id = ?");
 		$update->bind_param('sssssi', $_POST['name'], $_POST['subject'], $_POST['sitekey'], $_POST['secretkey'], $_POST['structure'], $_POST['id']);
 		$ex = $update->execute();

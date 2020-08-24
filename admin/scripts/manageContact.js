@@ -10,7 +10,7 @@ $("input[name='delete']").click(function() {
     
     $(".alert").remove();
     
-    if(confirm("Are you sure you want to delete this content?")) {
+    if(confirm("Are you sure you want to delete this contact form?")) {
         $.ajax({
             url: root_dir + "admin/scripts/manageContact.php",
             method: "POST",
@@ -76,8 +76,37 @@ $("#updateContact").submit(function() {
 		}
 	});
 	
-	if(valid == true) {		
+	if(valid == true) {	
+		var vStructure = {};
+		var i = 0;
+		
+		$(".formInputs .list-group-item:not(#actions)").each(function() {
+			var inputs = {};
+
+			$(this).find("*[name]:not([name='deleteInput'])").each(function() {
+				if($(this).is(":checkbox")) {
+					inputs[$(this).attr("name")] = ($(this).is(":checked") ? true : false);
+				}
+				else if($(this).attr("name") == 'options') {
+					var options = [];
+					
+					$.each($(this).val().split(","), function(index, val) {
+						options.push(val);
+					});
+					
+					inputs[$(this).attr("name")] = options;
+				}
+				else {
+					inputs[$(this).attr("name")] = $(this).val();
+				}
+			});
+
+			vStructure[i++] = inputs;
+		});
+		
 		structure['emails'] = vEmails;
+		structure['inputs'] = vStructure;
+		
 		$(this).find("input[name='structure']").val(JSON.stringify(structure));
 		
 		$(this).find(":submit").prop("disabled", true);
@@ -86,9 +115,20 @@ $("#updateContact").submit(function() {
 	else {
 		event.preventDefault();
 	}
-	
-	console.log(structure);
 });
+
+//Re-Order Items
+$(".formInputs").sortable({
+    items: "li:not(#actions)",
+    connectWith: ".formInputs"
+});
+
+//Delete Input
+$(".formInputs").on("click", "input[name='deleteInput']", function() {
+	if(confirm("Are you sure you want to delete this input?")) {
+		$(this).parents(".list-group-item").first().remove();
+	}
+})
 
 //Add Input To Structure
 $(".formInputs input[name='addInput']").click(function() {
@@ -138,7 +178,7 @@ $(".formInputs input[name='addInput']").click(function() {
 					<input type="text" class="form-control" name="type" value="general" disabled>
 				</div>
 				<div class="form-group mb-0">
-					<textarea class="form-control" name="value" placeholder="Enter some to be displayed to the user..."></textarea>
+					<textarea class="form-control noTiny" name="value" placeholder="Enter some to be displayed to the user..."></textarea>
 				</div>`;
 			break;
 		case 'number':
@@ -168,7 +208,7 @@ $(".formInputs input[name='addInput']").click(function() {
 					<div class="input-group-prepend">
 						<span class="input-group-text">Options</span>
 					</div>
-					<textarea class="form-control" name="options" placeholder="Option 1, Option 2, Option 3, etc..."></textarea>
+					<textarea class="form-control noTiny" name="options" placeholder="Option 1, Option 2, Option 3, etc..."></textarea>
 				</div>`;
 			break;
 		case 'radio': 
@@ -177,7 +217,7 @@ $(".formInputs input[name='addInput']").click(function() {
 					<div class="input-group-prepend">
 						<span class="input-group-text">Options</span>
 					</div>
-					<textarea class="form-control" name="options" placeholder="Option 1, Option 2, Option 3, etc..."></textarea>
+					<textarea class="form-control noTiny" name="options" placeholder="Option 1, Option 2, Option 3, etc..."></textarea>
 				</div>`;
 			break;
 		case 'file': 
@@ -199,7 +239,7 @@ $(".formInputs input[name='addInput']").click(function() {
 	}
 	
 	if(output != null) {
-		output = "<li class='list-group-item'><div class='form-group d-flex justify-content-end'><input type='button' class='btn btn-danger' name='delete' value='Delete Input'></div>" + output + "</li>";
+		output = "<li class='list-group-item'><div class='form-group d-flex justify-content-end'><input type='button' class='btn btn-danger' name='deleteInput' value='Delete Input'></div>" + output + "</li>";
 		$(output).insertBefore($(this).parents(".list-group-item").first());
 	}
 	else {

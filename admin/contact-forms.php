@@ -74,8 +74,123 @@
 			<div class="col bg-white">
 				<h2 class="py-2">Form Structure</h2>
 				
-				<ul class="list-group formInputs">
-					<li class="list-group-item">
+				<ul class="list-group formInputs" style="max-width: 992px;">
+					<?php $inputs = json_decode($contact['structure'], true)['inputs']; ?>
+					
+					<?php foreach($inputs as $iindex => $input) : ?>
+						<?php
+							$default = 
+								'<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Input Type</span>
+									</div>
+									<input type="text" class="form-control" name="type" value="' . $input['type'] . '" disabled>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<input type="checkbox" name="required" ' . ($input['required'] == true ? 'checked' : '') . '>
+										</div>
+										<span class="input-group-text">Required?</span>
+									</div>
+								</div>
+								<div class="input-group form-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Label</span>
+									</div>
+									<input type="text" class="form-control" name="label" value="' . $input['label'] . '">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<input type="checkbox" name="hidelabel" ' . ($input['hidelabel'] == true ? 'checked' : '') . '>
+										</div>
+										<span class="input-group-text">Hide Label?</span>
+									</div>
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Placeholder</span>
+									</div>
+									<input type="text" class="form-control" name="placeholder" value="' . $input['placeholder'] . '">
+								</div>';
+						?>
+					
+						<li class="list-group-item">
+							<div class="form-group d-flex justify-content-end">
+								<input type="button" class="btn btn-danger" value="Delete Input" name="deleteInput">
+							</div>
+							
+							<?php 
+								switch($input['type']) {
+									case 'general': 
+										echo '<div class="input-group form-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Input Type</span>
+											</div>
+											<input type="text" class="form-control" name="type" value="general" disabled>
+										</div>
+										<div class="form-group mb-0">
+											<textarea class="form-control noTiny" name="value" placeholder="Enter some to be displayed to the user...">' . $input['value'] . '</textarea>
+										</div>';
+										break;
+									case 'number': 
+										echo $default . 
+											'<div class="input-group form-group mt-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Min Value</span>
+												</div>
+												<input type="text" class="form-control" name="min" value="' . $input['min'] . '">
+											</div>
+											<div class="input-group form-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Max Value</span>
+												</div>
+												<input type="text" class="form-control" name="max" value="' . $input['max'] . '">
+											</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Step (Decimal Places)</span>
+												</div>
+												<input type="text" class="form-control" name="step" vaue="' . $input['step'] . '">
+											</div>';
+										break;
+									case 'select': 
+										echo $default . 
+											'<div class="input-group mt-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Options</span>
+												</div>
+												<textarea class="form-control noTiny" name="options" placeholder="Option 1, Option 2, Option 3, etc...">' . implode(',', $input['options']) . '</textarea>
+											</div>';
+										break;
+									case 'radio': 
+										echo $default . 
+											'<div class="input-group mt-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Options</span>
+												</div>
+												<textarea class="form-control noTiny" name="options" placeholder="Option 1, Option 2, Option 3, etc...">' . implode(',', $input['options']) . '</textarea>
+											</div>';
+										break;
+									case 'file': 
+										echo $default .
+											'<div class="input-group mt-3">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Allow Multiple Files</span>
+												</div>
+												<div class="input-group-append">
+													<div class="input-group-text">
+														<input type="checkbox" name="multiple" ' . ($input['multiple'] == true ? 'checked' : '') . '>
+													</div>
+												</div>
+											</div>';
+										break;
+									default: 
+										echo $default;
+										break;
+								} 
+							?>
+						</li>
+					<?php endforeach; ?>
+					
+					<li class="list-group-item" id="actions">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<input type="button" class="btn btn-primary" name="addInput" value="Add Input">
