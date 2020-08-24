@@ -239,11 +239,11 @@
 				<h2 class="py-2">Contact Forms List</h2>
 				
 				<?php
-					$itemCount = $mysqli->query("SELECT COUNT(*) FROM `contact_forms`")->num_rows;
+					$itemCount = $mysqli->query("SELECT * FROM `contact_forms`")->num_rows;
 					$pagination = new pagination($itemCount);
 					$pagination->load();
 				
-					$contacts = $mysqli->query("SELECT * FROM `contact_forms`");
+					$contacts = $mysqli->query("SELECT * FROM `contact_forms` ORDER BY id ASC LIMIT {$pagination->itemLimit} OFFSET {$pagination->offset}");
 				?>
 				
 				<?php if($contacts->num_rows > 0) : ?>
