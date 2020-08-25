@@ -26,11 +26,30 @@ I would also recommend having SPF and DKIM set up for mail so that the various e
 # Navigation Menus
 You can create as many navigation menus as you want within the CMS but need to manually add them within the code to display that menu. You just need to add the following code:
     
-    $somemenu = new navigation(menu_id);
+    $somemenu = new navbar(menu_id);
     $somemenu->display();
+	
+This uses bootstrap's navbar class to create a horizonal navigation menu. I will be looking to add a separate class for vertical navigation menus at some point. 
+
+# Shortcodes
+I have created a shortcode like system to allow for easy insertion of php functions within TinyMCE. You can add your own shortcodes by editing includes/classes/contentparser.class.php
+
+The content parser class looks for sets of square brackets within the string that is passed to it, then takes whatever parameters are inside and passes them to a function. 
+
+The square brackets should always include an "insert" parameter, this is the name of the function that will be run. You must also use double quotes within the shortcode. e.g.
+
+    $shortcode = '[insert="functionname",param1="x",param2="y"]';
+	echo new parsecontent($shortcode);
+	
+To create your own function edit the shortcodes class within includes/classes/contentparser.class.php. Call the function whatever you like and pass a single variable to it. Every parameter within the shortcode square brackets, other then "insert", will be passed as an associative array. You can then do whatever you like with those variables. 
+
+Current shortcodes included are:
+* [insert="contactform",id="x"] - Inserts a contact form that has been created in the CMS onto the page. Including code to validate and send it.
+* [insert="customfile",path="path/to/file"] - Used to include any custom php, html, js etc file you want. Should be an easy way to achieve whatever you want on a page. 
+* [insert="googlemap",api="your-api-key",lat="",lng="",zoom=""] - Will insert a Google map using their javascript API. This should be easily modifiable to add as many parameters as needed, for more complex maps. 
 
 # Bootstrap
-I am using pre compiled Bootstrap 4.5 for this build, there are no SASS files being used. 
+I am using pre compiled Bootstrap 4.5 for this build. The bootstrap node_modules are now included so you can theme using SASS. 
 
 # Other plugins
 I am using the following third party plugins as well as what comes included with Bootstrap

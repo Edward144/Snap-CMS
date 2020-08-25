@@ -155,6 +155,35 @@
 				return file_get_contents($transit . '://' . $_SERVER['SERVER_NAME'] . ROOT_DIR . $path);
 			}
 		}
+		
+		protected function googlemap($params) {
+			if(isset($params['api'])) {
+				$api = $params['api'];
+				$lat = (isset($params['lat']) && is_numeric($params['lat']) ? $params['lat'] : 0);
+				$lng = (isset($params['lat']) && is_numeric($params['lng']) ? $params['lng'] : 0);
+				$zoom = (isset($params['zoom']) && is_numeric($params['zoom']) && $params['zoom'] >= 0 ? $params['zoom'] : 12);
+				$unique = rtrim(base64_encode(time()), '=');
+			
+				$height = (isset($params['h'])  ? $params['h'] : '200px');
+				$width = (isset($params['w'])  ? $params['w'] : '100%');
+				
+				$this->shortoutput = 
+					'<div class="googleMap" id="googleMap' . $unique . '" style="height: ' . $height . '; width: ' . $width . ';"></div>
+
+					<script>
+						function initMap() {
+						var location = {lat: ' . $lat . ', lng: ' . $lng . '};
+						var map = new google.maps.Map(
+						  document.getElementById(\'googleMap' . $unique . '\'), {zoom: ' . $zoom . ', center: location});
+						var marker = new google.maps.Marker({position: location, map: map});
+						}
+					</script>
+
+					<script async defer src="https://maps.googleapis.com/maps/api/js?key=' . $api . '&callback=initMap"></script>';
+				
+				return $this->shortoutput;
+			}
+		}
 	}
 
 	class parseContent extends shortcode {
