@@ -54,7 +54,7 @@
 						<div class="carousel-item h-100 <?php echo ($index == 0 ? 'active' : ''); ?>" data-interval="10000" data-item="<?php echo $index; ?>">
 							<img src="<?php echo $item['imageUrl']; ?>" class="h-100 w-100" style="object-fit: cover;" alt="slide <?php echo $index; ?>">
 
-							<div class="carousel-caption d-none d-md-block" style="<?php echo ($item['captionPosition'] == 'top' ? 'top: 0;' : ($item['captionPosition'] == 'bottom' ? 'bottom: 0;' : 'top: 50%; transform: translateY(-25%);')); ?>">
+							<div class="carousel-caption d-none d-md-block" style="<?php echo ($item['captionPosition'] == 'top' ? 'top: 0;' : ($item['captionPosition'] == 'bottom' ? 'bottom: 0;' : 'top: 50%; transform: translateY(-50%); bottom: initial;')); ?>">
 								<h5><?php echo $item['title']; ?></h5>
 								<p class="mb-0"><?php echo $item['small']; ?></p>
 							</div>
