@@ -168,7 +168,7 @@
 				$width = (isset($params['w'])  ? $params['w'] : '100%');
 				
 				$this->shortoutput = 
-					'<div class="googleMap" id="googleMap' . $unique . '" style="height: ' . $height . '; width: ' . $width . ';"></div>
+					'<div class="googleMap" id="googleMap' . $unique . '" style="height: ' . $height . '; width="100%"; max-width: ' . $width . ';"></div>
 
 					<script>
 						function initMap() {
