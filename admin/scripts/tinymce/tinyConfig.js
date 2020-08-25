@@ -1,5 +1,5 @@
 var templateDir = root_dir + 'admin/scripts/tinymce/templates/';
-var customCss = root_dir + 'css/custom.min.css,' + root_dir + 'css/style.min.css';
+var customCss = root_dir + 'css/style.min.css';
 
 function startTiny() {
     tinymce.init({

@@ -4,6 +4,10 @@ html, body, .wrapper {
     height: 100%;
 }
 
+body#tinymce {
+	margin: 1em;
+}
+
 .wrapper {
     display: -webkit-box;
     display: -webkit-flex;
