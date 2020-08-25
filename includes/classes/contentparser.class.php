@@ -20,7 +20,7 @@
 					
 					if(!empty($json['inputs'])) {
 						$this->shortoutput = 
-							'<form id="contactForm' . $id . '" action="' . ROOT_DIR . 'includes/actions/sendForm.php" method="post">
+							'<form id="contactForm' . $id . '" class="contactForm" action="' . ROOT_DIR . 'includes/actions/sendForm.php" method="post">
 								<input type="hidden" name="formId" value="' . $id . '">
 								<input type="hidden" name="returnurl" value="' . $_SERVER['REQUEST_URI'] . '">';
 						
