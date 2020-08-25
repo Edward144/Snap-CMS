@@ -9893,7 +9893,7 @@ h3 {
     border-color: #dee2e6;
   }
 }
-html, body, .wrapper {
+body, .wrapper {
   height: 100%;
 }
 
