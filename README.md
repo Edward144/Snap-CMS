@@ -46,7 +46,7 @@ To create your own function edit the shortcodes class within includes/classes/co
 Current shortcodes included are:
 * [insert="contactform",id="x"] - Inserts a contact form that has been created in the CMS onto the page. Including code to validate and send it.
 * [insert="customfile",path="path/to/file"] - Used to include any custom php, html, js etc file you want. Should be an easy way to achieve whatever you want on a page. 
-* [insert="googlemap",api="your-api-key",lat="",lng="",zoom=""] - Will insert a Google map using their javascript API. This should be easily modifiable to add as many parameters as needed, for more complex maps. 
+* [insert="googlemap",api="your-api-key",lat="",lng="",zoom="",h="",w=""] - Will insert a Google map using their javascript API. This should be easily modifiable to add as many parameters as needed, for more complex maps. 
 
 # Bootstrap
 I am using pre compiled Bootstrap 4.5 for this build. The bootstrap node_modules are now included so you can theme using SASS. 
