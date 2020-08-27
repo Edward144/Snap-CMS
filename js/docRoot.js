@@ -1,3 +1,5 @@
+var http_host = location.protocol + "//";
+var server_name = location.hostname;
 var root_dir = "/";
 
 $("script").each(function(index) {    
