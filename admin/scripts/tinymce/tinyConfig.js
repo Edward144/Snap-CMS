@@ -17,7 +17,8 @@ function startTiny() {
         remove_script_host: false,
         image_title: true,
         content_css: customCss,
-		document_base_url: http_host + server_name + root_dir
+		document_base_url: http_host + server_name + root_dir,
+		extended_valid_elements: 'span'
     });
 }
 
