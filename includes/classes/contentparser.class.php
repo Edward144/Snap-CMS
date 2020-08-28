@@ -149,10 +149,16 @@
 		
 		protected function customfile($params) {
 			if(isset($params['path'])) {
-				$path = $params['path'];
-				$transit = (isset($_SERVER['HTTPS']) ? 'https' : 'http');
+				ob_start();
 				
-				return file_get_contents($transit . '://' . $_SERVER['SERVER_NAME'] . ROOT_DIR . $path);
+				$path = $params['path'];
+				include($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . $path);
+				
+				$output = ob_get_contents();
+				
+				ob_get_clean();
+				
+				return $output;
 			}
 		}
 		
