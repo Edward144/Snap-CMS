@@ -27,7 +27,7 @@
             ");*/
         }
 
-        if($post['id'] == $homepage && $_SERVER['REQUEST_URI'] != ROOT_DIR) {
+        if($post['id'] == $homepage && explode('?', $_SERVER['REQUEST_URI'])[0] != ROOT_DIR) {
             header("HTTP/1.1 301 Moved Permanently");
             header('Location: ' . ROOT_DIR);
             
