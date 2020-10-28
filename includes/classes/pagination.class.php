@@ -27,7 +27,7 @@
             }
             
             //Remove existing page query
-            $this->prefix = preg_replace('/(\?|\&)page=[0-9]/', '', $_SERVER['REQUEST_URI']);
+            $this->prefix = preg_replace('/(\?|\&)page=[0-9]/+', '', $_SERVER['REQUEST_URI']);
             
             //Change first & to ?
             $this->prefix = (strpos($this->prefix, '?') === false ? preg_replace('/\&/', '?', $this->prefix, 1) : $this->prefix);
