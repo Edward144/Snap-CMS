@@ -80,7 +80,7 @@
 						'</li>';
                 endwhile;
 			
-				$this->output .=
+				$output .=
 					'</ul>';
             endif;
             
