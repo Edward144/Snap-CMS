@@ -181,7 +181,7 @@ a:hover {
     -webkit-transition: margin 0.25s linear;
     -o-transition: margin 0.25s linear;
     transition: margin 0.25s linear;
-    z-index: 1040;
+    z-index: 100;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
