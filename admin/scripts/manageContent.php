@@ -69,18 +69,20 @@
     }
     elseif($_POST['method'] == 'saveContent') {
         $formData = [];
-		parse_str($_POST['formData'], $formData);
-		
-		$update = $mysqli->prepare("UPDATE `posts` SET name = ?, short_description = ?, content = ?, url = ?, gallery = ?, author = ?, date_posted = ?, last_edited = NOW(), last_edited_by = ?, meta_title = ?, meta_description = ?, meta_keywords = ?, meta_author = ? WHERE id = ? AND post_type_id = ?");
-		$update->bind_param('sssssssissssii', $formData['title'], $formData['shortDesc'], $formData['content'], slugify($formData['url']), json_encode($_POST['carouselData']), $formData['author'], $formData['datePosted'], $_SESSION['adminid'], $formData['metaTitle'], $formData['metaDescription'], $formData['metaKeywords'], $formData['metaAuthor'], $formData['id'], $formData['postTypeId']);
-		$ex = $update->execute();
-		
-		if($ex === false) {
-			echo json_encode([0, 'Could not save content']);
-			exit();
-		}
-		
-		echo json_encode([1, 'Content has saved successfully']);
+	parse_str($_POST['formData'], $formData);
+
+	$carouselData = (json_encode($_POST['carouselData']) == 'null' ? null : json_encode($_POST['carouselData']));
+
+	$update = $mysqli->prepare("UPDATE `posts` SET name = ?, short_description = ?, content = ?, url = ?, gallery = ?, author = ?, date_posted = ?, last_edited = NOW(), last_edited_by = ?, meta_title = ?, meta_description = ?, meta_keywords = ?, meta_author = ? WHERE id = ? AND post_type_id = ?");
+	$update->bind_param('sssssssissssii', $formData['title'], $formData['shortDesc'], $formData['content'], slugify($formData['url']), $carouselData, $formData['author'], $formData['datePosted'], $_SESSION['adminid'], $formData['metaTitle'], $formData['metaDescription'], $formData['metaKeywords'], $formData['metaAuthor'], $formData['id'], $formData['postTypeId']);
+	$ex = $update->execute();
+
+	if($ex === false) {
+		echo json_encode([0, 'Could not save content']);
+		exit();
+	}
+
+	echo json_encode([1, 'Content has saved successfully']);
     }
     elseif($_POST['method'] == 'updateLanding') {
         $_SESSION['status'] = 1;
