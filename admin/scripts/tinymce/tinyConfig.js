@@ -13,12 +13,12 @@ function startTiny() {
         ],
         min_height: 350,
         max_height: 1500,
-        relative_urls: true,
-        remove_script_host: false,
+        relative_urls: false,
+        remove_script_host: true,
         image_title: true,
         content_css: customCss,
 		document_base_url: http_host + server_name + root_dir,
-		extended_valid_elements: 'span'
+		extended_valid_elements: 'span[*],iframe[*]'
     });
 }
 
