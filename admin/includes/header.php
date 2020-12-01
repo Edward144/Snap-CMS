@@ -11,14 +11,6 @@
         exit();
     }
 
-    $classes = scandir($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'admin/includes/classes');
-
-    foreach($classes as $class) {
-        if(strpos($class, '.class') !== false) {
-            include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIR . 'admin/includes/classes/' . $class);
-        }
-    }
-
     $pageName = ucwords(str_replace('-', ' ', explode('.php', basename($_SERVER['PHP_SELF']))[0])); 
     $pageName = ($pageName == 'Index' ? 'Dashboard' : $pageName);
 ?>
