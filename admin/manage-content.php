@@ -22,6 +22,11 @@
             }
 
             $post = $post->fetch_assoc();
+	
+			$homepage = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'homepage' LIMIT 1");
+			$homepage = ($homepage->num_rows > 0 ? $homepage->fetch_array()[0] : null);
+	
+			echo $homepage;
         ?>
         
         <form id="managePost" class="row flex-grow-1">
@@ -42,7 +47,7 @@
                 
                 <div class="form-group">
                     <label>URL Slug</label>
-                    <input type="text" class="form-control" name="url" value="<?php echo $post['url']; ?>" required>
+                    <input type="text" class="form-control" name="url" value="<?php echo $post['url']; ?>" <?php echo ($_GET['id'] == $homepage ? 'placeholder="Cannot change url of homepage" disabled' : 'required'); ?>>
                 </div>
                 
                 <div class="form-group">

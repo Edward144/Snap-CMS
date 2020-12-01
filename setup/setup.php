@@ -163,7 +163,7 @@
 
     $mysqli->query(
         "INSERT INTO `posts` (post_type_id, name, content, url, author, date_posted, last_edited, last_edited_by, visible) VALUES
-        (2, 'Welcome to Snap CMS', '{$placeholderContent}', '/', 'Admin User', '{$cDate}', '{$cDate}', 1, 1)"
+        (2, 'Welcome to Snap CMS', '{$placeholderContent}', '', 'Admin User', '{$cDate}', '{$cDate}', 1, 1)"
     );
 
     $mysqli->query("CREATE TABLE `post_history` LIKE `posts`");
