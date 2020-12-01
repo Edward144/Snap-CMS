@@ -1,5 +1,7 @@
 <?php
 
+	require_once(__DIR__ . '/settings.php');
+
     function companyName() {
         global $mysqli; 
         
@@ -21,6 +23,15 @@
 		if($companyDetails->num_rows == 1) {
             return $companyDetails->fetch_assoc();
         }
+	}
+
+	function baseDir($url) {
+		if(isset($url)) {
+			return $url;
+		}
+		else {
+			return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . ROOT_DIR;
+		}
 	}
 	
 	function slugify($url) {
