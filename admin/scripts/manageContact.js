@@ -146,6 +146,9 @@ $(".formInputs input[name='addInput']").click(function() {
 				</div>
 				<span class="input-group-text">Required?</span>
 			</div>
+			<div class="input-group-append">
+				<input type='button' class='btn btn-danger' name='deleteInput' value='Delete Input'>
+			</div>
 		</div>
 		<div class="input-group form-group">
 			<div class="input-group-prepend">
@@ -239,7 +242,7 @@ $(".formInputs input[name='addInput']").click(function() {
 	}
 	
 	if(output != null) {
-		output = "<li class='list-group-item'><div class='form-group d-flex justify-content-end'><input type='button' class='btn btn-danger' name='deleteInput' value='Delete Input'></div>" + output + "</li>";
+		output = "<li class='list-group-item'>" + output + "</li>";
 		$(output).insertBefore($(this).parents(".list-group-item").first());
 	}
 	else {

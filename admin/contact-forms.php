@@ -91,6 +91,9 @@
 										</div>
 										<span class="input-group-text">Required?</span>
 									</div>
+									<div class="input-group-append">
+										<input type="button" class="btn btn-danger" value="Delete Input" name="deleteInput">
+									</div>
 								</div>
 								<div class="input-group form-group">
 									<div class="input-group-prepend">
@@ -113,10 +116,6 @@
 						?>
 					
 						<li class="list-group-item">
-							<div class="form-group d-flex justify-content-end">
-								<input type="button" class="btn btn-danger" value="Delete Input" name="deleteInput">
-							</div>
-							
 							<?php 
 								switch($input['type']) {
 									case 'general': 
