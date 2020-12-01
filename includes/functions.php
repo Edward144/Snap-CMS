@@ -25,8 +25,8 @@
         }
 	}
 
-	function baseDir($url) {
-		if(isset($url)) {
+	function baseDir($url = '') {
+		if(!empty($url)) {
 			return $url;
 		}
 		else {
