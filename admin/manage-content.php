@@ -187,7 +187,7 @@
             <div class="col-xl-4 bg-light">
                 <h2 class="py-2">Manage <?php echo ucwords(str_replace('-', ' ', $_GET['post-type'])); ?></h2>
 
-                <form id="createContent" action="<?php echo ROOT_DIR; ?>admin/scripts/manageContent.php" method="post">
+                <form id="createContent" action="admin/scripts/manageContent.php" method="post">
                     <input type="hidden" name="method" value="createContent">
                     <input type="hidden" name="postTypeId" value="<?php echo $postType['id']; ?>">
                     <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
@@ -223,7 +223,7 @@
                     <hr>
                     <h3 class="py-2">Landing Page</h3>
 
-                    <form id="updateLanding" action="<?php echo ROOT_DIR; ?>admin/scripts/manageContent.php" method="post">
+                    <form id="updateLanding" action="admin/scripts/manageContent.php" method="post">
                         <input type="hidden" name="method" value="updateLanding">
                         <input type="hidden" name="postTypeId" value="<?php echo $postType['id']; ?>">
                         <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
@@ -363,7 +363,7 @@
     <?php endif; ?>
 </div>
 
-<script src="<?php echo ROOT_DIR; ?>admin/scripts/manageContent.js"></script>
+<script src="admin/scripts/manageContent.js"></script>
 
 <?php require_once('includes/footer.php'); ?>
 

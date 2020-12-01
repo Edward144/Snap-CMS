@@ -6,7 +6,7 @@
             <div class="jumbotron py-4 bg-light">
                 <h1>This page does not exist</h1>
                 <br>                
-                <a href="<?php echo ROOT_DIR; ?>admin">Return to the dashboard</a> or 
+                <a href="admin">Return to the dashboard</a> or 
                 <a href="javascript:history.back()">Go back to your previous page</a>
             </div>
         </div>

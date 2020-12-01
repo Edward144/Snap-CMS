@@ -58,7 +58,7 @@
 
         <?php foreach($navItems as $navItem) : ?>
             <li class="nav-item border-bottom border-secondary">
-                <a href="<?php echo ROOT_DIR . 'admin/' . $navItem['link']; ?>" class="btn btn-dark rounded-0"><span><?php echo $navItem['name']; ?></span><span class="fa <?php echo (isset($navItem['icon']) ? $navItem['icon'] : 'fa-link'); ?>"></span></a>
+                <a href="<?php echo 'admin/' . $navItem['link']; ?>" class="btn btn-dark rounded-0"><span><?php echo $navItem['name']; ?></span><span class="fa <?php echo (isset($navItem['icon']) ? $navItem['icon'] : 'fa-link'); ?>"></span></a>
             </li>
         <?php endforeach; ?>
         

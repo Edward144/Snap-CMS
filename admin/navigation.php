@@ -25,7 +25,7 @@
         <div class="col-xl-4 bg-light">
             <h2 class="py-2">Manage Navigation</h2>
 			
-			<form id="deleteMenu" action="<?php echo ROOT_DIR; ?>admin/scripts/manageNavigation.php" method="post">
+			<form id="deleteMenu" action="admin/scripts/manageNavigation.php" method="post">
                 <input type="hidden" name="method" value="deleteMenu">
                 <input type="hidden" name="returnurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 
@@ -60,7 +60,7 @@
 				<hr>
 			</form>
 				
-			<form id="createMenu" action="<?php echo ROOT_DIR; ?>admin/scripts/manageNavigation.php" method="post">
+			<form id="createMenu" action="admin/scripts/manageNavigation.php" method="post">
 				<input type="hidden" name="method" value="createMenu">
 				<input type="hidden" name="returnurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
 				
@@ -83,7 +83,7 @@
 				<hr>
 			</form>
 			
-			<form id="updateMenu" action="<?php echo ROOT_DIR; ?>admin/scripts/manageNavigation.php" method="post">
+			<form id="updateMenu" action="admin/scripts/manageNavigation.php" method="post">
 				<h3 class="py-2">Insert Into Menu</h3>
 				
 				<input type="hidden" name="method" value="updateMenu">
@@ -168,7 +168,7 @@
     </div>
 </div>
 
-<script src="<?php echo ROOT_DIR; ?>admin/scripts/manageNavigation.js"></script>
+<script src="admin/scripts/manageNavigation.js"></script>
 
 <?php require_once('includes/footer.php'); ?>
 

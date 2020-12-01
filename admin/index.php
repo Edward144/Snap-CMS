@@ -27,7 +27,7 @@
                                     <?php while($post = $content->fetch_assoc()) : ?>
                                         <li class="list-group-item">
                                             <div>
-                                                <a href="<?php echo ROOT_DIR; ?>admin/manage-content/<?php echo strtolower(str_replace(' ', '-', $type['name'])) . '?id=' . $post['id']; ?>"><?php echo $post['name']; ?></a>
+                                                <a href="admin/manage-content/<?php echo strtolower(str_replace(' ', '-', $type['name'])) . '?id=' . $post['id']; ?>"><?php echo $post['name']; ?></a>
                                             </div>
                                             <div>Last edited at <?php echo date('d/m/Y H:i', strtotime($post['last_edited'])) . ' by ' . $post['username']; ?></div>
                                         </li>
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<script src="<?php echo ROOT_DIR; ?>js/apex-charts/apexcharts.min.js"></script>
+<script src="js/apex-charts/apexcharts.min.js"></script>
 
 <?php
     $postTypes = $mysqli->query("SELECT id, name FROM `post_types` ORDER BY id ASC"); 

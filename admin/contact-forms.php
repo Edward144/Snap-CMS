@@ -19,7 +19,7 @@
 			<div class="col-xl-4 bg-light">
 				<h2 class="py-2">Contact Form <?php echo $contact['id']; ?></h2>
 				
-				<form id="updateContact" action="<?php echo ROOT_DIR; ?>admin/scripts/manageContact.php" method="post">
+				<form id="updateContact" action="admin/scripts/manageContact.php" method="post">
 					<input type="hidden" name="id" value="<?php echo $contact['id']; ?>">
 					<input type="hidden" name="returnurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
 					<input type="hidden" name="method" value="updateContact">
@@ -218,7 +218,7 @@
 			<div class="col-xl-4 bg-light">
 				<h2 class="py-2">Manage Contact Forms</h2>
 				
-				<form id="createContact" action="<?php echo ROOT_DIR; ?>admin/scripts/manageContact.php" method="post">
+				<form id="createContact" action="admin/scripts/manageContact.php" method="post">
                     <input type="hidden" name="method" value="createContact">
                     <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
 
@@ -287,7 +287,7 @@
 	</div>
 </div>
 
-<script src="<?php echo ROOT_DIR; ?>admin/scripts/manageContact.js"></script>
+<script src="admin/scripts/manageContact.js"></script>
 
 <?php require_once('includes/footer.php'); ?>
 
