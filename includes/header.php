@@ -10,16 +10,17 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <base href="<?php echo baseDir(); ?>">
+		
 		<?php echo metaData($metaTitle, $metaDesc, $metaKeywords, $metaAuthor); ?>
         
-        <link rel="stylesheet" href="<?php echo ROOT_DIR; ?>css/style.min.css">
+        <link rel="stylesheet" href="css/style.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="<?php echo ROOT_DIR; ?>js/bootstrap.min.js"></script>
-        <script src="<?php echo ROOT_DIR; ?>js/docRoot.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/docRoot.min.js"></script>
 		
 		<?php googleAnalytics(); ?>
     </head>
@@ -31,9 +32,9 @@
 					<div class="row py-3">
 						<div class="col-sm-4">
 							<?php if(!empty($companyDetails['logo'])) : ?>
-								<a href="<?php echo ROOT_DIR; ?>"><img src="<?php echo $companyDetails['logo']; ?>" class="img-fluid siteLogo siteTitle" alt="<?php echo $companyDetails['name'] . ' logo';?>"></a>
+								<a href=""><img src="<?php echo $companyDetails['logo']; ?>" class="img-fluid siteLogo siteTitle" alt="<?php echo $companyDetails['name'] . ' logo';?>"></a>
 							<?php elseif(!empty($companyDetails['name'])) : ?>
-								<h2 class="siteLogo siteTitle"><a href="'<?php echo ROOT_DIR; ?>'"><?php echo $companyDetails['name']; ?></a></h2>
+								<h2 class="siteLogo siteTitle"><a href=""><?php echo $companyDetails['name']; ?></a></h2>
 							<?php endif; ?>
 						</div>
 

@@ -148,13 +148,13 @@
 					<div class="<?php echo $postDetails['name'] . 'List'; ?>">
 						<?php while($post = $posts->fetch_assoc()) : ?>
 							<div class="jumbotron py-3 <?php echo $postDetails['name'] . 'Item'; ?>">
-								<h2 class="title"><a href="<?php echo ROOT_DIR . $postDetails['name'] . '/' . $post['url']; ?>"><?php echo $post['name']; ?></a></h2>
+								<h2 class="title"><a href="<?php echo $postDetails['name'] . '/' . $post['url']; ?>"><?php echo $post['name']; ?></a></h2>
 								
 								<?php 
 									echo (!empty($post['author']) ? '<h6 class="author d-inline-block mr-1"><strong>Author: </strong>' . $post['author'] . '</h6>' : ''); 
 									echo (!empty($post['date_posted']) ? '<h6 class="posted d-inline-block mr-1"><strong>Posted: </strong>' . date('d/m/Y H:i', strtotime($post['date_posted'])) . '</h6>' : ''); 
 								
-									echo (!empty($post['short_description']) ? '<p>' . $post['short_description'] . ' <a href="' . ROOT_DIR . $postDetails['name'] . '/' . $post['url'] . '">Read More</a></p>' : ''); 
+									echo (!empty($post['short_description']) ? '<p>' . $post['short_description'] . ' <a href="' . $postDetails['name'] . '/' . $post['url'] . '">Read More</a></p>' : ''); 
 								?>
 							</div>
 						<?php endwhile; ?>
