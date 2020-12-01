@@ -3,7 +3,7 @@ function showEdit(userId) {
     $(".modal, .modal-backdrop, .card .alert").remove();
 
     $.ajax({
-        url: root_dir + "admin/scripts/manageUsers.php",
+        url: "admin/scripts/manageUsers.php",
         method: "POST",
         dataType: "json",
         data: ({userId, method: "pullUser"}),
@@ -196,7 +196,7 @@ $("body").on("submit", "#editUser", function() {
         $("<div class='spinner-border ml-1'><span class='sr-only'>Logging you in...</span></div>").insertAfter($(this).find(":submit"));
         
         $.ajax({
-            url: root_dir + "admin/scripts/manageUsers.php",
+            url: "admin/scripts/manageUsers.php",
             method: "POST",
             dataType: "json",
             data: ({formData, method: "editUser"}),
@@ -221,7 +221,7 @@ function deleteUser(userId) {
     
     if(confirm("Are you sure you want to delete this user?")) {
         $.ajax({
-            url: root_dir + "admin/scripts/manageUsers.php",
+            url: "admin/scripts/manageUsers.php",
             method: "POST",
             dataType: "json",
             data: ({userId, method: "deleteUser"}),

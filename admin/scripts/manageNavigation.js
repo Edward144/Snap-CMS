@@ -1,6 +1,6 @@
 //Change Menu
 $("select[name='selectMenu']").change(function() {
-	window.location.href = root_dir + "admin/navigation/" + $(this).val();
+	window.location.href = "admin/navigation/" + $(this).val();
 });
 
 //Create Menu
@@ -21,10 +21,6 @@ $("#createMenu").submit(function() {
 	if(valid == true) {
 		$(this).find(":submit").prop("disabled", true);
 		$("<div class='spinner-border ml-1'><span class='sr-only'>Processing...</div>").insertAfter($(this).find(":submit"));
-		
-		/*$.ajax({
-			url: root_dir + ""
-		});*/
 	}
 	else {
 		event.preventDefault();
@@ -48,7 +44,7 @@ $("select[name='existing']").change(function() {
 	var form = $(this).parents("form").first();
     
 	$.ajax({
-		url: root_dir + "admin/scripts/manageNavigation.php",
+		url: "admin/scripts/manageNavigation.php",
         method: "POST",
         dataType: "json",
         data: ({id, method: "pullPage"}),
@@ -66,7 +62,8 @@ $("input[name='selectImage']").click(function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
-        relative_urls: false,
+		document_base_url: http_host + server_name + root_dir,
+        relative_urls: true,
         remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
@@ -217,7 +214,7 @@ $("input[name='saveTree']").click(function() {
     });
     
     $.ajax({
-        url: root_dir + "admin/scripts/manageNavigation.php",
+        url: "admin/scripts/manageNavigation.php",
         method: "POST",
         dataType: "json",
         data: ({tree: JSON.stringify(tree), menuId, method: "saveTree"}),

@@ -1,5 +1,5 @@
-var templateDir = root_dir + 'admin/scripts/tinymce/templates/';
-var customCss = root_dir + 'css/style.min.css';
+var templateDir = 'admin/scripts/tinymce/templates/';
+var customCss = 'css/style.min.css';
 
 function startTiny() {
     tinymce.init({
@@ -13,7 +13,7 @@ function startTiny() {
         ],
         min_height: 350,
         max_height: 1500,
-        relative_urls: false,
+        relative_urls: true,
         remove_script_host: true,
         image_title: true,
         content_css: customCss,

@@ -22,7 +22,7 @@ $("input[name='visibility']").click(function() {
     var action = (btn.val() == "Hidden" ? "1" : "0");
     
     $.ajax({
-        url: root_dir + "admin/scripts/manageContent.php",
+        url: "admin/scripts/manageContent.php",
         method: "POST",
         dataType: "json",
         data: ({id: btn.attr("data-id"), action, method: "changeVisibility"}),
@@ -40,7 +40,7 @@ $("input[name='delete']").click(function() {
     
     if(confirm("Are you sure you want to delete this content?")) {
         $.ajax({
-            url: root_dir + "admin/scripts/manageContent.php",
+            url: "admin/scripts/manageContent.php",
             method: "POST",
             dataType: "json",
             data: ({id: btn.attr("data-id"), method: "deleteContent"}),
@@ -115,7 +115,7 @@ $("#managePost").submit(function() {
 		var formData = $(this).serialize();
 		
 		$.ajax({
-			url: root_dir + "admin/scripts/manageContent.php",
+			url: "admin/scripts/manageContent.php",
 			method: "POST",
 			dataType: "json",
 			data: ({formData, carouselData, method: "saveContent"}),
@@ -140,7 +140,8 @@ $("input[name='selectImage']").click(function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
-        relative_urls: false,
+		document_base_url: http_host + server_name + root_dir,
+        relative_urls: true,
         remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;
@@ -177,7 +178,8 @@ $("#addImage").click(function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
-        relative_urls: false,
+		document_base_url: http_host + server_name + root_dir,
+        relative_urls: true,
         remove_script_host: true,
         oninsert: function(args) {
             var images = args.files;

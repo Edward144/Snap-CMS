@@ -11,7 +11,8 @@ $("input[name='selectImage']").click(function() {
     moxman.browse({
         extensions: 'png, jpg, jpeg, gif, webp, svg',
         skin: "snapcms",
-        relative_urls: false,
+		document_base_url: http_host + server_name + root_dir,
+        relative_urls: true,
         remove_script_host: true,
         oninsert: function(args) {
             var image = args.files[0].url;

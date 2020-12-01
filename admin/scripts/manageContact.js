@@ -12,7 +12,7 @@ $("input[name='delete']").click(function() {
     
     if(confirm("Are you sure you want to delete this contact form?")) {
         $.ajax({
-            url: root_dir + "admin/scripts/manageContact.php",
+            url: "admin/scripts/manageContact.php",
             method: "POST",
             dataType: "json",
             data: ({id: btn.attr("data-id"), method: "deleteContact"}),
