@@ -4,9 +4,9 @@ var customCss = 'css/style.min.css';
 function startTiny() {
     tinymce.init({
         selector:'textarea:not(.noTiny):not(.tinySlider)',
-        plugins: 'paste image imagetools table code save link moxiemanager media fullscreen lists template autoresize',
+        plugins: 'paste image imagetools table code save link moxiemanager media fullscreen lists template autoresize textcolor colorpicker',
         menubar: 'file edit format insert table',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code fullscreen | template',
+        toolbar: 'undo redo | styleselect | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table tabledelete | fontsizeselect | link insert | code fullscreen | template',
         templates: [
             {title: 'Two Column', description: 'A two column layout that will responsively update to a single column on smaller devices.', url: templateDir + 'two-column.html'},
             {title: 'Three Column', description: 'A three column layout that will responsively update to a single column on smaller devices.', url: templateDir + 'three-column.html'},
