@@ -4,7 +4,7 @@
         public $firstPage = 1;
         public $lastPage;
         public $currentPage;
-        public $itemLimit = 1;
+        public $itemLimit = 10;
         public $pageLimit = 9;
         public $showFirst = true;
         public $showLast = true;
