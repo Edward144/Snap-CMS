@@ -30,7 +30,7 @@
 			return $url;
 		}
 		else {
-			return (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . ROOT_DIR;
+			return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http') . '://' . $_SERVER['SERVER_NAME'] . ROOT_DIR;
 		}
 	}
 	

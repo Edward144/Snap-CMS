@@ -4,7 +4,7 @@
         public $firstPage = 1;
         public $lastPage;
         public $currentPage;
-        public $itemLimit = 10;
+        public $itemLimit = 1;
         public $pageLimit = 9;
         public $showFirst = true;
         public $showLast = true;
@@ -15,7 +15,8 @@
         public $offset;
         public $items = 0;
         public $prefix = '?';
-        
+        public $pageUrl = '';
+		
         function __construct($last) {
             if($last != null) {
                 $this->lastPage = $last;
@@ -27,13 +28,17 @@
             }
             
             //Remove existing page query
-            $this->prefix = preg_replace('/(\?|\&)page=[0-9]/+', '', $_SERVER['REQUEST_URI']);
+			$queryString = preg_split('/(\?)/', $_SERVER['REQUEST_URI'], 0, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+            $this->prefix = preg_replace('/(\?|\&)page=\d+/', '', $queryString[1] . $queryString[2]);
             
             //Change first & to ?
             $this->prefix = (strpos($this->prefix, '?') === false ? preg_replace('/\&/', '?', $this->prefix, 1) : $this->prefix);
             
             //Append ? or & 
             $this->prefix = $this->prefix . (strpos($this->prefix, '?') !== false ? '&' : '?');
+			
+			//Get current url offset
+			$this->pageUrl = explode(ROOT_DIR, explode('?', $_SERVER['REQUEST_URI'])[0])[1];
         }
         
         function setFirstPage($page = 1) {
@@ -135,11 +140,11 @@
                         <ul class="pagination">';
                 
                     if($this->showFirst == true) {
-                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $this->firstPage . '"><< First</a></li>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->pageUrl . $this->prefix . 'page=' . $this->firstPage . '"><< First</a></li>';
                     }
                 
                     if($this->showPrev == true) {
-                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $prevPage . '">< Prev</a></li>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->pageUrl . $this->prefix . 'page=' . $prevPage . '">< Prev</a></li>';
                     }
                 
                     if($this->showPageNumbers == true) {
@@ -154,16 +159,16 @@
                         }
                         
                         for($this->i; $this->i <= $end; $this->i++) {
-                            $output .= '<li class="page-item ' . (isset($_GET['page']) && $_GET['page'] == $this->i ? 'active' : '') . '"><a class="page-link" href="' . $this->prefix . 'page=' . $this->i . '">' . $this->i . '</a></li>';
+                            $output .= '<li class="page-item ' . (isset($_GET['page']) && $_GET['page'] == $this->i ? 'active' : '') . '"><a class="page-link" href="' . $this->pageUrl . $this->prefix . 'page=' . $this->i . '">' . $this->i . '</a></li>';
                         }
                     }
                 
                     if($this->showNext == true) {
-                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $nextPage . '">Next ></a></li>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->pageUrl . $this->prefix . 'page=' . $nextPage . '">Next ></a></li>';
                     }
                 
                     if($this->showLast == true) {
-                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->prefix . 'page=' . $this->lastPage . '">Last >></a></li>';
+                        $output .= '<li class="page-item"><a class="page-link" href="' . $this->pageUrl . $this->prefix . 'page=' . $this->lastPage . '">Last >></a></li>';
                     }
                 
                 $output .= 
