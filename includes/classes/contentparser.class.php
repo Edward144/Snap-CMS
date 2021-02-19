@@ -229,6 +229,9 @@
 					$this->output .= $component;
 				}
 			}
+			
+			$this->output = preg_replace('/\<p\>\<(.*)\>/', '<$1>', $this->output);
+			$this->output = preg_replace('/<\/(.*)\>\<\/p\>/', '</$1>', $this->output);
 		}
 		
 		public function __toString() {
