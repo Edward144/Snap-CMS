@@ -124,6 +124,9 @@
 												<span class="input-group-text">Input Type</span>
 											</div>
 											<input type="text" class="form-control" name="type" value="general" disabled>
+											<div class="input-group-append">
+												<input type="button" class="btn btn-danger" name="deleteInput" value="Delete Input">
+											</div>
 										</div>
 										<div class="form-group mb-0">
 											<textarea class="form-control noTiny" name="value" placeholder="Enter some to be displayed to the user...">' . $input['value'] . '</textarea>
