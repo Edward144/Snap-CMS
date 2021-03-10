@@ -59,7 +59,7 @@
         $success = 1;
         $message = '';
         
-        $updateTree = $mysqli->prepare("UPDATE `navigation_structure` SET parent_id = ?, position = ?, name = ?, url = ?, image_url = ?, icon = ?, level = ? WHERE menu_id = ? AND id = ?");
+        $updateTree = $mysqli->prepare("UPDATE `navigation_structure` SET parent_id = ?, position = ?, name = ?, url = ?, image_url = ?, icon = ?, level = ?, visible = ? WHERE menu_id = ? AND id = ?");
         
         foreach($tree as $item) {
             if($item['delete'] == 1) {
@@ -73,7 +73,7 @@
                 }
             }
             else {
-                $updateTree->bind_param('iissssiii', $item['parentId'], $item['position'], $item['name'], $item['url'], $item['image'], $item['icon'], $item['level'], $_POST['menuId'], $item['id']);
+                $updateTree->bind_param('iissssiiii', $item['parentId'], $item['position'], $item['name'], $item['url'], $item['image'], $item['icon'], $item['level'], $item['visible'], $_POST['menuId'], $item['id']);
                 $ex = $updateTree->execute();
                 
                 if($ex === false) {
@@ -90,8 +90,8 @@
         echo json_encode([$success, $message]);
     }
 	elseif($_POST['method'] == 'updateMenu') {
-		$update = $mysqli->prepare("INSERT INTO `navigation_structure` (menu_id, parent_id, name, url, image_url) VALUES(?, ?, ?, ?, ?)");
-		$update->bind_param('iisss', $_POST['menuId'], $_POST['parentId'], $_POST['name'], $_POST['url'], $_POST['imageUrl']);
+		$update = $mysqli->prepare("INSERT INTO `navigation_structure` (menu_id, parent_id, name, url, image_url, visible) VALUES(?, ?, ?, ?, ?, ?)");
+		$update->bind_param('iisssi', $_POST['menuId'], $_POST['parentId'], $_POST['name'], $_POST['url'], $_POST['imageUrl'], $_POST['visible']);
 		$ex = $update->execute();
 		
 		if($ex === false) {

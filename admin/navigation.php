@@ -146,6 +146,19 @@
 					</select>
 				</div>
 				
+				<h6>Visibility</h6>
+				
+				<div class="form-check form-check-inline form-group">
+					<input type="radio" class="form-check-input" id="visible" name="visible" value="1" checked>
+					<label for="visible" class="form-check-label mr-2">Visible</label>
+					
+					<input type="radio" class="form-check-input" id="hidden"  name="visible" value="0">
+					<label for="hidden" class="form-check-label mr-2">Hidden</label>
+					
+					<input type="radio" class="form-check-input" id="excluded"  name="visible" value="-1">
+					<label for="excluded" class="form-check-label">Excluded</label>
+				</div>
+				
 				<div class="form-group d-flex align-items-center">
 					<input type="submit" class="btn btn-primary" value="Insert Item">
 				</div>

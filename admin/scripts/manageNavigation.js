@@ -206,12 +206,17 @@ $("input[name='saveTree']").click(function() {
             name: edit.find("input[name='hName']").val(),
             url: edit.find("input[name='hUrl']").val(),
             image: edit.find("input[name='hImage']").val(),
+			visible: edit.find("input[name='hVisible']:checked").val(),
             icon: edit.find("input[name='hIcon']").val(),
-            delete: edit.find("input[name='hDelete']").val(),
+            delete: edit.find("input[name='hDelete']").val()
         }
         
         i++;
     });
+	
+	console.log(tree);
+	
+	//return;
     
     $.ajax({
         url: "admin/scripts/manageNavigation.php",

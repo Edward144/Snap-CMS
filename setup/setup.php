@@ -218,13 +218,14 @@
         "CREATE TABLE IF NOT EXISTS `navigation_structure` (
             id INT AUTO_INCREMENT PRIMARY KEY,
             menu_id INT,
-            parent_id INT,
-            position INT,
+            parent_id INT DEFAULT 0,
+            position INT DEFAULT 0,
             name VARCHAR(255),
             url VARCHAR(255),
-            image_url VARCHAR(255),
+            image_url VARCHAR(255) DEFAULT '',
             icon VARCHAR(50),
-            level INT DEFAULT 0
+            level INT DEFAULT 0,
+			visible INT DEFAULT 1
         )"
     );
 
@@ -290,21 +291,6 @@
             ''
         )"
     );
-    
-    //Email admin user
-    $to = $adminEmail;
-    $subject = 'You\'ve been setup as a new user - Snap CMS';
-    $message =
-        '<p>Hi, </p>
-        <p>You have been set up as a new user for the Snap CMS installation at ' . $_SERVER['SERVER_NAME'] . '.</p>
-        <p>You can login <a href="//' . $_SERVER['SERVER_NAME'] . $docRoot . 'admin-login">here</a> with the username <strong>admin</strong> and your chosen password.</p>
-        <p>--</p>
-        <p>Snap CMS</p>';
-    $headers  = 'From: noreply@' . $_SERVER['SERVER_NAME'] . "\r\n";
-    $headers .= 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-Type: text/html; charset=UTF-8';
-
-    mail($to, $subject, $message, $headers, '-fnoreply@' . $_SERVER['SERVER_NAME']);
 
     //Create the connection file to be used by the rest of the site
 	if(!is_file('../includes/settings.php')) {
@@ -332,6 +318,21 @@
     );
 
     fclose($settings);
+
+	//Email admin user
+    $to = $adminEmail;
+    $subject = 'You\'ve been setup as a new user - Snap CMS';
+    $message =
+        '<p>Hi, </p>
+        <p>You have been set up as a new user for the Snap CMS installation at ' . $_SERVER['SERVER_NAME'] . '.</p>
+        <p>You can login <a href="//' . $_SERVER['SERVER_NAME'] . $docRoot . 'admin-login">here</a> with the username <strong>admin</strong> and your chosen password.</p>
+        <p>--</p>
+        <p>Snap CMS</p>';
+    $headers  = 'From: noreply@' . $_SERVER['SERVER_NAME'] . "\r\n";
+    $headers .= 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-Type: text/html; charset=UTF-8';
+
+    mail($to, $subject, $message, $headers, '-fnoreply@' . $_SERVER['SERVER_NAME']);
     
     $_SESSION['setupmessage'] = '<span class="text-success">Setup has completed successfully, you can now access the <a href="../admin-login">admin dashboard</a> with the username <strong>admin</strong> and your chosen password.</span>';
     $_SESSION['success'] = 1;

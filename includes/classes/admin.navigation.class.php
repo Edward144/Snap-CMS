@@ -77,6 +77,17 @@
                                                             <input type="button" class="btn btn-info mr-2" name="selectImage" value="Choose Image">
                                                             <input type="button" class="btn btn-secondary mt-2 mt-sm-0" name="clearImage" value="Remove Image" style="display: none;">
                                                         </div>
+														
+														<div class="form-check form-check-inline form-group">
+															<input type="radio" class="form-check-input" id="' . $row['id'] . 'visible" name="hVisible" value="1" ' . ($row['visible'] == 1 ? 'checked' : '') . '>
+															<label for="' . $row['id'] . 'visible" class="form-check-label mr-2">Visible</label>
+
+															<input type="radio" class="form-check-input" id="' . $row['id'] . 'hidden"  name="hVisible" value="0" ' . ($row['visible'] == 0 ? 'checked' : '') . '>
+															<label for="' . $row['id'] . 'hidden" class="form-check-label mr-2">Hidden</label>
+
+															<input type="radio" class="form-check-input" id="' . $row['id'] . 'excluded"  name="hVisible" value="-1" ' . ($row['visible'] == -1 ? 'checked' : '') . '>
+															<label for="' . $row['id'] . 'excluded" class="form-check-label">Excluded</label>
+														</div>
                                                     </form>
                                                 </div>
                                             </div>
