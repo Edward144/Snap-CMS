@@ -45,7 +45,7 @@
 					</select>
 				</div>
 				
-				<?php if($_GET['id'] > 0) : ?>
+				<?php /*if($_GET['id'] > 0) : ?>
 					<div class="form-group d-flex align-items-center">
 						<input type="submit" class="btn btn-danger" value="Delete Menu">
 					</div>
@@ -55,7 +55,7 @@
                     <div class="alert alert-<?php echo ($_SESSION['status'] == 0 ? 'danger' : 'success'); ?>">
                         <?php echo $_SESSION['deletemessage']; ?>
                     </div>
-                <?php endif; ?>
+                <?php endif;*/ ?>
                 
 				<hr>
 			</form>
