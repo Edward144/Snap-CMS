@@ -63,7 +63,7 @@
         <?php endforeach; ?>
         
         <li class="nav-item border-bottom border-secondary">
-            <a href="#" onclick="moxman.browse();" class="btn btn-info rounded-0"><span>Media Browser</span><span class="fa fa-image"></span></a>
+            <button type="button" onclick="moxman.browse();" class="btn btn-info rounded-0 w-100 text-left p-3"><span>Media Browser</span><span class="fa fa-image"></span></button>
         </li>
     </ul>
 </div>
