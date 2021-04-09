@@ -5,7 +5,7 @@
         <div class="col-xl-4 bg-light">
             <h2 class="py-2">Create New User</h2>
             
-            <form id="createUser" action="scripts/manageUsers.php" method="post">
+            <form id="createUser" action="admin/scripts/manageUsers.php" method="post">
                 <input type="hidden" name="method" value="createUser">
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 
@@ -87,7 +87,7 @@
     </div>
 </div>
 
-<script src="scripts/manageUsers.js"></script>
+<script src="admin/scripts/manageUsers.js"></script>
 
 <?php require_once('includes/footer.php'); ?>
 

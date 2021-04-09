@@ -3,7 +3,7 @@
 <div class="container-fluid d-block d-xl-flex h-100">                    
     <div class="row flex-grow-1">
         <div class="col-xl-8 bg-light">
-            <form id="updateDetails" action="scripts/manageWebsite.php" method="post">
+            <form id="updateDetails" action="admin/scripts/manageWebsite.php" method="post">
                 <input type="hidden" name="method" value="updateDetails">
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 
@@ -145,7 +145,7 @@
     </div>
 </div>
 
-<script src="scripts/manageWebsite.js"></script>
+<script src="admin/scripts/manageWebsite.js"></script>
 
 <?php require_once('includes/footer.php'); ?>
 
