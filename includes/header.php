@@ -16,11 +16,13 @@
         
         <link rel="stylesheet" href="css/style.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
-
+		<link rel="stylesheet" href="js/lightbox/css/lightbox.min.css">
+		
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/docRoot.min.js"></script>
+		<script src="js/lightbox/js/lightbox.min.js"></script>
 		
 		<?php googleAnalytics(); ?>
     </head>
