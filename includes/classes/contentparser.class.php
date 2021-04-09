@@ -114,11 +114,16 @@
 								<input type="hidden" name="action" value="validate_captcha">
 								<script src="https://www.google.com/recaptcha/api.js?render=' . $form['sitekey'] . '"></script>
 								<script>
-									grecaptcha.ready(function() {
-										grecaptcha.execute(\'' . $form['sitekey'] . '\', {action:\'validate_captcha\'})
-												  .then(function(token) {
-											document.getElementById(\'g-recaptcha-response-' . $id . '\').value = token;
-										});
+									$("#contactForm' . $id . '").submit(function() {
+										event.preventDefault();
+										
+										/*grecaptcha.ready(function() {*/
+											grecaptcha.execute(\'' . $form['sitekey'] . '\', {action:\'validate_captcha\'}).then(function(token) {
+												document.getElementById(\'g-recaptcha-response-' . $id . '\').value = token;
+												
+												$("#contactForm' . $id . '").unbind("submit").submit();
+											});
+										/*});*/
 									});
 								</script>';
 						}
