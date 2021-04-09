@@ -35,7 +35,8 @@
 	}
 	
 	function slugify($url) {
-        return preg_replace('/[^a-zA-Z0-9\:\/\-\?\=\#\.]/', '', $url);
+        $url = preg_replace('/\s/', '-', $url);
+		return strtolower(preg_replace('/[^a-zA-Z0-9\:\/\-\?\=\#\.]/', '', $url));
     }
 
 	function formatSizeUnits($bytes) {
