@@ -199,7 +199,8 @@ a:hover {
     display: block;
 }
 
-.sidebar .nav li > a {
+.sidebar .nav li > a,
+.sidebar .nav li > button {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -217,7 +218,8 @@ a:hover {
     text-align: left;
 }
 
-.sidebar .nav li > a .fa {
+.sidebar .nav li > a .fa,
+.sidebar .nav li > button .fa {
     margin-left: 18px;
 }
 
@@ -283,5 +285,15 @@ ul.navigationTree li:active {
 .question:not(#mc):active,
 .document:not(#mc):active {
     cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+
+.fa-grip-vertical {
+	cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.fa-grip-vertical:active {
+	cursor: -webkit-grabbing;
     cursor: grabbing;
 }
