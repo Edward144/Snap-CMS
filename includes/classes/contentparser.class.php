@@ -235,8 +235,12 @@
 				}
 			}
 			
-			$this->output = preg_replace('/\<p\>\<(.*)\>/', '<$1>', $this->output);
-			$this->output = preg_replace('/<\/(.*)\>\<\/p\>/', '</$1>', $this->output);
+			/*$this->output = preg_replace('/\<p\>\<(.*)\>/', '<$1>', $this->output);
+			$this->output = preg_replace('/<\/(.*)\>\<\/p\>/', '</$1>', $this->output);*/
+            
+            /*Remove empty p and p span tags */
+            $this->output = preg_replace('/<p[^>]*><\\/p[^>]*>/', '', $this->output);
+            $this->output = preg_replace('/<p[^>]*><span[^>]*><\\/span[^>]*><\\/p[^>]*>/', '', $this->output);
 		}
 		
 		public function __toString() {
