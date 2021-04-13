@@ -237,7 +237,7 @@
                 </form>
 			</div>
 
-			<div class="col bg-white hasTable">
+			<div class="col bg-white overflow-hidden">
 				<h2 class="py-2">Contact Forms List</h2>
 				
 				<?php
