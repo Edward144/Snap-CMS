@@ -289,6 +289,9 @@
         ), (
             'google analytics',
             ''
+        ), (
+            'tiny png',
+            ''
         )"
     );
 

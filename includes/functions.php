@@ -169,4 +169,47 @@
         }
     }
 
+	function tinypng($input = '') {
+		global $mysqli;
+		
+		$tinyapi = $mysqli->query("SELECT settings_value FROM `settings` WHERE settings_name = 'tiny png' LIMIT 1");
+		$apikey = ($tinyapi->num_rows > 0 ? $tinyapi->fetch_array()[0] : '');
+		
+		if(!empty($apikey)) {
+			$ch = curl_init();
+							
+			curl_setopt($ch, CURLOPT_URL, 'https://api.tinify.com/shrink');
+			curl_setopt($ch, CURLOPT_POST, 1);
+			
+			if(!empty($input)) {
+				curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents($input));
+			}
+			
+			curl_setopt($ch, CURLOPT_HTTPHEADER, [
+				'Content-type' => 'application/json',
+				'Location' => ''
+			]);
+			curl_setopt($ch, CURLOPT_USERPWD, 'api:' . $apikey);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+
+			$curlResponse = curl_exec($ch);
+			$curlHeaders = [];
+
+			curl_close($ch);
+
+			$curlHeaderData = explode("\n", $curlResponse);
+
+			foreach($curlHeaderData as $curlHeader) {
+				$curlHeader = explode(': ', $curlHeader);
+
+				$curlHeaders[$curlHeader[0]] = rtrim($curlHeader[1]);
+			}
+			
+			//$curlHeaders['curlResponse'] = $curlResponse;
+			
+			return $curlHeaders;
+		}
+	}
+
 ?>

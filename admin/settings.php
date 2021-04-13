@@ -5,7 +5,7 @@
         <div class="col-md-4 bg-light">
             <h2 class="py-2">General Settings</h2>
             
-            <form id="generalSettings" action="scripts/manageSettings.php" method="post">
+            <form id="generalSettings" action="admin/scripts/manageSettings.php" method="post">
                 <input type="hidden" name="method" value="updateSettings">
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 
@@ -52,6 +52,38 @@
                     <input type="text" class="form-control" name="google analytics" placeholder="UA-123456678-9" value="<?php echo $settingsArray['google analytics']; ?>">
                     <small class="text-muted">Add your Google analytics tracking tag, if you have an set up an analytics account</small>
                 </div>
+				
+				<div class="form-group">
+					<?php
+						$compressionCount = tinypng()['Compression-Count'];
+					
+						if($compressionCount > 500) {							
+							if($compressionCount <= 10000) {
+								$cost = 0.009;
+								$chargable = $compressionCount - 500;
+								$tinyCost = $chargable * $cost;
+							}
+							
+							if($compressionCount > 10001) {
+								$cost = 0.009;
+								$chargable = 10000 - 500;
+								$tinyCost = $chargable * $cost;
+								
+								$cost = 0.002;
+								$chargable = $compressionCount - 10000;
+								echo $tinyCost;
+								$tinyCost = $tinyCost + ($chargable * $cost);
+							}
+							
+							$tinyCost = (!empty($tinyCost) ? '<strong>($' . number_format($tinyCost, 2) . ')</strong>': '');
+						}
+					?>
+					
+					<label>Tiny PNG API</label>
+					<input type="text" class="form-control" name="tinypng" value="<?php echo $settingsArray['tiny png']; ?>">
+					<small class="text-muted">Automatically compress images uploaded via Media Browser.<br>
+					<code><?php echo $compressionCount; ?> / 500 free images compressed this month <?php echo $tinyCost; ?></code></small>
+				</div>
                 
                 <div class="form-group d-flex align-items-center">
                     <input type="submit" class="btn btn-primary" value="Save Settings">
@@ -79,7 +111,7 @@
                 <ul class="list-group">
                     <?php while($type = $customPosts->fetch_assoc()) : ?>
                         <li class="list-group-item">
-                            <form class="row" id="postTypes" action="scripts/manageSettings.php" method="post">
+                            <form class="row" id="postTypes" action="admin/scripts/manageSettings.php" method="post">
                                 <div class="col-sm d-flex align-items-center">
                                     <h4 class="mb-0"><?php echo $type['name']; ?></h4>
                                 </div>
@@ -109,7 +141,7 @@
             
             <h3 class="py-2">Create New Post Type</h2>
             
-            <form id="createPostType" action="scripts/manageSettings.php" method="post">
+            <form id="createPostType" action="admin/scripts/manageSettings.php" method="post">
                 <input type="hidden" name="method" value="createPostType">
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 
@@ -133,7 +165,7 @@
     </div>
 </div>
 
-<script src="scripts/manageSettings.js"></script>
+<script src="admin/scripts/manageSettings.js"></script>
 
 <?php require_once('includes/footer.php'); ?>
 
