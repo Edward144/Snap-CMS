@@ -231,7 +231,7 @@
 					}
 				}
 				else {
-					$this->output .= $component;
+					$this->output .= ltrim(rtrim($component, '<p>'), '</p>');
 				}
 			}
 			
