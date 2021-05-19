@@ -114,7 +114,7 @@
         <div class="col bg-white">
             <h2 class="py-2">Social Media</h2>
             
-            <form id="updateSocial" action="scripts/manageWebsite.php" method="post">
+            <form id="updateSocial" action="admin/scripts/manageWebsite.php" method="post">
                 <input type="hidden" name="method" value="updateSocial">
                 <input type="hidden" name="returnUrl" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                 
