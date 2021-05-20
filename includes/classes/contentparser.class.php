@@ -231,12 +231,16 @@
 					}
 				}
 				else {
-					$this->output .= ltrim(rtrim($component, '<p>'), '</p>');
+					if(substr($component, -3) == '<p>') {
+						$this->output .= substr($component, 0, -3);
+					    }
+					    elseif(substr($component, 0, 4) == '</p>') {
+						$this->output .= substr($component, 4);
+					    }
+					    else {
+						$this->output .= $component;
+					    }
 				}
-			}
-			
-			/*$this->output = preg_replace('/\<p\>\<(.*)\>/', '<$1>', $this->output);
-			$this->output = preg_replace('/<\/(.*)\>\<\/p\>/', '</$1>', $this->output);*/
             
             /*Remove empty p and p span tags */
             $this->output = preg_replace('/<p[^>]*><\\/p[^>]*>/', '', $this->output);
