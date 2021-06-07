@@ -31,7 +31,7 @@
                 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="text" class="form-control" name="password" value="<?php echo (isset($_SESSION['password']) ? $_SESSION['password'] : ''); ?>" required>
+                    <input type="password" class="form-control" name="password" value="<?php echo (isset($_SESSION['password']) ? $_SESSION['password'] : ''); ?>" required>
                 </div>
                 
                 <div class="form-group">
