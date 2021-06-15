@@ -38,7 +38,7 @@
             $this->prefix = $this->prefix . (strpos($this->prefix, '?') !== false ? '&' : '?');
 			
 			//Get current url offset
-			$this->pageUrl = explode(ROOT_DIR, explode('?', $_SERVER['REQUEST_URI'])[0])[1];
+			$this->pageUrl = explode($_SERVER['SERVER_NAME'] . ROOT_DIR)[1] . explode('?', $_SERVER['REQUEST_URI'])[0];
         }
         
         function setFirstPage($page = 1) {
@@ -188,7 +188,9 @@
                  'Offset: ' . $this->offset . '<br>' . 
                  'Integer: ' . $this->i . '<br>' .
                  'Show First: ' . $this->showFirst . '<br>' . 
-                 'Show Last: ' . $this->showLast . '<br>';
+                 'Show Last: ' . $this->showLast . '<br>' .
+		 'Prefix: ' . $this->prefix . '<br>' .
+                 'Page: ' . $this->pageUrl . ' | ' . $_SERVER['SERVER_NAME'] . ROOT_DIR . '<br>';
         }
     }
 
