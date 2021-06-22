@@ -93,7 +93,7 @@ $("#updateMenu").submit(function() {
     var valid = true;
     var url = $(this).find("input[name='url']");
     
-    if(/^[a-zA-Z0-9\-\/\#\?\=\.\_\s]+$/.test(url.val()) == false) {
+    if(/^[a-zA-Z0-9\:\/\-\_\+\?\&\=\#]+$/.test(url.val()) == false) {
 		url.addClass("is-invalid");
 		$("<div class='invalid-feedback'>URL can only contain letters, numbers, hyphens and forward slashes</div>").insertAfter(url);
 		valid = false;
@@ -125,7 +125,7 @@ $("body").on("click", ".modal-backdrop, .modal .close", function() {
     var valid = true;
     var url = $(".modal:visible").find("input[name='hUrl']");
     
-    if(/^[a-zA-Z0-9\-\/\#\?\=\.\_\s]+$/.test(url.val()) == false) {
+    if(/^[a-zA-Z0-9\:\/\-\_\+\?\&\=\#]+$/.test(url.val()) == false) {
 		url.addClass("is-invalid");
 		$("<div class='invalid-feedback'>URL can only contain letters, numbers, hyphens and forward slashes</div>").insertAfter(url);
 		valid = false;
