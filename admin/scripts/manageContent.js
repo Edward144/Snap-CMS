@@ -89,7 +89,7 @@ $("#managePost").submit(function() {
 		$("<div class='invalid-feedback'>A unique URL is required</div>").insertAfter(url);
 		valid = false;
 	}
-	else if(/^[a-zA-Z0-9\-\/\#\?\=\.\_\s]+$/.test(url.val()) == false && url.is(":disabled") == false) {
+	else if(/^[a-zA-Z0-9\:\/\-\_\+\?\&\=\#]+$/.test(url.val()) == false && url.is(":disabled") == false) {
 		url.addClass("is-invalid");
 		$("<div class='invalid-feedback'>URL can only contain letters, numbers, hyphens and forward slashes</div>").insertAfter(url);
 		valid = false;
