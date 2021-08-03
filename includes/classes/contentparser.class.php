@@ -233,14 +233,15 @@
 				else {
 					if(substr($component, -3) == '<p>') {
 						$this->output .= substr($component, 0, -3);
-					    }
-					    elseif(substr($component, 0, 4) == '</p>') {
+                    }
+                    elseif(substr($component, 0, 4) == '</p>') {
 						$this->output .= substr($component, 4);
-					    }
-					    else {
+                    }
+                    else {
 						$this->output .= $component;
-					    }
+                    }
 				}
+            }
             
             /*Remove empty p and p span tags */
             $this->output = preg_replace('/<p[^>]*><\\/p[^>]*>/', '', $this->output);
