@@ -1,3 +1,36 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+/*$theme-colors: (
+	"primary": #007bff,
+	"secondary": ##6c757d,
+	"white": #fff
+);
+
+$grid-breakpoints: (
+	xs:     0px,
+	sm:   576px,
+	md:   768px,
+	lg:  992px,
+	xl:  1200px,
+	xxl: 1440px
+);
+
+$container-max-widths: (
+	sm:   575.98px,
+	md:   767.98px,
+	lg:   991.98px,
+	xl:  1198.98px,
+	xxl: 1439.98px
+);*/
+
+$tinybreak: map-get($grid-breakpoints, xl);
+
+$spacer: 1rem;
+$spacers: (
+	6: ($spacer * 4)
+);
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 body, .wrapper {
@@ -5,7 +38,11 @@ body, .wrapper {
 }
 
 body#tinymce {
-	margin: 1em;
+	margin: auto;
+    padding: 0 1rem;
+    max-width: $tinybreak;
+    overflow-y: auto !important;
+    height: auto !important;
 }
 
 .wrapper {
@@ -45,7 +82,7 @@ body#tinymce {
 	position: relative;
 }
 
-@media only screen and (min-width: 992px) {	
+@include media-breakpoint-down(md) {	
 	.hasChildren > ul {
 		opacity: 0;
 		visibility: hidden;
