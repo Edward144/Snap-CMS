@@ -1,0 +1,16 @@
+.DS_Store
+admin/useruploads/*
+!admin/useruploads/.gitkeep
+admin/images/tempuploads/*
+!admin/images/tempuploads/.gitkeep
+templates/database_connect.php
+admin/custom_*
+custom_*
+gallery/*
+!gallery/.gitkeep
+scripts/revolution/*
+scripts/revolution-addons/*
+scripts/assets/*
+admin/tinymce/plugins/moxiemanager/data/storage/user.admin.json
+admin/tinymce/plugins/moxiemanager/data/storage/user.anonymous.json
+admin/tinymce/plugins/moxiemanager/data/storage/user.anonymous.json
