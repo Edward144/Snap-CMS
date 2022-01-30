@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /setup/
-Disallow: /admin-login/
-Disallow: /admin/
-Disallow: /includes/

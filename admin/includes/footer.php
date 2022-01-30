@@ -1,6 +1,0 @@
-            </div>
-        </div>
-
-        <script src="js/admin.min.js"></script>
-    </body>
-</html>
