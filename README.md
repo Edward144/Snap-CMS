@@ -1,5 +1,5 @@
 # Snap-CMS-v3
-A further redesign of Snap CMS using bootstrap, because I find it impossible to stay consistent.
+A redesign of Snap CMS using bootstrap.
 
 # IMPORTANT!
 I have been entirely rewriting every file since v2. Currently not everything is back in place, I will update this read me as I finish everything off. 
